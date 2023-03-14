@@ -141,7 +141,7 @@ const About = () => {
     'Redux Toolkit',
     'Redux',
     'Jest',
-    'Swagger Definitions',
+    'Postman',
     'PostgreSQL',
     'MongoDB',
     'Docker',
