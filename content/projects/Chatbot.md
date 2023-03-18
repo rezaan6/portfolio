@@ -13,7 +13,7 @@ tech:
   - React Hot Toast
   - Prettier
   - Vercel
-company: 'Personal'
+company: 'Web'
 showInProjects: false
 android: ''
 ios: ''

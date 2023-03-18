@@ -162,7 +162,7 @@ const ArchivePage = ({ location, data }) => {
               <tr>
                 <th>Year</th>
                 <th>Title</th>
-                <th className="hide-on-mobile">Made at</th>
+                <th className="hide-on-mobile">Type</th>
                 <th className="hide-on-mobile">Built with</th>
                 <th>Link</th>
               </tr>

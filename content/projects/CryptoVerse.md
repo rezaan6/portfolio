@@ -13,7 +13,7 @@ tech:
   - ChartJs
   - Prettier
   - Vercel
-company: 'Personal'
+company: 'Web'
 showInProjects: false
 android: ''
 ios: ''

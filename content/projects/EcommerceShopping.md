@@ -9,7 +9,7 @@ tech:
   - CSS
   - MYSQL
   - JQuery
-company: 'Personal'
+company: 'Web'
 showInProjects: true
 android: ''
 ios: ''

@@ -14,7 +14,7 @@ tech:
   - Render
   - Vercel
   - Prettier
-company: 'Personal'
+company: 'Web'
 showInProjects: false
 android: ''
 ios: ''

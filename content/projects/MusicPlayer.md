@@ -6,7 +6,7 @@ external: ''
 tech:
   - C#
   - Visual Studio
-company: 'Personal'
+company: 'Desktop'
 showInProjects: true
 android: ''
 ios: ''

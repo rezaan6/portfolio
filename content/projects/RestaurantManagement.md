@@ -7,7 +7,7 @@ tech:
   - .Net C#
   - Visual Studio
   - MYSQL
-company: 'Personal'
+company: 'Desktop'
 showInProjects: true
 android: ''
 ios: ''
