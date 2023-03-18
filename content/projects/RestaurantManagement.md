@@ -1,7 +1,7 @@
 ---
 date: '2021-01-27'
 title: 'Restaurant Mangement System'
-github: 'https://github.com/rezaan6/Restaurant-Managent-System'
+github: 'https://github.com/rezaan6/restaurant-managent-system'
 external: ''
 tech:
   - .Net C#

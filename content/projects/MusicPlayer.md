@@ -1,7 +1,7 @@
 ---
 date: '2021-01-25'
 title: 'Music Player'
-github: 'https://github.com/rezaan6/Music-Player'
+github: 'https://github.com/rezaan6/music-player'
 external: ''
 tech:
   - C#

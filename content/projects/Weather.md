@@ -1,7 +1,7 @@
 ---
 date: '2021-01-26'
-title: 'Weather App'
-github: 'https://github.com/rezaan6/Weather'
+title: 'Weather'
+github: 'https://github.com/rezaan6/weather'
 external: ''
 tech:
   - .Net C#

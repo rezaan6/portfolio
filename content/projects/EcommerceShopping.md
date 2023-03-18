@@ -1,7 +1,7 @@
 ---
 date: '2021-01-25'
-title: 'Tropical Code'
-github: 'https://github.com/rezaan6/Ecommerce-Shopping'
+title: 'Ecommerce Clothing Store'
+github: 'https://github.com/rezaan6/ecommerce-shopping'
 external: ''
 tech:
   - JS

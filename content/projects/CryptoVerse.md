@@ -1,6 +1,6 @@
 ---
 date: '2022-01-25'
-title: 'CryptoVerse'
+title: 'Crypto Currency Information'
 github: 'https://github.com/rezaan6/rapid-api-cryptoverse'
 external: 'https://rapid-api-cryptoverse.vercel.app/'
 tech:

@@ -33,6 +33,10 @@ module.exports = {
       name: 'Contact',
       url: '/#contact',
     },
+    {
+      name: 'Archive',
+      url: '/archive',
+    },
   ],
 
   colors: {
