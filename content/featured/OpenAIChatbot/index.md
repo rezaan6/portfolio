@@ -3,7 +3,7 @@ date: '1'
 title: 'Chatbot'
 cover: './demo.png'
 github: 'https://github.com/rezaan6/open-ai-chatbot'
-external: 'https://open-ai-chatbot-two.vercel.app/'
+external: 'https://open-ai-chatbot-rezaan6.vercel.app/'
 tech:
   - React
   - Nextjs

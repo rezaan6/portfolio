@@ -3,7 +3,7 @@ date: '3'
 title: 'CryptoVerse'
 cover: './demo.png'
 github: 'https://github.com/rezaan6/rapid-api-cryptoverse'
-external: 'https://rapid-api-cryptoverse.vercel.app/'
+external: 'https://rapid-api-cryptoverse-rezaan6.vercel.app/'
 cta: ''
 tech:
   - React
