@@ -21,7 +21,7 @@ tech:
   - Vercel
   - Render
 company: 'Web'
-showInProjects: false
+showInProjects: true
 android: ''
 ios: ''
 ---

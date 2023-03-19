@@ -10,7 +10,7 @@ tech:
   - BEM
   - Vercel
 company: 'Web'
-showInProjects: false
+showInProjects: true
 android: ''
 ios: ''
 ---
