@@ -2,7 +2,7 @@
 date: '2023-01-25'
 title: 'Chatbot'
 github: 'https://github.com/rezaan6/open-ai-chatbot'
-external: 'https://open-ai-chatbot-two.vercel.app/'
+external: 'https://open-ai-chatbot-rezaan6.vercel.app/'
 tech:
   - React
   - Nextjs
