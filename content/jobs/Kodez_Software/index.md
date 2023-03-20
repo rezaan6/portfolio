@@ -23,6 +23,7 @@ url: 'https://www.kodez.com.au/'
 - Collaborated closely with developers during production releases, swiftly addressing and resolving any post-release bugs to maintain the stability and performance of the application.
 - Experienced in JavaScript, React, Router, React Query, TypeScript, HTML, CSS (Styled Component), and other web technologies, with experience in backend languages such as Node.js, ExpressJs.
 - Experienced with relational databases Postgres.
+- Proficient in working with Docker containers and microservices architecture, with hands-on experience in developing and deploying multiple microservices as individual Docker containers. Able to manage containerized environments using tools such as Docker Compose. Experienced in building scalable and resilient distributed systems using microservices architecture and containerization technologies.
 - Implemented Sequelize as an ORM for efficient database management and seamless integration with Node.js applications.
 - Adopted the Atomic Design pattern to create modular, scalable, and maintainable user interfaces for web applications.
 - Actively participated in and occasionally led the interview process, contributing to the selection of qualified candidates for the team.
