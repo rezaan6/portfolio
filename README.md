@@ -10,11 +10,7 @@
   </a>
 </p>
 
-![demo](https://raw.githubusercontent.com/bchiang7/v4/main/src/images/demo.png)
-
-### TL;DR
-
-Credit by linking back to [brittanychiang.com](https://brittanychiang.com). Thanks!
+Credited to [brittanychiang.com](https://brittanychiang.com). Thanks!
 
 ## 🛠 Installation & Set Up
 
