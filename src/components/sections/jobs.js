@@ -164,6 +164,11 @@ const StyledTabPanel = styled.div`
   }
 `;
 
+const StyledPoints = styled.div`
+  overflow-y: scroll;
+  height: 70vh;
+`;
+
 const Jobs = () => {
   const data = useStaticQuery(graphql`
     query {
@@ -297,7 +302,7 @@ const Jobs = () => {
 
                     <p className="range">{range}</p>
 
-                    <div dangerouslySetInnerHTML={{ __html: html }} />
+                    <StyledPoints dangerouslySetInnerHTML={{ __html: html }} />
                   </StyledTabPanel>
                 </CSSTransition>
               );
