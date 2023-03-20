@@ -13,7 +13,7 @@ url: 'https://www.kodez.com.au/'
 - Proficient in working with Docker containers and microservices architecture, with hands-on experience in developing and deploying multiple microservices as individual Docker containers. Able to manage containerized environments using tools such as Docker Compose. Experienced in building scalable and resilient distributed systems using microservices architecture and containerization technologies.
 - Implemented Sequelize as an ORM for efficient database management and seamless integration with Node.js applications.
 - Adopted the Atomic Design pattern to create modular, scalable, and maintainable user interfaces for web applications.
-- The ability to move quickly and efficiently in an environment with loosely defined and occasionally delayed scopes,
+- The ability to move quickly and efficiently in an environment with loosely defined and occasionally delayed scopes.
 - Developed robust, high-performance, and scalable applications to support company's diverse needs and improve overall user experience.
 - Collaborated with design and product teams to develop new features focused on enhancing user experience and overall functionality.
 - Identified opportunities to improve team efficiency and implemented improvements to enhance productivity.
