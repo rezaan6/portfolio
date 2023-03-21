@@ -9,9 +9,11 @@ url: 'https://www.kodez.com.au/'
 ---
 
 - Experienced in JavaScript, React, Router, React Query, TypeScript, HTML, CSS (Styled Component), and other web technologies, with experience in backend languages such as Node.js, ExpressJs.
-- Experienced with relational databases Postgres.
+- Experienced with relational databases PostgreSQL .
 - Proficient in working with Docker containers and microservices architecture, with hands-on experience in developing and deploying multiple microservices as individual Docker containers. Able to manage containerized environments using tools such as Docker Compose. Experienced in building scalable and resilient distributed systems using microservices architecture and containerization technologies.
 - Implemented Sequelize as an ORM for efficient database management and seamless integration with Node.js applications.
+- Collaborated efficiently within diverse teams of 11 members (7 developer), adapting to different team dynamics and project requirements. Especially with code sync (e.g. pull request, testing code, knowledge transfer, pairing session on late nights).
+- Employed Jest, Husky tool and ESLint to conduct both frontend and backend testing in Node.js, ensuring the stability and performance of applications.
 - Adopted the Atomic Design pattern to create modular, scalable, and maintainable user interfaces for web applications.
 - The ability to move quickly and efficiently in an environment with loosely defined and occasionally delayed scopes.
 - Developed robust, high-performance, and scalable applications to support company's diverse needs and improve overall user experience.
@@ -29,5 +31,3 @@ url: 'https://www.kodez.com.au/'
 - Collaborated closely with developers during production releases, swiftly addressing and resolving any post-release bugs to maintain the stability and performance of the application.
 - Actively participated in and occasionally led the interview process, contributing to the selection of qualified candidates for the team.
 - Mentored and provided guidance to interns and associates, fostering their professional growth and enhancing their skills.
-- Collaborated efficiently within diverse teams of 11 members, adapting to different team dynamics and project requirements.
-- Employed Jest, Husky tool and ESLint to conduct both frontend and backend testing in Node.js, ensuring the stability and performance of applications.
