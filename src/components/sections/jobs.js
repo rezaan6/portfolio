@@ -165,8 +165,8 @@ const StyledTabPanel = styled.div`
 `;
 
 const StyledPoints = styled.div`
-  overflow-y: scroll;
-  height: 70vh;
+  overflow-y: auto;
+  max-height: 70vh;
 `;
 
 const Jobs = () => {
