@@ -192,18 +192,21 @@ const StyledProject = styled.li`
 
     li {
       margin: 0 20px 5px 0;
-      color: var(--light-slate);
       font-family: var(--font-mono);
       font-size: var(--fz-xs);
       white-space: nowrap;
+      padding-block: 2px;
+      color: #ccd6f6;
+      padding-inline: 10px;
+      border-radius: 10px;
+      background: #112240;
     }
 
     @media (max-width: 768px) {
-      margin: 10px 0;
+      margin: 15px 0;
 
       li {
         margin: 0 10px 5px 0;
-        color: var(--lightest-slate);
       }
     }
   }
