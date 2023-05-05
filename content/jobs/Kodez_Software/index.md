@@ -12,6 +12,7 @@ url: 'https://www.kodez.com.au/'
 - Experienced with relational databases PostgreSQL .
 - Proficient in working with Docker containers and microservices architecture, with hands-on experience in developing and deploying multiple microservices as individual Docker containers. Able to manage containerized environments using tools such as Docker Compose. Experienced in building scalable and resilient distributed systems using microservices architecture and containerization technologies.
 - Implemented Sequelize as an ORM for efficient database management and seamless integration with Node.js applications.
+- Utilized OWASP techniques to secure code from vulnerabilities (Existing and New System)
 - Collaborated efficiently within diverse teams of 11 members (7 developer), adapting to different team dynamics and project requirements. Especially with code sync (e.g. pull request, testing code, knowledge transfer, pairing session on late nights).
 - Employed Jest, Husky tool and ESLint to conduct both frontend and backend testing in Node.js, ensuring the stability and performance of applications.
 - Adopted the Atomic Design pattern to create modular, scalable, and maintainable user interfaces for web applications.
