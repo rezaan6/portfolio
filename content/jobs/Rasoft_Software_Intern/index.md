@@ -1,10 +1,10 @@
 ---
-date: '2020-10-01'
+date: '2020-07-01'
 title: 'Software Engineer Intern, Full Stack'
 tabTitle: 'Intern'
 company: 'RaSoft'
 location: 'Colombo, Sri Lanka'
-range: 'October 2020 - December 2020'
+range: 'July 2020 - December 2020'
 url: ''
 ---
 
