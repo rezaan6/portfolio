@@ -158,14 +158,13 @@ const About = () => {
             <p>
               Hello! My name is Rezaan and I enjoy creating things that live on the internet. My
               interest in web development started back in 2017 when I had a programming class for
-              C++ in my Higher National Diploma for Mechatronics Engineering — that turned into, me
-              transitioning to coding HTML &amp; CSS! on my notepad.
+              C++ in my Higher National Diploma for Mechatronics Engineering — that turned, me
+              transitioning to coding HTML &amp; CSS! on the notepad.
             </p>
 
             <p>
-              Fast-forward to today, and I’ve had the privilege of working at{' '}
-              <a href="https://www.kodez.com.au/">Kodez</a>. My main focus is building accessible,
-              inclusive products and digital experiences for a variety of clients.
+              Fast-forward to today, my main focus is building accessible, inclusive products and
+              digital experiences for a variety of clients.
             </p>
             <p>Here are a few technologies I’ve been working with recently:</p>
           </div>

@@ -66,12 +66,7 @@ const Hero = () => {
     <>
       <p>
         I’m a software engineer specializing in building (and occasionally designing) exceptional
-        digital experiences. Currently, I’m focused on building accessible, human-centered products
-        at{' '}
-        <a href="https://www.kodez.com.au/" target="_blank" rel="noreferrer">
-          Kodez
-        </a>
-        .
+        digital experiences. Currently, I’m focused on building accessible, human-centered products.
       </p>
     </>
   );
