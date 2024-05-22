@@ -1,10 +1,10 @@
 ---
-date: '2019-12-01'
+date: '2019-06-01'
 title: 'Frontend Engineer'
 tabTitle: 'Engineer'
 company: 'RaSoft'
 location: 'Colombo, Sri Lanka'
-range: 'December 2019 - February 2021'
+range: 'June 2019 - February 2021'
 url: ''
 ---
 

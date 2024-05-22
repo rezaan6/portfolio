@@ -1,10 +1,10 @@
 ---
-date: '2019-03-01'
+date: '2018-12-01'
 title: 'Intern'
 tabTitle: 'Intern'
 company: 'RaSoft'
 location: 'Colombo, Sri Lanka'
-range: 'March 2019 - November 2019'
+range: 'December 2018 - May 2019'
 url: ''
 ---
 

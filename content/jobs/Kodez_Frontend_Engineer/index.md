@@ -1,10 +1,10 @@
 ---
-date: '2021-02-01'
+date: '2021-03-01'
 title: 'Frontend Engineer'
 tabTitle: 'Engineer'
 company: 'Kodez'
 location: 'Melbourne, Victoria'
-range: 'February 2021 - Present'
+range: 'March 2021 - February 2024'
 url: 'https://www.kodez.com.au/'
 ---
 
