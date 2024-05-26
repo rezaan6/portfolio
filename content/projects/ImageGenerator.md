@@ -1,8 +1,8 @@
 ---
 date: '2023-02-25'
 title: 'Image Generator'
-github: 'https://github.com/rezaan6/open-ai-dalle-2-image-generator'
-external: 'https://open-ai-dalle-2-image-generator-rezaan6.vercel.app/'
+github: 'https://github.com/rezaan6/open-ai-dalle-image-generator'
+external: 'https://open-ai-dalle-image-generator-rezaan6.vercel.app/'
 tech:
   - React
   - Vite

@@ -2,8 +2,8 @@
 date: '2'
 title: 'Image Generator'
 cover: './demo.png'
-github: 'https://github.com/rezaan6/open-ai-dalle-2-image-generator'
-external: 'https://open-ai-dalle-2-image-generator-rezaan6.vercel.app/'
+github: 'https://github.com/rezaan6/open-ai-dalle-image-generator'
+external: 'https://open-ai-dalle-image-generator-rezaan6.vercel.app/'
 tech:
   - React
   - Vite
