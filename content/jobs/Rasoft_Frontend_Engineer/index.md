@@ -5,7 +5,6 @@ tabTitle: 'Engineer'
 company: 'RaSoft'
 location: 'Colombo, Sri Lanka'
 range: 'June 2019 - February 2021'
-url: ''
 ---
 
 - Assisted in the development of user interfaces using React.js, gaining exposure to JavaScript, HTML, and CSS/SCSS.

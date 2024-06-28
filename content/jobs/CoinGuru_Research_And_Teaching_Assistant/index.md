@@ -5,7 +5,6 @@ tabTitle: 'RA / TA '
 company: 'La Trobe University'
 location: 'Melbourne, Victoria'
 range: 'August 2021 - July 2022'
-url: ''
 ---
 
 ### RA Duties
