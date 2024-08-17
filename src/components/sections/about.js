@@ -130,7 +130,7 @@ const About = () => {
     'TypeScript',
     'React',
     'NextJs',
-    'Node.js',
+    'Git',
     'ExpressJs',
     'TailwindCSS',
     'Styled Component',
@@ -144,7 +144,7 @@ const About = () => {
     'Postman',
     'PostgreSQL',
     'MongoDB',
-    'Docker',
+    'GraphQL',
     'Vercel',
   ];
 

@@ -97,6 +97,7 @@ const StyledSidebar = styled.aside`
     padding: 50px 10px;
     width: min(75vw, 400px);
     height: 100vh;
+    overflow: scroll;
     outline: 0;
     background-color: var(--light-navy);
     box-shadow: -10px 0px 30px -15px var(--navy-shadow);
@@ -151,7 +152,7 @@ const StyledSidebar = styled.aside`
     ${({ theme }) => theme.mixins.bigButton};
     padding: 18px 50px;
     margin: 10% auto 0;
-    width: max-content;
+    width: -webkit-fill-available;
   }
 `;
 
@@ -265,10 +266,14 @@ const Menu = () => {
                 ))}
               </ol>
             )}
-
-            <a href="/resume.pdf" className="resume-link">
-              Resume
-            </a>
+            <div className="resume-links">
+              <a href="/resume (Detailed Version).pdf" className="resume-link">
+                Resume (Detailed)
+              </a>
+              <a href="/resume (Developer Compact).pdf" className="resume-link">
+                Resume (Developer Compact)
+              </a>
+            </div>
           </nav>
         </StyledSidebar>
       </div>
