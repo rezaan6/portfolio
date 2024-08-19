@@ -8,8 +8,8 @@ range: 'March 2024 - Present'
 url: 'https://www.axinom.com/'
 ---
 
-- Served as the Lead Frontend Developer, leading a team of frontend engineers in the development and management of frontend applications for a prominent language school client.
-- Developed and delivered three progressive web applications (PWAs) tailored to the client's needs: a descriptive content portal, film portal, and audio exam portal, using Next.js, a popular React framework.
+- Led the frontend team to develop and manage web applications for international clients.
+- Collaborated with design, product, QA and backend team to create multiple web application.
 - Implemented i18n features for seamless multi-language support enhancing user experience.
 - Utilized SCSS (Sass) for efficient and maintainable styling, leveraging its features to streamline CSS development and technologies such as React, TypeScript, and GraphQL to create robust and user-friendly frontend solutions, ensuring an intuitive user experience.
 - Moving from 0 to 1 production. Successfully led the frontend development and release of the entire application as the final version for acceptance testing, ensuring that all required features and functionalities were implemented and ready for evaluation by stakeholders and end users.
