@@ -1,13 +1,14 @@
 ---
 date: '2024-03-01'
-title: 'Senior Frontend Engineer'
-tabTitle: 'Senior'
+title: 'Associate Tech Lead - Frontend Engineer'
+tabTitle: 'Lead'
 company: 'Axinom'
 location: 'Fürth, Germany'
 range: 'March 2024 - Present'
 url: 'https://www.axinom.com/'
 ---
 
+- Initially joined as a Senior Frontend Engineer and led the team from day one; formally promoted to Associate Tech Lead after 8 months.
 - Led the frontend team to develop and manage web applications for international clients.
 - Collaborated with design, product, QA and backend team to create multiple web application.
 - Implemented i18n features for seamless multi-language support enhancing user experience.
