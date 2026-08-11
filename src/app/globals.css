@@ -1,0 +1,306 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-body);
+}
+
+body {
+  background: var(--background);
+  color: #0f172a;
+  font-family: var(--font-body), Arial, Helvetica, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem;
+}
+
+section[id] {
+  scroll-margin-top: 8rem;
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+.resume-shell {
+  font-variant-ligatures: none;
+}
+
+/* Digital-first width: read in a browser far more often than printed, and a
+   wider measure is what keeps dense bullets to one or two lines. Print
+   reflows this to a true A4 below. */
+.resume-page {
+  width: 232mm;
+}
+
+.resume-paper-frame {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 28px 80px rgba(24, 24, 27, 0.16);
+  position: relative;
+  width: 232mm;
+}
+
+.section-heading {
+  border-bottom: 1px solid #cbd5e1;
+  color: #0f172a;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  padding-bottom: 0.35rem;
+  text-transform: uppercase;
+}
+
+@media print {
+  html,
+  body {
+    background: #ffffff;
+  }
+
+  /* Reflow the 232mm screen document down to a real A4 page. The layout is a
+     single column, so it reflows cleanly; only the width and a slightly
+     tighter type scale change. */
+  .resume-page {
+    margin: 0;
+    max-width: none;
+    min-height: 297mm;
+    width: 210mm;
+    font-size: 10.1px;
+  }
+
+  .resume-paper-frame {
+    border: 0;
+    box-shadow: none;
+    width: 210mm;
+  }
+
+  /* Never split a role, the stack grid, or education across a page break. */
+  .resume-page .break-inside-avoid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 6.5rem;
+  }
+
+  section[id] {
+    scroll-margin-top: 9rem;
+  }
+}
+
+/* Signal Room (V6 flagship portfolio) — a product-tool aesthetic.
+   Light (clean white product UI) is the default; dark on the toggle.
+   Themed entirely via CSS variables. */
+.signal-room {
+  /* light is the default theme — bright white product UI */
+  --sr-bg: #ffffff;
+  --sr-bg-alt: #f6f7fb;
+  --sr-panel: #ffffff;
+  --sr-hairline: #ececf2;
+  --sr-text: #14151a;
+  --sr-soft: #3d4150;
+  --sr-muted: #6a6f7e;
+  --sr-faint: #6c7180;
+  --sr-accent: #023047;
+  --sr-accent-solid: #023047;
+  --sr-accent-soft: rgba(2, 48, 71, 0.1);
+  --sr-accent-ink: #ffffff;
+  --sr-accent-grad: linear-gradient(135deg, #0b5170 0%, #023047 58%, #011c2b 100%);
+  --sr-scrim: rgba(20, 21, 26, 0.4);
+  --sr-track: #eef0f6;
+  --sr-shadow: 0 1px 2px rgba(20, 21, 26, 0.05), 0 12px 32px rgba(20, 21, 26, 0.08);
+
+  background: var(--sr-bg);
+  color: var(--sr-text);
+  font-family: var(--font-body), Arial, Helvetica, sans-serif;
+}
+
+.signal-room[data-theme="dark"] {
+  --sr-bg: #0b0c10;
+  --sr-bg-alt: #101218;
+  --sr-panel: #15171e;
+  --sr-hairline: #262a33;
+  --sr-text: #f3f4f7;
+  --sr-soft: #c7ccd6;
+  --sr-muted: #9aa0ad;
+  --sr-faint: #6b7280;
+  --sr-accent: #6fa8c4;
+  --sr-accent-solid: #0f5271;
+  --sr-accent-soft: rgba(34, 96, 124, 0.2);
+  --sr-accent-ink: #ffffff;
+  --sr-accent-grad: linear-gradient(135deg, #17627f 0%, #0f5271 55%, #023047 100%);
+  --sr-scrim: rgba(0, 0, 0, 0.58);
+  --sr-track: #22262f;
+  --sr-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Skip-to-content link — off-screen until keyboard focus (WCAG 2.4.1). */
+.signal-room .sr-skip-link { position: absolute; left: -9999px; top: 0; z-index: 60; }
+.signal-room .sr-skip-link:focus { left: 1rem; top: 0.5rem; padding: 0.5rem 0.9rem; background: var(--sr-accent-solid); color: var(--sr-accent-ink); border-radius: 8px; outline: none; font-size: 13px; font-weight: 600; }
+
+/* Smooth theme cross-fade. Gated on a TRANSIENT `data-theming` attribute that
+   only exists for ~400ms around an actual theme toggle — so normal :hover
+   transitions keep their authored 150/200ms timing and transform-based
+   micro-interactions (arrow slide, button press) are never overridden. Only
+   color-ish properties transition; motion/react (transform/opacity) is untouched. */
+.signal-room[data-theming] *,
+.signal-room[data-theming] *::before,
+.signal-room[data-theming] *::after {
+  transition-property: background-color, border-color, color, fill, stroke,
+    box-shadow, outline-color;
+  transition-duration: 320ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Theme "ink drop" (View Transitions). On toggle we snapshot the page, apply the
+   new theme, then reveal the NEW snapshot through a circle that grows out of the
+   toggle icon (the JS animates its clip-path). We kill the default cross-fade so
+   only the circle animates, and stack the new theme above the old so the reveal
+   floods over the previous look like spreading paint. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 0;
+}
+::view-transition-new(root) {
+  z-index: 1;
+}
+
+/* Primary CTA — gradient indigo with a sheen + lively hover-lift / press. */
+.signal-room .sr-cta {
+  background: var(--sr-accent-grad);
+  color: var(--sr-accent-ink);
+  box-shadow:
+    0 6px 18px -6px color-mix(in srgb, var(--sr-accent-solid) 55%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+  transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.16s ease,
+    filter 0.16s ease;
+}
+.signal-room .sr-cta:hover {
+  transform: translateY(-3px) scale(1.035);
+  filter: saturate(1.12) brightness(1.07);
+  box-shadow:
+    0 16px 38px -8px color-mix(in srgb, var(--sr-accent-solid) 72%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.16);
+}
+.signal-room .sr-cta:active {
+  transform: translateY(1px) scale(0.94);
+  filter: brightness(0.96);
+}
+/* Icon / secondary controls — springy tap feedback. */
+.signal-room .sr-tap {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.16s ease,
+    color 0.16s ease, background-color 0.16s ease;
+}
+.signal-room .sr-tap:hover {
+  transform: translateY(-1px) scale(1.12);
+}
+.signal-room .sr-tap:active {
+  transform: scale(0.84);
+}
+
+.signal-room ::selection {
+  background: var(--sr-accent-solid);
+  color: var(--sr-accent-ink);
+}
+
+/* Tool icons carry their real brand colours. On the light theme they sit bare
+   on the card (no visible plate); on the dark theme a white plate appears so
+   colourful — and near-black — brand logos stay legible on the dark card. */
+.signal-room .sr-tool-ic {
+  background: transparent;
+}
+.signal-room[data-theme="dark"] .sr-tool-ic {
+  background: #ffffff;
+}
+
+/* Product-tool depth: give the big cards a soft shadow automatically. */
+.signal-room .rounded-2xl,
+.signal-room .rounded-3xl {
+  box-shadow: var(--sr-shadow);
+}
+
+/* Tight anchor offset for the compact header. */
+.signal-room section[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+/* Interactive cursor + tactile press feedback (app-like micro-motion). */
+.signal-room a,
+.signal-room button,
+.signal-room select,
+.signal-room [role="button"] {
+  cursor: pointer;
+}
+.signal-room button:active {
+  transform: scale(0.95);
+}
+
+/* Accessibility: visible keyboard focus ring on all interactive elements. */
+.signal-room a:focus-visible,
+.signal-room button:focus-visible,
+.signal-room select:focus-visible,
+.signal-room input:focus-visible,
+.signal-room [tabindex]:focus-visible {
+  outline: 2px solid var(--sr-accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* The command-palette search field is unmistakably the focus inside its own
+   dialog — suppress the ring so it reads as one clean, borderless field. */
+.signal-room input.sr-cmd-input:focus-visible {
+  outline: none;
+  border-radius: 0;
+}
+
+/* Route loading skeleton shimmer (Next.js loading.tsx fallbacks). */
+@keyframes sr-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.signal-room .sr-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--sr-bg-alt) 25%,
+    var(--sr-hairline) 37%,
+    var(--sr-bg-alt) 63%
+  );
+  background-size: 200% 100%;
+  animation: sr-shimmer 1.4s linear infinite;
+  border-radius: 0.5rem;
+}
+
+/* Accessibility: honor reduced-motion everywhere (Lighthouse + vestibular). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
