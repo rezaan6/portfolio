@@ -683,75 +683,6 @@ function AnimatedNumber({
   return <motion.span ref={ref}>{text}</motion.span>;
 }
 
-function Bar({
-  pct,
-  color,
-  className,
-}: {
-  pct: number;
-  color?: string;
-  className?: string;
-}) {
-  const reduce = useReducedMotion();
-  return (
-    <div
-      className={`h-2 overflow-hidden rounded-full bg-[var(--sr-track)] ${
-        className ?? ""
-      }`}
-    >
-      <motion.div
-        className="h-full rounded-full"
-        style={{ background: color ?? "var(--sr-accent)" }}
-        initial={reduce ? false : { width: 0 }}
-        whileInView={{ width: `${pct}%` }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      />
-    </div>
-  );
-}
-
-function TradeoffMeter({
-  left,
-  right,
-  pos,
-  color,
-}: {
-  left: string;
-  right: string;
-  pos: number;
-  color?: string;
-}) {
-  const reduce = useReducedMotion();
-  const c = color ?? "var(--sr-accent)";
-  const leansRight = pos >= 50;
-  return (
-    <div>
-      <div className="flex items-center justify-between font-[family-name:var(--font-display)] text-[10px] uppercase tracking-[0.1em]">
-        <span style={{ color: leansRight ? "var(--sr-muted)" : c, fontWeight: leansRight ? 400 : 600 }}>{left}</span>
-        <span style={{ color: leansRight ? c : "var(--sr-muted)", fontWeight: leansRight ? 600 : 400 }}>{right}</span>
-      </div>
-      <div className="relative mt-2.5 h-1.5 rounded-full bg-[var(--sr-track)]">
-        {/* neutral midpoint — so which side the marker sits on reads at a glance */}
-        <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-3 w-px -translate-x-1/2 -translate-y-1/2 bg-[var(--sr-hairline)]" />
-        {/* where the decision actually landed on the spectrum */}
-        <motion.span
-          className="absolute top-1/2 z-10 block h-3.5 w-3.5 -translate-y-1/2 rounded-full border-2 border-[var(--sr-panel)] shadow-sm"
-          style={{ marginLeft: "-7px", background: c }}
-          initial={reduce ? false : { left: "50%" }}
-          whileInView={{ left: `${pos}%` }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        />
-      </div>
-      <p className="mt-2.5 text-[10.5px] leading-4 text-[var(--sr-faint)]">
-        Where the call landed — leaned toward{" "}
-        <span style={{ color: c }}>{leansRight ? right : left}</span>.
-      </p>
-    </div>
-  );
-}
-
 function LogoMark({
   logo,
   mark,
@@ -868,45 +799,65 @@ export function EvidenceSection() {
                       ))}
                     </div>
 
-                    {/* signal bars + trade-off meter */}
-                    <div className="mt-6 grid gap-6 border-t border-[var(--sr-hairline)] pt-6 sm:grid-cols-2">
+                    {/* Engineering evidence: the constraint, then a plain
+                        results table. No dashboard bars — half of these are
+                        counts, not percentages, and a bar would imply a
+                        measurement that doesn't exist. */}
+                    <div className="mt-6 grid gap-6 border-t border-[var(--sr-hairline)] pt-6 sm:grid-cols-[0.9fr_1.1fr]">
                       <div>
                         <p className="font-[family-name:var(--font-display)] text-[10px] uppercase tracking-[0.16em] text-[var(--sr-faint)]">
-                          Measured
+                          Constraint
                         </p>
-                        <div className="mt-3 space-y-3">
-                          {cs.bars.map((b) => (
-                            <div key={b.label}>
-                              <div className="flex items-center justify-between text-[12px]">
-                                <span className="text-[var(--sr-muted)]">
-                                  {b.label}
-                                </span>
-                                <span className="font-[family-name:var(--font-display)] text-[11px] text-[var(--sr-soft)]">
-                                  {b.pct}%
-                                </span>
-                              </div>
-                              <Bar pct={b.pct} color={cs.color} className="mt-1.5" />
-                            </div>
-                          ))}
-                        </div>
-                        <p className="mt-3 text-[10.5px] leading-4 text-[var(--sr-faint)]">
-                          Source: {caseBarSource[cs.slug] ?? "before/after vs. a defined baseline"}
+                        <p className="mt-3 text-[14px] leading-[1.6] text-[var(--sr-soft)]">
+                          {cs.tradeoffShort}
                         </p>
+                        {cs.stack?.length ? (
+                          <ul className="mt-4 flex flex-wrap gap-1.5">
+                            {cs.stack.slice(0, 6).map((s) => (
+                              <li
+                                key={s}
+                                className="rounded-full px-2.5 py-1 font-[family-name:var(--font-mono)] text-[10.5px]"
+                                style={{
+                                  background: `color-mix(in srgb, ${cs.color} 10%, transparent)`,
+                                  color: brandInk(cs.color),
+                                }}
+                              >
+                                {s}
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null}
                       </div>
+
                       <div className="sm:border-l sm:border-[var(--sr-hairline)] sm:pl-6">
                         <p className="font-[family-name:var(--font-display)] text-[10px] uppercase tracking-[0.16em] text-[var(--sr-faint)]">
-                          Trade-off
+                          Results
                         </p>
-                        <div className="mt-5">
-                          <TradeoffMeter
-                            left={cs.tradeoffLeft}
-                            right={cs.tradeoffRight}
-                            pos={cs.tradeoffPos}
-                            color={cs.color}
-                          />
-                        </div>
-                        <p className="mt-4 text-[13px] leading-6 text-[var(--sr-muted)]">
-                          {cs.tradeoffShort}
+                        <dl className="mt-3 divide-y divide-[var(--sr-hairline)]">
+                          {cs.results.map((r) => (
+                            <div
+                              key={r.label}
+                              className="flex items-baseline justify-between gap-4 py-2 first:pt-0"
+                            >
+                              <dt className="text-[12.5px] leading-[1.45] text-[var(--sr-muted)]">
+                                {r.label}
+                                {r.note ? (
+                                  <span className="block text-[10.5px] leading-4 text-[var(--sr-faint)]">
+                                    {r.note}
+                                  </span>
+                                ) : null}
+                              </dt>
+                              <dd
+                                className="shrink-0 font-[family-name:var(--font-display)] text-[15px] font-semibold tabular-nums"
+                                style={{ color: brandInk(cs.color) }}
+                              >
+                                {r.value}
+                              </dd>
+                            </div>
+                          ))}
+                        </dl>
+                        <p className="mt-3 text-[10.5px] leading-4 text-[var(--sr-faint)]">
+                          {caseBarSource[cs.slug] ?? "Before/after against a defined baseline."}
                         </p>
                       </div>
                     </div>
@@ -2461,257 +2412,6 @@ function V8Work() {
   );
 }
 
-// "Read for your role" — the SAME four real codebases, re-read through the lens
-// a specific engineering hiring manager cares about. One case is the primary fit
-// per lens; the others are honest transferable reads (no work reframed into
-// something it wasn't). Switching lenses reshuffles primaries to the top.
-const lenses = [
-  {
-    id: "frontend",
-    label: "Frontend",
-    blurb: "Architecture, design systems, and rendering at scale.",
-  },
-  {
-    id: "fullstack",
-    label: "Full stack",
-    blurb: "API layers, data, and delivery end to end.",
-  },
-  {
-    id: "performance",
-    label: "Performance",
-    blurb: "Bundles, load time, and the measurement behind it.",
-  },
-] as const;
-
-type LensId = (typeof lenses)[number]["id"];
-
-const lensReads: Record<
-  string,
-  Record<LensId, { primary?: boolean; read: string; metric: string }>
-> = {
-  hobber: {
-    frontend: {
-      primary: true,
-      read: "Greenfield frontend architecture for real — seven domains as independent feature slices over one shared UI layer, so a new module is a new folder rather than a refactor.",
-      metric: "Vendor dashboard, architected 0→1",
-    },
-    fullstack: {
-      read: "Built against APIs, authentication, and real-time features with backend and DevOps — the client shaped around the contract rather than working around it.",
-      metric: "7 platform modules integrated",
-    },
-    performance: {
-      read: "Feature slicing is a performance decision before it's an organizational one: route-level boundaries are what make code-splitting possible later without a rewrite.",
-      metric: "Split-ready by construction",
-    },
-  },
-  axinom: {
-    frontend: {
-      read: "Led the frontend team onto Mosaic's micro-frontends and built multi-language UIs across regions — i18n designed in, not retrofitted as a fork per market.",
-      metric: "4 micro-frontends integrated",
-    },
-    fullstack: {
-      read: "Wired the frontend to Mosaic APIs for content sync and metadata, hardened DRM playback through Shaka Player, and kept CI/CD stable with DevOps across environments.",
-      metric: "DRM + metadata pipeline",
-    },
-    performance: {
-      primary: true,
-      read: "Treated load time as a deliverable, not a post-launch cleanup — bundle optimization, lazy loading, and caching took roughly 15% off page load on a media product.",
-      metric: "−15% page load",
-    },
-  },
-  kodez: {
-    frontend: {
-      read: "Built the design system that became the spine: a Storybook component library that cut frontend development time ~30% across a CMS the whole team was shipping into.",
-      metric: "−30% dev time · 90% coverage",
-    },
-    fullstack: {
-      primary: true,
-      read: "Node.js BFF layers, ExpressJS services, and database work across 250+ SQL tables — plus migrating a legacy PHP/jQuery app to React and Express without freezing delivery.",
-      metric: "BFF + 250+ table schema",
-    },
-    performance: {
-      read: "Cut page load ~40% with code-splitting, lazy loading, and asset optimization, with assets served from S3 behind CloudFront — measured before/after, sustained across 40+ releases.",
-      metric: "−40% page load · 40+ releases",
-    },
-  },
-  rasoft: {
-    frontend: {
-      read: "First end-to-end UI ownership: an Employment Management System taken from concept to production in React, plus a responsive, accessible rebuild of the company site.",
-      metric: "EMS delivered 0→1",
-    },
-    fullstack: {
-      read: "Full-stack from the start at seed stage — designing interactions with the backend engineers rather than waiting for a spec, because there was nobody else to hand it to.",
-      metric: "Concept → production, solo UI",
-    },
-    performance: {
-      read: "Where I learned the rule the hard way: I optimized components before measuring. Profile first is the habit that later produced the 40% and 15% wins.",
-      metric: "+15% conversion after revamp",
-    },
-  },
-};
-
-function LensReframe() {
-  const reduce = useReducedMotion();
-  const [lens, setLens] = useState<LensId>("frontend");
-  const active = lenses.find((l) => l.id === lens)!;
-  const cases = caseStudies;
-  const ordered = [...cases].sort((a, b) => {
-    const pa = lensReads[a.slug]?.[lens]?.primary ? 0 : 1;
-    const pb = lensReads[b.slug]?.[lens]?.primary ? 0 : 1;
-    return pa - pb;
-  });
-  return (
-    <section className="border-t border-[var(--sr-hairline)] px-5 py-20 lg:px-8">
-      <div className="mx-auto max-w-6xl">
-        <Reveal>
-          <SectionLabel title="Read for your role" />
-          <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-            Same four codebases — read for the role you&apos;re hiring for.
-          </h2>
-          <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
-            Pick the lens your role cares about. Same real work, re-read for
-            what that engineer actually needs to see — not reshaped into
-            something it wasn&apos;t.
-          </p>
-        </Reveal>
-
-        {/* Lens switch — segmented control with a sliding pill. */}
-        <Reveal delay={0.05}>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
-            <div className="inline-flex w-fit rounded-full border border-[var(--sr-hairline)] bg-[var(--sr-panel)] p-1">
-              {lenses.map((l) => {
-                const on = l.id === lens;
-                return (
-                  <button
-                    key={l.id}
-                    type="button"
-                    onClick={() => setLens(l.id)}
-                    aria-pressed={on}
-                    className="relative rounded-full px-4 py-2 font-[family-name:var(--font-display)] text-[12px] font-medium uppercase tracking-[0.1em] transition"
-                  >
-                    {on ? (
-                      <motion.span
-                        layoutId="lens-pill"
-                        aria-hidden="true"
-                        className="absolute inset-0 rounded-full"
-                        style={{ background: "var(--sr-accent-soft)" }}
-                        transition={
-                          reduce
-                            ? { duration: 0 }
-                            : { type: "spring", stiffness: 380, damping: 32 }
-                        }
-                      />
-                    ) : null}
-                    <span
-                      className="relative z-10"
-                      style={{
-                        color: on ? "var(--sr-accent)" : "var(--sr-muted)",
-                      }}
-                    >
-                      {l.label}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={lens}
-                initial={reduce ? false : { opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={reduce ? undefined : { opacity: 0, x: 8 }}
-                transition={{ duration: 0.22 }}
-                className="font-[family-name:var(--font-display)] text-[12px] uppercase tracking-[0.12em] text-[var(--sr-faint)]"
-              >
-                {active.blurb}
-              </motion.p>
-            </AnimatePresence>
-          </div>
-        </Reveal>
-
-        {/* Case reads — reshuffle so the primary fit for the lens leads. */}
-        <div className="mt-8 grid grid-cols-1 gap-4">
-          {ordered.map((cs) => {
-            const r = lensReads[cs.slug]?.[lens];
-            const brand = cs.brand ?? "var(--sr-accent)";
-            const primary = r?.primary;
-            return (
-              <motion.div
-                key={cs.slug}
-                layout={!reduce}
-                transition={
-                  reduce
-                    ? { duration: 0 }
-                    : { type: "spring", stiffness: 260, damping: 30 }
-                }
-                className="rounded-2xl border bg-[var(--sr-panel)]"
-                style={{
-                  borderColor: primary
-                    ? `color-mix(in srgb, ${brand} 45%, var(--sr-hairline))`
-                    : "var(--sr-hairline)",
-                }}
-              >
-                <Link
-                  href={`/work/${cs.slug}`}
-                  className="grid gap-4 p-6 md:grid-cols-[minmax(0,15rem)_1fr] md:items-center md:gap-8"
-                >
-                  <div className="flex items-center gap-3">
-                    <LogoMark logo={cs.logo} mark={cs.mark} color={cs.color} />
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2">
-                        <p className="font-[family-name:var(--font-display)] text-[16px] font-medium text-[var(--sr-text)]">
-                          {cs.company}
-                        </p>
-                        {primary ? (
-                          <span
-                            className="rounded-full px-2 py-0.5 font-[family-name:var(--font-display)] text-[8.5px] font-semibold uppercase tracking-[0.1em]"
-                            style={{
-                              background: `color-mix(in srgb, ${brand} 16%, transparent)`,
-                              color: brandInk(brand),
-                            }}
-                          >
-                            Primary fit
-                          </span>
-                        ) : null}
-                      </div>
-                      <p className="font-[family-name:var(--font-display)] text-[10.5px] uppercase tracking-[0.1em] text-[var(--sr-muted)]">
-                        {cs.tag}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="min-w-0">
-                    <AnimatePresence mode="wait">
-                      <motion.p
-                        key={lens}
-                        initial={reduce ? false : { opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={reduce ? undefined : { opacity: 0, y: -8 }}
-                        transition={{ duration: 0.24 }}
-                        className="text-[14.5px] leading-7 text-[var(--sr-soft)]"
-                      >
-                        {r?.read}
-                      </motion.p>
-                    </AnimatePresence>
-                    <span
-                      className="mt-3 inline-flex rounded-full px-3 py-1 text-[11px] font-medium"
-                      style={{
-                        background: `color-mix(in srgb, ${brand} 14%, transparent)`,
-                        color: brandInk(brand),
-                      }}
-                    >
-                      {r?.metric}
-                    </span>
-                  </div>
-                </Link>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function V8Process() {
   return (
     <section className="px-5 py-20 lg:px-8">
@@ -2883,7 +2583,6 @@ export function SignalHomeV8() {
       <V8Hero />
       <V8Impact />
       <V8Work />
-      <LensReframe />
       <V8Process />
       <V8Focus />
       <ContactSection />

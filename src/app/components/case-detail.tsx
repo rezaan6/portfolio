@@ -15,7 +15,14 @@ import type { CaseStudy } from "./signal-room-data";
  * Content per case lives in prototype-data.tsx.
  * ------------------------------------------------------------------ */
 
-export function CaseDetail({ cs }: { cs: CaseStudy }) {
+export function CaseDetail({
+  cs,
+  codeHtml,
+}: {
+  cs: CaseStudy;
+  /** Pre-highlighted on the server — see lib/highlight.ts. */
+  codeHtml?: string | null;
+}) {
   const brand = cs.brand ?? "#1e3a8a";
   // Accessible brand text: keep the hue, blend toward the theme's text colour so
   // small brand-coloured labels clear contrast on the light hero tint.
@@ -131,6 +138,34 @@ export function CaseDetail({ cs }: { cs: CaseStudy }) {
             </div>
             <p className="mt-10 rounded-xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)] px-4 py-3 text-[13px] leading-6 text-[var(--sr-muted)]">
               A <span className="font-semibold text-[var(--sr-text)]">reference build of the flow</span>, drawn in code to show the shape of the work. The production app is under NDA.
+            </p>
+          </div>
+        </section>
+      ) : null}
+
+      {/* The pattern, in code. Illustrative — it shows the shape of the
+          decision; the production implementation is under NDA. */}
+      {cs.code && codeHtml ? (
+        <section className="border-b border-[var(--sr-hairline)]">
+          <div className="mx-auto max-w-3xl px-5 py-16 lg:px-8 lg:py-20">
+            <p
+              className="font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.2em]"
+              style={{ color: ink }}
+            >
+              The pattern, in code
+            </p>
+            <p className="mt-3 text-[15px] leading-7 text-[var(--sr-soft)]">
+              {cs.code.caption}
+            </p>
+            <div
+              className="sr-code mt-6"
+              // Shiki output, generated at build time from a string literal in
+              // our own source — no user input reaches this.
+              dangerouslySetInnerHTML={{ __html: codeHtml }}
+            />
+            <p className="mt-3 text-[12px] leading-6 text-[var(--sr-faint)]">
+              Illustrative — written to show the shape of the decision. Client
+              code is under NDA and none of it appears here.
             </p>
           </div>
         </section>

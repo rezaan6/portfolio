@@ -12,12 +12,16 @@ import { SiteFrame } from "./components/signal-room";
 const bodyFont = Inter({
   variable: "--font-body",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
 });
 
 const headingFont = Manrope({
   variable: "--font-heading",
   subsets: ["latin"],
   weight: ["500", "600", "700", "800"],
+  display: "swap",
+  preload: true,
 });
 
 // Signal Room display + label font — Sora: a distinctive, modern geometric
@@ -43,6 +47,7 @@ const numeralFont = Oswald({
   subsets: ["latin"],
   weight: ["600"],
   display: "swap",
+  preload: false,
 });
 
 const SITE_URL = "https://rezaanriyaz.com";

@@ -293,6 +293,44 @@ section[id] {
   border-radius: 0.5rem;
 }
 
+/* Shiki code blocks. Shiki emits both themes at once (--shiki-light /
+   --shiki-dark custom properties per token), so switching the site theme is a
+   CSS variable swap — no re-highlighting, no flash, and no highlighter in the
+   client bundle. */
+.signal-room .sr-code pre {
+  background: var(--sr-bg-alt);
+  border: 1px solid var(--sr-hairline);
+  border-radius: 14px;
+  overflow-x: auto;
+  padding: 1.1rem 1.25rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12.5px;
+  line-height: 1.75;
+  tab-size: 2;
+}
+
+.signal-room .sr-code code {
+  display: block;
+  width: fit-content;
+  min-width: 100%;
+}
+
+.signal-room .sr-code .shiki,
+.signal-room .sr-code .shiki span {
+  color: var(--shiki-light);
+}
+
+.signal-room[data-theme="dark"] .sr-code .shiki,
+.signal-room[data-theme="dark"] .sr-code .shiki span {
+  color: var(--shiki-dark);
+}
+
+/* Keyboard users must be able to scroll a wide block. */
+.signal-room .sr-code pre:focus-visible {
+  outline: 2px solid var(--sr-accent);
+  outline-offset: 2px;
+}
+
 /* Accessibility: honor reduced-motion everywhere (Lighthouse + vestibular). */
 @media (prefers-reduced-motion: reduce) {
   *,

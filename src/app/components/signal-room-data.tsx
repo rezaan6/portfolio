@@ -21,6 +21,7 @@ export const navLinks = [
   { href: "/method", num: "04", label: "Method" },
   { href: "/artifacts", num: "05", label: "Artifacts" },
   { href: "/about", num: "06", label: "About" },
+  { href: "/colophon", num: "07", label: "Colophon" },
 ];
 
 export const archetypeChips = [
@@ -46,12 +47,10 @@ export type CaseStudy = {
   problem: string;
   move: string;
   result: string;
+  /** The hard constraint the work happened inside. */
   tradeoffShort: string;
-  // Engineering visualizations (measured bars + trade-off meter)
-  bars: { label: string; pct: number }[];
-  tradeoffLeft: string;
-  tradeoffRight: string;
-  tradeoffPos: number;
+  /** Plain before/after results — no invented percentages, no dashboard bars. */
+  results: { label: string; value: string; note?: string }[];
   // Full breakdown (revealed on the detail page)
   context: string;
   decision: string;
@@ -65,6 +64,12 @@ export type CaseStudy = {
   scale?: string[];
   stack?: string[];
   practices?: { lp: string; why: string }[];
+  /**
+   * An illustrative snippet of the pattern the case is about — written to
+   * show the shape of the decision, not lifted from client code (which is
+   * under NDA). Highlighted at build time; see lib/highlight.ts.
+   */
+  code?: { caption: string; lang?: "tsx" | "typescript" | "bash"; source: string };
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -89,13 +94,15 @@ export const caseStudies: CaseStudy[] = [
     result:
       "Seven core platform modules and five vendor workflows in production on one shared component layer — with the structure still legible enough that a new domain is a new folder, not a refactor.",
     tradeoffShort: "Upfront architecture vs. time to first screen",
-    bars: [
-      { label: "Screens composed from the shared UI layer, not authored", pct: 80 },
-      { label: "Domains isolated behind their own slice boundary", pct: 100 },
+    results: [
+      { label: "Platform modules shipped", value: "7", note: "each in its own slice" },
+      { label: "Vendor workflows built on the shared layer", value: "5" },
+      {
+        label: "Page-load baseline",
+        value: "not yet measured",
+        note: "7 months in — no before/after to report",
+      },
     ],
-    tradeoffLeft: "Upfront architecture",
-    tradeoffRight: "Time to first screen",
-    tradeoffPos: 32,
     context:
       "Hobber is a marketplace for entertainment, recreation, dining, and tourism vendors, and the vendor platform is the side those businesses actually operate on. When I joined there was no dashboard — just a list of everything it would eventually need: authentication, vendor accounts, dashboards, scheduling, payouts, integrations, and team access management. Each of those is a real domain with its own state, its own permissions, and its own backend surface. The default path is to start with one screen and keep adding to it; three months later every change touches everything.",
     decision:
@@ -108,6 +115,32 @@ export const caseStudies: CaseStudy[] = [
       "Authentication, vendor accounts, dashboards, scheduling, payouts, integrations, and team access management are all live as separate feature modules, with activity management, booking flows, stock scheduling, discount logic, and vendor content management built on top of the same reusable UI layer. The structure is the deliverable as much as the screens are: adding a domain is adding a folder.",
     detail:
       "What I'd do differently: I built the shared component layer slightly ahead of demand, and a couple of those early primitives were generalized for use cases that never arrived. The better rule — the one I now hold to — is to let a pattern appear twice before it becomes a shared component, and to keep the third one honest. The lesson I carry: on a greenfield platform the expensive decision is not which framework you pick, it's where you draw the boundaries, because every future feature either respects them or erodes them.",
+    code: {
+      caption:
+        "The boundary rule the whole codebase is held to — a slice may reach down into shared UI, never sideways into another slice. Enforced by lint, not by good intentions.",
+      lang: "typescript",
+      source: `// features/<domain>/   owns its routes, components, state and api together
+// shared/ui/             generic primitives only — no domain knowledge
+
+// eslint.config.mjs — the architecture is a lint rule, not a document.
+{
+  rules: {
+    "no-restricted-imports": ["error", {
+      patterns: [{
+        group: ["@/features/*/*"],
+        message:
+          "Cross-slice import. Compose at the route level, or promote the " +
+          "shared piece into shared/ui.",
+      }],
+    }],
+  },
+}
+
+// Shared UI stays domain-agnostic: if a prop names a domain, it is not shared.
+type ButtonProps = { variant: "primary" | "ghost"; loading?: boolean }  // ok
+type RowProps    = { variant: "primary"; isPayoutRow: boolean }         // not shared
+`,
+    },
     customerLede:
       "Vendors run their whole business — services, schedules, pricing, payouts, and team access — from one dashboard instead of a scattered set of tools and manual back-and-forth.",
     scale: [
@@ -158,16 +191,11 @@ export const caseStudies: CaseStudy[] = [
     result:
       "Page load times down ~15% through bundle optimization, lazy loading, and caching, with reliable protected playback and multi-language UIs shipped across regions.",
     tradeoffShort: "Reuse the platform vs. build it bespoke",
-    bars: [
-      { label: "Page load time reduced", pct: 15 },
-      {
-        label: "Mosaic micro-frontends integrated (Media, Catalogue, Entitlement, DRM)",
-        pct: 100,
-      },
+    results: [
+      { label: "Page load time", value: "−15%", note: "bundle, lazy-load, caching" },
+      { label: "Mosaic micro-frontends integrated", value: "4", note: "Media, Catalogue, Entitlement, DRM" },
+      { label: "Locales shipped", value: "multi-region", note: "i18n designed in, bundles split per locale" },
     ],
-    tradeoffLeft: "Reuse the platform",
-    tradeoffRight: "Build it bespoke",
-    tradeoffPos: 26,
     context:
       "Axinom builds enterprise media technology, and its internal platform — Mosaic — already exposes the hard parts of media delivery as micro-frontends: Media, Catalogue, Entitlement, and DRM. I led the frontend team delivering high-performance web applications for global media clients on top of it. Two things make that work harder than a normal web build. Protected content has to actually play, on real devices, through a DRM pipeline that fails loudly and unhelpfully. And the audience is international, so every string, layout, and format is a localization problem, not an afternoon of translation.",
     decision:
@@ -180,6 +208,23 @@ export const caseStudies: CaseStudy[] = [
       "Multiple products delivered 0→1 through full development, testing, and production release cycles; ~15% faster page loads from bundle optimization, lazy loading, and caching; seamless multi-language experiences across regions; and reliable playback of protected content via Shaka Player and DRM workflows. Alongside the delivery work I strengthened the security posture by identifying vulnerabilities and adding validation and authentication layers, and mentored junior developers while enforcing coding standards.",
     detail:
       "What I'd do differently: I measured page load as an aggregate for too long. Averages hide the regions and devices where the experience is materially worse, and on an international media product that's exactly where the users you're localizing for live — I'd segment by region and device from the first measurement, not the third. The broader lesson: on a platform like Mosaic, the engineering skill isn't writing more code, it's knowing which capability already exists and integrating it cleanly enough that the next team doesn't rewrite it.",
+    code: {
+      caption:
+        "Route-level splitting with the playback path deliberately excluded — the lazy boundary is a product decision, not a default.",
+      lang: "tsx",
+      source: `// Everything the user has not asked for yet is deferred...
+const Catalogue = dynamic(() => import("./catalogue"), { loading: () => <RowSkeleton /> })
+const Settings  = dynamic(() => import("./settings"))
+
+// ...but never anything on the critical path to first frame. A lazy player
+// chunk turns a 200ms stall into a "video is broken" support ticket.
+import { Player } from "./player"          // eager, always
+import { acquireLicense } from "./drm"     // eager, always
+
+// Locale bundles load on demand: shipping every language to every user is a
+// cost paid by people who will never see the other strings.
+const messages = await import("../locales/" + locale + ".json")`,
+    },
     customerLede:
       "Viewers of global media clients get protected film and audio that starts reliably, loads about 15% faster, and reads in their own language.",
     scale: [
@@ -233,14 +278,13 @@ export const caseStudies: CaseStudy[] = [
     result:
       "~90% automated coverage, ~40% faster page loads, ~30% less frontend development time, and 40+ production releases while migrating the legacy stack incrementally.",
     tradeoffShort: "Standardize on the system vs. per-project freedom",
-    bars: [
-      { label: "Automated Cypress coverage on critical paths", pct: 90 },
-      { label: "Page load time reduced", pct: 40 },
-      { label: "Frontend dev time cut via the Storybook library", pct: 30 },
+    results: [
+      { label: "Page load time", value: "−40%", note: "code-splitting, lazy loading, asset optimization" },
+      { label: "Frontend development time", value: "−30%", note: "after the Storybook library landed" },
+      { label: "Automated coverage, critical paths", value: "90%", note: "Cypress, gated in CI" },
+      { label: "Technical debt", value: "−25%", note: "legacy PHP/jQuery migration" },
+      { label: "Production releases", value: "40+" },
     ],
-    tradeoffLeft: "Standardize on the system",
-    tradeoffRight: "Per-project freedom",
-    tradeoffPos: 28,
     context:
       "Kodez builds an enterprise CMS for service management and logistics, integrating REST APIs from clients including NTT DATA, Toshiba, Park Assist, City, and Fiserv. The surface is large — database operations spanning 250+ SQL tables — and it sat alongside a legacy PHP/jQuery application that still had users. Meanwhile the startup itself grew from 10 to 60+ people. Two forces pull against each other in that setup: the codebase needs to change constantly for clients, and every change is a chance to break something that someone is paid to rely on.",
     decision:
@@ -253,6 +297,25 @@ export const caseStudies: CaseStudy[] = [
       "40+ production releases delivered — new features, defect fixes, and database optimization across 250+ SQL tables. Page loads ~40% faster, frontend development ~30% faster, over 90% automated Cypress coverage, and technical debt down ~25% from migrating legacy PHP/jQuery to React and ExpressJS. Enterprise REST integrations with NTT DATA, Toshiba, Park Assist, City, and Fiserv stayed interoperable throughout.",
     detail:
       "What I'd do differently: I sold the component library on consistency when I should have sold it on speed. Engineers adopt a design system when it visibly saves them an afternoon, not when it's described as the right thing to do — I'd publish the before/after build time for a real screen in week one and let the number do the arguing. The lesson I carry: high release throughput isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. TDD and Storybook weren't overhead on the 40+ releases; they were the reason there were 40+ releases.",
+    code: {
+      caption:
+        "How a component earns its way into the shared library — the promotion rule, expressed as the story file it has to ship with.",
+      lang: "tsx",
+      source: `// A component is not "done" until every state it can reach is reachable
+// in Storybook. This is what made the library adoptable rather than aspirational.
+export default { title: "shared/DataTable", component: DataTable } satisfies Meta
+
+export const Default:  Story = { args: { rows: sample } }
+export const Loading:  Story = { args: { rows: [], loading: true } }
+export const Empty:    Story = { args: { rows: [] } }
+export const Errored:  Story = { args: { error: new Error("Fetch failed") } }
+export const TenThousandRows: Story = { args: { rows: many(10_000) } }  // virtualized?
+
+// The gate that made 40+ releases safe: a bug gets a failing test before a fix.
+it("keeps a service unbookable when price is missing", () => {
+  expect(isBookable({ status: "bookable", price: undefined })).toBe(false)
+})`,
+    },
     customerLede:
       "Client service and logistics teams work in a CMS that loads about 40% faster and keeps working release after release, across integrations with NTT DATA, Toshiba, Park Assist, City, and Fiserv.",
     scale: [
@@ -312,13 +375,11 @@ export const caseStudies: CaseStudy[] = [
     result:
       "The EMS shipped to production, and the site revamp lifted UX and conversion ~15% while the same push contributed to ~20% growth in client acquisition.",
     tradeoffShort: "Rapid delivery vs. scalable architecture",
-    bars: [
-      { label: "Website conversion lift after the UI revamp", pct: 15 },
-      { label: "Client-acquisition growth from the same push", pct: 20 },
+    results: [
+      { label: "Conversion after the UI revamp", value: "+15%", note: "responsive redesign + accessibility" },
+      { label: "Client acquisition", value: "+20%", note: "same push; reported internally" },
+      { label: "EMS", value: "concept → production", note: "end-to-end UI ownership" },
     ],
-    tradeoffLeft: "Rapid delivery",
-    tradeoffRight: "Scalable architecture",
-    tradeoffPos: 54,
     context:
       "RaSoft is where I started — first as a Frontend Engineer Intern in December 2018, then as a Frontend Engineer through February 2021. It was seed-stage, which in practice means there is no separate frontend team, no design system, and no one else to hand the hard part to. Two problems sat in front of me. The company's own website was underperforming: the UI was dated, it wasn't responsive, and people dropped out before they ever made contact. And internally, employment management had no system at all — it needed to be designed and built.",
     decision:
@@ -331,6 +392,21 @@ export const caseStudies: CaseStudy[] = [
       "A complete Employment Management System delivered from concept to production with end-to-end UI development, and a company site rebuilt for responsiveness and accessibility that lifted conversion ~15%. Along the way I ran code reviews and pair-programming sessions to hold quality, improved performance through refactoring and component-level optimization, and got real exposure to Agile/Scrum through sprint planning and retrospectives.",
     detail:
       "What I'd do differently: I optimized components before I had any measurement, which is guessing with extra steps. Now I'd profile first and let the numbers pick the target — a habit that later turned into the 40% and 15% load-time wins at Kodez and Axinom, both of which started from a measurement rather than an instinct. The lesson I carry from RaSoft: pair programming and code review were where I actually learned to write maintainable code, and both cost time that always felt like it could be spent shipping. It couldn't.",
+    code: {
+      caption:
+        "The lesson from this role, written as the rule I have followed since — the measurement picks the target, not the instinct.",
+      lang: "bash",
+      source: `# What I did here: optimized components on instinct, measured nothing.
+# What I do now, in this order:
+
+$ npx vite-bundle-visualizer                 # what actually ships, and to whom
+$ npx lighthouse <url> --only-categories=performance
+$ node --cpu-prof server.js                  # where the time really goes
+
+# Only then: code-split, lazy-load, cache. Measure again, and report the
+# before/after against the baseline — not as a causal claim.
+`,
+    },
     customerLede:
       "Staff got an actual system for employment management instead of ad-hoc process, and visitors to the company site could find and contact the business on any device.",
     scale: [

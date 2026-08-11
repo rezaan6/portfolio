@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { CaseDetail } from "../../components/case-detail";
+import { highlightCode } from "../../lib/highlight";
 import { caseStudies } from "../../components/signal-room-data";
 
 export function generateStaticParams() {
@@ -29,5 +30,12 @@ export default async function CasePage({
   const { slug } = await params;
   const cs = caseStudies.find((c) => c.slug === slug);
   if (!cs) notFound();
-  return <CaseDetail cs={cs} />;
+
+  // Highlight on the server at build time, hand the client pre-rendered HTML.
+  // Shiki never reaches the browser.
+  const codeHtml = cs.code
+    ? await highlightCode(cs.code.source, cs.code.lang ?? "tsx")
+    : null;
+
+  return <CaseDetail cs={cs} codeHtml={codeHtml} />;
 }
