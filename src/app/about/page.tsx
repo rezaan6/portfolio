@@ -4,6 +4,7 @@ import {
   AboutBeyond,
   AboutHero,
   AboutStats,
+  MethodSection,
   PathSection,
   PrinciplesSection,
   ToolsSection,
@@ -13,7 +14,7 @@ import {
 export const metadata: Metadata = {
   title: "About — Mohammed Rezaan Riyaz",
   description:
-    "Senior Frontend Engineer in the UAE: the career path, engineering principles, the stack I build with, and how to get in touch.",
+    "Senior Frontend Engineer in the UAE: the career path, engineering principles, how I build, the stack I work in, and how to get in touch.",
 };
 
 export default function AboutPage() {
@@ -23,6 +24,7 @@ export default function AboutPage() {
       <AboutStats />
       <PathSection />
       <PrinciplesSection />
+      <MethodSection />
       <ToolsSection />
       <AboutBeyond />
       <ContactSection />

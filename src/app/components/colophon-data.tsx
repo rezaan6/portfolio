@@ -28,7 +28,7 @@ export const STACK_FACTS = [
   { k: "UI", v: "React 19 · Tailwind CSS 4" },
   { k: "Language", v: "TypeScript 5.9, strict" },
   { k: "Motion", v: "motion 13 — every animation honours reduced-motion" },
-  { k: "Rendering", v: "16 routes, all prerendered at build time" },
+  { k: "Rendering", v: "14 routes, all prerendered at build time" },
   { k: "Dependencies", v: "6 runtime packages · npm audit: 0 vulnerabilities" },
 ];
 

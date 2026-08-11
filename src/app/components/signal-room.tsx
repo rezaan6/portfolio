@@ -922,9 +922,9 @@ export function MethodSection() {
             How I build — one loop, start to finish.
           </h2>
           <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
-            Every codebase below runs through the same four stages, and each
-            hands the next a concrete output — so the process is repeatable,
-            not improvised.
+            Every case study runs through the same four stages, and each hands
+            the next a concrete output — so the process is repeatable, not
+            improvised.
           </p>
         </Reveal>
 
@@ -1285,13 +1285,13 @@ export function AboutHero() {
                 transformOrigin: "center",
               }}
             >
-              06
+              05
             </text>
           </svg>
           <div className="relative grid gap-10 lg:grid-cols-[1.35fr_0.85fr] lg:items-center">
             <Reveal>
               <p className="font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.3em] text-[var(--sr-accent)]">
-                06 · About
+                05 · About
               </p>
               <h1 className="mt-5 max-w-2xl font-[family-name:var(--font-display)] text-[clamp(1.85rem,3.5vw,2.75rem)] font-medium leading-[1.06] tracking-[-0.01em] text-[var(--sr-text)]">
                 I architect the system, not just the screen.

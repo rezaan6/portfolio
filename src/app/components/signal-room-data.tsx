@@ -18,10 +18,11 @@ export const navLinks = [
   { href: "/", num: "01", label: "Home" },
   { href: "/work", num: "02", label: "Work" },
   { href: "/projects", num: "03", label: "Projects" },
-  { href: "/method", num: "04", label: "Method" },
-  { href: "/artifacts", num: "05", label: "Artifacts" },
-  { href: "/about", num: "06", label: "About" },
-  { href: "/colophon", num: "07", label: "Colophon" },
+  { href: "/artifacts", num: "04", label: "Artifacts" },
+  { href: "/about", num: "05", label: "About" },
+  // "This Site" rather than "Colophon": the convention is known to designers
+  // and frontend engineers, but a recruiter shouldn't have to know the word.
+  { href: "/colophon", num: "06", label: "This Site" },
 ];
 
 export const archetypeChips = [

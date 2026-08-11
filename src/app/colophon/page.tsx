@@ -19,8 +19,8 @@ export default async function ColophonPage() {
   return (
     <>
       <PageIntro
-        num="07"
-        label="Colophon"
+        num="06"
+        label="This Site"
         title="This site, as a work sample."
         subtitle="Most of my production work is under NDA. This isn't — it's the one codebase I can hand you in full. Here are the decisions behind it, the numbers it actually scores, and the source."
       />
