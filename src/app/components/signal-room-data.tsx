@@ -1167,6 +1167,7 @@ Red pipeline = no merge. No "we'll fix it after."
   },
   {
     name: "Postman",
+    slug: "postman",
     mono: "PM",
     color: "#FF6C37",
     group: "Testing & quality",
@@ -1286,6 +1287,7 @@ Written after the release — describing what shipped, not what was planned.`,
   },
   {
     name: "Azure DevOps",
+    slug: "azuredevops",
     mono: "AZ",
     color: "#0078D7",
     group: "Collaboration",
@@ -1310,12 +1312,12 @@ MCP: agent talks to the repo, docs, and services — not a pasted snippet
 Line I hold: architecture and trade-offs stay mine. No unread merges.`,
   },
   {
-    name: "OpenAI / Codex",
+    name: "ChatGPT",
     slug: "openai",
     group: "AI-native engineering",
     use: "Code generation, synthetic data & debugging",
     howIUse:
-      "I use ChatGPT and Codex across the delivery lifecycle — generating synthetic datasets for testing, scaling, and edge-case validation, which is genuinely where it earns its keep because those are the cases I wouldn't have thought to write. Alongside that it speeds up debugging, documentation generation, and rapid prototyping to make an architectural option concrete before I commit to it.",
+      "I use ChatGPT across the delivery lifecycle — generating synthetic datasets for testing, scaling, and edge-case validation, which is genuinely where it earns its keep because those are the cases I wouldn't have thought to write. Alongside that it speeds up debugging, documentation generation, and rapid prototyping to make an architectural option concrete before I commit to it.",
     sample: `Synthetic data for the cases you'd never write
 generate: 10k vendors × {timezone drift, DST boundary, price = 0,
           partial pricing, 200-char names, RTL locale}

@@ -1387,7 +1387,11 @@ export function AboutStats() {
     { value: yearsOfExperience(), prefix: "", suffix: "+", label: "Years of hands-on React in production" },
     { value: 40, prefix: "", suffix: "+", label: "Production releases delivered at Kodez" },
     { value: 90, prefix: "~", suffix: "%", label: "Automated Cypress coverage on critical paths" },
-    { value: 100, prefix: "", suffix: "M+", label: "Annual requests served by frontends I've shipped" },
+    // A fourth counter here read "100M+ annual requests served by frontends I've
+    // shipped". Nothing on this site, in the résumé, or in any source material
+    // supports it — the largest number on the page was also the only one with no
+    // provenance at all. Replaced with a figure that is simply a count.
+    { value: 250, prefix: "", suffix: "+", label: "SQL tables in the Kodez CMS schema" },
   ];
   return (
     <section className="px-4 pt-10 sm:px-5 lg:px-8 lg:pt-14">

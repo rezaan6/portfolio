@@ -41,16 +41,35 @@ const CONTACT = [
   "rezaanriyaz.com",
 ];
 
+// Keyed off the visible string so the list above stays the single source of the
+// text, and so a copy/paste export never picks up markup it can't represent.
+const CONTACT_HREF: Record<string, string> = {
+  "+971-56-618-4561": "tel:+971566184561",
+  "rezaan6@gmail.com": "mailto:rezaan6@gmail.com",
+  "linkedin.com/in/rezaan6": "https://linkedin.com/in/rezaan6",
+  "github.com/rezaan6": "https://github.com/rezaan6",
+};
+
+// Text glyphs rather than icon files: this block is ~10px, it prints, and it goes
+// through a plain-text export — an SVG sprite would cost a request and add nothing
+// legible at that size.
+const CONTACT_GLYPH: Record<string, string> = {
+  "+971-56-618-4561": "☏",
+  "rezaan6@gmail.com": "✉",
+  "linkedin.com/in/rezaan6": "in",
+  "github.com/rezaan6": "⌘",
+};
+
 const POSITIONING = () =>
   `Senior Frontend Engineer with ${yearsPhrase()} owning large React codebases from architecture through production. I lead frontend teams, work cross-functionally with design, backend and DevOps, and turn Figma into pixel-perfect, accessible interfaces. I make the structural decisions a codebase has to live with, and take responsibility for how it performs and how safely it ships.`;
 
 // The five-second scan payload. Every figure is a before/after read against
 // a defined baseline — never a causal claim.
 const METRICS = [
-  { value: "2", unit: "platforms", label: "architected 0→1" },
-  { value: "−40%", unit: "", label: "page load time, Kodez CMS" },
-  { value: "90%", unit: "", label: "automated coverage, critical paths" },
-  { value: "40+", unit: "", label: "production releases shipped" },
+  { value: "2", label: "platforms architected 0→1" },
+  { value: "−40%", label: "page load time, Kodez CMS" },
+  { value: "90%", label: "automated coverage, critical paths" },
+  { value: "40+", label: "production releases shipped" },
 ];
 
 const EXPERIENCE: Role[] = [
@@ -284,7 +303,7 @@ const buildResumeText = () =>
     POSITIONING(),
     "",
     "HIGHLIGHTS",
-    METRICS.map((m) => `- ${m.value}${m.unit ? " " + m.unit : ""} ${m.label}`).join("\n"),
+    METRICS.map((m) => `- ${m.value} ${m.label}`).join("\n"),
     "",
     "EXPERIENCE",
     EXPERIENCE.map(
@@ -449,10 +468,44 @@ export default function ResumePage() {
                         React · Next.js · TypeScript · {yearsPhrase()}
                       </p>
                     </div>
+                    {/* Four of these six lines are addressable — a phone number, an
+                        email and two profiles — and they were rendered as dead text.
+                        A résumé is read in a browser and as a PDF, and in both an
+                        anchor is clickable, so the recruiter reaches LinkedIn in one
+                        click instead of retyping a URL. The visible text is unchanged
+                        so the plain-text export and the printed page read identically;
+                        only the link and a small leading glyph are added. */}
                     <ul className="space-y-[3px] text-right text-[10px] leading-[1.45] text-neutral-700">
-                      {CONTACT.map((c) => (
-                        <li key={c}>{c}</li>
-                      ))}
+                      {CONTACT.map((c) => {
+                        const href = CONTACT_HREF[c];
+                        const glyph = CONTACT_GLYPH[c];
+                        const body = (
+                          <>
+                            {glyph ? (
+                              <span aria-hidden="true" className="mr-1.5 inline-block text-neutral-400">
+                                {glyph}
+                              </span>
+                            ) : null}
+                            {c}
+                          </>
+                        );
+                        return (
+                          <li key={c}>
+                            {href ? (
+                              <a
+                                href={href}
+                                target={href.startsWith("http") ? "_blank" : undefined}
+                                rel={href.startsWith("http") ? "noreferrer" : undefined}
+                                className="text-neutral-700 underline-offset-2 hover:text-[#023047] hover:underline print:no-underline"
+                              >
+                                {body}
+                              </a>
+                            ) : (
+                              body
+                            )}
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
 
@@ -470,11 +523,6 @@ export default function ResumePage() {
                     >
                       <p className="font-[family-name:var(--font-heading)] text-[23px] font-bold leading-none tracking-[-0.01em] text-[#023047]">
                         {m.value}
-                        {m.unit ? (
-                          <span className="ml-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-neutral-500">
-                            {m.unit}
-                          </span>
-                        ) : null}
                       </p>
                       <p className="mt-2 text-[9.8px] leading-[1.4] text-neutral-600">
                         {m.label}
