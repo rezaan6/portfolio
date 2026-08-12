@@ -538,7 +538,11 @@ export const projects: Project[] = [
       "Render + Vercel",
     ],
     github: "https://github.com/rezaan6/streaming-platform",
-    external: "https://streaming-platform-rezaan6.vercel.app/",
+    // No live demo. This is the one project here that streams video, which makes
+    // it by far the most bandwidth-expensive thing to host, and it was the one
+    // that burned through the account's allowance. The deployment is gone, and
+    // it isn't worth re-exposing for the twenty seconds a reader spends on it —
+    // the repo's README carries screenshots and the write-up.
     category: "Web",
     year: "2023",
   },
