@@ -1929,6 +1929,13 @@ export function ToolsSection() {
 
 // Small shared pieces for the project cards: an external/repo link and the
 // tech chip row. Kept here so the featured and compact cards stay in sync.
+/* Source and Live demo are the two highest-value actions on a project card,
+   and as bare glyphs they were the quietest things in it — an arrow icon
+   asks the reader to guess that it means "live demo". They're labelled now,
+   in the same outlined pill the rest of the site uses for a secondary action
+   (see the case-study link and the resume's Copy button), so they read as
+   actions rather than decoration and drop the odd circular hover target.
+   They stay on the left: everything else in the card hangs off that spine. */
 function ProjectLinks({ github, external }: { github?: string; external?: string }) {
   const links = [
     github
@@ -1943,7 +1950,7 @@ function ProjectLinks({ github, external }: { github?: string; external?: string
     external
       ? {
           href: external,
-          label: "Live",
+          label: "Live demo",
           path: (
             <>
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
@@ -1955,19 +1962,22 @@ function ProjectLinks({ github, external }: { github?: string; external?: string
   ].filter(Boolean) as { href: string; label: string; path: ReactNode }[];
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex flex-wrap items-center gap-2">
       {links.map((l) => (
         <a
           key={l.label}
           href={l.href}
           target="_blank"
           rel="noreferrer"
+          // Starts with the visible text so the accessible name matches what a
+          // speech-input user would say (WCAG 2.5.3), with the new-tab warning
+          // appended rather than replacing it.
           aria-label={`${l.label} (opens in a new tab)`}
-          className="flex h-8 w-8 items-center justify-center rounded-full text-[var(--sr-muted)] transition hover:bg-[var(--sr-accent-soft)] hover:text-[var(--sr-accent)]"
+          className="inline-flex items-center gap-1.5 rounded-full border border-[var(--sr-hairline)] px-3 py-1.5 font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.12em] text-[var(--sr-text)] transition hover:border-[var(--sr-accent)] hover:bg-[var(--sr-accent-soft)] hover:text-[var(--sr-accent)]"
         >
           <svg
             aria-hidden="true"
-            className="h-4 w-4"
+            className="h-3.5 w-3.5"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -1977,6 +1987,7 @@ function ProjectLinks({ github, external }: { github?: string; external?: string
           >
             {l.path}
           </svg>
+          {l.label}
         </a>
       ))}
     </div>
