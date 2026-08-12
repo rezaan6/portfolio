@@ -512,7 +512,12 @@ export function SiteFrame({ children }: { children: ReactNode }) {
                   href={l.href}
                   target={external ? "_blank" : undefined}
                   rel={external ? "noreferrer" : undefined}
-                  className="font-[family-name:var(--font-display)] text-[11.5px] uppercase tracking-[0.12em] text-[var(--sr-muted)] underline-offset-4 transition hover:text-[var(--sr-accent)] hover:underline"
+                  // These four sit on every page and were 17px tall — under the 24px
+                  // WCAG 2.5.8 minimum, and the "inline" exemption doesn't cover them
+                  // because they're stacked blocks rather than links inside a sentence.
+                  // The padding buys the height without moving the text, since the row
+                  // is already taller than the type.
+                  className="inline-flex min-h-6 items-center font-[family-name:var(--font-display)] text-[11.5px] uppercase tracking-[0.12em] text-[var(--sr-muted)] underline-offset-4 transition hover:text-[var(--sr-accent)] hover:underline"
                 >
                   {l.label}
                 </a>
