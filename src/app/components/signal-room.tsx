@@ -484,14 +484,41 @@ export function SiteFrame({ children }: { children: ReactNode }) {
 
       <main id="main">{children}</main>
 
+      {/* The full contact section only appears on home and /about. This footer
+          is what makes that safe — every other page still has a direct route
+          to reach me, without repeating a whole section eight times. */}
       <footer className="border-t border-[var(--sr-hairline)]">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-8 sm:flex-row sm:items-center sm:justify-between lg:px-8">
-          <p className="font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.16em] text-[var(--sr-faint)]">
-            Mohammed Rezaan Riyaz
-          </p>
-          <p className="font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.16em] text-[var(--sr-faint)]">
-            Senior Frontend Engineer · React · Next.js · TypeScript
-          </p>
+        <div className="mx-auto flex max-w-6xl flex-col gap-5 px-5 py-9 sm:flex-row sm:items-center sm:justify-between lg:px-8">
+          <div>
+            <p className="font-[family-name:var(--font-display)] text-[13px] font-medium text-[var(--sr-text)]">
+              Mohammed Rezaan Riyaz
+            </p>
+            <p className="mt-1 font-[family-name:var(--font-display)] text-[10.5px] uppercase tracking-[0.14em] text-[var(--sr-faint)]">
+              Senior Frontend Engineer · Open to roles · UAE
+            </p>
+          </div>
+
+          <nav aria-label="Contact" className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            {[
+              { label: "Email", href: `mailto:${contact.email}` },
+              { label: "LinkedIn", href: contact.linkedin },
+              { label: "GitHub", href: contact.github },
+              { label: "Resume", href: contact.resume },
+            ].map((l) => {
+              const external = l.href.startsWith("http");
+              return (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noreferrer" : undefined}
+                  className="font-[family-name:var(--font-display)] text-[11.5px] uppercase tracking-[0.12em] text-[var(--sr-muted)] underline-offset-4 transition hover:text-[var(--sr-accent)] hover:underline"
+                >
+                  {l.label}
+                </a>
+              );
+            })}
+          </nav>
         </div>
       </footer>
     </div>
@@ -1434,99 +1461,71 @@ export function AboutBeyond() {
 
 export function PathSection() {
   const reduce = useReducedMotion();
-  // Newest first, matching resume convention — a reader starts from where I am
-  // now and reads back. `timeline` is already stored newest-first.
-  const items = timeline;
-
+  // Newest first. The title ladder carries the progression on its own, so the
+  // rail stays a quiet spine rather than a numbered scoreboard.
   return (
     <section className="border-b border-[var(--sr-hairline)] px-5 py-20 lg:px-8">
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-3xl">
         <Reveal>
           <SectionLabel title="The path" />
-          <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-Lead today, intern in 2018.
+          <h2 className="mt-4 max-w-2xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
+            Lead today, intern in 2018.
           </h2>
-          <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
-            Four roles across three tiers, read back from today — owning the
-            architecture, setting the standards a team builds against, and before
-            that owning a first screen end to end.
-          </p>
         </Reveal>
 
-        <ol className="relative mt-12">
-          {/* the rail */}
+        <div className="relative mt-14">
           <span
             aria-hidden="true"
-            className="absolute left-[17px] top-2 bottom-2 w-px bg-[var(--sr-hairline)] sm:left-[21px]"
+            className="absolute left-[5px] top-4 bottom-8 w-px bg-[var(--sr-hairline)]"
           />
           <motion.span
             aria-hidden="true"
-            className="absolute left-[17px] top-2 w-px origin-top bg-[var(--sr-accent)] sm:left-[21px]"
-            style={{ bottom: 8 }}
+            className="absolute left-[5px] top-4 w-px origin-top bg-[var(--sr-accent)]"
+            style={{ bottom: 32 }}
             initial={{ scaleY: reduce ? 1 : 0 }}
             whileInView={{ scaleY: 1 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1.6, ease: [0.4, 0, 0.2, 1] }}
+            transition={{ duration: 1.4, ease: [0.4, 0, 0.2, 1] }}
           />
+          <ol>
 
-          {items.map((item, i) => {
+          {timeline.map((item, i) => {
             const cs = caseStudies.find((c) => c.company === item.company);
             const brand = cs?.brand ?? "var(--sr-accent-solid)";
-            const isLatest = i === 0;
             return (
-              <Reveal key={item.company} delay={0.06 * i}>
-                <li className="relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
-                  {/* rung: the level marker */}
+              <li key={item.company} className="relative flex gap-6 pb-14 last:pb-0 sm:gap-7">
                   <span
-                    className="relative z-10 mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl font-[family-name:var(--font-display)] text-[12px] font-semibold ring-4 ring-[var(--sr-bg)] sm:h-11 sm:w-11 sm:text-[13px]"
-                    style={{
-                      background: isLatest ? brand : "var(--sr-panel)",
-                      color: isLatest ? "#fff" : brandInk(String(brand)),
-                      boxShadow: `inset 0 0 0 1.5px ${brand}`,
-                    }}
-                  >
-                    {item.level}
-                  </span>
+                    aria-hidden="true"
+                    className="relative z-10 mt-[7px] h-[11px] w-[11px] shrink-0 rounded-[3px] ring-4 ring-[var(--sr-bg)]"
+                    style={{ background: i === 0 ? brand : "var(--sr-hairline)" }}
+                  />
 
-                  <div className="min-w-0 flex-1 pb-2">
-                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                      <span className="font-[family-name:var(--font-display)] text-[12px] font-semibold tracking-[0.08em] text-[var(--sr-accent)]">
-                        {item.year}
-                      </span>
-                      <p className="font-[family-name:var(--font-display)] text-[19px] font-medium leading-tight text-[var(--sr-text)]">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-baseline gap-x-2.5">
+                      <p className="font-[family-name:var(--font-display)] text-[18px] font-medium leading-tight text-[var(--sr-text)]">
                         {item.company}
                       </p>
-                      {cs?.logo ? (
-                        <span className="flex h-6 w-6 items-center justify-center overflow-hidden rounded-md bg-[var(--sr-panel)] ring-1 ring-[var(--sr-hairline)]">
-                          <Image src={cs.logo} alt="" width={14} height={14} unoptimized className="h-3.5 w-3.5 object-contain" />
-                        </span>
-                      ) : null}
+                      <span className="font-[family-name:var(--font-display)] text-[10.5px] uppercase tracking-[0.12em] text-[var(--sr-faint)]">
+                        {item.place} · {item.year}
+                      </span>
                     </div>
 
-                    {/* the title is the promotion — give it the emphasis */}
                     <p
-                      className="mt-1.5 font-[family-name:var(--font-display)] text-[15px] font-semibold"
+                      className="mt-1.5 font-[family-name:var(--font-display)] text-[14px] font-semibold"
                       style={{ color: brandInk(String(brand)) }}
                     >
                       {item.role}
                     </p>
 
-                    <p className="mt-1 font-[family-name:var(--font-display)] text-[10.5px] uppercase tracking-[0.1em] text-[var(--sr-faint)]">
-                      {item.domain} · {item.place}
-                    </p>
-
-                    <p className="mt-3 text-[14px] leading-7 text-[var(--sr-soft)]">
+                    <p className="mt-3.5 max-w-[46ch] text-[14.5px] leading-[1.75] text-[var(--sr-soft)]">
                       {item.scope}
                     </p>
-                    <p className="mt-2 border-l-2 border-[var(--sr-hairline)] pl-3 text-[13px] leading-6 text-[var(--sr-muted)]">
-                      {item.step}
-                    </p>
                   </div>
-                </li>
-              </Reveal>
+              </li>
             );
           })}
-        </ol>
+          </ol>
+        </div>
       </div>
     </section>
   );
@@ -1579,19 +1578,21 @@ export function EducationSection() {
                 <p className="mt-1.5 font-[family-name:var(--font-display)] text-[10.5px] uppercase tracking-[0.1em] text-[var(--sr-muted)]">
                   {e.school} · {e.year}
                 </p>
-                {/* Reserve the row whether or not there's an award, so the
-                    divider and body copy line up across all three cards. */}
-                <div className="mt-3 flex min-h-[26px] items-start">
-                  {e.award ? (
+                {e.note ? (
+                  <p className="mt-4 flex-1 border-t border-[var(--sr-hairline)] pt-4 text-[13px] leading-6 text-[var(--sr-soft)]">
+                    {e.note}
+                  </p>
+                ) : null}
+
+                {/* Award sits at the foot of the card behind its own rule.
+                    Pinned to the bottom by the flex-1 above, so the cards with
+                    no grade waste no space reserving a row they never use. */}
+                {e.award ? (
+                  <div className="mt-5">
                     <span className="inline-flex w-fit rounded-full bg-[var(--sr-accent-soft)] px-2.5 py-1 font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--sr-accent)]">
                       {e.award}
                     </span>
-                  ) : null}
-                </div>
-                {e.note ? (
-                  <p className="mt-4 border-t border-[var(--sr-hairline)] pt-4 text-[13px] leading-6 text-[var(--sr-soft)]">
-                    {e.note}
-                  </p>
+                  </div>
                 ) : null}
               </div>
             </Reveal>

@@ -56,7 +56,7 @@ const METRICS = [
 const EXPERIENCE: Role[] = [
   {
     company: "Hobber",
-    location: "Abu Dhabi, UAE",
+    location: "HQ Abu Dhabi, UAE",
     descriptor:
       "Marketplace platform for entertainment, recreation, dining & tourism vendors",
     title: "Lead Frontend Engineer",
@@ -67,12 +67,13 @@ const EXPERIENCE: Role[] = [
       "Shipped seven core platform modules — authentication, vendor accounts, dashboards, scheduling, payouts, integrations, and team access — as independent slices over one shared component layer.",
       "Built the vendor workflows on top: activity management, booking flows, stock scheduling, discount logic, and content management.",
       "Set the architectural boundaries the codebase is held to, so a new domain is a new folder rather than a refactor, with cross-slice contracts enforced by TypeScript at build time.",
+      "Set up the testing layer from scratch — Vitest for unit and integration, Playwright for end-to-end across the vendor workflows.",
       "Partner with backend and DevOps engineers on API contracts, authentication systems, and real-time platform features.",
     ],
   },
   {
     company: "Axinom",
-    location: "German company · Sri Lanka office",
+    location: "HQ Fürth, Germany",
     descriptor: "Enterprise media technology delivered on the Mosaic platform",
     title: "Lead Frontend Engineer",
     period: "Mar 2024 — Nov 2025",
@@ -97,7 +98,7 @@ const EXPERIENCE: Role[] = [
   },
   {
     company: "Kodez",
-    location: "Australian company · Sri Lanka office",
+    location: "HQ Melbourne, Australia",
     descriptor: "Enterprise CMS for service management and logistics",
     title: "Senior Frontend Engineer",
     period: "Mar 2021 — Feb 2024",
@@ -124,7 +125,7 @@ const EXPERIENCE: Role[] = [
   },
   {
     company: "RaSoft",
-    location: "Sri Lanka",
+    location: "HQ Colombo, Sri Lanka",
     descriptor: "Seed-stage startup — internal systems and web products",
     title: "Frontend Engineer (from Frontend Engineer Intern)",
     period: "Dec 2018 — Feb 2021",
@@ -205,6 +206,8 @@ const STACK: StackGroup[] = [
   {
     label: "Testing & quality",
     items: [
+      "Vitest",
+      "Playwright",
       "Jest",
       "Cypress",
       "TDD",

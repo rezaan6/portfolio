@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { DeviceStage } from "./prototype";
 import { PROTOTYPES } from "./prototype-data";
-import { ContactSection, Magnetic } from "./signal-room";
+import { Magnetic } from "./signal-room";
 import type { CaseStudy } from "./signal-room-data";
 
 /* ------------------------------------------------------------------ *
@@ -224,7 +224,6 @@ export function CaseDetail({
         </section>
       ) : null}
 
-      <ContactSection />
     </div>
   );
 }

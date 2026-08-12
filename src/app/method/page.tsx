@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
 import {
-  ContactSection,
   MethodSection,
   PageIntro,
   PrinciplesSection,
@@ -24,7 +23,6 @@ export default function MethodPage() {
       />
       <MethodSection />
       <PrinciplesSection />
-      <ContactSection />
     </>
   );
 }

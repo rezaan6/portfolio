@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { ContactSection, PageIntro, ToolsSection } from "../components/signal-room";
+import { PageIntro, ToolsSection } from "../components/signal-room";
 
 export const metadata: Metadata = {
   title: "Stack — Mohammed Rezaan Riyaz",
@@ -18,7 +18,6 @@ export default function StackPage() {
         subtitle="Grouped by what each part is for rather than listed alphabetically. Open any one to see how it shows up in real work — the craft below is what moves it."
       />
       <ToolsSection />
-      <ContactSection />
     </>
   );
 }
