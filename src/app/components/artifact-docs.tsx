@@ -296,7 +296,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "callout",
         tone: "insight",
         title: "The premise",
-        text: "Release throughput is not a function of moving fast. It's a function of how cheaply you can prove you didn't break anything. TDD and CI gates weren't overhead on the 40+ releases — they're the reason there were 40+ releases.",
+        text: "Release throughput is not a function of moving fast. It's a function of how cheaply you can prove you didn't break anything. TDD and CI gates weren't overhead on the 40+ releases — they're what made shipping at that rate safe.",
       },
       {
         type: "table",

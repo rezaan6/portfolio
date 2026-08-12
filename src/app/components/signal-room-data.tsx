@@ -311,7 +311,7 @@ const messages = await import("../locales/" + locale + ".json")`,
     outcome:
       "40+ production releases delivered — new features, defect fixes, and database optimization across 250+ SQL tables. Page loads ~40% faster, frontend development ~30% faster, over 90% automated Cypress coverage, and technical debt down ~25% from migrating legacy PHP/jQuery to React and ExpressJS. REST integrations against the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City) stayed interoperable throughout.",
     detail:
-      "What I'd do differently: I sold the component library on consistency when I should have sold it on speed. Engineers adopt a design system when it visibly saves them an afternoon, not when it's described as the right thing to do — I'd publish the before/after build time for a real screen in week one and let the number do the arguing. The lesson I carry: high release throughput isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. TDD and Storybook weren't overhead on the 40+ releases; they were the reason there were 40+ releases.",
+      "What I'd do differently: I sold the component library on consistency when I should have sold it on speed. Engineers adopt a design system when it visibly saves them an afternoon, not when it's described as the right thing to do — I'd publish the before/after build time for a real screen in week one and let the number do the arguing. The lesson I carry: high release throughput isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. TDD and Storybook weren't overhead on the 40+ releases; they are what made shipping at that rate feel safe.",
     code: {
       caption:
         "How a component earns its way into the shared library — the promotion rule, expressed as the story file it has to ship with.",
@@ -402,7 +402,7 @@ it("keeps a service unbookable when price is missing", () => {
     tradeoff:
       "Rapid delivery vs. scalable architecture. The honest answer is that I leaned slightly toward architecture and shipped a little slower than I could have — refactoring components rather than duplicating them, and improving performance at the component level while features were still landing. At seed stage that's a defensible but not free choice: some things reached users later than they might have. What I'd defend is the direction, because the EMS was going to be lived in daily, and the site was the company's front door.",
     signal:
-      "The site had a number: UX and conversion improved ~15% after the responsive redesign and accessibility work, and the broader business-development push it was part of contributed to ~20% growth in client acquisitions and ~25% overall revenue growth. The EMS was read differently — it went from concept to a production system that handled employment management end-to-end, so the signal was that it shipped and got used. I'm deliberate about that distinction: one of those is a measured lift, the other is delivery.",
+      "The site had a number: UX and conversion improved ~15% after the responsive redesign and accessibility work — reported internally, over the months after launch, and it was one of several things changing at once. The EMS was the other half of the job: an internal system that did not exist, designed and built end to end.",
     outcome:
       "A complete Employment Management System delivered from concept to production with end-to-end UI development, and a company site rebuilt for responsiveness and accessibility that lifted conversion ~15%. Along the way I ran code reviews and pair-programming sessions to hold quality, improved performance through refactoring and component-level optimization, and got real exposure to Agile/Scrum through sprint planning and retrospectives.",
     detail:
@@ -799,7 +799,7 @@ RESULT  >90% automated coverage on critical paths · 40+ production releases
 THE PREMISE
 Release throughput is not a function of moving fast. It is a function of how cheaply
 you can prove you did not break anything. TDD and CI gates were not overhead on the
-40+ releases — they are the reason there were 40+ releases.
+40+ releases — they are what made shipping at that rate safe.
 
 THE PYRAMID, AS ACTUALLY BUILT
 - Unit (Jest): pure logic, formatters, reducers, data transforms. Fast, plentiful.
@@ -1098,7 +1098,7 @@ router.post("/services", validate(ServiceSchema), async (req, res, next) => {
     group: "Backend & platform",
     use: "Relational data & query performance",
     howIUse:
-      "I'm comfortable enough in SQL to be useful in the part of the stack most frontend engineers avoid — at Kodez I worked on optimizing database operations across a schema spanning 250+ tables, which is where you learn that a slow screen is often a missing index rather than a rendering problem. I read query plans before I blame the client, and I review data-layer changes for index and query impact as part of the release checklist.",
+      "I'm comfortable enough in SQL to be useful in the part of the stack most frontend engineers avoid — at Kodez I worked on optimizing database operations across a schema spanning 250+ tables, which is where you learn that a slow screen is often a data-layer problem rather than a rendering one. I'd rather rule that out with the backend team than assume the client is at fault.",
     sample: `Check the plan before blaming the UI
 EXPLAIN ANALYZE SELECT ... ;   -- Seq Scan on a 2M-row table?
 → the "slow dashboard" was one missing composite index.`,
@@ -1208,7 +1208,7 @@ Unexplained size increase → blocked, not noted.`,
     group: "Build & delivery",
     use: "S3, CloudFront & asset delivery",
     howIUse:
-      "At Kodez I deployed to S3 with CloudFront in front of it for asset storage and delivery, and that is where a lot of the perceived load-time win actually came from — cache headers and CDN behaviour move the number more than most application-code changes do. I make cache policy an explicit decision per asset class rather than an accident of defaults, so a hashed bundle and an HTML document are never treated the same way.",
+      "At Kodez I deployed to S3 with CloudFront in front of it for asset storage and delivery. Cache headers and CDN behaviour move the number more than most application-code changes do. I make cache policy an explicit decision per asset class rather than an accident of defaults, so a hashed bundle and an HTML document are never treated the same way.",
     sample: `Cache policy is a decision, not a default
 /static/*  (hashed)   → immutable, 1 year
 /index.html           → no-cache, revalidate every load

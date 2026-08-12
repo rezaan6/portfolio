@@ -676,7 +676,7 @@ const caseBarSource: Record<string, string> = {
   axinom:
     "Load-time measured before/after the bundle, lazy-load, and caching work, plus the Mosaic micro-frontends integrated for client delivery.",
   kodez:
-    "CI coverage reports and before/after load-time and build-time reads across 40+ production releases.",
+    "CI coverage reports and before/after load-time reads across 40+ production releases.",
   rasoft:
     "Reported internally at a seed-stage startup — an early-career read, not instrumented analytics.",
 };
@@ -2123,10 +2123,10 @@ export function ProjectsSection() {
 function V8HeroCard() {
   const reduce = useReducedMotion();
   const rows = [
-    { company: "Hobber", label: "Vendor dashboard architected", value: "0→1", pct: 100, logo: "/logos/hobber.png", mark: "HB", note: "7 modules, feature-sliced React + TS" },
-    { company: "Axinom", label: "Page load time", value: "−15%", pct: 62, logo: "/logos/axinom.png", mark: "AX", note: "bundle, lazy-load & caching" },
-    { company: "Kodez", label: "Page load time", value: "−40%", pct: 88, logo: "/logos/kodez.png", mark: "KZ", note: "code-splitting across 40+ releases" },
-    { company: "Kodez", label: "Automated test coverage", value: "90%", pct: 90, logo: "/logos/kodez.png", mark: "KZ", note: "TDD with Cypress, gated in CI" },
+    { company: "Hobber", label: "Vendor dashboard architected", value: "0→1", logo: "/logos/hobber.png", mark: "HB", note: "7 modules, feature-sliced React + TS" },
+    { company: "Axinom", label: "Page load time", value: "−15%", logo: "/logos/axinom.png", mark: "AX", note: "bundle, lazy-load & caching" },
+    { company: "Kodez", label: "Page load time", value: "−40%", logo: "/logos/kodez.png", mark: "KZ", note: "code-splitting across 40+ releases" },
+    { company: "Kodez", label: "Automated test coverage", value: "90%", logo: "/logos/kodez.png", mark: "KZ", note: "TDD with Cypress, gated in CI" },
   ];
   return (
     <motion.div
@@ -2149,7 +2149,7 @@ function V8HeroCard() {
         </span>
       </div>
       <div className="mt-5 space-y-4">
-        {rows.map((r, i) => (
+        {rows.map((r) => (
           <div key={`${r.company}-${r.label}`} className="flex items-center gap-3.5">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[var(--sr-bg-alt)] ring-1 ring-[var(--sr-hairline)]">
               {r.logo ? (
@@ -2163,16 +2163,12 @@ function V8HeroCard() {
                 <p className="truncate text-[13px] font-medium text-[var(--sr-text)]">{r.label}</p>
                 <span className="font-[family-name:var(--font-display)] text-[21px] font-semibold leading-none" style={{ color: "var(--sr-accent)" }}>{r.value}</span>
               </div>
-              <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-[var(--sr-track)]">
-                <motion.div
-                  className="h-full rounded-full"
-                  style={{ background: "var(--sr-accent-grad)" }}
-                  initial={reduce ? false : { width: 0 }}
-                  whileInView={{ width: `${r.pct}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.9, delay: 0.15 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                />
-              </div>
+              {/* The progress bars that used to sit here encoded nothing. Their
+                  widths were hand-picked — −15% drew 62, −40% drew 88, 90% drew
+                  90, and "0→1" drew a full bar — so three different mappings
+                  shared one axis and a longer bar didn't mean a better result.
+                  A chart that can't be read is worse than no chart anywhere, and
+                  worse still on a frontend portfolio. The figure carries itself. */}
               <p className="mt-1 text-[10px] text-[var(--sr-muted)]">{r.company} · {r.note}</p>
             </div>
           </div>
