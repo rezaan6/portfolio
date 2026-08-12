@@ -2,7 +2,14 @@
  * Signal Room — shared content + types for the software-engineering
  * portfolio. Pure data, imported by the client UI module and the route
  * pages. Every claim here traces to the resume or a role description.
+ *
+ * One rule worth stating: no copy in this file hardcodes a length of
+ * career or a version number. Both go stale on their own schedule and
+ * neither announces that it has. Years come from `lib/experience`;
+ * stack chips name the tool and let the reader assume current.
  * ------------------------------------------------------------------ */
+
+import { yearsPhrase } from "../lib/experience";
 
 export const contact = {
   email: "rezaan6@gmail.com",
@@ -942,7 +949,7 @@ export const tools: Tool[] = [
     group: "Core frontend",
     use: "Component architecture & rendering",
     howIUse:
-      "React is where most of my seven years live — I think in component boundaries and rendering behaviour before I think in screens. That means being deliberate about reconciliation and memoization, keeping controlled and uncontrolled components from mixing, and isolating components so one slow subtree doesn't drag a page down. At Hobber I used it to architect a vendor dashboard as independent feature slices; at Kodez it carried a CMS through 40+ production releases without the render layer becoming the bottleneck.",
+      `React is where most of my ${yearsPhrase()} live — I think in component boundaries and rendering behaviour before I think in screens. That means being deliberate about reconciliation and memoization, keeping controlled and uncontrolled components from mixing, and isolating components so one slow subtree doesn't drag a page down. At Hobber I used it to architect a vendor dashboard as independent feature slices; at Kodez it carried a CMS through 40+ production releases without the render layer becoming the bottleneck.`,
     sample: `Feature slice — the boundary rule
 features/payouts/     routes · components · state · api  (owns its domain)
 features/scheduling/  routes · components · state · api
