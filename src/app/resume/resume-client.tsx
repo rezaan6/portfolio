@@ -144,7 +144,7 @@ const STACK: StackGroup[] = [
   {
     label: "React & Next.js",
     items: [
-      "React 19",
+      "React",
       "Next.js (App + Pages Router)",
       "SSR / CSR / ISR",
       "Hydration",
@@ -158,7 +158,7 @@ const STACK: StackGroup[] = [
     label: "Language & frameworks",
     items: [
       "TypeScript",
-      "JavaScript (ES6+)",
+      "JavaScript",
       "Zod",
       "Typed API boundaries",
       "Angular (legacy systems)",

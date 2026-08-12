@@ -1110,6 +1110,31 @@ const Service = new Schema({
 }, { timestamps: true })`,
   },
   {
+    name: "Vitest",
+    slug: "vitest",
+    group: "Testing & quality",
+    use: "Unit & integration tests",
+    howIUse:
+      "Vitest is what I set the Hobber test layer up on, from an empty repository. It runs through the same transform pipeline as the application, so there is no second build configuration to keep in sync with the first — the class of failure where the tests pass and the bundle doesn't simply isn't available. Below the unit tests I use it for integration tests at the slice boundaries, because in a feature-sliced codebase the contract between slices is exactly where a regression will hide.",
+    sample: `Integration tests live at the boundary, not inside the slice
+test("bookings slice reads availability without importing it", async () => {
+  const slot = await bookings.reserve({ serviceId, start })
+  expect(slot.status).toBe("held")   // contract, not implementation
+})`,
+  },
+  {
+    name: "Playwright",
+    slug: "playwright",
+    group: "Testing & quality",
+    use: "End-to-end tests",
+    howIUse:
+      "Playwright covers the Hobber vendor workflows end to end — the paths where a silent break costs a vendor money rather than costing them a click. I'm deliberate about what earns an E2E test, because they are the slowest and most brittle tests in the suite: authentication and permissions, anything that writes, and anything a defect has already been filed against. When one does fail, the trace tells you what the run actually did, which is the difference between a flaky test you retry and a bug you fix.",
+    sample: `E2E covers what costs money if it breaks
+await page.getByRole("button", { name: "Confirm booking" }).click()
+await expect(page.getByText("Booking confirmed")).toBeVisible()
+// payouts, permissions, writes — not every button on the page`,
+  },
+  {
     name: "Jest",
     slug: "jest",
     group: "Testing & quality",
