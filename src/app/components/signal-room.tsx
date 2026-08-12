@@ -37,6 +37,7 @@ import {
   timeline,
   tools,
 } from "./signal-room-data";
+import { yearsOfExperience, yearsPhrase } from "../lib/experience";
 import { ArtifactDocView } from "./artifact-doc";
 import { ARTIFACT_DOCS } from "./artifact-docs";
 
@@ -1285,19 +1286,19 @@ export function AboutHero() {
                 transformOrigin: "center",
               }}
             >
-              05
+              07
             </text>
           </svg>
           <div className="relative grid gap-10 lg:grid-cols-[1.35fr_0.85fr] lg:items-center">
             <Reveal>
               <p className="font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.3em] text-[var(--sr-accent)]">
-                05 · About
+                07 · About
               </p>
               <h1 className="mt-5 max-w-2xl font-[family-name:var(--font-display)] text-[clamp(1.85rem,3.5vw,2.75rem)] font-medium leading-[1.06] tracking-[-0.01em] text-[var(--sr-text)]">
                 I architect the system, not just the screen.
               </h1>
               <p className="mt-6 max-w-xl text-[16px] leading-8 text-[var(--sr-muted)]">
-                7+ years building accessible, high-performance web products —
+                {yearsPhrase()} building accessible, high-performance web products —
                 marketplace platforms, enterprise media, and CMS at scale. I
                 draw the boundaries first, prove the work with tests, and let a
                 measurement pick the next optimization.
@@ -1356,7 +1357,7 @@ export function AboutHero() {
 
 export function AboutStats() {
   const stats = [
-    { value: 7, prefix: "", suffix: "+", label: "Years of hands-on React in production" },
+    { value: yearsOfExperience(), prefix: "", suffix: "+", label: "Years of hands-on React in production" },
     { value: 40, prefix: "", suffix: "+", label: "Production releases delivered at Kodez" },
     { value: 90, prefix: "~", suffix: "%", label: "Automated Cypress coverage on critical paths" },
     { value: 100, prefix: "", suffix: "M+", label: "Annual requests served by frontends I've shipped" },
@@ -1387,7 +1388,7 @@ export function AboutBeyond() {
   const cards = [
     {
       t: "How I got here",
-      b: "It started in 2017 during a Mechatronics course, where a C++ class pulled me toward the web — HTML and CSS in Notepad, then React, then architecting full platforms. The hardware background is why I still reach for a measurement before an opinion.",
+      b: "It started in 2017 during a Mechatronics course, where a C++ class pulled me toward the web — HTML and CSS in Notepad, then React, then architecting full platforms. My dissertation went the other direction: a blockchain e-voting system on Ethereum, which is where the interest in onchain systems started. The hardware background is why I still reach for a measurement before an opinion.",
     },
     {
       t: "How I collaborate",
@@ -1433,102 +1434,168 @@ export function AboutBeyond() {
 
 export function PathSection() {
   const reduce = useReducedMotion();
-  const hoverLift = reduce ? undefined : { y: -4 };
-  // Oldest → newest — the career path reads as a progression.
-  const items = [...timeline].reverse();
+  // Newest first, matching resume convention — a reader starts from where I am
+  // now and reads back. `timeline` is already stored newest-first.
+  const items = timeline;
 
   return (
     <section className="border-b border-[var(--sr-hairline)] px-5 py-20 lg:px-8">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-4xl">
         <Reveal>
           <SectionLabel title="The path" />
           <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-            From a first internal build to leading frontend at enterprise scale.
+Lead today, intern in 2018.
           </h2>
           <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
-            Seven years, one line — Sri Lanka to Australia to Germany to the UAE.
+            Four roles across three tiers, read back from today — owning the
+            architecture, setting the standards a team builds against, and before
+            that owning a first screen end to end.
           </p>
         </Reveal>
 
-        {/* Journey wire — on scroll-in, an "MR" avatar walks left→right through
-            each era (nodes align with the 4 cards below) while the line fills,
-            expressing the engineer→present progression. Desktop only. */}
-        <div className="relative mt-14 mb-2 hidden h-10 lg:block" aria-hidden="true">
-          <div className="absolute left-[12.5%] right-[12.5%] top-1/2 h-[2px] -translate-y-1/2 rounded-full bg-[var(--sr-hairline)]" />
-          <motion.div
-            className="absolute left-[12.5%] top-1/2 h-[2px] w-[75%] origin-left -translate-y-1/2 rounded-full bg-[var(--sr-accent)]"
-            initial={{ scaleX: reduce ? 1 : 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 2.2, ease: [0.4, 0, 0.2, 1] }}
+        <ol className="relative mt-12">
+          {/* the rail */}
+          <span
+            aria-hidden="true"
+            className="absolute left-[17px] top-2 bottom-2 w-px bg-[var(--sr-hairline)] sm:left-[21px]"
           />
-          {items.map((_, i) => (
-            <span
-              key={i}
-              className="absolute top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--sr-hairline)]"
-              style={{ left: `${12.5 + i * 25}%` }}
-            />
-          ))}
-          <motion.div
-            className="absolute top-1/2 z-10 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[var(--sr-accent)] shadow-lg ring-4 ring-[var(--sr-bg)]"
-            initial={{ left: reduce ? "87.5%" : "12.5%" }}
-            whileInView={{ left: "87.5%" }}
+          <motion.span
+            aria-hidden="true"
+            className="absolute left-[17px] top-2 w-px origin-top bg-[var(--sr-accent)] sm:left-[21px]"
+            style={{ bottom: 8 }}
+            initial={{ scaleY: reduce ? 1 : 0 }}
+            whileInView={{ scaleY: 1 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 2.2, ease: [0.4, 0, 0.2, 1] }}
-          >
-            <span className="font-[family-name:var(--font-display)] text-[9px] font-bold text-[var(--sr-accent-ink)]">
-              MR
-            </span>
-          </motion.div>
-        </div>
+            transition={{ duration: 1.6, ease: [0.4, 0, 0.2, 1] }}
+          />
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((item, i) => {
             const cs = caseStudies.find((c) => c.company === item.company);
             const brand = cs?.brand ?? "var(--sr-accent-solid)";
+            const isLatest = i === 0;
             return (
-              <Reveal key={item.company} delay={0.06 * i} className="h-full">
-                <motion.div
-                  whileHover={hoverLift}
-                  transition={springHover}
-                  className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)] p-6 transition hover:border-[var(--sr-accent)]"
-                >
-                  {/* brand accent bar — per-company identity */}
+              <Reveal key={item.company} delay={0.06 * i}>
+                <li className="relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
+                  {/* rung: the level marker */}
                   <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-x-0 top-0 h-1"
-                    style={{ background: brand }}
-                  />
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="font-[family-name:var(--font-display)] text-[13px] font-semibold tracking-[0.06em] text-[var(--sr-accent)]">
-                      {item.year}
-                    </span>
-                    {cs?.logo ? (
-                      <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg bg-[var(--sr-panel)] ring-1 ring-[var(--sr-hairline)]">
-                        <Image src={cs.logo} alt="" width={20} height={20} unoptimized className="h-5 w-5 object-contain" />
+                    className="relative z-10 mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl font-[family-name:var(--font-display)] text-[12px] font-semibold ring-4 ring-[var(--sr-bg)] sm:h-11 sm:w-11 sm:text-[13px]"
+                    style={{
+                      background: isLatest ? brand : "var(--sr-panel)",
+                      color: isLatest ? "#fff" : brandInk(String(brand)),
+                      boxShadow: `inset 0 0 0 1.5px ${brand}`,
+                    }}
+                  >
+                    {item.level}
+                  </span>
+
+                  <div className="min-w-0 flex-1 pb-2">
+                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                      <span className="font-[family-name:var(--font-display)] text-[12px] font-semibold tracking-[0.08em] text-[var(--sr-accent)]">
+                        {item.year}
                       </span>
-                    ) : (
-                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--sr-accent-soft)] font-[family-name:var(--font-display)] text-[12px] font-semibold text-[var(--sr-accent)]">
-                        {item.company[0]}
-                      </span>
-                    )}
+                      <p className="font-[family-name:var(--font-display)] text-[19px] font-medium leading-tight text-[var(--sr-text)]">
+                        {item.company}
+                      </p>
+                      {cs?.logo ? (
+                        <span className="flex h-6 w-6 items-center justify-center overflow-hidden rounded-md bg-[var(--sr-panel)] ring-1 ring-[var(--sr-hairline)]">
+                          <Image src={cs.logo} alt="" width={14} height={14} unoptimized className="h-3.5 w-3.5 object-contain" />
+                        </span>
+                      ) : null}
+                    </div>
+
+                    {/* the title is the promotion — give it the emphasis */}
+                    <p
+                      className="mt-1.5 font-[family-name:var(--font-display)] text-[15px] font-semibold"
+                      style={{ color: brandInk(String(brand)) }}
+                    >
+                      {item.role}
+                    </p>
+
+                    <p className="mt-1 font-[family-name:var(--font-display)] text-[10.5px] uppercase tracking-[0.1em] text-[var(--sr-faint)]">
+                      {item.domain} · {item.place}
+                    </p>
+
+                    <p className="mt-3 text-[14px] leading-7 text-[var(--sr-soft)]">
+                      {item.scope}
+                    </p>
+                    <p className="mt-2 border-l-2 border-[var(--sr-hairline)] pl-3 text-[13px] leading-6 text-[var(--sr-muted)]">
+                      {item.step}
+                    </p>
                   </div>
-                  <p className="mt-4 font-[family-name:var(--font-display)] text-[18px] font-medium leading-snug text-[var(--sr-text)]">
-                    {item.company}
-                  </p>
-                  <p className="mt-1 text-[13px] font-medium text-[var(--sr-soft)]">
-                    {item.role}
-                  </p>
-                  <p className="mt-3 font-[family-name:var(--font-display)] text-[10.5px] uppercase tracking-[0.1em] text-[var(--sr-faint)]">
-                    {item.domain}
-                  </p>
-                  <p className="mt-3 flex-1 text-[13px] leading-6 text-[var(--sr-muted)]">
-                    {item.scope}
-                  </p>
-                </motion.div>
+                </li>
               </Reveal>
             );
           })}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+export function EducationSection() {
+  // Verified against the certificates, not the old CV — which had the BSc
+  // title short, omitted the First Class, and credited the wrong institution
+  // for the Mechatronics diploma.
+  const education = [
+    {
+      degree: "BSc (Hons) Computer Science & Software Engineering",
+      award: "First Class",
+      school: "University of Bedfordshire",
+      year: "2022",
+      note: "Dissertation: BlockVote — a blockchain-based e-voting system on Ethereum, built and defended in 2022. Solidity contracts, Truffle, a React client and MetaMask, with a 78-page thesis on where the model holds and where it doesn't.",
+    },
+    {
+      degree: "Pearson BTEC Level 5 HND — Computing (Software Engineering)",
+      school: "British College of Applied Studies",
+      year: "2020",
+      note: "Where the software engineering foundation was actually laid — data structures, databases, and the first systems I built end to end, alongside the early RaSoft work.",
+    },
+    {
+      degree: "Higher Diploma — Mechatronics Engineering",
+      school: "ICBT, Sri Lanka",
+      year: "2019",
+      note: "Externally moderated by Cardiff Metropolitan University. The starting point, and not a straight line: I came in for hardware and left through a C++ class that pulled me toward the web — which is also why I still reach for a measurement before an opinion.",
+    },
+  ];
+
+
+  return (
+    <section className="border-b border-[var(--sr-hairline)]">
+      <div className="mx-auto max-w-6xl px-5 py-20 lg:px-8">
+        <Reveal>
+          <SectionLabel title="Education" />
+          <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
+            Where it started, formally.
+          </h2>
+        </Reveal>
+
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
+          {education.map((e, i) => (
+            <Reveal key={e.degree} delay={0.05 * i} className="h-full">
+              <div className="flex h-full flex-col rounded-2xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)] p-6">
+                <p className="flex min-h-[3.1rem] items-start font-[family-name:var(--font-display)] text-[16px] font-medium leading-snug text-[var(--sr-text)]">
+                  {e.degree}
+                </p>
+                <p className="mt-1.5 font-[family-name:var(--font-display)] text-[10.5px] uppercase tracking-[0.1em] text-[var(--sr-muted)]">
+                  {e.school} · {e.year}
+                </p>
+                {/* Reserve the row whether or not there's an award, so the
+                    divider and body copy line up across all three cards. */}
+                <div className="mt-3 flex min-h-[26px] items-start">
+                  {e.award ? (
+                    <span className="inline-flex w-fit rounded-full bg-[var(--sr-accent-soft)] px-2.5 py-1 font-[family-name:var(--font-display)] text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--sr-accent)]">
+                      {e.award}
+                    </span>
+                  ) : null}
+                </div>
+                {e.note ? (
+                  <p className="mt-4 border-t border-[var(--sr-hairline)] pt-4 text-[13px] leading-6 text-[var(--sr-soft)]">
+                    {e.note}
+                  </p>
+                ) : null}
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
@@ -1683,9 +1750,9 @@ export function ToolsSection() {
     <section className="border-b border-[var(--sr-hairline)]">
       <div className="mx-auto max-w-6xl px-5 py-20 lg:px-8">
         <Reveal>
-          <SectionLabel title="How I work" />
+          <SectionLabel title="The toolkit" />
           <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-            My stack — and the craft behind it.
+            Grouped by what each part is for.
           </h2>
           <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
             The toolkit, grouped by what each part is for — architecture through
@@ -1915,12 +1982,13 @@ function ProjectLinks({ github, external }: { github?: string; external?: string
   );
 }
 
-function TechChips({ tech, max }: { tech: string[]; max?: number }) {
-  const shown = max ? tech.slice(0, max) : tech;
-  const rest = max ? tech.length - shown.length : 0;
+// Always show the whole stack. These lists top out at seven items, so
+// truncating hid one or two chips behind a "+1 more" that cost the reader
+// more than it saved.
+function TechChips({ tech }: { tech: string[] }) {
   return (
     <ul className="mt-4 flex flex-wrap gap-1.5">
-      {shown.map((t) => (
+      {tech.map((t) => (
         <li
           key={t}
           className="rounded-full border border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] px-2.5 py-1 font-[family-name:var(--font-mono)] text-[10.5px] text-[var(--sr-muted)]"
@@ -1928,11 +1996,6 @@ function TechChips({ tech, max }: { tech: string[]; max?: number }) {
           {t}
         </li>
       ))}
-      {rest > 0 ? (
-        <li className="rounded-full px-2.5 py-1 font-[family-name:var(--font-mono)] text-[10.5px] text-[var(--sr-faint)]">
-          +{rest} more
-        </li>
-      ) : null}
     </ul>
   );
 }
@@ -1951,35 +2014,15 @@ export function ProjectsSection() {
             <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
               Personal projects, not production work — my production code is
               under NDA. I&apos;m listing what each one was actually for rather
-              than pitching them as portfolio pieces.
+              than pitching them as portfolio pieces. Every repo has
+              screenshots and a full write-up in its README.
             </p>
           </Reveal>
 
           <div className="mt-12 space-y-6">
-            {projects.map((p, i) => (
+            {projects.filter((pr) => !pr.minor).map((p, i) => (
               <Reveal key={p.slug} delay={0.04 * i}>
-                <article
-                  className={`grid overflow-hidden rounded-3xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)] ${
-                    p.image ? "lg:grid-cols-2" : ""
-                  }`}
-                >
-                  {/* Only render the media column when there's a real
-                      screenshot — an empty grey panel reads as a broken image. */}
-                  {p.image ? (
-                    <div
-                      className={`relative min-h-[220px] bg-[var(--sr-bg-alt)] ${
-                        i % 2 === 1 ? "lg:order-2" : ""
-                      }`}
-                    >
-                      <Image
-                        src={p.image}
-                        alt={`${p.title} — application screenshot`}
-                        fill
-                        sizes="(min-width: 1024px) 50vw, 100vw"
-                        className="object-cover object-top"
-                      />
-                    </div>
-                  ) : null}
+                <article className="overflow-hidden rounded-3xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)]">
                   <div className="flex flex-col justify-center p-7 sm:p-9">
                     <p className="font-[family-name:var(--font-display)] text-[10px] uppercase tracking-[0.16em] text-[var(--sr-accent)]">
                       {p.category} · {p.year}
@@ -2005,6 +2048,52 @@ export function ProjectsSection() {
                 </article>
               </Reveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* Secondary tier — smaller API-integration builds. Kept because they
+          are the only public code touching AI and crypto surfaces, and listed
+          compactly so they add coverage without competing with the three
+          above. */}
+      <section className="border-b border-[var(--sr-hairline)]">
+        <div className="mx-auto max-w-6xl px-5 py-16 lg:px-8">
+          <Reveal>
+            <SectionLabel title="Also built" />
+            <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.3rem,2.4vw,1.9rem)] font-medium leading-[1.1] text-[var(--sr-text)]">
+              Smaller API-integration builds.
+            </h2>
+            <p className="mt-3 max-w-2xl text-[15px] leading-7 text-[var(--sr-muted)]">
+              Each one wraps a third-party API in a UI — the interesting part was
+              always the state around the request, not the request.
+            </p>
+          </Reveal>
+
+          <div className="mt-9 grid gap-4 md:grid-cols-3">
+            {projects
+              .filter((p) => p.minor)
+              .map((p, i) => (
+                <Reveal key={p.slug} delay={0.04 * i} className="h-full">
+                  <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)]">
+                    <div className="flex flex-1 flex-col p-5">
+                      <p className="font-[family-name:var(--font-display)] text-[10px] uppercase tracking-[0.14em] text-[var(--sr-faint)]">
+                        {p.year}
+                      </p>
+                      <h3 className="mt-1.5 font-[family-name:var(--font-display)] text-[16px] font-medium text-[var(--sr-text)]">
+                        {p.title}
+                      </h3>
+                      <p className="mt-2 flex-1 text-[12.5px] leading-6 text-[var(--sr-muted)]">
+                        {p.learned}
+                      </p>
+                      <TechChips tech={p.tech} />
+                      <div className="mt-4">
+                        <ProjectLinks github={p.github} external={p.external} />
+                      </div>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
           </div>
         </div>
       </section>
@@ -2113,7 +2202,7 @@ function V8Hero() {
             </Reveal>
             <Reveal delay={0.12}>
               <p className="mt-7 max-w-lg text-[16px] leading-7 text-[var(--sr-muted)]">
-                7+ years across marketplace, media, and enterprise products —
+                {yearsPhrase()} across marketplace, media, and enterprise products —
                 frontend architecture with full-stack range. I draw the
                 boundaries first, prove the work with tests, and let a
                 measurement pick the next optimization.
@@ -2229,6 +2318,12 @@ export function CaseAccordion() {
             <motion.div
               key={cs.slug}
               onMouseEnter={() => setActive(i)}
+              // flexGrow is a LAYOUT property, so animating it from an unset
+              // value on mount shifts every sibling panel — that was the whole
+              // of this page's cumulative layout shift. `initial={false}` snaps
+              // the first render straight to the resting value; hover still
+              // animates normally.
+              initial={false}
               animate={{ flexGrow: isActive ? 3.4 : 1 }}
               transition={
                 reduce

@@ -8,9 +8,11 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   poweredByHeader: false,
-  // /method was folded into /about; keep the old path working.
+  // Retired routes — keep the old paths working rather than 404ing them.
   async redirects() {
-    return [{ source: "/method", destination: "/about", permanent: true }];
+    return [
+      { source: "/colophon", destination: "/", permanent: true },
+    ];
   },
   turbopack: {
     root: path.join(__dirname),

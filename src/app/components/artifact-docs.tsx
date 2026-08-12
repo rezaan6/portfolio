@@ -314,7 +314,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
           { text: "Authentication and permissions." },
           { text: "Anything that writes to the 250+ table schema." },
           {
-            text: "Every enterprise integration surface — NTT DATA, Toshiba, Park Assist, City, Fiserv.",
+            text: "Every integration surface in the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City).",
           },
           { text: "Any path a defect has been filed against. A bug gets a test before it gets a fix." },
         ],

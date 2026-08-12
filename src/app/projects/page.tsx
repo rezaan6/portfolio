@@ -15,7 +15,7 @@ export default function ProjectsPage() {
         num="03"
         label="Projects"
         title="Side builds, and what each one was for."
-        subtitle="Three side builds from 2023, each one aimed at a specific unknown — an out-of-band job queue, a split client/API deployment, and where dashboard state actually belongs. Source and live demos on every card."
+        subtitle="Three side builds from 2023, each one aimed at a specific unknown — an out-of-band job queue, a split client/API deployment, and where dashboard state actually belongs. Source, live demo and screenshots on every card."
       />
       <ProjectsSection />
     </>

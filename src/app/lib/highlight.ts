@@ -46,20 +46,3 @@ export async function highlightCode(code: string, lang: CodeLang = "tsx") {
     colorReplacements: { "#fff": "transparent", "#ffffff": "transparent" },
   });
 }
-
-/**
- * Highlight a keyed map of snippets in one pass. Returns a plain
- * `Record<key, html>` that is safe to pass across the server/client
- * boundary as a prop.
- */
-export async function highlightMap(
-  snippets: Record<string, { code: string; lang?: CodeLang }>,
-): Promise<Record<string, string>> {
-  const entries = await Promise.all(
-    Object.entries(snippets).map(
-      async ([key, { code, lang }]) =>
-        [key, await highlightCode(code, lang ?? "tsx")] as const,
-    ),
-  );
-  return Object.fromEntries(entries);
-}

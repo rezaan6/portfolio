@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import { navLinks } from "../components/signal-room-data";
+import { yearsOfExperience, yearsPhrase } from "../lib/experience";
 
 /* ------------------------------------------------------------------ *
  * Resume — digital-first, single column.
@@ -40,8 +41,8 @@ const CONTACT = [
   "rezaanriyaz.com",
 ];
 
-const POSITIONING =
-  "Senior Frontend Engineer with 7+ years owning large React codebases from architecture through production. I lead frontend teams, make the structural decisions a codebase has to live with, and take responsibility for how it performs and how safely it ships.";
+const POSITIONING = () =>
+  `Senior Frontend Engineer with ${yearsPhrase()} owning large React codebases from architecture through production. I lead frontend teams, work cross-functionally with design, backend and DevOps, and turn Figma into pixel-perfect, accessible interfaces. I make the structural decisions a codebase has to live with, and take responsibility for how it performs and how safely it ships.`;
 
 // The five-second scan payload. Every figure is a before/after read against
 // a defined baseline — never a causal claim.
@@ -55,10 +56,10 @@ const METRICS = [
 const EXPERIENCE: Role[] = [
   {
     company: "Hobber",
-    location: "UAE",
+    location: "Abu Dhabi, UAE",
     descriptor:
       "Marketplace platform for entertainment, recreation, dining & tourism vendors",
-    title: "Frontend Tech Lead",
+    title: "Lead Frontend Engineer",
     period: "Jan 2026 — Present",
     stack: ["React", "TypeScript", "Feature-sliced architecture", "REST", "Real-time"],
     points: [
@@ -71,9 +72,9 @@ const EXPERIENCE: Role[] = [
   },
   {
     company: "Axinom",
-    location: "Germany",
+    location: "German company · Sri Lanka office",
     descriptor: "Enterprise media technology delivered on the Mosaic platform",
-    title: "Senior Frontend Engineer · Frontend Team Lead",
+    title: "Lead Frontend Engineer",
     period: "Mar 2024 — Nov 2025",
     stack: [
       "React",
@@ -86,16 +87,17 @@ const EXPERIENCE: Role[] = [
       "Azure DevOps",
     ],
     points: [
-      "Led the frontend team building high-performance web applications for global media clients, delivering multiple products 0→1 through full development, testing, and production release cycles.",
+      "Led the frontend team building high-performance web applications for clients including the Goethe-Institut and the Lindau Nobel Laureate Meetings, delivering multiple products 0→1 through full development, testing, and production release cycles.",
       "Reduced page load time ~15% through bundle optimization, lazy loading, and caching improvements.",
       "Built on Axinom's Mosaic micro-frontends (Media, Catalogue, Entitlement, DRM) and its APIs for content synchronization and metadata management, rather than hand-rolling media delivery.",
-      "Implemented secure DRM playback with Shaka Player, designed i18n in from the start for multi-language experiences across regions, and held SEO and WCAG-aligned accessibility across customer-facing surfaces.",
+      "Implemented secure DRM playback with Shaka Player, and designed i18n in from the start for multi-language experiences across regions.",
+      "Worked directly with designers to translate Figma into pixel-perfect, responsive interfaces, holding SEO and WCAG-aligned accessibility across every customer-facing surface.",
       "Owned client-facing technical communication — requirements, feasibility, UX trade-offs, and scope — mentored junior engineers, enforced coding standards, and kept CI/CD stable with DevOps across environments.",
     ],
   },
   {
     company: "Kodez",
-    location: "Australia",
+    location: "Australian company · Sri Lanka office",
     descriptor: "Enterprise CMS for service management and logistics",
     title: "Senior Frontend Engineer",
     period: "Mar 2021 — Feb 2024",
@@ -116,7 +118,8 @@ const EXPERIENCE: Role[] = [
       "Built a Storybook-based reusable component library that cut frontend development time ~30% across projects.",
       "Reduced page load time ~40% through code-splitting, lazy loading, and asset optimization, with assets served from AWS S3 behind CloudFront.",
       "Migrated a legacy PHP/jQuery application to React and ExpressJS incrementally, cutting technical debt ~25% without freezing client delivery — and built Node.js BFF layers with the backend team to reduce API latency.",
-      "Integrated enterprise REST APIs for NTT DATA, Toshiba, Park Assist, City, and Fiserv across a 250+ table schema; set frontend standards and ran code reviews as the team scaled from 10 to 60+ engineers.",
+      "Built REST integrations against the client's enterprise vendor stack — Amtek (Australia), running on Fiserv, Toshiba, NTT DATA, Park Assist and City systems — across a 250+ table schema.",
+      "Translated Figma designs into pixel-perfect, responsive interfaces; set frontend standards and ran code reviews as the team scaled from 10 to 60+ engineers.",
     ],
   },
   {
@@ -151,20 +154,28 @@ const STACK: StackGroup[] = [
     ],
   },
   {
-    label: "Language & types",
-    items: ["TypeScript", "JavaScript (ES6+)", "Zod", "Typed API boundaries"],
+    label: "Language & frameworks",
+    items: [
+      "TypeScript",
+      "JavaScript (ES6+)",
+      "Zod",
+      "Typed API boundaries",
+      "Angular (legacy systems)",
+    ],
   },
   {
-    label: "UI & design systems",
+    label: "UI, interaction & design systems",
     items: [
+      "Pixel-perfect Figma implementation",
+      "Design collaboration & handoff",
+      "Interaction & motion design",
       "Storybook",
+      "Design tokens & theming",
       "Tailwind CSS",
       "SCSS",
       "Material UI",
       "Radix UI",
-      "Design tokens",
       "Atomic Design",
-      "Figma handoff",
     ],
   },
   {
@@ -176,6 +187,7 @@ const STACK: StackGroup[] = [
       "React Hook Form",
       "REST",
       "GraphQL",
+      "Algolia search",
       "Cache invalidation",
     ],
   },
@@ -200,6 +212,17 @@ const STACK: StackGroup[] = [
       "CI quality gates",
       "WCAG accessibility",
       "BrowserStack",
+    ],
+  },
+  {
+    label: "Security",
+    items: [
+      "XSS prevention",
+      "Secure authentication flows",
+      "Token handling",
+      "Content validation",
+      "Secure API integration patterns",
+      "Dependency risk awareness",
     ],
   },
   {
@@ -229,21 +252,33 @@ const STACK: StackGroup[] = [
   },
 ];
 
-const EDUCATION = [
-  { degree: "BSc (Hons) Computer Science", school: "University of Bedfordshire" },
-  { degree: "HND Computer Science", school: "Pearson BTEC" },
-  { degree: "HND Mechatronics", school: "Cardiff Metropolitan University" },
+const EDUCATION: { degree: string; school: string; note?: string }[] = [
+  {
+    degree: "BSc (Hons) Computer Science & Software Engineering — First Class",
+    school: "University of Bedfordshire · 2022",
+    // Kept here rather than in the skills chips: it dates the work to 2022 and
+    // frames it as academic, which is what it was.
+    note: "Dissertation: BlockVote — blockchain-based e-voting on Ethereum (Solidity, Truffle, React, MetaMask)",
+  },
+  {
+    degree: "Pearson BTEC Level 5 HND — Computing (Software Engineering)",
+    school: "British College of Applied Studies · 2020",
+  },
+  {
+    degree: "Higher Diploma — Mechatronics Engineering",
+    school: "ICBT, moderated by Cardiff Metropolitan University · 2019",
+  },
 ];
 
 const buildResumeText = () =>
   [
     "MOHAMMED REZAAN RIYAZ",
-    "Senior Frontend Engineer — React · Next.js · TypeScript · 7+ Years",
+    `Senior Frontend Engineer — React · Next.js · TypeScript · ${yearsOfExperience()}+ Years`,
     "",
     CONTACT.join("\n"),
     "",
     "SUMMARY",
-    POSITIONING,
+    POSITIONING(),
     "",
     "HIGHLIGHTS",
     METRICS.map((m) => `- ${m.value}${m.unit ? " " + m.unit : ""} ${m.label}`).join("\n"),
@@ -261,7 +296,7 @@ ${r.points.map((pt) => `- ${pt}`).join("\n")}`,
     STACK.map((g) => `${g.label}: ${g.items.join(", ")}`).join("\n"),
     "",
     "EDUCATION",
-    EDUCATION.map((e) => `${e.degree} — ${e.school}`).join("\n"),
+    EDUCATION.map((e) => `${e.degree} — ${e.school}${e.note ? "\n  " + e.note : ""}`).join("\n"),
   ].join("\n");
 
 /* ----------------------------- sections ---------------------------- */
@@ -408,7 +443,7 @@ export default function ResumePage() {
                         Senior Frontend Engineer
                       </p>
                       <p className="mt-1.5 text-[11.5px] tracking-[0.04em] text-neutral-600">
-                        React · Next.js · TypeScript · 7+ years
+                        React · Next.js · TypeScript · {yearsPhrase()}
                       </p>
                     </div>
                     <ul className="space-y-[3px] text-right text-[10px] leading-[1.45] text-neutral-700">
@@ -419,7 +454,7 @@ export default function ResumePage() {
                   </div>
 
                   <p className="mt-6 max-w-[165mm] text-[11.6px] leading-[1.62] text-neutral-700">
-                    {POSITIONING}
+                    {POSITIONING()}
                   </p>
                 </header>
 
@@ -523,6 +558,11 @@ export default function ResumePage() {
                           {e.degree}
                         </p>
                         <p className="mt-0.5 text-[10.3px] text-neutral-600">{e.school}</p>
+                        {e.note ? (
+                          <p className="mt-1.5 text-[9.8px] italic leading-[1.45] text-neutral-500">
+                            {e.note}
+                          </p>
+                        ) : null}
                       </div>
                     ))}
                   </div>

@@ -18,11 +18,10 @@ export const navLinks = [
   { href: "/", num: "01", label: "Home" },
   { href: "/work", num: "02", label: "Work" },
   { href: "/projects", num: "03", label: "Projects" },
-  { href: "/artifacts", num: "04", label: "Artifacts" },
-  { href: "/about", num: "05", label: "About" },
-  // "This Site" rather than "Colophon": the convention is known to designers
-  // and frontend engineers, but a recruiter shouldn't have to know the word.
-  { href: "/colophon", num: "06", label: "This Site" },
+  { href: "/stack", num: "04", label: "Stack" },
+  { href: "/method", num: "05", label: "Method" },
+  { href: "/artifacts", num: "06", label: "Artifacts" },
+  { href: "/about", num: "07", label: "About" },
 ];
 
 export const archetypeChips = [
@@ -177,7 +176,8 @@ type RowProps    = { variant: "primary"; isPayoutRow: boolean }         // not s
     slug: "axinom",
     mark: "AX",
     tag: "MEDIA PLATFORM · PERFORMANCE & DRM",
-    domain: "Enterprise media platform on Mosaic, for global media clients · Germany",
+    domain:
+      "Enterprise media platform on Mosaic, for global media clients · German company, Sri Lanka office",
     period: "Mar 2024 — Nov 2025",
     color: "#004078",
     brand: "#004078",
@@ -198,7 +198,7 @@ type RowProps    = { variant: "primary"; isPayoutRow: boolean }         // not s
       { label: "Locales shipped", value: "multi-region", note: "i18n designed in, bundles split per locale" },
     ],
     context:
-      "Axinom builds enterprise media technology, and its internal platform — Mosaic — already exposes the hard parts of media delivery as micro-frontends: Media, Catalogue, Entitlement, and DRM. I led the frontend team delivering high-performance web applications for global media clients on top of it. Two things make that work harder than a normal web build. Protected content has to actually play, on real devices, through a DRM pipeline that fails loudly and unhelpfully. And the audience is international, so every string, layout, and format is a localization problem, not an afternoon of translation.",
+      "Axinom builds enterprise media technology, and its internal platform — Mosaic — already exposes the hard parts of media delivery as micro-frontends: Media, Catalogue, Entitlement, and DRM. I led the frontend team delivering high-performance web applications on top of it for clients including the Goethe-Institut and the Lindau Nobel Laureate Meetings, whose Mediatheque holds decades of lecture recordings from Nobel laureates and young scientists. Two things make that work harder than a normal web build. Protected content has to actually play, on real devices, through a DRM pipeline that fails loudly and unhelpfully. And the audience is international, so every string, layout, and format is a localization problem, not an afternoon of translation.",
     decision:
       "I made building on the platform the default rather than the fallback. Client film and audio content ran through Mosaic's micro-frontends and Mosaic APIs for content synchronization and metadata management, and secure playback went through Shaka Player so DRM was handled by a hardened player rather than a bespoke integration. i18n was designed in from the start instead of retrofitted. On top of that I treated load time as a first-class deliverable — bundle optimization, lazy loading, and caching improvements — rather than something to look at after launch.",
     tradeoff:
@@ -229,9 +229,9 @@ const messages = await import("../locales/" + locale + ".json")`,
     customerLede:
       "Viewers of global media clients get protected film and audio that starts reliably, loads about 15% faster, and reads in their own language.",
     scale: [
-      "Enterprise media platform",
-      "Built on Mosaic · Germany",
-      "Global media clients",
+      "Enterprise media platform on Mosaic",
+      "German company · Sri Lanka office",
+      "Clients: Goethe-Institut · Lindau Nobel Laureate Meetings",
       "Led the frontend team",
     ],
     stack: [
@@ -264,7 +264,7 @@ const messages = await import("../locales/" + locale + ".json")`,
     mark: "KZ",
     tag: "ENTERPRISE CMS · DESIGN SYSTEM & TDD",
     domain:
-      "Enterprise CMS for service management & logistics, integrating global clients · Australia",
+      "Enterprise CMS for service management & logistics, integrating global clients · Australian company, Sri Lanka office",
     period: "Mar 2021 — Feb 2024",
     color: "#F87850",
     brand: "#F87850",
@@ -287,7 +287,7 @@ const messages = await import("../locales/" + locale + ".json")`,
       { label: "Production releases", value: "40+" },
     ],
     context:
-      "Kodez builds an enterprise CMS for service management and logistics, integrating REST APIs from clients including NTT DATA, Toshiba, Park Assist, City, and Fiserv. The surface is large — database operations spanning 250+ SQL tables — and it sat alongside a legacy PHP/jQuery application that still had users. Meanwhile the startup itself grew from 10 to 60+ people. Two forces pull against each other in that setup: the codebase needs to change constantly for clients, and every change is a chance to break something that someone is paid to rely on.",
+      "Kodez builds an enterprise CMS for service management and logistics. The client I worked across was Amtek in Australia, whose operation runs on enterprise vendor systems (Fiserv, Toshiba, NTT DATA, Park Assist and City), so the CMS had to integrate cleanly with all of them. The surface is large — database operations spanning 250+ SQL tables — and it sat alongside a legacy PHP/jQuery application that still had users. Meanwhile the startup itself grew from 10 to 60+ people. Two forces pull against each other in that setup: the codebase needs to change constantly for clients, and every change is a chance to break something that someone is paid to rely on.",
     decision:
       "I architected and delivered the CMS from 0→1 to MVP as a React microarchitecture applying SOLID principles, then made two investments that most teams defer. First, a Storybook-based reusable component library — the shared spine, so a new screen is composed rather than authored. Second, Test-Driven Development with Cypress, taken seriously enough to reach over 90% automated coverage and wired into CI/CD, so a release is gated by evidence rather than by whoever remembered to click through it. Redux handled state flow, TanStack React Query handled fetching, caching, and synchronization, and Node.js BFF layers cut API latency.",
     tradeoff:
@@ -295,7 +295,7 @@ const messages = await import("../locales/" + locale + ".json")`,
     signal:
       "Three numbers, all of them things I could show. Automated test coverage — over 90%, running in CI/CD, which is what made frequent releases safe. Page load time, which came down ~40% through code-splitting, lazy loading, and asset optimization, with AWS S3 serving assets. And frontend development time, which dropped ~30% once the Storybook library was the default way to build. Cross-browser behavior was validated on BrowserStack, and API contracts stayed documented in Swagger, with sprint work tracked in JIRA and Confluence.",
     outcome:
-      "40+ production releases delivered — new features, defect fixes, and database optimization across 250+ SQL tables. Page loads ~40% faster, frontend development ~30% faster, over 90% automated Cypress coverage, and technical debt down ~25% from migrating legacy PHP/jQuery to React and ExpressJS. Enterprise REST integrations with NTT DATA, Toshiba, Park Assist, City, and Fiserv stayed interoperable throughout.",
+      "40+ production releases delivered — new features, defect fixes, and database optimization across 250+ SQL tables. Page loads ~40% faster, frontend development ~30% faster, over 90% automated Cypress coverage, and technical debt down ~25% from migrating legacy PHP/jQuery to React and ExpressJS. REST integrations against the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City) stayed interoperable throughout.",
     detail:
       "What I'd do differently: I sold the component library on consistency when I should have sold it on speed. Engineers adopt a design system when it visibly saves them an afternoon, not when it's described as the right thing to do — I'd publish the before/after build time for a real screen in week one and let the number do the arguing. The lesson I carry: high release throughput isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. TDD and Storybook weren't overhead on the 40+ releases; they were the reason there were 40+ releases.",
     code: {
@@ -318,10 +318,10 @@ it("keeps a service unbookable when price is missing", () => {
 })`,
     },
     customerLede:
-      "Client service and logistics teams work in a CMS that loads about 40% faster and keeps working release after release, across integrations with NTT DATA, Toshiba, Park Assist, City, and Fiserv.",
+      "Client service and logistics teams work in a CMS that loads about 40% faster and keeps working release after release, across integrations with the vendor systems their operation runs on.",
     scale: [
       "Enterprise CMS · service mgmt + logistics",
-      "Australia · 40+ production releases",
+      "Australian company · Sri Lanka office",
       "250+ SQL tables",
       "Team scaled 10 → 60+",
     ],
@@ -469,10 +469,15 @@ export type Project = {
   blurb: string;
   /** The one thing the build was actually for — stated plainly. */
   learned: string;
+  /**
+   * Secondary tier: smaller API-integration builds, kept because they are the
+   * only public code touching AI and crypto surfaces. Listed compactly and
+   * labelled for what they are rather than dressed up as portfolio pieces.
+   */
+  minor?: boolean;
   tech: string[];
   github?: string;
   external?: string;
-  image?: string;
   featured?: boolean;
   category: "Web" | "Desktop";
   year: string;
@@ -498,7 +503,6 @@ export const projects: Project[] = [
     ],
     github: "https://github.com/rezaan6/bright-data-web-scraper",
     external: "https://bright-data-web-scraper-rezaan6.vercel.app/",
-    image: "/projects/web-scraper.png",
     featured: true,
     category: "Web",
     year: "2023",
@@ -541,10 +545,51 @@ export const projects: Project[] = [
     ],
     github: "https://github.com/rezaan6/admin-dashboard",
     external: "https://admin-dashboard-rezaan6.vercel.app/",
-    image: "/projects/admin-dashboard.png",
     featured: true,
     category: "Web",
     year: "2023",
+  },
+  {
+    slug: "chatbot",
+    title: "AI Chatbot",
+    blurb:
+      "A chat interface over the OpenAI API with Google auth — model selection, conversation create/delete, streaming responses, and toast feedback on every action.",
+    learned:
+      "UI for a response that arrives token by token: streaming state, cancellation, and what the screen shows while the model is still thinking.",
+    tech: ["Next.js", "TypeScript", "OpenAI API", "Firebase", "NextAuth"],
+    github: "https://github.com/rezaan6/open-ai-chatbot",
+    external: "https://open-ai-chatbot-rezaan6.vercel.app/",
+    minor: true,
+    category: "Web",
+    year: "2023",
+  },
+  {
+    slug: "image-generator",
+    title: "AI Image Generator",
+    blurb:
+      "A DALL·E interface for generating, previewing, downloading and publishing images from a text prompt, with generated assets stored on Cloudinary behind an Express API.",
+    learned:
+      "Long-running generation as a UI problem — prompt state, the wait, failure, and retry all needed designing before the happy path mattered.",
+    tech: ["React", "Vite", "TypeScript", "OpenAI API", "Cloudinary", "ExpressJS"],
+    github: "https://github.com/rezaan6/open-ai-dalle-image-generator",
+    external: "https://open-ai-dalle-image-generator-rezaan6.vercel.app/",
+    minor: true,
+    category: "Web",
+    year: "2023",
+  },
+  {
+    slug: "cryptoverse",
+    title: "CryptoVerse",
+    blurb:
+      "A cryptocurrency dashboard over live market data — coins, exchanges, and news, with Redux Toolkit for state and ChartJs for price history.",
+    learned:
+      "Rendering volatile market data without the UI thrashing: polling cadence, chart re-render cost, and formatting numbers that change every second.",
+    tech: ["React", "Redux Toolkit", "ChartJs", "Rapid API", "Ant Design"],
+    github: "https://github.com/rezaan6/rapid-api-cryptoverse",
+    external: "https://rapid-api-cryptoverse-rezaan6.vercel.app/",
+    minor: true,
+    category: "Web",
+    year: "2022",
   },
 ];
 
@@ -567,7 +612,7 @@ export const artifacts: Artifact[] = [  {
     body: `ADR-001 — Feature-sliced architecture for the vendor dashboard
 
 STATUS   Accepted
-OWNER    Rezaan Riyaz — Frontend Tech Lead, Hobber
+OWNER    Rezaan Riyaz — Lead Frontend Engineer, Hobber
 CONTEXT  Greenfield vendor platform (UAE marketplace: entertainment, recreation, dining, tourism)
 
 CONTEXT
@@ -652,7 +697,7 @@ Story published · props documented · a11y checked · used in two places.`,
       "The rule that keeps data-fetching bugs from becoming rendering bugs — what belongs in the cache, what belongs in the component, and why the two are never the same store.",
     body: `STATE MODEL — Hobber vendor dashboard
 
-OWNER   Rezaan Riyaz — Senior Frontend Engineer
+OWNER   Rezaan Riyaz — Lead Frontend Engineer
 STACK   React · TypeScript · feature-sliced architecture
 
 THE RULE
@@ -691,7 +736,7 @@ client disagree, the server wins and the UI says so.`,
       "The performance one-pager for the Axinom media build: what was measured, the three levers that moved it (bundle, lazy-load, caching), and the guardrails that stopped a fast page from becoming a broken one.",
     body: `PERF BUDGET — Media web applications, Axinom (Mosaic)
 
-OWNER   Rezaan Riyaz — Senior Frontend Engineer, frontend team lead
+OWNER   Rezaan Riyaz — Lead Frontend Engineer
 RESULT  ~15% reduction in page load time
 READ AS Before/after against a defined baseline — not a controlled experiment
 
@@ -750,7 +795,7 @@ THE PYRAMID, AS ACTUALLY BUILT
 WHAT ALWAYS GETS AN E2E TEST
 - Authentication and permissions.
 - Anything that writes to the 250+ table schema.
-- Every enterprise integration surface (NTT DATA, Toshiba, Park Assist, City, Fiserv).
+- Every integration surface in the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City).
 - Any path a defect has already been filed against. A bug gets a test before a fix.
 
 WHAT DELIBERATELY DOES NOT
@@ -816,30 +861,42 @@ export const timeline = [
   {
     year: "2026",
     company: "Hobber",
-    role: "Frontend Tech Lead",
-    domain: "Vendor marketplace platform · UAE",
+    role: "Lead Frontend Engineer",
+    level: 3,
+    domain: "Vendor marketplace platform",
+    place: "Abu Dhabi, UAE — on-site",
     scope: "Vendor dashboard 0→1 on a modular React + TypeScript architecture.",
+    step: "Same remit, new problem — this time a greenfield platform, architected from an empty repo.",
   },
   {
     year: "2024",
     company: "Axinom",
-    role: "Senior Frontend Engineer",
-    domain: "Enterprise media platform on Mosaic · Germany",
+    role: "Lead Frontend Engineer",
+    level: 3,
+    domain: "Enterprise media platform on Mosaic",
+    place: "German company · Sri Lanka office",
     scope: "Micro-frontends, Shaka Player DRM, i18n; ~15% faster page loads.",
+    step: "Leading the frontend team and owning client-facing technical calls.",
   },
   {
     year: "2021",
     company: "Kodez",
     role: "Senior Frontend Engineer",
-    domain: "Enterprise CMS · Australia",
+    level: 2,
+    domain: "Enterprise CMS for service management & logistics",
+    place: "Australian company · Sri Lanka office",
     scope: "React CMS 0→1, Storybook system, 90% Cypress coverage, 40+ releases.",
+    step: "Setting the standards a team scaling 10 → 60+ engineers built against.",
   },
   {
     year: "2018",
     company: "RaSoft",
     role: "Frontend Engineer ← Intern",
-    domain: "Internal systems & web · Sri Lanka",
+    level: 1,
+    domain: "Internal systems & company web",
+    place: "Colombo, Sri Lanka",
     scope: "EMS built concept → production; site revamp lifted conversion ~15%.",
+    step: "First end-to-end UI ownership, at a seed-stage startup.",
   },
 ];
 
