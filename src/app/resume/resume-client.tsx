@@ -59,7 +59,7 @@ const EXPERIENCE: Role[] = [
     location: "HQ Abu Dhabi, UAE",
     descriptor:
       "Marketplace platform for entertainment, recreation, dining & tourism vendors",
-    title: "Lead Frontend Engineer",
+    title: "Senior Frontend Engineer — Lead",
     period: "Jan 2026 — Present",
     stack: ["React", "TypeScript", "Feature-sliced architecture", "REST", "Real-time"],
     points: [
@@ -75,7 +75,7 @@ const EXPERIENCE: Role[] = [
     company: "Axinom",
     location: "HQ Fürth, Germany",
     descriptor: "Enterprise media technology delivered on the Mosaic platform",
-    title: "Lead Frontend Engineer",
+    title: "Senior Frontend Engineer — Lead",
     period: "Mar 2024 — Nov 2025",
     stack: [
       "React",

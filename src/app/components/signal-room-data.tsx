@@ -626,7 +626,7 @@ export const artifacts: Artifact[] = [  {
     body: `ADR-001 — Feature-sliced architecture for the vendor dashboard
 
 STATUS   Accepted
-OWNER    Rezaan Riyaz — Lead Frontend Engineer, Hobber
+OWNER    Rezaan Riyaz — Senior Frontend Engineer (Lead), Hobber
 CONTEXT  Greenfield vendor platform (UAE marketplace: entertainment, recreation, dining, tourism)
 
 CONTEXT
@@ -711,7 +711,7 @@ Story published · props documented · a11y checked · used in two places.`,
       "The rule that keeps data-fetching bugs from becoming rendering bugs — what belongs in the cache, what belongs in the component, and why the two are never the same store.",
     body: `STATE MODEL — Hobber vendor dashboard
 
-OWNER   Rezaan Riyaz — Lead Frontend Engineer
+OWNER   Rezaan Riyaz — Senior Frontend Engineer (Lead)
 STACK   React · TypeScript · feature-sliced architecture
 
 THE RULE
@@ -750,7 +750,7 @@ client disagree, the server wins and the UI says so.`,
       "The performance one-pager for the Axinom media build: what was measured, the three levers that moved it (bundle, lazy-load, caching), and the guardrails that stopped a fast page from becoming a broken one.",
     body: `PERF BUDGET — Media web applications, Axinom (Mosaic)
 
-OWNER   Rezaan Riyaz — Lead Frontend Engineer
+OWNER   Rezaan Riyaz — Senior Frontend Engineer (Lead)
 RESULT  ~15% reduction in page load time
 READ AS Before/after against a defined baseline — not a controlled experiment
 
@@ -875,7 +875,7 @@ export const timeline = [
   {
     year: "2026",
     company: "Hobber",
-    role: "Lead Frontend Engineer",
+    role: "Senior Frontend Engineer — Lead",
     place: "HQ Abu Dhabi, UAE",
     // One line. The title carries the seniority; this carries the substance.
     scope:
@@ -884,7 +884,7 @@ export const timeline = [
   {
     year: "2024",
     company: "Axinom",
-    role: "Lead Frontend Engineer",
+    role: "Senior Frontend Engineer — Lead",
     place: "HQ Fürth, Germany",
     scope:
       "Led the frontend team on an enterprise media platform — Mosaic micro-frontends, Shaka Player DRM, i18n, and ~15% faster page loads.",
