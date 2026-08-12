@@ -425,14 +425,29 @@ export default function ResumePage() {
                   {copyState === "copied" ? "Copied" : copyState === "error" ? "Failed" : "Copy"}
                 </span>
               </button>
-              <button
-                type="button"
-                onClick={() => window.print()}
-                title="Opens the print dialog — choose “Save as PDF”. Reflows to A4."
-                className="rounded-full bg-[var(--sr-accent-solid)] px-4 py-1.5 text-[12px] font-semibold text-[var(--sr-accent-ink)] transition hover:opacity-90"
+              {/* Was window.print(), which handed the reader whatever their browser
+                  decided to produce — their margins, their paper size, their headers.
+                  These two files are generated from this same route by
+                  scripts/resume-pdf.mjs, so they cannot drift from what's on screen.
+                  The A4 one is separate because a 232 × 636mm sheet scaled onto A4
+                  puts the body type near 5pt: the tall one is for reading, A4 is for
+                  uploading to an ATS and for printing. */}
+              <a
+                href="/resume-a4.pdf"
+                download="Mohammed-Rezaan-Riyaz-Resume-A4.pdf"
+                title="A4, paginated — the one to upload to an application form"
+                className="hidden rounded-full border border-[var(--sr-hairline)] px-3 py-1.5 text-[12px] font-medium text-[var(--sr-text)] transition hover:border-[var(--sr-accent)] hover:text-[var(--sr-accent)] sm:inline-flex sm:items-center print:hidden"
+              >
+                A4
+              </a>
+              <a
+                href="/resume.pdf"
+                download="Mohammed-Rezaan-Riyaz-Resume.pdf"
+                title="One continuous page, generated from this document"
+                className="inline-flex items-center rounded-full bg-[var(--sr-accent-solid)] px-4 py-1.5 text-[12px] font-semibold text-[var(--sr-accent-ink)] transition hover:opacity-90 print:hidden"
               >
                 Download PDF
-              </button>
+              </a>
             </div>
           </div>
         </div>
