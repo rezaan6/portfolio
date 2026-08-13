@@ -531,10 +531,21 @@ export default function ResumePage() {
 
                 {/* --------------------------- highlights ------------------------ */}
                 <section className="grid grid-cols-4 border-b border-neutral-200 bg-neutral-50 print:bg-white">
+                  {/* The outer edges of this strip carry the document's own margin
+                      (px-11) rather than the tile padding, so the first figure sits
+                      on the same left spine as the name above it and every bullet
+                      below. Interior tiles stay at px-6 — matching the outer padding
+                      all the way across would push the middle figures apart and make
+                      the row read as four separate cards. */}
                   {METRICS.map((m, i) => (
                     <div
                       key={m.label}
-                      className={`px-6 py-5 ${i > 0 ? "border-l border-neutral-200" : ""}`}
+                      className={[
+                        "py-5",
+                        i === 0 ? "pl-11" : "pl-6",
+                        i === METRICS.length - 1 ? "pr-11" : "pr-6",
+                        i > 0 ? "border-l border-neutral-200" : "",
+                      ].join(" ")}
                     >
                       <p className="font-[family-name:var(--font-heading)] text-[23px] font-bold leading-none tracking-[-0.01em] text-[#023047]">
                         {m.value}
