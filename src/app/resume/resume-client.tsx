@@ -68,7 +68,7 @@ const POSITIONING = () =>
 const METRICS = [
   { value: "2", label: "platforms architected 0→1" },
   { value: "−40%", label: "page load time, Kodez CMS" },
-  { value: "90%", label: "automated coverage, critical paths" },
+  { value: "~90%", label: "flow coverage, critical paths" },
   { value: "40+", label: "production releases shipped" },
 ];
 
@@ -134,10 +134,10 @@ const EXPERIENCE: Role[] = [
     ],
     points: [
       "Architected and delivered a React CMS from 0→1 to MVP as a microarchitecture applying SOLID principles, then led 40+ production releases on it.",
-      "Introduced TDD with Cypress and drove automated coverage past 90% on critical paths, gated in CI/CD — the reason release throughput stayed safe at that volume.",
+      "Introduced TDD with Cypress and drove automated coverage ~90% on critical paths, gated in CI/CD — the reason release throughput stayed safe at that volume.",
       "Built a Storybook-based reusable component library that cut frontend development time ~30% across projects.",
-      "Reduced page load time ~40% through code-splitting, lazy loading, and asset optimization, with assets served from AWS S3 behind CloudFront.",
-      "Migrated a legacy PHP/jQuery application to React and ExpressJS incrementally, cutting technical debt ~25% without freezing client delivery — and built Node.js BFF layers with the backend team to reduce API latency.",
+      "Reduced page load time ~40% through code-splitting, lazy loading, and asset optimization, with assets served from AWS S3.",
+      "Migrated a legacy PHP/jQuery application to React and ExpressJS incrementally without freezing client delivery — and built Node.js BFF layers with the backend team to reduce API latency.",
       "Built REST integrations against the client's enterprise vendor stack — Amtek (Australia), running on Fiserv, Toshiba, NTT DATA, Park Assist and City systems — across a 250+ table schema.",
       "Translated Figma designs into pixel-perfect, responsive interfaces; set frontend standards and ran code reviews as the team scaled from 10 to 60+ engineers.",
     ],
@@ -255,7 +255,7 @@ const STACK: StackGroup[] = [
       "PHP / Laravel",
       "PostgreSQL",
       "MongoDB",
-      "AWS (S3, CloudFront)",
+      "AWS S3",
       "Docker",
       "GitHub Actions",
       "Vercel",

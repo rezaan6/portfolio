@@ -283,9 +283,9 @@ const messages = await import("../locales/" + locale + ".json")`,
     color: "#F87850",
     brand: "#F87850",
     logo: "/logos/kodez.png",
-    metric: "−40% load · −30% dev time · 90% coverage",
+    metric: "−40% load · −30% dev time · ~90% coverage",
     headline:
-      "A CMS built to be changed: a Storybook design system, 90% Cypress coverage, and 40+ releases without a freeze.",
+      "A CMS built to be changed: a Storybook design system, ~90% Cypress coverage, and 40+ releases without a freeze.",
     problem:
       "A React CMS spanning 250+ SQL tables and enterprise integrations, sitting next to a legacy PHP/jQuery codebase — every release risked a regression somewhere nobody was looking.",
     move:
@@ -296,20 +296,19 @@ const messages = await import("../locales/" + locale + ".json")`,
     results: [
       { label: "Page load time", value: "−40%", note: "code-splitting, lazy loading, asset optimization" },
       { label: "Frontend development time", value: "−30%", note: "after the Storybook library landed" },
-      { label: "Automated coverage, critical paths", value: "90%", note: "Cypress, gated in CI" },
-      { label: "Technical debt", value: "−25%", note: "legacy PHP/jQuery migration" },
+      { label: "Flow coverage, critical paths", value: "~90%", note: "Cypress, gated in CI" },
       { label: "Production releases", value: "40+" },
     ],
     context:
       "Kodez builds an enterprise CMS for service management and logistics. The client I worked across was Amtek in Australia, whose operation runs on enterprise vendor systems (Fiserv, Toshiba, NTT DATA, Park Assist and City), so the CMS had to integrate cleanly with all of them. The surface is large — database operations spanning 250+ SQL tables — and it sat alongside a legacy PHP/jQuery application that still had users. Meanwhile the startup itself grew from 10 to 60+ people. Two forces pull against each other in that setup: the codebase needs to change constantly for clients, and every change is a chance to break something that someone is paid to rely on.",
     decision:
-      "I architected and delivered the CMS from 0→1 to MVP as a React microarchitecture applying SOLID principles, then made two investments that most teams defer. First, a Storybook-based reusable component library — the shared spine, so a new screen is composed rather than authored. Second, Test-Driven Development with Cypress, taken seriously enough to reach over 90% automated coverage and wired into CI/CD, so a release is gated by evidence rather than by whoever remembered to click through it. Redux handled state flow, TanStack React Query handled fetching, caching, and synchronization, and Node.js BFF layers cut API latency.",
+      "I architected and delivered the CMS from 0→1 to MVP as a React microarchitecture applying SOLID principles, then made two investments that most teams defer. First, a Storybook-based reusable component library — the shared spine, so a new screen is composed rather than authored. Second, Test-Driven Development with Cypress, taken seriously enough to reach ~90% automated coverage and wired into CI/CD, so a release is gated by evidence rather than by whoever remembered to click through it. Redux handled state flow, TanStack React Query handled fetching, caching, and synchronization, and Node.js BFF layers cut API latency.",
     tradeoff:
       "Standardizing on the system vs. per-project freedom. A shared library and an enforced test gate slow down the first version of any given screen — engineers occasionally wanted a bespoke component and got a slightly more general one instead. I made that trade deliberately: at 40+ releases and a team scaling past 60, consistency is what keeps velocity from decaying. The migration was the same call in a different costume — I moved the legacy PHP/jQuery application to React and ExpressJS incrementally rather than in a big-bang rewrite, accepting a period of two coexisting stacks to avoid freezing client delivery.",
     signal:
-      "Three numbers, all of them things I could show. Automated test coverage — over 90%, running in CI/CD, which is what made frequent releases safe. Page load time, which came down ~40% through code-splitting, lazy loading, and asset optimization, with AWS S3 serving assets. And frontend development time, which dropped ~30% once the Storybook library was the default way to build. Cross-browser behavior was validated on BrowserStack, and API contracts stayed documented in Swagger, with sprint work tracked in JIRA and Confluence.",
+      "Three numbers, all of them things I could show. Automated test coverage — ~90%, running in CI/CD, which is what made frequent releases safe. Page load time, which came down ~40% through code-splitting, lazy loading, and asset optimization, with AWS S3 serving assets. And frontend development time, which dropped ~30% once the Storybook library was the default way to build. Cross-browser behavior was validated on BrowserStack, and API contracts stayed documented in Swagger, with sprint work tracked in JIRA and Confluence.",
     outcome:
-      "40+ production releases delivered — new features, defect fixes, and database optimization across 250+ SQL tables. Page loads ~40% faster, frontend development ~30% faster, over 90% automated Cypress coverage, and technical debt down ~25% from migrating legacy PHP/jQuery to React and ExpressJS. REST integrations against the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City) stayed interoperable throughout.",
+      "40+ production releases delivered — new features, defect fixes, and database optimization across 250+ SQL tables. Page loads ~40% faster, frontend development ~30% faster, ~90% automated Cypress coverage, and a legacy PHP/jQuery application migrated to React and ExpressJS without a delivery freeze. REST integrations against the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City) stayed interoperable throughout.",
     detail:
       "What I'd do differently: I sold the component library on consistency when I should have sold it on speed. Engineers adopt a design system when it visibly saves them an afternoon, not when it's described as the right thing to do — I'd publish the before/after build time for a real screen in week one and let the number do the arguing. The lesson I carry: high release throughput isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. TDD and Storybook weren't overhead on the 40+ releases; they are what made shipping at that rate feel safe.",
     code: {
@@ -354,7 +353,7 @@ it("keeps a service unbookable when price is missing", () => {
     practices: [
       {
         lp: "Tests are how you ship fast",
-        why: "Introduced TDD with Cypress to over 90% automated coverage inside CI/CD, which is what made 40+ production releases safe rather than merely frequent.",
+        why: "Introduced TDD with Cypress to ~90% automated coverage inside CI/CD, which is what made 40+ production releases safe rather than merely frequent.",
       },
       {
         lp: "Reusable beats bespoke",
@@ -362,11 +361,11 @@ it("keeps a service unbookable when price is missing", () => {
       },
       {
         lp: "Performance is a feature",
-        why: "Cut page load time ~40% with code-splitting, lazy loading, and asset optimization, with AWS S3 behind CloudFront serving assets.",
+        why: "Cut page load time ~40% with code-splitting, lazy loading, and asset optimization, with assets served from AWS S3.",
       },
       {
         lp: "Migrate incrementally, never freeze",
-        why: "Moved a legacy PHP/jQuery application to React and ExpressJS in steps — ~25% less technical debt — instead of a big-bang rewrite that would have stopped client delivery.",
+        why: "Moved a legacy PHP/jQuery application to React and ExpressJS in steps — instead of a big-bang rewrite that would have stopped client delivery.",
       },
     ],
   },
@@ -792,13 +791,13 @@ On an international product, the aggregate is the least informative number avail
   },  {
     type: "TEST STRATEGY",
     company: "Kodez",
-    title: "TDD with Cypress — 90% on the paths that matter",
+    title: "TDD with Cypress — ~90% on the paths that matter",
     blurb:
       "The testing strategy that made 40+ production releases safe: what gets a test, what deliberately does not, and where the gate sits in CI/CD.",
     body: `TEST STRATEGY — Kodez CMS
 
 OWNER   Rezaan Riyaz — Senior Frontend Engineer
-RESULT  >90% automated coverage on critical paths · 40+ production releases
+RESULT  ~90% flow coverage on critical paths · 40+ production releases
 
 THE PREMISE
 Release throughput is not a function of moving fast. It is a function of how cheaply
@@ -834,11 +833,11 @@ not have yet. Claiming otherwise would be theatre.`,
     company: "Kodez",
     title: "PHP/jQuery → React + Express, without a freeze",
     blurb:
-      "How a legacy application moved to a modern stack incrementally — the strangler approach, what shipped in which order, and the rule that kept two coexisting stacks from doubling the work. ~25% technical debt removed.",
+      "How a legacy application moved to a modern stack incrementally — the strangler approach, what shipped in which order, and the rule that kept two coexisting stacks from doubling the work.",
     body: `MIGRATION PLAN — legacy PHP/jQuery → React + ExpressJS
 
 OWNER   Rezaan Riyaz — Senior Frontend Engineer, Kodez
-RESULT  ~25% reduction in technical debt · zero delivery freeze
+RESULT  Legacy stack retired incrementally · zero delivery freeze
 
 THE CONSTRAINT
 The legacy application had users and client commitments. A big-bang rewrite means
@@ -899,7 +898,7 @@ export const timeline = [
     role: "Senior Frontend Engineer",
     place: "HQ Melbourne, Australia",
     scope:
-      "Built an enterprise CMS 0→1 and the standards a team scaling 10 → 60+ built against — Storybook system, 90% Cypress coverage, 40+ releases.",
+      "Built an enterprise CMS 0→1 and the standards a team scaling 10 → 60+ built against — Storybook system, ~90% Cypress coverage, 40+ releases.",
   },
   {
     year: "2018",
@@ -926,7 +925,7 @@ export const principles: { label: string; body: string }[] = [
   },
   {
     label: "Tests are how you ship fast",
-    body: "Release throughput isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. Over 90% Cypress coverage in CI wasn't overhead on 40+ releases — it's why there were 40+ releases.",
+    body: "Release throughput isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. ~90% Cypress coverage in CI wasn't overhead on 40+ releases — it's why there were 40+ releases.",
   },
 ];
 
@@ -1163,11 +1162,11 @@ it("keeps a service unbookable when price is missing", () => {
     group: "Testing & quality",
     use: "End-to-end & regression testing",
     howIUse:
-      "Cypress is what made frequent releases safe at Kodez — I introduced TDD with it and drove automated coverage past 90% on the critical paths, wired into CI/CD as a merge gate. I'm selective about what earns an E2E test: authentication and permissions, anything that writes to the database, every enterprise integration surface, and any path a defect has already been filed against. Everything else is cheaper to cover lower down the pyramid.",
+      "Cypress is what made frequent releases safe at Kodez — I introduced TDD with it and drove automated coverage ~90% on the critical paths, wired into CI/CD as a merge gate. I'm selective about what earns an E2E test: authentication and permissions, anything that writes to the database, every enterprise integration surface, and any path a defect has already been filed against. Everything else is cheaper to cover lower down the pyramid.",
     sample: `The gate, not the suite size
 Blocking specs: auth · permissions · writes · client integrations
 Red pipeline = no merge. No "we'll fix it after."
->90% coverage on critical paths across 40+ production releases.`,
+~90% coverage on critical paths across 40+ production releases.`,
   },
   {
     name: "Postman",
@@ -1211,9 +1210,9 @@ Unexplained size increase → blocked, not noted.`,
     name: "AWS",
     slug: "amazonwebservices",
     group: "Build & delivery",
-    use: "S3, CloudFront & asset delivery",
+    use: "S3 & asset delivery",
     howIUse:
-      "At Kodez I deployed to S3 with CloudFront in front of it for asset storage and delivery. Cache headers and CDN behaviour move the number more than most application-code changes do. I make cache policy an explicit decision per asset class rather than an accident of defaults, so a hashed bundle and an HTML document are never treated the same way.",
+      "At Kodez I deployed static assets to S3 for storage and delivery. Cache headers and CDN behaviour move the number more than most application-code changes do. I make cache policy an explicit decision per asset class rather than an accident of defaults, so a hashed bundle and an HTML document are never treated the same way.",
     sample: `Cache policy is a decision, not a default
 /static/*  (hashed)   → immutable, 1 year
 /index.html           → no-cache, revalidate every load

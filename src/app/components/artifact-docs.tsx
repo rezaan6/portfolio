@@ -287,7 +287,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "fields",
         fields: [
           { label: "Doc", value: "Test strategy — Kodez CMS" },
-          { label: "Coverage", value: ">90% automated, on critical paths" },
+          { label: "Coverage", value: "~90% automated, on critical paths" },
           { label: "Throughput", value: "40+ production releases" },
           { label: "Tooling", value: "Jest · Cypress · CI/CD · BrowserStack" },
         ],
@@ -350,14 +350,14 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
 
   "MIGRATION PLAN": {
     summary:
-      "How a legacy PHP/jQuery application moved to React and ExpressJS incrementally at Kodez — the strangler approach, the ordering, and the one rule that kept two coexisting stacks from doubling the work. ~25% technical debt removed, with no delivery freeze.",
+      "How a legacy PHP/jQuery application moved to React and ExpressJS incrementally at Kodez — the strangler approach, the ordering, and the one rule that kept two coexisting stacks from doubling the work. removed, with no delivery freeze.",
     blocks: [
       {
         type: "fields",
         fields: [
           { label: "Doc", value: "Legacy PHP/jQuery → React + ExpressJS" },
           { label: "Constraint", value: "Live users and client commitments — no freeze available" },
-          { label: "Result", value: "~25% reduction in technical debt" },
+          { label: "Result", value: "Legacy stack retired · zero delivery freeze" },
           { label: "Approach", value: "Strangler — migrate alongside funded work" },
         ],
       },

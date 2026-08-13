@@ -327,9 +327,21 @@ export function SiteFrame({ children }: { children: ReactNode }) {
       toggle(true);
       return;
     }
+    // Origin is the pointer, not the button's box. The button carries `sr-tap`,
+    // which applies `translateY(-1px) scale(1.12)` on hover — and on the first
+    // interaction after a page load that transform is still settling when the
+    // click lands, so getBoundingClientRect() reports a box mid-animation and
+    // the circle starts somewhere other than under the cursor. clientX/clientY
+    // is exactly where the press happened and can't be wrong.
+    //
+    // Keyboard activation reports 0,0, so fall back to the button's centre
+    // there — and guard on `detail`, which is 0 for Enter/Space and non-zero
+    // for a real pointer, rather than trusting a coordinate that could
+    // legitimately be near the origin.
     const rect = btn.getBoundingClientRect();
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
+    const fromPointer = e.detail > 0 && (e.clientX !== 0 || e.clientY !== 0);
+    const x = fromPointer ? e.clientX : rect.left + rect.width / 2;
+    const y = fromPointer ? e.clientY : rect.top + rect.height / 2;
 
     // Distance to the farthest corner, then 6% more. Without the overshoot the
     // circle lands exactly on the corner pixel and the easing spends its final
@@ -2155,7 +2167,7 @@ function V8HeroCard() {
     { company: "Hobber", label: "Vendor dashboard architected", value: "0→1", logo: "/logos/hobber.png", mark: "HB", note: "7 modules, feature-sliced React + TS" },
     { company: "Axinom", label: "Page load time", value: "−15%", logo: "/logos/axinom.png", mark: "AX", note: "bundle, lazy-load & caching" },
     { company: "Kodez", label: "Page load time", value: "−40%", logo: "/logos/kodez.png", mark: "KZ", note: "code-splitting across 40+ releases" },
-    { company: "Kodez", label: "Automated test coverage", value: "90%", logo: "/logos/kodez.png", mark: "KZ", note: "TDD with Cypress, gated in CI" },
+    { company: "Kodez", label: "Automated test coverage", value: "~90%", logo: "/logos/kodez.png", mark: "KZ", note: "TDD with Cypress, gated in CI" },
   ];
   return (
     <motion.div
@@ -2293,7 +2305,7 @@ function V8Impact() {
       value: "−40%",
       label: "Page load time via code-splitting, lazy loading & asset optimization · Kodez",
     },
-    { value: "90%", label: "Automated Cypress coverage on critical paths, gated in CI · Kodez" },
+    { value: "~90%", label: "Automated Cypress coverage on critical paths, gated in CI · Kodez" },
     {
       value: "−30%",
       label: "Frontend dev time after the Storybook component library landed · Kodez",
@@ -2618,7 +2630,7 @@ function V8Focus() {
       t: "Testing & release safety",
       d: "TDD with Cypress and Jest, gated in CI, plus cross-browser validation — the reason high release throughput is safe rather than merely fast.",
       companies: ["Kodez"],
-      outcome: "90% coverage · 40+ releases",
+      outcome: "~90% coverage · 40+ releases",
     },
     {
       t: "AI-native engineering",
