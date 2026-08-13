@@ -391,7 +391,7 @@ it("keeps a service unbookable when price is missing", () => {
     move:
       "Took the EMS from concept to production as the end-to-end UI owner in React, and rebuilt the company site around responsiveness and accessibility.",
     result:
-      `The EMS shipped to production, and the site revamp lifted UX and conversion ${MEASUREMENTS["load-axinom"].value.replace("−","")} while the same push contributed to ~20% growth in client acquisition.`,
+      `The EMS shipped to production, and the site revamp lifted UX and conversion ${MEASUREMENTS.conversion.value.replace("+","")} while the same push contributed to ~20% growth in client acquisition.`,
     tradeoffShort: "Rapid delivery vs. scalable architecture",
     results: [
       { label: "Conversion after the UI revamp", note: "responsive redesign + accessibility", m: "conversion" },
@@ -404,9 +404,9 @@ it("keeps a service unbookable when price is missing", () => {
     tradeoff:
       "Rapid delivery vs. scalable architecture. The honest answer is that I leaned slightly toward architecture and shipped a little slower than I could have — refactoring components rather than duplicating them, and improving performance at the component level while features were still landing. At seed stage that's a defensible but not free choice: some things reached users later than they might have. What I'd defend is the direction, because the EMS was going to be lived in daily, and the site was the company's front door.",
     signal:
-      `The site had a number: UX and conversion improved ${MEASUREMENTS["load-axinom"].value.replace("−","")} after the responsive redesign and accessibility work — reported internally, over the months after launch, and it was one of several things changing at once. The EMS was the other half of the job: an internal system that did not exist, designed and built end to end.`,
+      `The site had a number: UX and conversion improved ${MEASUREMENTS.conversion.value.replace("+","")} after the responsive redesign and accessibility work — reported internally, over the months after launch, and it was one of several things changing at once. The EMS was the other half of the job: an internal system that did not exist, designed and built end to end.`,
     outcome:
-      `A complete Employment Management System delivered from concept to production with end-to-end UI development, and a company site rebuilt for responsiveness and accessibility that lifted conversion ${MEASUREMENTS["load-axinom"].value.replace("−","")}. Along the way I ran code reviews and pair-programming sessions to hold quality, improved performance through refactoring and component-level optimization, and got real exposure to Agile/Scrum through sprint planning and retrospectives.`,
+      `A complete Employment Management System delivered from concept to production with end-to-end UI development, and a company site rebuilt for responsiveness and accessibility that lifted conversion ${MEASUREMENTS.conversion.value.replace("+","")}. Along the way I ran code reviews and pair-programming sessions to hold quality, improved performance through refactoring and component-level optimization, and got real exposure to Agile/Scrum through sprint planning and retrospectives.`,
     detail:
       "What I'd do differently: I optimized components before I had any measurement, which is guessing with extra steps. Now I'd profile first and let the numbers pick the target — a habit that later turned into the 40% and 15% load-time wins at Kodez and Axinom, both of which started from a measurement rather than an instinct. The lesson I carry from RaSoft: pair programming and code review were where I actually learned to write maintainable code, and both cost time that always felt like it could be spent shipping. It couldn't.",
     code: {
@@ -440,7 +440,7 @@ $ node --cpu-prof server.js                  # where the time really goes
       },
       {
         lp: "Accessibility is conversion",
-        why: `Rebuilt the company site around responsive layout and accessibility improvements, lifting UX and conversion ${MEASUREMENTS["load-axinom"].value.replace("−","")}.`,
+        why: `Rebuilt the company site around responsive layout and accessibility improvements, lifting UX and conversion ${MEASUREMENTS.conversion.value.replace("+","")}.`,
       },
       {
         lp: "Review is where quality happens",
@@ -909,7 +909,7 @@ export const timeline = [
     role: "Frontend Engineer",
     place: "HQ Colombo, Sri Lanka",
     scope:
-      `First end-to-end UI ownership at a seed-stage startup — an employment system from concept to production, and a site revamp that lifted conversion ${MEASUREMENTS["load-axinom"].value.replace("−","")}.`,
+      `Joined as an intern and left owning the UI end to end — an employment system from concept to production, and a site revamp that lifted conversion ${MEASUREMENTS.conversion.value.replace("+","")}.`,
   },
 ];
 
