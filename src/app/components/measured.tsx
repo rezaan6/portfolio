@@ -1,6 +1,6 @@
 "use client";
 
-import { useId } from "react";
+import { useCallback, useId, useRef } from "react";
 
 import {
   KIND_LABEL,
@@ -10,26 +10,36 @@ import {
 } from "../lib/measurement";
 
 /* ------------------------------------------------------------------ *
- * "How this was measured" — a disclosure, not a tooltip.
+ * "How this figure was measured" — an ⓘ that opens on hover and on tap.
  *
- * Deliberately opens on click, never on hover. Hover-only affordances
- * fail keyboard users and touch outright, and WCAG 2.1.3 then demands
- * the panel be hoverable, dismissible and persistent — three behaviours
- * to hand-build and get wrong. A button that toggles a panel has all of
- * that from the platform, and makes the touch interaction identical to
- * the desktop one instead of a second code path.
+ * Hover is the convention and it is genuinely quicker, so hover and
+ * keyboard focus both open it. But hover alone is not enough: there is
+ * no hover on a phone, so a hover-only tooltip is simply unreachable on
+ * touch. Click therefore toggles it too, which costs nothing on desktop
+ * and is the only way in on mobile.
  *
- * Built on the native Popover API so the panel renders in the top
- * layer: it cannot be clipped by an ancestor's overflow, cannot be
- * fought over with z-index, and cannot shift a single pixel of layout.
- * That last one matters here — this site had a CLS regression from
- * animating a layout property, and a panel that reserved space or
- * pushed content would reintroduce exactly that.
+ * WCAG 1.4.13 (Content on Hover or Focus) asks for three things once you
+ * open on hover, and all three are handled here:
+ *   hoverable  — a short close delay, cancelled if the pointer enters
+ *                the panel, so you can move onto it to read or select
+ *   dismissible — Esc, free from the Popover API
+ *   persistent  — it stays until you leave or dismiss it; nothing on a
+ *                timer
  *
- * Esc, light-dismiss and one-open-at-a-time come free with popover.
- * Where it isn't supported the button degrades to an inert marker; the
- * same text is in the résumé's printed endnotes, so nothing is lost.
+ * Anchored to the icon via CSS Anchor Positioning where supported, so it
+ * reads as a tooltip attached to the number rather than a dialog. Where
+ * it isn't, it centres — degraded, still legible, still dismissible.
+ *
+ * Popover means the panel lives in the top layer: it cannot be clipped
+ * by an ancestor's overflow, cannot be fought over with z-index, and
+ * cannot shift a pixel of layout. That last one matters on a site that
+ * already had one CLS regression from animating a layout property.
  * ------------------------------------------------------------------ */
+
+type Pop = HTMLDivElement & {
+  showPopover?: () => void;
+  hidePopover?: () => void;
+};
 
 export function Measured({
   id,
@@ -38,34 +48,82 @@ export function Measured({
   id: MeasurementId;
   className?: string;
 }) {
-  const panelId = useId();
+  const raw = useId();
+  // useId returns colons, which are not valid in a CSS custom ident.
+  const key = `m${raw.replace(/[^a-zA-Z0-9]/g, "")}`;
+  const panelRef = useRef<Pop | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   // Widened deliberately. MEASUREMENTS uses `satisfies`, which keeps each
   // entry's literal type — so entries without a `limit` genuinely don't have
-  // the property and reading it is an error. The map is what needs the strict
-  // keys; a consumer only needs the shared shape.
+  // the property and reading it is an error. The map needs the strict keys; a
+  // consumer only needs the shared shape.
   const m: Measurement | undefined = MEASUREMENTS[id];
+
+  const cancelClose = useCallback(() => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  }, []);
+
+  const open = useCallback(() => {
+    cancelClose();
+    try {
+      panelRef.current?.showPopover?.();
+    } catch {
+      /* already open, or popover unsupported */
+    }
+  }, [cancelClose]);
+
+  // The delay is the "hoverable" half of 1.4.13 — long enough to cross the gap
+  // between the icon and the panel without it vanishing under the pointer.
+  const closeSoon = useCallback(() => {
+    cancelClose();
+    closeTimer.current = setTimeout(() => {
+      try {
+        panelRef.current?.hidePopover?.();
+      } catch {
+        /* already closed */
+      }
+    }, 220);
+  }, [cancelClose]);
+
   if (!m) return null;
 
   return (
     <>
       <button
         type="button"
-        // @ts-expect-error — popovertarget is valid HTML the React types lag on
-        popovertarget={panelId}
         aria-label="How this figure was measured"
-        title="How this figure was measured"
+        // No popovertarget attribute. The browser's built-in behaviour for it is
+        // *toggle*, which fights the hover handler: the pointer arriving opens
+        // the panel, then the click toggles it shut, so a tap on desktop looked
+        // like nothing happened. Click is handled here and always opens rather
+        // than toggling — closing is the pointer leaving, Esc, or popover's own
+        // light-dismiss when you click elsewhere.
+        onClick={open}
+        // Guarded on pointerType so a tap doesn't fire the hover path first and
+        // then race the click. Touch gets click only; a mouse gets both.
+        onPointerEnter={(e) => {
+          if (e.pointerType === "mouse") open();
+        }}
+        onPointerLeave={(e) => {
+          if (e.pointerType === "mouse") closeSoon();
+        }}
+        onFocus={open}
+        onBlur={closeSoon}
+        style={{ anchorName: `--${key}` } as React.CSSProperties}
         className={[
-          // The conventional ⓘ, sized to sit beside a figure without competing
-          // with it — 14px against display type, at the muted colour until
-          // hovered. It reads as "there is more here" instantly, which a text
-          // link next to a large numeral does not.
           "relative inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full",
           "border border-current align-middle text-[9px] font-semibold leading-none",
-          "text-[var(--sr-faint)] transition",
+          "text-[var(--sr-faint)] transition-colors",
           "hover:text-[var(--sr-accent)] focus-visible:text-[var(--sr-accent)]",
-          // 44px hit area from a pseudo-element, so the target is thumb-sized
-          // without the icon occupying 44px of layout.
-          "after:absolute after:left-1/2 after:top-1/2 after:h-11 after:w-11",
+          // 28px hit area, not 44. Since hover now opens the panel, an oversized
+          // invisible target means it opens when the pointer is nowhere near the
+          // icon — which reads as the thing being twitchy. 28 still clears the
+          // 24px WCAG 2.5.8 minimum for tapping.
+          "after:absolute after:left-1/2 after:top-1/2 after:h-7 after:w-7",
           "after:-translate-x-1/2 after:-translate-y-1/2 after:content-['']",
           "print:hidden",
           className,
@@ -75,32 +133,39 @@ export function Measured({
       </button>
 
       <div
-        id={panelId}
+        ref={panelRef}
+        id={key}
         popover="auto"
+        onMouseEnter={cancelClose}
+        onMouseLeave={closeSoon}
+        style={
+          {
+            positionAnchor: `--${key}`,
+            positionArea: "block-end span-inline-start",
+            positionTryFallbacks: "flip-block, flip-inline, flip-block flip-inline",
+            marginBlockStart: "0.5rem",
+          } as React.CSSProperties
+        }
         className={[
-          "m-auto w-[min(30rem,calc(100vw-2rem))] rounded-2xl border p-5",
-          "border-[var(--sr-hairline)] bg-[var(--sr-panel)] text-left shadow-2xl",
-          "backdrop:bg-black/40 print:hidden",
+          // Tooltip proportions, not dialog: narrower measure, tighter padding,
+          // and no backdrop — a backdrop on hover would dim the page every time
+          // the pointer crossed an icon.
+          "w-[min(22rem,calc(100vw-2rem))] rounded-xl border p-3.5",
+          "border-[var(--sr-hairline)] bg-[var(--sr-panel)] text-left shadow-xl",
+          // Centred fallback where anchor positioning isn't supported.
+          "[position-area:none] supports-[position-area:block-end]:m-0 m-auto",
+          "print:hidden",
         ].join(" ")}
       >
-        <p className="font-[family-name:var(--font-display)] text-[10px] uppercase tracking-[0.16em] text-[var(--sr-accent)]">
+        <p className="font-[family-name:var(--font-display)] text-[9.5px] uppercase tracking-[0.16em] text-[var(--sr-accent)]">
           {KIND_LABEL[m.kind]}
         </p>
-        <p className="mt-2.5 text-[13.5px] leading-6 text-[var(--sr-text)]">{m.basis}</p>
+        <p className="mt-1.5 text-[12.5px] leading-[1.55] text-[var(--sr-text)]">{m.basis}</p>
         {m.limit ? (
-          <p className="mt-3 border-t border-[var(--sr-hairline)] pt-3 text-[12.5px] leading-6 text-[var(--sr-muted)]">
+          <p className="mt-2 border-t border-[var(--sr-hairline)] pt-2 text-[11.5px] leading-[1.55] text-[var(--sr-muted)]">
             {m.limit}
           </p>
         ) : null}
-        <button
-          type="button"
-          // @ts-expect-error — popovertargetaction is valid HTML the React types lag on
-          popovertarget={panelId}
-          popovertargetaction="hide"
-          className="mt-4 rounded-full border border-[var(--sr-hairline)] px-3 py-1 font-[family-name:var(--font-display)] text-[10.5px] uppercase tracking-[0.12em] text-[var(--sr-muted)] transition hover:border-[var(--sr-accent)] hover:text-[var(--sr-accent)]"
-        >
-          Close
-        </button>
       </div>
     </>
   );
