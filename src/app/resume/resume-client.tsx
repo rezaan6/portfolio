@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-import { Measured } from "../components/measured";
 import { navLinks } from "../components/signal-room-data";
 import { yearsOfExperience, yearsPhrase } from "../lib/experience";
 import { KIND_LABEL, MEASUREMENTS, type MeasurementId } from "../lib/measurement";
@@ -566,15 +565,14 @@ export default function ResumePage() {
                     >
                       <p className="font-[family-name:var(--font-heading)] text-[23px] font-bold leading-none tracking-[-0.01em] text-[#023047]">
                         {MEASUREMENTS[m.m].value}
-                        {/* Superscript for print, ⓘ for screen. The PDF keeps the
-                            marker and the endnote; the browser gets the panel as
-                            well, so neither medium is missing the provenance. */}
+                        {/* Superscript only. An interactive ⓘ inside what is meant
+                            to read as a printed document looks out of place, and
+                            it duplicated the marker sitting beside it — both
+                            pointed at the same endnote. The notes after Education
+                            carry the provenance on screen and in the PDF alike. */}
                         <sup className="ml-0.5 align-super text-[9px] font-semibold text-neutral-400">
                           {i + 1}
                         </sup>
-                        <span className="ml-1 align-middle text-neutral-400">
-                          <Measured id={m.m} />
-                        </span>
                       </p>
                       <p className="mt-2 text-[9.8px] leading-[1.4] text-neutral-600">
                         {m.label}
