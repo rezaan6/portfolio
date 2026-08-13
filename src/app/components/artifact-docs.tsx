@@ -1,3 +1,4 @@
+import { MEASUREMENTS } from "../lib/measurement";
 import type { ArtDoc } from "./artifact-doc";
 
 /* Structured, per-type engineering documents. Each artifact type renders as
@@ -91,7 +92,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
       {
         type: "section",
         title: "Why this exists",
-        text: "The CMS spans 250+ SQL tables and enterprise integrations, and the team grew from 10 to 60+ engineers. Without a shared spine, every screen is authored from scratch and the product drifts. The library is how a screen becomes composition instead of authorship.",
+        text: `The CMS spans ${MEASUREMENTS.tables.value} SQL tables and enterprise integrations, and the team grew from 10 to 60+ people. Without a shared spine, every screen is authored from scratch and the product drifts. The library is how a screen becomes composition instead of authorship.`,
       },
       {
         type: "steps",
@@ -223,7 +224,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         fields: [
           { label: "Doc", value: "Page-load budget — media web applications" },
           { label: "Context", value: "Axinom · Mosaic platform · global media clients" },
-          { label: "Result", value: "~15% reduction in page load time" },
+          { label: "Result", value: `${MEASUREMENTS["load-axinom"].value.replace("−","")} reduction in page load time` },
           {
             label: "Read as",
             value: "Before/after vs. a defined baseline — not a controlled experiment",
@@ -249,7 +250,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "table",
         cols: ["What was measured", "Read"],
         rows: [
-          { cells: ["Page load time", "−15%"], tag: "Now" },
+          { cells: ["Page load time", MEASUREMENTS["load-axinom"].value], tag: "Now" },
           { cells: ["Bundle composition", "Audited"] },
           { cells: ["Time to interactive, playback routes", "Watched"] },
         ],
@@ -281,14 +282,14 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
 
   "TEST STRATEGY": {
     summary:
-      "The testing strategy that made 40+ production releases safe at Kodez: what gets a test, what deliberately doesn't, where the gate sits, and an honest account of how much of it was actually test-first.",
+      `The testing strategy that made ${MEASUREMENTS.releases.value} production releases safe at Kodez: what gets a test, what deliberately doesn't, where the gate sits, and an honest account of how much of it was actually test-first.`,
     blocks: [
       {
         type: "fields",
         fields: [
           { label: "Doc", value: "Test strategy — Kodez CMS" },
-          { label: "Coverage", value: "~90% automated, on critical paths" },
-          { label: "Throughput", value: "40+ production releases" },
+          { label: "Coverage", value: `${MEASUREMENTS.coverage.value} automated, on critical paths` },
+          { label: "Releases", value: `${MEASUREMENTS.releases.value} production releases` },
           { label: "Tooling", value: "Jest · Cypress · CI/CD · BrowserStack" },
         ],
       },
@@ -296,7 +297,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "callout",
         tone: "insight",
         title: "The premise",
-        text: "Release throughput is not a function of moving fast. It's a function of how cheaply you can prove you didn't break anything. TDD and CI gates weren't overhead on the 40+ releases — they're what made shipping at that rate safe.",
+        text: `Release throughput is not a function of moving fast. It's a function of how cheaply you can prove you didn't break anything. TDD and CI gates weren't overhead on the ${MEASUREMENTS.releases.value} releases — they're what made shipping at that rate safe.`,
       },
       {
         type: "table",
@@ -312,7 +313,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         title: "What always gets an E2E test",
         checks: [
           { text: "Authentication and permissions." },
-          { text: "Anything that writes to the 250+ table schema." },
+          { text: "Anything that writes to the ${MEASUREMENTS.tables.value} table schema." },
           {
             text: "Every integration surface in the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City).",
           },
@@ -378,7 +379,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         cols: ["Order", "What moved", "Why"],
         rows: [
           { cells: ["01", "Routes already scheduled for a change", "Nearly free"] },
-          { cells: ["02", "High-traffic, high-latency paths", "−40% load"] },
+          { cells: ["02", "High-traffic, high-latency paths", `${MEASUREMENTS["load-kodez"].value} load`] },
           { cells: ["03", "Integration-heavy screens", "After BFF"] },
           { cells: ["04", "Low-traffic legacy screens", "Last, some never"] },
         ],

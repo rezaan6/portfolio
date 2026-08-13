@@ -38,6 +38,7 @@ import {
   tools,
 } from "./signal-room-data";
 import { Measured } from "./measured";
+import { MEASUREMENTS } from "../lib/measurement";
 import { yearsOfExperience, yearsPhrase } from "../lib/experience";
 import { ArtifactDocView } from "./artifact-doc";
 import { ARTIFACT_DOCS } from "./artifact-docs";
@@ -714,7 +715,7 @@ const caseBarSource: Record<string, string> = {
   axinom:
     "Load-time measured before/after the bundle, lazy-load, and caching work, plus the Mosaic micro-frontends integrated for client delivery.",
   kodez:
-    "CI coverage reports and before/after load-time reads across 40+ production releases.",
+    `CI coverage reports and before/after load-time reads across ${MEASUREMENTS.releases.value} production releases.`,
   rasoft:
     "Reported internally at a seed-stage startup — an early-career read, not instrumented analytics.",
 };
@@ -926,7 +927,10 @@ export function EvidenceSection() {
                                 className="shrink-0 font-[family-name:var(--font-display)] text-[15px] font-semibold tabular-nums"
                                 style={{ color: brandInk(cs.color) }}
                               >
-                                {r.value}
+                                {/* Shared source wins where a row is tagged, so a
+                                    figure can't say one thing here and another on
+                                    the résumé. */}
+                                {r.m ? MEASUREMENTS[r.m].value : r.value}
                               </dd>
                             </div>
                           ))}
@@ -2175,9 +2179,9 @@ function V8HeroCard() {
   const reduce = useReducedMotion();
   const rows = [
     { company: "Hobber", label: "Vendor dashboard architected", value: "0→1", logo: "/logos/hobber.png", mark: "HB", note: "7 modules, feature-sliced React + TS" },
-    { company: "Axinom", label: "Page load time", value: "−15%", logo: "/logos/axinom.png", mark: "AX", note: "bundle, lazy-load & caching" },
-    { company: "Kodez", label: "Page load time", value: "−40%", logo: "/logos/kodez.png", mark: "KZ", note: "code-splitting across 40+ releases" },
-    { company: "Kodez", label: "Automated test coverage", value: "~90%", logo: "/logos/kodez.png", mark: "KZ", note: "TDD with Cypress, gated in CI" },
+    { company: "Axinom", label: "Page load time", value: MEASUREMENTS["load-axinom"].value, logo: "/logos/axinom.png", mark: "AX", note: "bundle, lazy-load & caching" },
+    { company: "Kodez", label: "Page load time", value: MEASUREMENTS["load-kodez"].value, logo: "/logos/kodez.png", mark: "KZ", note: `code-splitting across ${MEASUREMENTS.releases.value} releases` },
+    { company: "Kodez", label: "Automated test coverage", value: MEASUREMENTS.coverage.value, logo: "/logos/kodez.png", mark: "KZ", note: "TDD with Cypress, gated in CI" },
   ];
   return (
     <motion.div
@@ -2312,16 +2316,16 @@ function V8Impact() {
       fill: true,
     },
     {
-      value: "−40%",
+      value: MEASUREMENTS["load-kodez"].value,
       label: "Page load time via code-splitting, lazy loading & asset optimization · Kodez",
     },
-    { value: "~90%", label: "Automated Cypress coverage on critical paths, gated in CI · Kodez" },
+    { value: MEASUREMENTS.coverage.value, label: "Automated Cypress coverage on critical paths, gated in CI · Kodez" },
     {
-      value: "−30%",
+      value: MEASUREMENTS["dev-time"].value,
       label: "Frontend dev time after the Storybook component library landed · Kodez",
     },
     {
-      value: "250+",
+      value: MEASUREMENTS.tables.value,
       label: "SQL tables in the schema behind the CMS I owned the frontend for",
     },
   ];
@@ -2622,25 +2626,25 @@ function V8Focus() {
       t: "Performance engineering",
       d: "Bundle analysis, code-splitting, lazy loading, and caching — always starting from a measurement rather than an instinct, and never reading the average alone.",
       companies: ["Kodez", "Axinom"],
-      outcome: "−40% and −15% page load",
+      outcome: `${MEASUREMENTS["load-kodez"].value} and ${MEASUREMENTS["load-axinom"].value} page load`,
     },
     {
       t: "Design systems",
       d: "Component libraries documented in Storybook with an accessibility floor and a real promotion rule, so screens get composed instead of authored.",
       companies: ["Kodez"],
-      outcome: "−30% frontend dev time",
+      outcome: `${MEASUREMENTS["dev-time"].value} frontend dev time`,
     },
     {
       t: "Full-stack delivery",
       d: "Node.js BFF layers, ExpressJS services, and relational schema work — plus incremental migration off a legacy stack without freezing delivery.",
       companies: ["Kodez", "RaSoft"],
-      outcome: "250+ SQL tables · −25% tech debt",
+      outcome: `${MEASUREMENTS.tables.value} SQL tables · ${MEASUREMENTS["tech-debt"].value} tech debt`,
     },
     {
       t: "Testing & release safety",
-      d: "TDD with Cypress and Jest, gated in CI, plus cross-browser validation — the reason high release throughput is safe rather than merely fast.",
+      d: "TDD with Cypress and Jest, gated in CI, plus cross-browser validation — the reason releases stayed frequent and safe is safe rather than merely fast.",
       companies: ["Kodez"],
-      outcome: "~90% coverage · 40+ releases",
+      outcome: `${MEASUREMENTS.coverage.value} coverage · ${MEASUREMENTS.releases.value} releases`,
     },
     {
       t: "AI-native engineering",

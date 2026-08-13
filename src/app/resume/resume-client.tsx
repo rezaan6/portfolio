@@ -66,22 +66,21 @@ const POSITIONING = () =>
 
 // The five-second scan payload. Every figure is a before/after read against
 // a defined baseline — never a causal claim.
-const METRICS: { value: string; label: string; m: MeasurementId }[] = [
-  { value: "2", label: "platforms architected 0→1", m: "platforms" },
-  { value: "−40%", label: "page load time, Kodez CMS", m: "load-kodez" },
-  { value: "~90%", label: "flow coverage, critical paths", m: "coverage" },
-  { value: "40+", label: "production releases shipped", m: "releases" },
+// Only the label lives here. The figure itself comes from lib/measurement,
+// so changing −40% there changes it on the résumé, in the case tables and in
+// the endnotes at once — they used to be three separate copies.
+const METRICS: { label: string; m: MeasurementId }[] = [
+  { label: "platforms architected 0→1 — Hobber, Kodez", m: "platforms" },
+  { label: "page load time, Kodez CMS", m: "load-kodez" },
+  { label: "flow coverage, critical paths", m: "coverage" },
+  { label: "production releases shipped", m: "releases" },
 ];
 
 // The site can open a panel; a PDF cannot. Superscript markers on the four
 // tiles point at an endnote block after Education, which is on screen as well
 // as in print — one artifact, not a screen version and a print version that
 // drift. This is the same text the site's disclosures show.
-const ENDNOTES = METRICS.map((x, i) => ({
-  n: i + 1,
-  value: x.value,
-  ...MEASUREMENTS[x.m],
-}));
+const ENDNOTES = METRICS.map((x, i) => ({ n: i + 1, ...MEASUREMENTS[x.m] }));
 
 const EXPERIENCE: Role[] = [
   {
@@ -119,7 +118,7 @@ const EXPERIENCE: Role[] = [
     ],
     points: [
       "Led the frontend team building high-performance web applications for clients including the Goethe-Institut and the Lindau Nobel Laureate Meetings, delivering multiple products 0→1 through full development, testing, and production release cycles.",
-      "Reduced page load time ~15% through bundle optimization, lazy loading, and caching improvements.",
+      `Reduced page load time ${MEASUREMENTS["load-axinom"].value.replace("−","")} through bundle optimization, lazy loading, and caching improvements.`,
       "Built on Axinom's Mosaic micro-frontends (Media, Catalogue, Entitlement, DRM) and its APIs for content synchronization and metadata management, rather than hand-rolling media delivery.",
       "Implemented secure DRM playback with Shaka Player, and designed i18n in from the start for multi-language experiences across regions.",
       "Worked directly with designers to translate Figma into pixel-perfect, responsive interfaces, holding SEO and WCAG-aligned accessibility across every customer-facing surface.",
@@ -144,13 +143,13 @@ const EXPERIENCE: Role[] = [
       "AWS",
     ],
     points: [
-      "Architected and delivered a React CMS from 0→1 to MVP as a microarchitecture applying SOLID principles, then led 40+ production releases on it.",
-      "Introduced TDD with Cypress and drove automated coverage ~90% on critical paths, gated in CI/CD — the reason release throughput stayed safe at that volume.",
-      "Built a Storybook-based reusable component library that cut frontend development time ~30% across projects.",
-      "Reduced page load time ~40% through code-splitting, lazy loading, and asset optimization, with assets served from AWS S3.",
+      `Architected and delivered a React CMS from 0→1 to MVP as a microarchitecture applying SOLID principles, then led ${MEASUREMENTS.releases.value} production releases on it.`,
+      `Introduced TDD with Cypress and drove automated coverage ${MEASUREMENTS.coverage.value} on critical paths, gated in CI/CD — which is what let releases stay frequent without a regression freeze.`,
+      `Built a Storybook-based reusable component library that cut frontend development time ${MEASUREMENTS["dev-time"].value.replace("−","")} across projects.`,
+      `Reduced page load time ${MEASUREMENTS["load-kodez"].value.replace("−","")} through code-splitting, lazy loading, and asset optimization, with assets served from AWS S3.`,
       "Migrated a legacy PHP/jQuery application to React and ExpressJS incrementally without freezing client delivery — and built Node.js BFF layers with the backend team to reduce API latency.",
-      "Built REST integrations against the client's enterprise vendor stack — Amtek (Australia), running on Fiserv, Toshiba, NTT DATA, Park Assist and City systems — across a 250+ table schema.",
-      "Translated Figma designs into pixel-perfect, responsive interfaces; set frontend standards and ran code reviews as the team scaled from 10 to 60+ engineers.",
+      `Built REST integrations against the client's enterprise vendor stack — Amtek (Australia), running on Fiserv, Toshiba, NTT DATA, Park Assist and City systems — across a ${MEASUREMENTS.tables.value} table schema.`,
+      "Translated Figma designs into pixel-perfect, responsive interfaces; set frontend standards and ran code reviews as the team scaled from 10 to 60+ people.",
     ],
   },
   {
@@ -162,7 +161,7 @@ const EXPERIENCE: Role[] = [
     stack: ["React.js", "JavaScript", "SCSS", "Agile / Scrum"],
     points: [
       "Delivered an Employment Management System from concept to production as the end-to-end UI owner, in React.js, JavaScript, HTML, and SCSS.",
-      "Rebuilt the company website around responsive layout and accessibility, lifting UX and conversion ~15%; the same push contributed to ~20% growth in client acquisition.",
+      `Rebuilt the company website around responsive layout and accessibility, lifting UX and conversion ${MEASUREMENTS["load-axinom"].value.replace("−","")}; the same push contributed to ~20% growth in client acquisition.`,
       "Improved application performance through refactoring and component-level optimization, and ran code reviews and pair-programming sessions to keep the codebase maintainable as it grew.",
     ],
   },
@@ -314,7 +313,7 @@ const buildResumeText = () =>
     POSITIONING(),
     "",
     "HIGHLIGHTS",
-    METRICS.map((m) => `- ${m.value} ${m.label}`).join("\n"),
+    METRICS.map((m) => `- ${MEASUREMENTS[m.m].value} ${m.label}`).join("\n"),
     "",
     "EXPERIENCE",
     EXPERIENCE.map(
@@ -565,7 +564,7 @@ export default function ResumePage() {
                       ].join(" ")}
                     >
                       <p className="font-[family-name:var(--font-heading)] text-[23px] font-bold leading-none tracking-[-0.01em] text-[#023047]">
-                        {m.value}
+                        {MEASUREMENTS[m.m].value}
                         <sup className="ml-0.5 align-super text-[9px] font-semibold text-neutral-400">
                           {i + 1}
                         </sup>

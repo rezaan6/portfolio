@@ -10,7 +10,7 @@
  * ------------------------------------------------------------------ */
 
 import { yearsPhrase } from "../lib/experience";
-import type { MeasurementId } from "../lib/measurement";
+import { MEASUREMENTS, type MeasurementId } from "../lib/measurement";
 
 export const contact = {
   email: "rezaan6@gmail.com",
@@ -58,7 +58,9 @@ export type CaseStudy = {
   /** The hard constraint the work happened inside. */
   tradeoffShort: string;
   /** Plain before/after results — no invented percentages, no dashboard bars. */
-  results: { label: string; value: string; note?: string; m?: MeasurementId }[];
+  // `value` only for rows with no measurement entry; tagged rows read theirs
+  // from lib/measurement so the figure lives in exactly one place.
+  results: { label: string; value?: string; note?: string; m?: MeasurementId }[];
   // Full breakdown (revealed on the detail page)
   context: string;
   decision: string;
@@ -103,7 +105,7 @@ export const caseStudies: CaseStudy[] = [
       "Seven core platform modules and five vendor workflows in production on one shared component layer — with the structure still legible enough that a new domain is a new folder, not a refactor.",
     tradeoffShort: "Upfront architecture vs. time to first screen",
     results: [
-      { label: "Platform modules shipped", value: "7", note: "each in its own slice", m: "modules" },
+      { label: "Platform modules shipped", note: "each in its own slice", m: "modules" },
       { label: "Vendor workflows built on the shared layer", value: "5" },
       {
         label: "Test layer",
@@ -197,7 +199,7 @@ type RowProps    = { variant: "primary"; isPayoutRow: boolean }         // not s
     color: "#004078",
     brand: "#004078",
     logo: "/logos/axinom.png",
-    metric: "−15% page load · secure DRM playback",
+    metric: `${MEASUREMENTS["load-axinom"].value} page load · secure DRM playback`,
     headline:
       "Building on the platform instead of around it: Mosaic micro-frontends, Shaka Player DRM, and a 15% faster load.",
     problem:
@@ -205,10 +207,10 @@ type RowProps    = { variant: "primary"; isPayoutRow: boolean }         // not s
     move:
       "Led the frontend team onto Axinom's Mosaic micro-frontends (Media, Catalogue, Entitlement, DRM), wired secure playback through Shaka Player, and attacked load time at the bundle.",
     result:
-      "Page load times down ~15% through bundle optimization, lazy loading, and caching, with reliable protected playback and multi-language UIs shipped across regions.",
+      `Page load times down ${MEASUREMENTS["load-axinom"].value.replace("−","")} through bundle optimization, lazy loading, and caching, with reliable protected playback and multi-language UIs shipped across regions.`,
     tradeoffShort: "Reuse the platform vs. build it bespoke",
     results: [
-      { label: "Page load time", value: "−15%", note: "bundle, lazy-load, caching", m: "load-axinom" },
+      { label: "Page load time", note: "bundle, lazy-load, caching", m: "load-axinom" },
       { label: "Mosaic micro-frontends integrated", value: "4", note: "Media, Catalogue, Entitlement, DRM" },
       { label: "Locales shipped", value: "multi-region", note: "i18n designed in, bundles split per locale" },
     ],
@@ -219,9 +221,9 @@ type RowProps    = { variant: "primary"; isPayoutRow: boolean }         // not s
     tradeoff:
       "Reuse the platform vs. build it bespoke. Mosaic's micro-frontends come with their own conventions and integration seams, and there were moments a hand-rolled component would have been quicker for one client. I chose the platform anyway: bespoke media delivery means owning DRM edge cases and metadata sync forever, and that debt lands on whoever inherits the codebase. Where the platform genuinely didn't fit, we extended rather than forked — and I weighed each of those against the maintenance cost out loud, in client and internal reviews.",
     signal:
-      "Page load time was the number I could defend, measured before and after the bundle work, and it moved ~15%. Alongside it I watched playback reliability through the Shaka Player integration, cross-region rendering once i18n was live, and the CI/CD pipelines I kept stable with DevOps — because a performance win that ships unreliably isn't a win. Delivery health was tracked in Azure DevOps and JIRA, with the process documented in Confluence.",
+      `Page load time was the number I could defend, measured before and after the bundle work, and it moved ${MEASUREMENTS["load-axinom"].value.replace("−","")}. Alongside it I watched playback reliability through the Shaka Player integration, cross-region rendering once i18n was live, and the CI/CD pipelines I kept stable with DevOps — because a performance win that ships unreliably isn't a win. Delivery health was tracked in Azure DevOps and JIRA, with the process documented in Confluence.`,
     outcome:
-      "Multiple products delivered 0→1 through full development, testing, and production release cycles; ~15% faster page loads from bundle optimization, lazy loading, and caching; seamless multi-language experiences across regions; and reliable playback of protected content via Shaka Player and DRM workflows. Alongside the delivery work I strengthened the security posture by identifying vulnerabilities and adding validation and authentication layers, and mentored junior developers while enforcing coding standards.",
+      `Multiple products delivered 0→1 through full development, testing, and production release cycles; ${MEASUREMENTS["load-axinom"].value.replace("−","")} faster page loads from bundle optimization, lazy loading, and caching; seamless multi-language experiences across regions; and reliable playback of protected content via Shaka Player and DRM workflows. Alongside the delivery work I strengthened the security posture by identifying vulnerabilities and adding validation and authentication layers, and mentored junior developers while enforcing coding standards.`,
     detail:
       "What I'd do differently: I measured page load as an aggregate for too long. Averages hide the regions and devices where the experience is materially worse, and on an international media product that's exactly where the users you're localizing for live — I'd segment by region and device from the first measurement, not the third. The broader lesson: on a platform like Mosaic, the engineering skill isn't writing more code, it's knowing which capability already exists and integrating it cleanly enough that the next team doesn't rewrite it.",
     code: {
@@ -261,7 +263,7 @@ const messages = await import("../locales/" + locale + ".json")`,
     practices: [
       {
         lp: "Performance is a feature",
-        why: "Treated load time as a deliverable rather than a post-launch cleanup, cutting it ~15% through bundle optimization, lazy loading, and caching improvements.",
+        why: `Treated load time as a deliverable rather than a post-launch cleanup, cutting it ${MEASUREMENTS["load-axinom"].value.replace("−","")} through bundle optimization, lazy loading, and caching improvements.`,
       },
       {
         lp: "Build on the platform",
@@ -284,35 +286,35 @@ const messages = await import("../locales/" + locale + ".json")`,
     color: "#F87850",
     brand: "#F87850",
     logo: "/logos/kodez.png",
-    metric: "−40% load · −30% dev time · ~90% coverage",
+    metric: `${MEASUREMENTS["load-kodez"].value} load · ${MEASUREMENTS["dev-time"].value} dev time · ${MEASUREMENTS.coverage.value} coverage`,
     headline:
-      "A CMS built to be changed: a Storybook design system, ~90% Cypress coverage, and 40+ releases without a freeze.",
+      `A CMS built to be changed: a Storybook design system, ${MEASUREMENTS.coverage.value} Cypress coverage, and ${MEASUREMENTS.releases.value} releases without a freeze.`,
     problem:
-      "A React CMS spanning 250+ SQL tables and enterprise integrations, sitting next to a legacy PHP/jQuery codebase — every release risked a regression somewhere nobody was looking.",
+      `A React CMS spanning ${MEASUREMENTS.tables.value} SQL tables and enterprise integrations, sitting next to a legacy PHP/jQuery codebase — every release risked a regression somewhere nobody was looking.`,
     move:
       "Built the CMS 0→1 on a microarchitecture with SOLID boundaries, a Storybook component library as the shared spine, and TDD with Cypress as the gate on every release.",
     result:
-      "~90% automated coverage, ~40% faster page loads, ~30% less frontend development time, and 40+ production releases while migrating the legacy stack incrementally.",
+      `${MEASUREMENTS.coverage.value} automated coverage, ${MEASUREMENTS["load-kodez"].value.replace("−","")} faster page loads, ${MEASUREMENTS["dev-time"].value.replace("−","")} less frontend development time, and ${MEASUREMENTS.releases.value} production releases while migrating the legacy stack incrementally.`,
     tradeoffShort: "Standardize on the system vs. per-project freedom",
     results: [
-      { label: "Page load time", value: "−40%", note: "code-splitting, lazy loading, asset optimization", m: "load-kodez" },
-      { label: "Frontend development time", value: "−30%", note: "after the Storybook library landed", m: "dev-time" },
-      { label: "Technical debt", value: "−25%", note: "legacy PHP/jQuery migration", m: "tech-debt" },
-      { label: "Flow coverage, critical paths", value: "~90%", note: "Cypress, gated in CI", m: "coverage" },
-      { label: "Production releases", value: "40+", m: "releases" },
+      { label: "Page load time", note: "code-splitting, lazy loading, asset optimization", m: "load-kodez" },
+      { label: "Frontend development time", note: "after the Storybook library landed", m: "dev-time" },
+      { label: "Technical debt", note: "legacy PHP/jQuery migration", m: "tech-debt" },
+      { label: "Flow coverage, critical paths", note: "Cypress, gated in CI", m: "coverage" },
+      { label: "Production releases", m: "releases" },
     ],
     context:
-      "Kodez builds an enterprise CMS for service management and logistics. The client I worked across was Amtek in Australia, whose operation runs on enterprise vendor systems (Fiserv, Toshiba, NTT DATA, Park Assist and City), so the CMS had to integrate cleanly with all of them. The surface is large — database operations spanning 250+ SQL tables — and it sat alongside a legacy PHP/jQuery application that still had users. Meanwhile the startup itself grew from 10 to 60+ people. Two forces pull against each other in that setup: the codebase needs to change constantly for clients, and every change is a chance to break something that someone is paid to rely on.",
+      `Kodez builds an enterprise CMS for service management and logistics. The client I worked across was Amtek in Australia, whose operation runs on enterprise vendor systems (Fiserv, Toshiba, NTT DATA, Park Assist and City), so the CMS had to integrate cleanly with all of them. The surface is large — database operations spanning ${MEASUREMENTS.tables.value} SQL tables — and it sat alongside a legacy PHP/jQuery application that still had users. Meanwhile the startup itself grew from 10 to 60+ people. Two forces pull against each other in that setup: the codebase needs to change constantly for clients, and every change is a chance to break something that someone is paid to rely on.`,
     decision:
-      "I architected and delivered the CMS from 0→1 to MVP as a React microarchitecture applying SOLID principles, then made two investments that most teams defer. First, a Storybook-based reusable component library — the shared spine, so a new screen is composed rather than authored. Second, Test-Driven Development with Cypress, taken seriously enough to reach ~90% automated coverage and wired into CI/CD, so a release is gated by evidence rather than by whoever remembered to click through it. Redux handled state flow, TanStack React Query handled fetching, caching, and synchronization, and Node.js BFF layers cut API latency.",
+      `I architected and delivered the CMS from 0→1 to MVP as a React microarchitecture applying SOLID principles, then made two investments that most teams defer. First, a Storybook-based reusable component library — the shared spine, so a new screen is composed rather than authored. Second, Test-Driven Development with Cypress, taken seriously enough to reach ${MEASUREMENTS.coverage.value} automated coverage and wired into CI/CD, so a release is gated by evidence rather than by whoever remembered to click through it. Redux handled state flow, TanStack React Query handled fetching, caching, and synchronization, and Node.js BFF layers cut API latency.`,
     tradeoff:
-      "Standardizing on the system vs. per-project freedom. A shared library and an enforced test gate slow down the first version of any given screen — engineers occasionally wanted a bespoke component and got a slightly more general one instead. I made that trade deliberately: at 40+ releases and a team scaling past 60, consistency is what keeps velocity from decaying. The migration was the same call in a different costume — I moved the legacy PHP/jQuery application to React and ExpressJS incrementally rather than in a big-bang rewrite, accepting a period of two coexisting stacks to avoid freezing client delivery.",
+      `Standardizing on the system vs. per-project freedom. A shared library and an enforced test gate slow down the first version of any given screen — engineers occasionally wanted a bespoke component and got a slightly more general one instead. I made that trade deliberately: at ${MEASUREMENTS.releases.value} releases and a company scaling past 60, consistency is what keeps velocity from decaying. The migration was the same call in a different costume — I moved the legacy PHP/jQuery application to React and ExpressJS incrementally rather than in a big-bang rewrite, accepting a period of two coexisting stacks to avoid freezing client delivery.`,
     signal:
-      "Three numbers, all of them things I could show. Automated test coverage — ~90%, running in CI/CD, which is what made frequent releases safe. Page load time, which came down ~40% through code-splitting, lazy loading, and asset optimization, with AWS S3 serving assets. And frontend development time, which dropped ~30% once the Storybook library was the default way to build. Cross-browser behavior was validated on BrowserStack, and API contracts stayed documented in Swagger, with sprint work tracked in JIRA and Confluence.",
+      `Three numbers, all of them things I could show. Automated test coverage — ${MEASUREMENTS.coverage.value}, running in CI/CD, which is what made frequent releases safe. Page load time, which came down ${MEASUREMENTS["load-kodez"].value.replace("−","")} through code-splitting, lazy loading, and asset optimization, with AWS S3 serving assets. And frontend development time, which dropped ${MEASUREMENTS["dev-time"].value.replace("−","")} once the Storybook library was the default way to build. Cross-browser behavior was validated on BrowserStack, and API contracts stayed documented in Swagger, with sprint work tracked in JIRA and Confluence.`,
     outcome:
-      "40+ production releases delivered — new features, defect fixes, and database optimization across 250+ SQL tables. Page loads ~40% faster, frontend development ~30% faster, ~90% automated Cypress coverage, and a legacy PHP/jQuery application migrated to React and ExpressJS without a delivery freeze. REST integrations against the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City) stayed interoperable throughout.",
+      `${MEASUREMENTS.releases.value} production releases delivered — new features, defect fixes, and database optimization across ${MEASUREMENTS.tables.value} SQL tables. Page loads ${MEASUREMENTS["load-kodez"].value.replace("−","")} faster, frontend development ${MEASUREMENTS["dev-time"].value.replace("−","")} faster, ${MEASUREMENTS.coverage.value} automated Cypress coverage, and a legacy PHP/jQuery application migrated to React and ExpressJS without a delivery freeze. REST integrations against the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City) stayed interoperable throughout.`,
     detail:
-      "What I'd do differently: I sold the component library on consistency when I should have sold it on speed. Engineers adopt a design system when it visibly saves them an afternoon, not when it's described as the right thing to do — I'd publish the before/after build time for a real screen in week one and let the number do the arguing. The lesson I carry: high release throughput isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. TDD and Storybook weren't overhead on the 40+ releases; they are what made shipping at that rate feel safe.",
+      `What I'd do differently: I sold the component library on consistency when I should have sold it on speed. Engineers adopt a design system when it visibly saves them an afternoon, not when it's described as the right thing to do — I'd publish the before/after build time for a real screen in week one and let the number do the arguing. The lesson I carry: release cadence isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. TDD and Storybook weren't overhead on the ${MEASUREMENTS.releases.value} releases; they are what made shipping at that rate feel safe.`,
     code: {
       caption:
         "How a component earns its way into the shared library — the promotion rule, expressed as the story file it has to ship with.",
@@ -327,7 +329,7 @@ export const Empty:    Story = { args: { rows: [] } }
 export const Errored:  Story = { args: { error: new Error("Fetch failed") } }
 export const TenThousandRows: Story = { args: { rows: many(10_000) } }  // virtualized?
 
-// The gate that made 40+ releases safe: a bug gets a failing test before a fix.
+// The gate that made ${MEASUREMENTS.releases.value} releases safe: a bug gets a failing test before a fix.
 it("keeps a service unbookable when price is missing", () => {
   expect(isBookable({ status: "bookable", price: undefined })).toBe(false)
 })`,
@@ -337,7 +339,7 @@ it("keeps a service unbookable when price is missing", () => {
     scale: [
       "Enterprise CMS · service mgmt + logistics",
       "HQ Melbourne, Australia",
-      "250+ SQL tables",
+      `${MEASUREMENTS.tables.value} SQL tables`,
       "Team scaled 10 → 60+",
     ],
     stack: [
@@ -355,7 +357,7 @@ it("keeps a service unbookable when price is missing", () => {
     practices: [
       {
         lp: "Tests are how you ship fast",
-        why: "Introduced TDD with Cypress to ~90% automated coverage inside CI/CD, which is what made 40+ production releases safe rather than merely frequent.",
+        why: `Introduced TDD with Cypress to ${MEASUREMENTS.coverage.value} automated coverage inside CI/CD, which is what made ${MEASUREMENTS.releases.value} production releases safe rather than merely frequent.`,
       },
       {
         lp: "Reusable beats bespoke",
@@ -363,7 +365,7 @@ it("keeps a service unbookable when price is missing", () => {
       },
       {
         lp: "Performance is a feature",
-        why: "Cut page load time ~40% with code-splitting, lazy loading, and asset optimization, with assets served from AWS S3.",
+        why: `Cut page load time ${MEASUREMENTS["load-kodez"].value.replace("−","")} with code-splitting, lazy loading, and asset optimization, with assets served from AWS S3.`,
       },
       {
         lp: "Migrate incrementally, never freeze",
@@ -381,7 +383,7 @@ it("keeps a service unbookable when price is missing", () => {
     color: "#E11D48",
     brand: "#E11D48",
     logo: "/logos/rasoft.svg",
-    metric: "EMS delivered 0→1 · +15% conversion",
+    metric: `EMS delivered 0→1 · ${MEASUREMENTS.conversion.value} conversion`,
     headline:
       "Where the engineering habits started: owning an EMS end-to-end at a seed-stage startup.",
     problem:
@@ -389,11 +391,10 @@ it("keeps a service unbookable when price is missing", () => {
     move:
       "Took the EMS from concept to production as the end-to-end UI owner in React, and rebuilt the company site around responsiveness and accessibility.",
     result:
-      "The EMS shipped to production, and the site revamp lifted UX and conversion ~15% while the same push contributed to ~20% growth in client acquisition.",
+      `The EMS shipped to production, and the site revamp lifted UX and conversion ${MEASUREMENTS["load-axinom"].value.replace("−","")} while the same push contributed to ~20% growth in client acquisition.`,
     tradeoffShort: "Rapid delivery vs. scalable architecture",
     results: [
-      { label: "Conversion after the UI revamp", value: "+15%", note: "responsive redesign + accessibility", m: "conversion" },
-      { label: "Client acquisition", value: "+20%", note: "same push; reported internally" },
+      { label: "Conversion after the UI revamp", note: "responsive redesign + accessibility", m: "conversion" },
       { label: "EMS", value: "concept → production", note: "end-to-end UI ownership" },
     ],
     context:
@@ -403,9 +404,9 @@ it("keeps a service unbookable when price is missing", () => {
     tradeoff:
       "Rapid delivery vs. scalable architecture. The honest answer is that I leaned slightly toward architecture and shipped a little slower than I could have — refactoring components rather than duplicating them, and improving performance at the component level while features were still landing. At seed stage that's a defensible but not free choice: some things reached users later than they might have. What I'd defend is the direction, because the EMS was going to be lived in daily, and the site was the company's front door.",
     signal:
-      "The site had a number: UX and conversion improved ~15% after the responsive redesign and accessibility work — reported internally, over the months after launch, and it was one of several things changing at once. The EMS was the other half of the job: an internal system that did not exist, designed and built end to end.",
+      `The site had a number: UX and conversion improved ${MEASUREMENTS["load-axinom"].value.replace("−","")} after the responsive redesign and accessibility work — reported internally, over the months after launch, and it was one of several things changing at once. The EMS was the other half of the job: an internal system that did not exist, designed and built end to end.`,
     outcome:
-      "A complete Employment Management System delivered from concept to production with end-to-end UI development, and a company site rebuilt for responsiveness and accessibility that lifted conversion ~15%. Along the way I ran code reviews and pair-programming sessions to hold quality, improved performance through refactoring and component-level optimization, and got real exposure to Agile/Scrum through sprint planning and retrospectives.",
+      `A complete Employment Management System delivered from concept to production with end-to-end UI development, and a company site rebuilt for responsiveness and accessibility that lifted conversion ${MEASUREMENTS["load-axinom"].value.replace("−","")}. Along the way I ran code reviews and pair-programming sessions to hold quality, improved performance through refactoring and component-level optimization, and got real exposure to Agile/Scrum through sprint planning and retrospectives.`,
     detail:
       "What I'd do differently: I optimized components before I had any measurement, which is guessing with extra steps. Now I'd profile first and let the numbers pick the target — a habit that later turned into the 40% and 15% load-time wins at Kodez and Axinom, both of which started from a measurement rather than an instinct. The lesson I carry from RaSoft: pair programming and code review were where I actually learned to write maintainable code, and both cost time that always felt like it could be spent shipping. It couldn't.",
     code: {
@@ -439,7 +440,7 @@ $ node --cpu-prof server.js                  # where the time really goes
       },
       {
         lp: "Accessibility is conversion",
-        why: "Rebuilt the company site around responsive layout and accessibility improvements, lifting UX and conversion ~15%.",
+        why: `Rebuilt the company site around responsive layout and accessibility improvements, lifting UX and conversion ${MEASUREMENTS["load-axinom"].value.replace("−","")}.`,
       },
       {
         lp: "Review is where quality happens",
@@ -673,7 +674,7 @@ to be seven modules on day one, not discovered later.`,
     company: "Kodez",
     title: "Reusable component library — the API contract",
     blurb:
-      "How a component earns its place in the Storybook library: the props contract, the accessibility floor, and what disqualifies a component from being shared. The spine that cut frontend dev time ~30%.",
+      `How a component earns its place in the Storybook library: the props contract, the accessibility floor, and what disqualifies a component from being shared. The spine that cut frontend dev time ${MEASUREMENTS["dev-time"].value.replace("−","")}.`,
     body: `COMPONENT SPEC — Storybook library, Kodez CMS
 
 OWNER   Rezaan Riyaz — Senior Frontend Engineer
@@ -681,7 +682,7 @@ STACK   React · TypeScript · SCSS · Material UI · Storybook
 RESULT  ~30% reduction in frontend development time across projects
 
 WHY THIS EXISTS
-The CMS spans 250+ SQL tables and enterprise integrations, and the team scaled from
+The CMS spans ${MEASUREMENTS.tables.value} SQL tables and enterprise integrations, and the team scaled from
 10 to 60+ people. Without a shared spine, every new screen is authored from scratch
 and the product drifts. The library is how a screen becomes composition instead of
 authorship.
@@ -756,7 +757,7 @@ client disagree, the server wins and the UI says so.`,
     body: `PERF BUDGET — Media web applications, Axinom (Mosaic)
 
 OWNER   Rezaan Riyaz — Senior Frontend Engineer (Lead)
-RESULT  ~15% reduction in page load time
+RESULT  ${MEASUREMENTS["load-axinom"].value.replace("−","")} reduction in page load time
 READ AS Before/after against a defined baseline — not a controlled experiment
 
 WHY THIS EXISTS
@@ -793,18 +794,18 @@ On an international product, the aggregate is the least informative number avail
   },  {
     type: "TEST STRATEGY",
     company: "Kodez",
-    title: "TDD with Cypress — ~90% on the paths that matter",
+    title: "TDD with Cypress — ${MEASUREMENTS.coverage.value} on the paths that matter",
     blurb:
-      "The testing strategy that made 40+ production releases safe: what gets a test, what deliberately does not, and where the gate sits in CI/CD.",
+      `The testing strategy that made ${MEASUREMENTS.releases.value} production releases safe: what gets a test, what deliberately does not, and where the gate sits in CI/CD.`,
     body: `TEST STRATEGY — Kodez CMS
 
 OWNER   Rezaan Riyaz — Senior Frontend Engineer
-RESULT  ~90% flow coverage on critical paths · 40+ production releases
+RESULT  ${MEASUREMENTS.coverage.value} flow coverage on critical paths · ${MEASUREMENTS.releases.value} production releases
 
 THE PREMISE
 Release throughput is not a function of moving fast. It is a function of how cheaply
 you can prove you did not break anything. TDD and CI gates were not overhead on the
-40+ releases — they are what made shipping at that rate safe.
+${MEASUREMENTS.releases.value} releases — they are what made shipping at that rate safe.
 
 THE PYRAMID, AS ACTUALLY BUILT
 - Unit (Jest): pure logic, formatters, reducers, data transforms. Fast, plentiful.
@@ -813,7 +814,7 @@ THE PYRAMID, AS ACTUALLY BUILT
 
 WHAT ALWAYS GETS AN E2E TEST
 - Authentication and permissions.
-- Anything that writes to the 250+ table schema.
+- Anything that writes to the ${MEASUREMENTS.tables.value} table schema.
 - Every integration surface in the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City).
 - Any path a defect has already been filed against. A bug gets a test before a fix.
 
@@ -892,7 +893,7 @@ export const timeline = [
     role: "Senior Frontend Engineer — Lead",
     place: "HQ Fürth, Germany",
     scope:
-      "Led the frontend team on an enterprise media platform — Mosaic micro-frontends, Shaka Player DRM, i18n, and ~15% faster page loads.",
+      `Led the frontend team on an enterprise media platform — Mosaic micro-frontends, Shaka Player DRM, i18n, and ${MEASUREMENTS["load-axinom"].value.replace("−","")} faster page loads.`,
   },
   {
     year: "2021",
@@ -900,7 +901,7 @@ export const timeline = [
     role: "Senior Frontend Engineer",
     place: "HQ Melbourne, Australia",
     scope:
-      "Built an enterprise CMS 0→1 and the standards a team scaling 10 → 60+ built against — Storybook system, ~90% Cypress coverage, 40+ releases.",
+      `Built an enterprise CMS 0→1 and the standards a team scaling 10 → 60+ built against — Storybook system, ${MEASUREMENTS.coverage.value} Cypress coverage, ${MEASUREMENTS.releases.value} releases.`,
   },
   {
     year: "2018",
@@ -908,7 +909,7 @@ export const timeline = [
     role: "Frontend Engineer",
     place: "HQ Colombo, Sri Lanka",
     scope:
-      "First end-to-end UI ownership at a seed-stage startup — an employment system from concept to production, and a site revamp that lifted conversion ~15%.",
+      `First end-to-end UI ownership at a seed-stage startup — an employment system from concept to production, and a site revamp that lifted conversion ${MEASUREMENTS["load-axinom"].value.replace("−","")}.`,
   },
 ];
 
@@ -923,11 +924,11 @@ export const principles: { label: string; body: string }[] = [
   },
   {
     label: "Performance is a feature",
-    body: "Profile first, optimize second. Every load-time win I can point to — ~40% at Kodez, ~15% at Axinom — started from a measurement, not an instinct. And never read the average alone; it hides the users having the worst time.",
+    body: `Profile first, optimize second. Every load-time win I can point to — ${MEASUREMENTS["load-kodez"].value.replace("−","")} at Kodez, ${MEASUREMENTS["load-axinom"].value.replace("−","")} at Axinom — started from a measurement, not an instinct. And never read the average alone; it hides the users having the worst time.`,
   },
   {
     label: "Tests are how you ship fast",
-    body: "Release throughput isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. ~90% Cypress coverage in CI wasn't overhead on 40+ releases — it's why there were 40+ releases.",
+    body: "Release throughput isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. ${MEASUREMENTS.coverage.value} Cypress coverage in CI wasn't overhead on ${MEASUREMENTS.releases.value} releases — it's why there were ${MEASUREMENTS.releases.value} releases.",
   },
 ];
 
@@ -954,7 +955,7 @@ export const tools: Tool[] = [
     group: "Core frontend",
     use: "Component architecture & rendering",
     howIUse:
-      `React is where most of my ${yearsPhrase()} live — I think in component boundaries and rendering behaviour before I think in screens. That means being deliberate about reconciliation and memoization, keeping controlled and uncontrolled components from mixing, and isolating components so one slow subtree doesn't drag a page down. At Hobber I used it to architect a vendor dashboard as independent feature slices; at Kodez it carried a CMS through 40+ production releases without the render layer becoming the bottleneck.`,
+      `React is where most of my ${yearsPhrase()} live — I think in component boundaries and rendering behaviour before I think in screens. That means being deliberate about reconciliation and memoization, keeping controlled and uncontrolled components from mixing, and isolating components so one slow subtree doesn't drag a page down. At Hobber I used it to architect a vendor dashboard as independent feature slices; at Kodez it carried a CMS through ${MEASUREMENTS.releases.value} production releases without the render layer becoming the bottleneck.`,
     sample: `Feature slice — the boundary rule
 features/payouts/     routes · components · state · api  (owns its domain)
 features/scheduling/  routes · components · state · api
@@ -967,7 +968,7 @@ Rule: a slice imports from shared/ui, never from another slice.`,
     group: "Core frontend",
     use: "App Router, SSR/CSR & routing",
     howIUse:
-      "I use Next.js when the rendering strategy is itself a product decision — which parts must be server-rendered for SEO and first paint, which are client-interactive, and where the hydration boundary sits. At Axinom that mattered for media applications where load time was a deliverable: route-level code-splitting and deferred client bundles were a large part of the ~15% improvement. I work across both the App Router and Pages, and I treat the server/client boundary as an explicit design choice rather than a default.",
+      `I use Next.js when the rendering strategy is itself a product decision — which parts must be server-rendered for SEO and first paint, which are client-interactive, and where the hydration boundary sits. At Axinom that mattered for media applications where load time was a deliverable: route-level code-splitting and deferred client bundles were a large part of the ${MEASUREMENTS["load-axinom"].value.replace("−","")} improvement. I work across both the App Router and Pages, and I treat the server/client boundary as an explicit design choice rather than a default.`,
     sample: `Rendering decision, per route
 /catalogue     server-rendered  — SEO + fast first paint
 /player        client            — DRM + playback state
@@ -1103,7 +1104,7 @@ router.post("/services", validate(ServiceSchema), async (req, res, next) => {
     group: "Backend & platform",
     use: "Relational data & query performance",
     howIUse:
-      "I'm comfortable enough in SQL to be useful in the part of the stack most frontend engineers avoid — at Kodez I worked on optimizing database operations across a schema spanning 250+ tables, which is where you learn that a slow screen is often a data-layer problem rather than a rendering one. I'd rather rule that out with the backend team than assume the client is at fault.",
+      `I'm comfortable enough in SQL to be useful in the part of the stack most frontend engineers avoid — at Kodez I worked on optimizing database operations across a schema spanning ${MEASUREMENTS.tables.value} tables, which is where you learn that a slow screen is often a data-layer problem rather than a rendering one. I'd rather rule that out with the backend team than assume the client is at fault.`,
     sample: `Check the plan before blaming the UI
 EXPLAIN ANALYZE SELECT ... ;   -- Seq Scan on a 2M-row table?
 → the "slow dashboard" was one missing composite index.`,
@@ -1164,11 +1165,11 @@ it("keeps a service unbookable when price is missing", () => {
     group: "Testing & quality",
     use: "End-to-end & regression testing",
     howIUse:
-      "Cypress is what made frequent releases safe at Kodez — I introduced TDD with it and drove automated coverage ~90% on the critical paths, wired into CI/CD as a merge gate. I'm selective about what earns an E2E test: authentication and permissions, anything that writes to the database, every enterprise integration surface, and any path a defect has already been filed against. Everything else is cheaper to cover lower down the pyramid.",
+      `Cypress is what made frequent releases safe at Kodez — I introduced TDD with it and drove automated coverage ${MEASUREMENTS.coverage.value} on the critical paths, wired into CI/CD as a merge gate. I'm selective about what earns an E2E test: authentication and permissions, anything that writes to the database, every enterprise integration surface, and any path a defect has already been filed against. Everything else is cheaper to cover lower down the pyramid.`,
     sample: `The gate, not the suite size
 Blocking specs: auth · permissions · writes · client integrations
 Red pipeline = no merge. No "we'll fix it after."
-~90% coverage on critical paths across 40+ production releases.`,
+${MEASUREMENTS.coverage.value} coverage on critical paths across ${MEASUREMENTS.releases.value} production releases.`,
   },
   {
     name: "Postman",
@@ -1201,7 +1202,7 @@ vite build --mode production && npx vite-bundle-visualizer
     group: "Build & delivery",
     use: "Bundle optimization & code-splitting",
     howIUse:
-      "Webpack is where a lot of the real performance work happened — the ~15% load-time reduction at Axinom and the ~40% at Kodez both came out of bundle analysis, code-splitting, and lazy loading rather than anything visible in the UI. I treat an unexplained bundle-size increase as a merge blocker, because bundle growth is the one regression that never shows up in a test suite.",
+      `Webpack is where a lot of the real performance work happened — the ${MEASUREMENTS["load-axinom"].value.replace("−","")} load-time reduction at Axinom and the ${MEASUREMENTS["load-kodez"].value.replace("−","")} at Kodez both came out of bundle analysis, code-splitting, and lazy loading rather than anything visible in the UI. I treat an unexplained bundle-size increase as a merge blocker, because bundle growth is the one regression that never shows up in a test suite.`,
     sample: `Split by route, defer by need
 - vendor chunk cached across releases
 - route chunks loaded on navigation
