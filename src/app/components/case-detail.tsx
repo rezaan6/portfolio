@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { Measured } from "./measured";
+import { MEASUREMENTS } from "../lib/measurement";
 import { DeviceStage } from "./prototype";
 import { PROTOTYPES } from "./prototype-data";
 import { Magnetic } from "./signal-room";
@@ -182,6 +184,49 @@ export function CaseDetail({
           ))}
         </div>
       </section>
+
+      {/* The figures, each with its basis. The accordion on /work carries these
+          same rows, but a reader arriving here from search would otherwise get
+          the prose without the numbers behind it — and with nowhere to ask how
+          they were arrived at. */}
+      {cs.results?.length ? (
+        <section className="border-t border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)]">
+          <div className="mx-auto max-w-3xl px-5 py-14 lg:px-8 lg:py-16">
+            <p
+              className="font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.2em]"
+              style={{ color: ink }}
+            >
+              What it moved
+            </p>
+            <dl className="mt-6 divide-y divide-[var(--sr-hairline)]">
+              {cs.results.map((r) => (
+                <div
+                  key={r.label}
+                  className="flex items-baseline justify-between gap-4 py-3 first:pt-0"
+                >
+                  <dt className="text-[13.5px] leading-[1.5] text-[var(--sr-muted)]">
+                    {r.label}
+                    {r.note ? (
+                      <span className="block text-[11px] leading-4 text-[var(--sr-faint)]">
+                        {r.note}
+                      </span>
+                    ) : null}
+                  </dt>
+                  <dd
+                    className="shrink-0 font-[family-name:var(--font-display)] text-[17px] font-semibold tabular-nums"
+                    style={{ color: ink }}
+                  >
+                    <span className="inline-flex items-center gap-1.5">
+                      {r.m ? MEASUREMENTS[r.m].value : r.value}
+                      {r.m ? <Measured id={r.m} /> : null}
+                    </span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+      ) : null}
 
       {/* The engineering practices this case demonstrates — each mapped to a
           specific decision above, not a generic trait. */}

@@ -38,7 +38,7 @@ import {
   tools,
 } from "./signal-room-data";
 import { Measured } from "./measured";
-import { MEASUREMENTS } from "../lib/measurement";
+import { MEASUREMENTS, type MeasurementId } from "../lib/measurement";
 import { yearsOfExperience, yearsPhrase } from "../lib/experience";
 import { ArtifactDocView } from "./artifact-doc";
 import { ARTIFACT_DOCS } from "./artifact-docs";
@@ -1428,15 +1428,21 @@ export function AboutHero() {
 }
 
 export function AboutStats() {
-  const stats = [
-    { value: yearsOfExperience(), prefix: "", suffix: "+", label: "Years of hands-on React in production" },
-    { value: 40, prefix: "", suffix: "+", label: "Production releases delivered at Kodez" },
-    { value: 90, prefix: "~", suffix: "%", label: "Automated Cypress coverage on critical paths" },
-    // A fourth counter here read "100M+ annual requests served by frontends I've
-    // shipped". Nothing on this site, in the résumé, or in any source material
-    // supports it — the largest number on the page was also the only one with no
-    // provenance at all. Replaced with a figure that is simply a count.
-    { value: 250, prefix: "", suffix: "+", label: "SQL tables in the Kodez CMS schema" },
+  // The counter animates a number, so it needs the digits separately from the
+  // prefix and suffix — but the digits are parsed out of the shared source
+  // rather than typed again, so these four cannot drift from the case tables
+  // or the résumé. A fourth counter here once read "100M+ annual requests
+  // served by frontends I've shipped"; nothing anywhere supported it, and the
+  // largest figure on the page was the only one with no provenance at all.
+  const digits = (id: MeasurementId) =>
+    Number(MEASUREMENTS[id].value.replace(/[^0-9]/g, ""));
+  const stats: {
+    value: number; prefix: string; suffix: string; label: string; m: MeasurementId;
+  }[] = [
+    { value: yearsOfExperience(), prefix: "", suffix: "+", label: "Years of hands-on React in production", m: "experience" },
+    { value: digits("releases"), prefix: "", suffix: "+", label: "Production releases delivered at Kodez", m: "releases" },
+    { value: digits("coverage"), prefix: "~", suffix: "%", label: "Automated Cypress coverage on critical paths", m: "coverage" },
+    { value: digits("tables"), prefix: "", suffix: "+", label: "SQL tables in the Kodez CMS schema", m: "tables" },
   ];
   return (
     <section className="px-4 pt-10 sm:px-5 lg:px-8 lg:pt-14">
@@ -1447,8 +1453,12 @@ export function AboutStats() {
               <p className="font-[family-name:var(--font-display)] text-[clamp(2rem,4vw,2.8rem)] font-medium leading-none tracking-[-0.02em] text-[var(--sr-accent)]">
                 <AnimatedNumber value={s.value} prefix={s.prefix} suffix={s.suffix} />
               </p>
-              <p className="mt-3 text-[13.5px] leading-6 text-[var(--sr-muted)]">
-                {s.label}
+              <p className="mt-3 flex items-start gap-1.5 text-[13.5px] leading-6 text-[var(--sr-muted)]">
+                <span>{s.label}</span>
+                {/* Beside the label rather than the numeral — the counter here is
+                    clamp(2rem, 4vw, 2.8rem), and a 14px icon next to type that
+                    large reads as debris rather than an affordance. */}
+                <Measured id={s.m} className="mt-1.5" />
               </p>
             </div>
           </Reveal>
