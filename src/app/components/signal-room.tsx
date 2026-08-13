@@ -645,8 +645,12 @@ export function PageIntro({
           </svg>
           <div className="relative">
             <Reveal>
+              {/* Label only. The number is already the watermark filling the
+                  right of this panel, and the nav above it reads "04 Stack" —
+                  printing it a third time in the eyebrow told the reader
+                  nothing they hadn't been told twice. */}
               <p className="font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.3em] text-[var(--sr-accent)]">
-                {num} · {label}
+                {label}
               </p>
               <h1 className="mt-5 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.9rem,3.6vw,2.8rem)] font-medium leading-[1.05] tracking-[-0.01em] text-[var(--sr-text)]">
                 {title}
@@ -1363,8 +1367,10 @@ export function AboutHero() {
           </svg>
           <div className="relative grid gap-10 lg:grid-cols-[1.35fr_0.85fr] lg:items-center">
             <Reveal>
+              {/* Label only, matching PageIntro — the 07 is already the
+                  watermark behind this panel and the nav above it. */}
               <p className="font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.3em] text-[var(--sr-accent)]">
-                07 · About
+                About
               </p>
               <h1 className="mt-5 max-w-2xl font-[family-name:var(--font-display)] text-[clamp(1.85rem,3.5vw,2.75rem)] font-medium leading-[1.06] tracking-[-0.01em] text-[var(--sr-text)]">
                 I architect the system, not just the screen.
