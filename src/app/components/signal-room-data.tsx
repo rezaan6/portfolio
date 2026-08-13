@@ -258,6 +258,7 @@ const messages = await import("../locales/" + locale + ".json")`,
       "SCSS",
       "GraphQL",
       "Shaka Player / DRM",
+      "Azure Blob Storage",
       "Azure DevOps",
     ],
     practices: [
