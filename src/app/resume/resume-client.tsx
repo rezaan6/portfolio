@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { navLinks } from "../components/signal-room-data";
 import { yearsOfExperience, yearsPhrase } from "../lib/experience";
+import { KIND_LABEL, MEASUREMENTS, type MeasurementId } from "../lib/measurement";
 
 /* ------------------------------------------------------------------ *
  * Resume — digital-first, single column.
@@ -65,12 +66,22 @@ const POSITIONING = () =>
 
 // The five-second scan payload. Every figure is a before/after read against
 // a defined baseline — never a causal claim.
-const METRICS = [
-  { value: "2", label: "platforms architected 0→1" },
-  { value: "−40%", label: "page load time, Kodez CMS" },
-  { value: "~90%", label: "flow coverage, critical paths" },
-  { value: "40+", label: "production releases shipped" },
+const METRICS: { value: string; label: string; m: MeasurementId }[] = [
+  { value: "2", label: "platforms architected 0→1", m: "platforms" },
+  { value: "−40%", label: "page load time, Kodez CMS", m: "load-kodez" },
+  { value: "~90%", label: "flow coverage, critical paths", m: "coverage" },
+  { value: "40+", label: "production releases shipped", m: "releases" },
 ];
+
+// The site can open a panel; a PDF cannot. Superscript markers on the four
+// tiles point at an endnote block after Education, which is on screen as well
+// as in print — one artifact, not a screen version and a print version that
+// drift. This is the same text the site's disclosures show.
+const ENDNOTES = METRICS.map((x, i) => ({
+  n: i + 1,
+  value: x.value,
+  ...MEASUREMENTS[x.m],
+}));
 
 const EXPERIENCE: Role[] = [
   {
@@ -317,6 +328,12 @@ ${r.points.map((pt) => `- ${pt}`).join("\n")}`,
     "CORE STACK",
     STACK.map((g) => `${g.label}: ${g.items.join(", ")}`).join("\n"),
     "",
+    "MEASUREMENT NOTES",
+    ENDNOTES.map((e) => {
+      const lim = "limit" in e && e.limit ? " " + e.limit : "";
+      return `[${e.n}] ${e.value} — ${KIND_LABEL[e.kind]}. ${e.basis}${lim}`;
+    }).join("\n"),
+    "",
     "EDUCATION",
     EDUCATION.map((e) => `${e.degree} — ${e.school}${e.note ? "\n  " + e.note : ""}`).join("\n"),
   ].join("\n");
@@ -549,6 +566,9 @@ export default function ResumePage() {
                     >
                       <p className="font-[family-name:var(--font-heading)] text-[23px] font-bold leading-none tracking-[-0.01em] text-[#023047]">
                         {m.value}
+                        <sup className="ml-0.5 align-super text-[9px] font-semibold text-neutral-400">
+                          {i + 1}
+                        </sup>
                       </p>
                       <p className="mt-2 text-[9.8px] leading-[1.4] text-neutral-600">
                         {m.label}
@@ -640,6 +660,35 @@ export default function ResumePage() {
                             {e.note}
                           </p>
                         ) : null}
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* ------------------------ measurement notes -------------------- */}
+                <section className="break-inside-avoid border-t border-neutral-200 px-11 pb-9 pt-7">
+                  <SectionHeading>Measurement Notes</SectionHeading>
+                  <p className="mb-3 text-[9.6px] leading-[1.5] text-neutral-500">
+                    What each headline figure is, and where it stops. Counts are
+                    checkable, readings depend on conditions, estimates are
+                    judgements — they are not the same kind of claim and are not
+                    presented as though they were.
+                  </p>
+                  <div className="grid grid-cols-2 gap-x-8 gap-y-3">
+                    {ENDNOTES.map((e) => (
+                      <div key={e.n} className="break-inside-avoid">
+                        <p className="text-[9.8px] font-semibold text-neutral-800">
+                          <sup className="mr-1 align-super text-[8px] text-neutral-400">
+                            {e.n}
+                          </sup>
+                          {e.value} · {KIND_LABEL[e.kind]}
+                        </p>
+                        <p className="mt-0.5 text-[9.3px] leading-[1.5] text-neutral-600">
+                          {e.basis}
+                          {"limit" in e && e.limit ? (
+                            <span className="text-neutral-500"> {e.limit}</span>
+                          ) : null}
+                        </p>
                       </div>
                     ))}
                   </div>

@@ -10,6 +10,7 @@
  * ------------------------------------------------------------------ */
 
 import { yearsPhrase } from "../lib/experience";
+import type { MeasurementId } from "../lib/measurement";
 
 export const contact = {
   email: "rezaan6@gmail.com",
@@ -57,7 +58,7 @@ export type CaseStudy = {
   /** The hard constraint the work happened inside. */
   tradeoffShort: string;
   /** Plain before/after results — no invented percentages, no dashboard bars. */
-  results: { label: string; value: string; note?: string }[];
+  results: { label: string; value: string; note?: string; m?: MeasurementId }[];
   // Full breakdown (revealed on the detail page)
   context: string;
   decision: string;
@@ -102,7 +103,7 @@ export const caseStudies: CaseStudy[] = [
       "Seven core platform modules and five vendor workflows in production on one shared component layer — with the structure still legible enough that a new domain is a new folder, not a refactor.",
     tradeoffShort: "Upfront architecture vs. time to first screen",
     results: [
-      { label: "Platform modules shipped", value: "7", note: "each in its own slice" },
+      { label: "Platform modules shipped", value: "7", note: "each in its own slice", m: "modules" },
       { label: "Vendor workflows built on the shared layer", value: "5" },
       {
         label: "Test layer",
@@ -207,7 +208,7 @@ type RowProps    = { variant: "primary"; isPayoutRow: boolean }         // not s
       "Page load times down ~15% through bundle optimization, lazy loading, and caching, with reliable protected playback and multi-language UIs shipped across regions.",
     tradeoffShort: "Reuse the platform vs. build it bespoke",
     results: [
-      { label: "Page load time", value: "−15%", note: "bundle, lazy-load, caching" },
+      { label: "Page load time", value: "−15%", note: "bundle, lazy-load, caching", m: "load-axinom" },
       { label: "Mosaic micro-frontends integrated", value: "4", note: "Media, Catalogue, Entitlement, DRM" },
       { label: "Locales shipped", value: "multi-region", note: "i18n designed in, bundles split per locale" },
     ],
@@ -294,10 +295,11 @@ const messages = await import("../locales/" + locale + ".json")`,
       "~90% automated coverage, ~40% faster page loads, ~30% less frontend development time, and 40+ production releases while migrating the legacy stack incrementally.",
     tradeoffShort: "Standardize on the system vs. per-project freedom",
     results: [
-      { label: "Page load time", value: "−40%", note: "code-splitting, lazy loading, asset optimization" },
-      { label: "Frontend development time", value: "−30%", note: "after the Storybook library landed" },
-      { label: "Flow coverage, critical paths", value: "~90%", note: "Cypress, gated in CI" },
-      { label: "Production releases", value: "40+" },
+      { label: "Page load time", value: "−40%", note: "code-splitting, lazy loading, asset optimization", m: "load-kodez" },
+      { label: "Frontend development time", value: "−30%", note: "after the Storybook library landed", m: "dev-time" },
+      { label: "Technical debt", value: "−25%", note: "legacy PHP/jQuery migration", m: "tech-debt" },
+      { label: "Flow coverage, critical paths", value: "~90%", note: "Cypress, gated in CI", m: "coverage" },
+      { label: "Production releases", value: "40+", m: "releases" },
     ],
     context:
       "Kodez builds an enterprise CMS for service management and logistics. The client I worked across was Amtek in Australia, whose operation runs on enterprise vendor systems (Fiserv, Toshiba, NTT DATA, Park Assist and City), so the CMS had to integrate cleanly with all of them. The surface is large — database operations spanning 250+ SQL tables — and it sat alongside a legacy PHP/jQuery application that still had users. Meanwhile the startup itself grew from 10 to 60+ people. Two forces pull against each other in that setup: the codebase needs to change constantly for clients, and every change is a chance to break something that someone is paid to rely on.",
@@ -390,7 +392,7 @@ it("keeps a service unbookable when price is missing", () => {
       "The EMS shipped to production, and the site revamp lifted UX and conversion ~15% while the same push contributed to ~20% growth in client acquisition.",
     tradeoffShort: "Rapid delivery vs. scalable architecture",
     results: [
-      { label: "Conversion after the UI revamp", value: "+15%", note: "responsive redesign + accessibility" },
+      { label: "Conversion after the UI revamp", value: "+15%", note: "responsive redesign + accessibility", m: "conversion" },
       { label: "Client acquisition", value: "+20%", note: "same push; reported internally" },
       { label: "EMS", value: "concept → production", note: "end-to-end UI ownership" },
     ],

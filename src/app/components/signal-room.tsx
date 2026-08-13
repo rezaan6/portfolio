@@ -37,6 +37,7 @@ import {
   timeline,
   tools,
 } from "./signal-room-data";
+import { Measured } from "./measured";
 import { yearsOfExperience, yearsPhrase } from "../lib/experience";
 import { ArtifactDocView } from "./artifact-doc";
 import { ARTIFACT_DOCS } from "./artifact-docs";
@@ -909,6 +910,15 @@ export function EvidenceSection() {
                                 {r.note ? (
                                   <span className="block text-[10.5px] leading-4 text-[var(--sr-faint)]">
                                     {r.note}
+                                  </span>
+                                ) : null}
+                                {/* The trigger sits under the label rather than
+                                    beside the figure: an affordance next to
+                                    display type competes with the number it's
+                                    meant to support. */}
+                                {r.m ? (
+                                  <span className="mt-1 block">
+                                    <Measured id={r.m} />
                                   </span>
                                 ) : null}
                               </dt>
