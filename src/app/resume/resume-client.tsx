@@ -80,7 +80,10 @@ const METRICS: { label: string; m: MeasurementId }[] = [
 // tiles point at an endnote block after Education, which is on screen as well
 // as in print — one artifact, not a screen version and a print version that
 // drift. This is the same text the site's disclosures show.
-const ENDNOTES = METRICS.map((x, i) => ({ n: i + 1, ...MEASUREMENTS[x.m] }));
+// Each note leads with its figure *and* its label. The figure alone isn't
+// always enough — the platforms count is literally "2", which on its own reads
+// like the ordinal marker this replaced.
+const ENDNOTES = METRICS.map((x) => ({ id: x.m, label: x.label, ...MEASUREMENTS[x.m] }));
 
 const EXPERIENCE: Role[] = [
   {
@@ -330,7 +333,7 @@ ${r.points.map((pt) => `- ${pt}`).join("\n")}`,
     "MEASUREMENT NOTES",
     ENDNOTES.map((e) => {
       const lim = "limit" in e && e.limit ? " " + e.limit : "";
-      return `[${e.n}] ${e.value} — ${KIND_LABEL[e.kind]}. ${e.basis}${lim}`;
+      return `${e.value} ${e.label} — ${KIND_LABEL[e.kind]}. ${e.basis}${lim}`;
     }).join("\n"),
     "",
     "EDUCATION",
@@ -556,15 +559,11 @@ export default function ResumePage() {
                       ].join(" ")}
                     >
                       <p className="font-[family-name:var(--font-heading)] text-[23px] font-bold leading-none tracking-[-0.01em] text-[#023047]">
+                        {/* No superscript marker. Each note below leads with its
+                            own figure — "−40% · Before/after reading" — so the
+                            value is the label, and an ordinal was a second
+                            numbering scheme to follow for no gain. */}
                         {MEASUREMENTS[m.m].value}
-                        {/* Superscript only. An interactive ⓘ inside what is meant
-                            to read as a printed document looks out of place, and
-                            it duplicated the marker sitting beside it — both
-                            pointed at the same endnote. The notes after Education
-                            carry the provenance on screen and in the PDF alike. */}
-                        <sup className="ml-0.5 align-super text-[9px] font-semibold text-neutral-400">
-                          {i + 1}
-                        </sup>
                       </p>
                       <p className="mt-2 text-[9.8px] leading-[1.4] text-neutral-600">
                         {m.label}
@@ -672,12 +671,13 @@ export default function ResumePage() {
                   </p>
                   <div className="grid grid-cols-2 gap-x-8 gap-y-3">
                     {ENDNOTES.map((e) => (
-                      <div key={e.n} className="break-inside-avoid">
+                      <div key={e.id} className="break-inside-avoid">
                         <p className="text-[9.8px] font-semibold text-neutral-800">
-                          <sup className="mr-1 align-super text-[8px] text-neutral-400">
-                            {e.n}
-                          </sup>
-                          {e.value} · {KIND_LABEL[e.kind]}
+                          {e.value} {e.label}
+                          <span className="font-normal text-neutral-500">
+                            {" · "}
+                            {KIND_LABEL[e.kind]}
+                          </span>
                         </p>
                         <p className="mt-0.5 text-[9.3px] leading-[1.5] text-neutral-600">
                           {e.basis}

@@ -996,7 +996,7 @@ export function MethodSection() {
             Architect → Build → Harden → Measure
           </p>
           <h2 className="mt-3 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-            How I build — one loop, start to finish.
+            Each stage hands the next something concrete.
           </h2>
           <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
             Every case study runs through the same four stages, and each hands
@@ -2086,7 +2086,7 @@ export function ProjectsSection() {
           <Reveal>
             <SectionLabel title="Side builds · 2023" />
             <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-              Three builds, each for one specific unknown.
+              Not portfolio pieces — questions I hadn’t hit at work.
             </h2>
             <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
               Personal projects, not production work — my production code is
