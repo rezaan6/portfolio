@@ -12,7 +12,8 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "audit": "npm audit --audit-level=moderate",
-    "resume:pdf": "node scripts/resume-pdf.mjs"
+    "resume:pdf": "node scripts/resume-pdf.mjs",
+    "prebuild": "node scripts/check-no-template-leaks.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

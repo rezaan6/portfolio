@@ -86,7 +86,7 @@ export const MEASUREMENTS = {
     value: "−25%",
     kind: "estimate",
     basis:
-      "How much of the legacy PHP/jQuery surface was retired over the incremental migration to React and ExpressJS.",
+      "How much of the legacy Laravel and jQuery surface was retired over the incremental migration to React and ExpressJS.",
     limit:
       "There is no standard unit for technical debt, so treat this as a judgement rather than a measurement. The claim I would defend is the delivery record: the migration ran in steps and never froze client delivery.",
   },

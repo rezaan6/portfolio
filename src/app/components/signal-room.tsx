@@ -1188,9 +1188,12 @@ export function ArtifactsSection() {
           {artifacts.map((artifact, index) => {
             const cs = caseStudies.find((c) => c.company === artifact.company);
             const brand = cs?.brand ?? "var(--sr-accent)";
+            // min-w-0: a grid item defaults to min-width:auto and will not shrink
+            // below its content, so this card rendered wider than its 350px track
+            // at 390px and pushed the whole page sideways.
             return (
-              <Reveal key={artifact.title} delay={0.03 * index}>
-                <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)] p-6 transition hover:border-[var(--sr-accent)]">
+              <Reveal key={artifact.title} delay={0.03 * index} className="min-w-0">
+                <div className="relative flex min-w-0 h-full flex-col overflow-hidden rounded-2xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)] p-6 transition hover:border-[var(--sr-accent)]">
                   {/* Every card gets a top accent — brand colour for a company
                       artifact, indigo for a general practice one. */}
                   <span

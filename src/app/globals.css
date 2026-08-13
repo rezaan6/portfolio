@@ -297,7 +297,16 @@ section[id] {
    --shiki-dark custom properties per token), so switching the site theme is a
    CSS variable swap — no re-highlighting, no flash, and no highlighter in the
    client bundle. */
+.signal-room .sr-code {
+  /* A grid or flex child defaults to min-width:auto, which means it refuses to
+     shrink below its content. Code cannot wrap, so without this the block pushes
+     the whole page wide and the pre's overflow-x never gets a chance to engage. */
+  min-width: 0;
+  max-width: 100%;
+}
+
 .signal-room .sr-code pre {
+  max-width: 100%;
   background: var(--sr-bg-alt);
   border: 1px solid var(--sr-hairline);
   border-radius: 14px;

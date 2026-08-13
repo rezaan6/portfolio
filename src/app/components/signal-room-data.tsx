@@ -291,7 +291,7 @@ const messages = await import("../locales/" + locale + ".json")`,
     headline:
       `A CMS built to be changed: a Storybook design system, ${MEASUREMENTS.coverage.value} Cypress coverage, and ${MEASUREMENTS.releases.value} releases without a freeze.`,
     problem:
-      `A React CMS spanning ${MEASUREMENTS.tables.value} SQL tables and enterprise integrations, sitting next to a legacy PHP/jQuery codebase — every release risked a regression somewhere nobody was looking.`,
+      `A React CMS spanning ${MEASUREMENTS.tables.value} SQL tables and enterprise integrations, sitting next to a legacy Laravel and jQuery codebase — every release risked a regression somewhere nobody was looking.`,
     move:
       "Built the CMS 0→1 on a microarchitecture with SOLID boundaries, a Storybook component library as the shared spine, and TDD with Cypress as the gate on every release.",
     result:
@@ -305,15 +305,15 @@ const messages = await import("../locales/" + locale + ".json")`,
       { label: "Production releases", m: "releases" },
     ],
     context:
-      `Kodez builds an enterprise CMS for service management and logistics. The client I worked across was Amtek in Australia, whose operation runs on enterprise vendor systems (Fiserv, Toshiba, NTT DATA, Park Assist and City), so the CMS had to integrate cleanly with all of them. The surface is large — database operations spanning ${MEASUREMENTS.tables.value} SQL tables — and it sat alongside a legacy PHP/jQuery application that still had users. Meanwhile the startup itself grew from 10 to 60+ people. Two forces pull against each other in that setup: the codebase needs to change constantly for clients, and every change is a chance to break something that someone is paid to rely on.`,
+      `Kodez builds an enterprise CMS for service management and logistics. The client I worked across was Amtek in Australia, whose operation runs on enterprise vendor systems (Fiserv, Toshiba, NTT DATA, Park Assist and City), so the CMS had to integrate cleanly with all of them. The surface is large — database operations spanning ${MEASUREMENTS.tables.value} SQL tables — and it sat alongside a legacy Laravel and jQuery application that still had users. Meanwhile the startup itself grew from 10 to 60+ people. Two forces pull against each other in that setup: the codebase needs to change constantly for clients, and every change is a chance to break something that someone is paid to rely on.`,
     decision:
       `I architected and delivered the CMS from 0→1 to MVP as a React microarchitecture applying SOLID principles, then made two investments that most teams defer. First, a Storybook-based reusable component library — the shared spine, so a new screen is composed rather than authored. Second, Test-Driven Development with Cypress, taken seriously enough to reach ${MEASUREMENTS.coverage.value} automated coverage and wired into CI/CD, so a release is gated by evidence rather than by whoever remembered to click through it. Redux handled state flow, TanStack React Query handled fetching, caching, and synchronization, and Node.js BFF layers cut API latency.`,
     tradeoff:
-      `Standardizing on the system vs. per-project freedom. A shared library and an enforced test gate slow down the first version of any given screen — engineers occasionally wanted a bespoke component and got a slightly more general one instead. I made that trade deliberately: at ${MEASUREMENTS.releases.value} releases and a company scaling past 60, consistency is what keeps velocity from decaying. The migration was the same call in a different costume — I moved the legacy PHP/jQuery application to React and ExpressJS incrementally rather than in a big-bang rewrite, accepting a period of two coexisting stacks to avoid freezing client delivery.`,
+      `Standardizing on the system vs. per-project freedom. A shared library and an enforced test gate slow down the first version of any given screen — engineers occasionally wanted a bespoke component and got a slightly more general one instead. I made that trade deliberately: at ${MEASUREMENTS.releases.value} releases and a company scaling past 60, consistency is what keeps velocity from decaying. The migration was the same call in a different costume — I moved the legacy Laravel and jQuery application to React and ExpressJS incrementally rather than in a big-bang rewrite, accepting a period of two coexisting stacks to avoid freezing client delivery.`,
     signal:
       `Three numbers, all of them things I could show. Automated test coverage — ${MEASUREMENTS.coverage.value}, running in CI/CD, which is what made frequent releases safe. Page load time, which came down ${MEASUREMENTS["load-kodez"].value.replace("−","~")} through code-splitting, lazy loading, and asset optimization, with AWS S3 serving assets. And frontend development time, which dropped ${MEASUREMENTS["dev-time"].value.replace("−","~")} once the Storybook library was the default way to build. Cross-browser behavior was validated on BrowserStack, and API contracts stayed documented in Swagger, with sprint work tracked in JIRA and Confluence.`,
     outcome:
-      `${MEASUREMENTS.releases.value} production releases delivered — new features, defect fixes, and database optimization across ${MEASUREMENTS.tables.value} SQL tables. Page loads ${MEASUREMENTS["load-kodez"].value.replace("−","~")} faster, frontend development ${MEASUREMENTS["dev-time"].value.replace("−","~")} faster, ${MEASUREMENTS.coverage.value} automated Cypress coverage, and a legacy PHP/jQuery application migrated to React and ExpressJS without a delivery freeze. REST integrations against the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City) stayed interoperable throughout.`,
+      `${MEASUREMENTS.releases.value} production releases delivered — new features, defect fixes, and database optimization across ${MEASUREMENTS.tables.value} SQL tables. Page loads ${MEASUREMENTS["load-kodez"].value.replace("−","~")} faster, frontend development ${MEASUREMENTS["dev-time"].value.replace("−","~")} faster, ${MEASUREMENTS.coverage.value} automated Cypress coverage, and a legacy Laravel and jQuery application migrated to React and ExpressJS without a delivery freeze. REST integrations against the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City) stayed interoperable throughout.`,
     detail:
       `What I'd do differently: I sold the component library on consistency when I should have sold it on speed. Engineers adopt a design system when it visibly saves them an afternoon, not when it's described as the right thing to do — I'd publish the before/after build time for a real screen in week one and let the number do the arguing. The lesson I carry: release cadence isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. TDD and Storybook weren't overhead on the ${MEASUREMENTS.releases.value} releases; they are what made shipping at that rate feel safe.`,
     code: {
@@ -370,7 +370,7 @@ it("keeps a service unbookable when price is missing", () => {
       },
       {
         lp: "Migrate incrementally, never freeze",
-        why: "Moved a legacy PHP/jQuery application to React and ExpressJS in steps — instead of a big-bang rewrite that would have stopped client delivery.",
+        why: "Moved a legacy Laravel and jQuery application to React and ExpressJS in steps — instead of a big-bang rewrite that would have stopped client delivery.",
       },
     ],
   },
@@ -795,7 +795,7 @@ On an international product, the aggregate is the least informative number avail
   },  {
     type: "TEST STRATEGY",
     company: "Kodez",
-    title: "TDD with Cypress — ${MEASUREMENTS.coverage.value} on the paths that matter",
+    title: `TDD with Cypress — ${MEASUREMENTS.coverage.value} on the paths that matter`,
     blurb:
       `The testing strategy that made ${MEASUREMENTS.releases.value} production releases safe: what gets a test, what deliberately does not, and where the gate sits in CI/CD.`,
     body: `TEST STRATEGY — Kodez CMS
@@ -835,10 +835,10 @@ not have yet. Claiming otherwise would be theatre.`,
   },  {
     type: "MIGRATION PLAN",
     company: "Kodez",
-    title: "PHP/jQuery → React + Express, without a freeze",
+    title: "Laravel/jQuery → React + Express, without a freeze",
     blurb:
       "How a legacy application moved to a modern stack incrementally — the strangler approach, what shipped in which order, and the rule that kept two coexisting stacks from doubling the work.",
-    body: `MIGRATION PLAN — legacy PHP/jQuery → React + ExpressJS
+    body: `MIGRATION PLAN — legacy Laravel/jQuery → React + ExpressJS
 
 OWNER   Rezaan Riyaz — Senior Frontend Engineer, Kodez
 RESULT  Legacy stack retired incrementally · zero delivery freeze
@@ -929,7 +929,7 @@ export const principles: { label: string; body: string }[] = [
   },
   {
     label: "Tests are how you ship fast",
-    body: "Release throughput isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. ${MEASUREMENTS.coverage.value} Cypress coverage in CI wasn't overhead on ${MEASUREMENTS.releases.value} releases — it's why there were ${MEASUREMENTS.releases.value} releases.",
+    body: `Release throughput isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. ${MEASUREMENTS.coverage.value} Cypress coverage in CI wasn't overhead on ${MEASUREMENTS.releases.value} releases — it's why there were ${MEASUREMENTS.releases.value} releases.`,
   },
 ];
 
