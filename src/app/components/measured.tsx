@@ -52,23 +52,26 @@ export function Measured({
         type="button"
         // @ts-expect-error — popovertarget is valid HTML the React types lag on
         popovertarget={panelId}
-        aria-label="How this was measured"
+        aria-label="How this figure was measured"
+        title="How this figure was measured"
         className={[
-          // A quiet dotted underline rather than an ⓘ glyph beside the numeral.
-          // An icon next to display type competes with the figure; an underline
-          // on the label reads as "there is more here" without shouting.
-          "relative inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.12em]",
-          "text-[var(--sr-faint)] underline decoration-dotted decoration-from-font underline-offset-4",
-          "transition hover:text-[var(--sr-accent)] focus-visible:text-[var(--sr-accent)]",
-          // 44px touch target via a pseudo-element, so the hit area grows
-          // without the button occupying 44px of layout.
-          "after:absolute after:left-1/2 after:top-1/2 after:h-11 after:w-[calc(100%+1rem)]",
+          // The conventional ⓘ, sized to sit beside a figure without competing
+          // with it — 14px against display type, at the muted colour until
+          // hovered. It reads as "there is more here" instantly, which a text
+          // link next to a large numeral does not.
+          "relative inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full",
+          "border border-current align-middle text-[9px] font-semibold leading-none",
+          "text-[var(--sr-faint)] transition",
+          "hover:text-[var(--sr-accent)] focus-visible:text-[var(--sr-accent)]",
+          // 44px hit area from a pseudo-element, so the target is thumb-sized
+          // without the icon occupying 44px of layout.
+          "after:absolute after:left-1/2 after:top-1/2 after:h-11 after:w-11",
           "after:-translate-x-1/2 after:-translate-y-1/2 after:content-['']",
           "print:hidden",
           className,
         ].join(" ")}
       >
-        How this was measured
+        <span aria-hidden="true">i</span>
       </button>
 
       <div

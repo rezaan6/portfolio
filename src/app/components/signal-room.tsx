@@ -913,15 +913,6 @@ export function EvidenceSection() {
                                     {r.note}
                                   </span>
                                 ) : null}
-                                {/* The trigger sits under the label rather than
-                                    beside the figure: an affordance next to
-                                    display type competes with the number it's
-                                    meant to support. */}
-                                {r.m ? (
-                                  <span className="mt-1 block">
-                                    <Measured id={r.m} />
-                                  </span>
-                                ) : null}
                               </dt>
                               <dd
                                 className="shrink-0 font-[family-name:var(--font-display)] text-[15px] font-semibold tabular-nums"
@@ -930,7 +921,10 @@ export function EvidenceSection() {
                                 {/* Shared source wins where a row is tagged, so a
                                     figure can't say one thing here and another on
                                     the résumé. */}
-                                {r.m ? MEASUREMENTS[r.m].value : r.value}
+                                <span className="inline-flex items-center gap-1.5">
+                                  {r.m ? MEASUREMENTS[r.m].value : r.value}
+                                  {r.m ? <Measured id={r.m} /> : null}
+                                </span>
                               </dd>
                             </div>
                           ))}
