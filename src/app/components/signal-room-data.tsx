@@ -299,7 +299,7 @@ const messages = await import("../locales/" + locale + ".json")`,
     results: [
       { label: "Page load time", note: "code-splitting, lazy loading, asset optimization", m: "load-kodez" },
       { label: "Frontend development time", note: "after the Storybook library landed", m: "dev-time" },
-      { label: "Technical debt", note: "legacy PHP/jQuery migration", m: "tech-debt" },
+      { label: "Technical debt", note: "legacy Laravel/jQuery migration", m: "tech-debt" },
       { label: "Flow coverage, critical paths", note: "Cypress, gated in CI", m: "coverage" },
       { label: "Production releases", m: "releases" },
     ],
@@ -1017,11 +1017,23 @@ $space: (xs: 4px, sm: 8px, md: 16px, lg: 24px);
     group: "Styling & design systems",
     use: "Component foundation & theming",
     howIUse:
-      "At Kodez, Material UI was the foundation the CMS was built on, which makes theming the important skill — mapping the client's design language onto the theme rather than overriding components one by one. I wrap MUI primitives in our own components so the application never imports MUI directly; that way the library is an implementation detail we can change, not a dependency baked into 200 screens.",
+      "At Kodez, Material UI was the foundation the CMS was built on, and the part that earned its licence was MUI X Data Grid Pro — the CMS's tables sat over a schema far too large to send to the client, so filtering, sorting and pagination all had to happen server-side with the grid driving the query rather than the row set. That makes theming the important skill — mapping the client's design language onto the theme rather than overriding components one by one. I wrap MUI primitives in our own components so the application never imports MUI directly; that way the library is an implementation detail we can change, not a dependency baked into 200 screens.",
     sample: `Wrap, don't import directly
 shared/ui/Button.tsx   →  wraps MUI Button, exposes our variants only
 app/**/*               →  imports shared/ui/Button
 Result: swapping the library is one file, not a codemod.`,
+  },
+  {
+    name: "shadcn/ui",
+    slug: "shadcnui",
+    group: "Styling & design systems",
+    use: "Component foundation on Radix + Tailwind",
+    howIUse:
+      "shadcn/ui is the foundation the Hobber component layer is built on, and the reason I chose it is that it isn't a dependency — the components are copied into the repo, so they can be changed rather than fought with. That matters on a platform with seven feature slices: when a select needs different keyboard behaviour for one domain, I edit the component instead of wrapping it in three layers of props. Radix underneath means the accessibility work — focus management, roles, escape handling — is already correct before I touch it, which is the part teams usually get wrong when they hand-roll.",
+    sample: `Owned, not imported — so it can be changed
+components/ui/select.tsx    // in the repo, editable
+components/vendor/…         // slices compose it, never fork it
+// a dependency you can't edit becomes three props deep`,
   },
   {
     name: "Storybook",
@@ -1099,14 +1111,14 @@ router.post("/services", validate(ServiceSchema), async (req, res, next) => {
 })`,
   },
   {
-    name: "PostgreSQL",
-    slug: "postgresql",
+    name: "MySQL",
+    slug: "mysql",
     group: "Backend & platform",
     use: "Relational data & query performance",
     howIUse:
-      `I'm comfortable enough in SQL to be useful in the part of the stack most frontend engineers avoid — at Kodez I worked on optimizing database operations across a schema spanning ${MEASUREMENTS.tables.value} tables, which is where you learn that a slow screen is often a data-layer problem rather than a rendering one. I'd rather rule that out with the backend team than assume the client is at fault.`,
+      `I'm comfortable enough in SQL to be useful in the part of the stack most frontend engineers avoid — at Kodez, behind Sequelize, I worked on optimizing database operations across a schema spanning ${MEASUREMENTS.tables.value} tables, which is where you learn that a slow screen is often a data-layer problem rather than a rendering one. I'd rather rule that out with the backend team than assume the client is at fault.`,
     sample: `Check the plan before blaming the UI
-EXPLAIN ANALYZE SELECT ... ;   -- Seq Scan on a 2M-row table?
+EXPLAIN SELECT ... ;      -- type: ALL means a full table scan
 → the "slow dashboard" was one missing composite index.`,
   },
   {
