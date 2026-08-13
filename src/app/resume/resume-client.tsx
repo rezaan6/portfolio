@@ -443,19 +443,11 @@ export default function ResumePage() {
               </button>
               {/* Was window.print(), which handed the reader whatever their browser
                   decided to produce — their margins, their paper size, their headers.
-                  These two files are generated from this same route by
-                  scripts/resume-pdf.mjs, so they cannot drift from what's on screen.
-                  The A4 one is separate because a 232 × 636mm sheet scaled onto A4
-                  puts the body type near 5pt: the tall one is for reading, A4 is for
-                  uploading to an ATS and for printing. */}
-              <a
-                href="/resume-a4.pdf"
-                download="Mohammed-Rezaan-Riyaz-Resume-A4.pdf"
-                title="A4, paginated — the one to upload to an application form"
-                className="hidden rounded-full border border-[var(--sr-hairline)] px-3 py-1.5 text-[12px] font-medium text-[var(--sr-text)] transition hover:border-[var(--sr-accent)] hover:text-[var(--sr-accent)] sm:inline-flex sm:items-center print:hidden"
-              >
-                A4
-              </a>
+                  This file is generated from this same route by
+                  scripts/resume-pdf.mjs, so it cannot drift from what's on screen.
+                  A paginated A4 version is still built and sits at /resume-a4.pdf for
+                  ATS uploads, but it isn't surfaced here — two download buttons made
+                  the reader choose before they had any reason to care. */}
               <a
                 href="/resume.pdf"
                 download="Mohammed-Rezaan-Riyaz-Resume.pdf"
