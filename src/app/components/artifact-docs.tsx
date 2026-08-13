@@ -313,7 +313,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         title: "What always gets an E2E test",
         checks: [
           { text: "Authentication and permissions." },
-          { text: "Anything that writes to the ${MEASUREMENTS.tables.value} table schema." },
+          { text: `Anything that writes to the ${MEASUREMENTS.tables.value} table schema.` },
           {
             text: "Every integration surface in the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City).",
           },
