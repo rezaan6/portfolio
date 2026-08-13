@@ -121,7 +121,7 @@ const EXPERIENCE: Role[] = [
     ],
     points: [
       "Led the frontend team building high-performance web applications for clients including the Goethe-Institut and the Lindau Nobel Laureate Meetings, delivering multiple products 0→1 through full development, testing, and production release cycles.",
-      `Reduced page load time ${MEASUREMENTS["load-axinom"].value.replace("−","")} through bundle optimization, lazy loading, and caching improvements.`,
+      `Reduced page load time ${MEASUREMENTS["load-axinom"].value.replace("−","~")} through bundle optimization, lazy loading, and caching improvements.`,
       "Built on Axinom's Mosaic micro-frontends (Media, Catalogue, Entitlement, DRM) and its APIs for content synchronization and metadata management, rather than hand-rolling media delivery.",
       "Implemented secure DRM playback with Shaka Player, and designed i18n in from the start for multi-language experiences across regions.",
       "Worked directly with designers to translate Figma into pixel-perfect, responsive interfaces, holding SEO and WCAG-aligned accessibility across every customer-facing surface.",
@@ -148,11 +148,11 @@ const EXPERIENCE: Role[] = [
     points: [
       `Architected and delivered a React CMS from 0→1 to MVP as a microarchitecture applying SOLID principles, then led ${MEASUREMENTS.releases.value} production releases on it.`,
       `Introduced TDD with Cypress and drove automated coverage ${MEASUREMENTS.coverage.value} on critical paths, gated in CI/CD — which is what let releases stay frequent without a regression freeze.`,
-      `Built a Storybook-based reusable component library that cut frontend development time ${MEASUREMENTS["dev-time"].value.replace("−","")} across projects.`,
-      `Reduced page load time ${MEASUREMENTS["load-kodez"].value.replace("−","")} through code-splitting, lazy loading, and asset optimization, with assets served from AWS S3.`,
+      `Built a Storybook-based reusable component library that cut frontend development time ${MEASUREMENTS["dev-time"].value.replace("−","~")} across projects.`,
+      `Reduced page load time ${MEASUREMENTS["load-kodez"].value.replace("−","~")} through code-splitting, lazy loading, and asset optimization, with assets served from AWS S3.`,
       "Migrated a legacy PHP/jQuery application to React and ExpressJS incrementally without freezing client delivery — and built Node.js BFF layers with the backend team to reduce API latency.",
       `Built REST integrations against the client's enterprise vendor stack — Amtek (Australia), running on Fiserv, Toshiba, NTT DATA, Park Assist and City systems — across a ${MEASUREMENTS.tables.value} table schema.`,
-      "Translated Figma designs into pixel-perfect, responsive interfaces; set frontend standards and ran code reviews as the team scaled from 10 to 60+ people.",
+      "Translated Figma designs into pixel-perfect, responsive interfaces; set frontend standards and ran code reviews as the company scaled from 10 to 60+ people.",
     ],
   },
   {
@@ -165,7 +165,7 @@ const EXPERIENCE: Role[] = [
     points: [
       "Joined as a Frontend Engineer Intern in December 2018 and moved into the full role in June 2019 — first end-to-end UI ownership at a seed-stage startup.",
       "Delivered an Employment Management System from concept to production as the end-to-end UI owner, in React.js, JavaScript, HTML, and SCSS.",
-      `Rebuilt the company website around responsive layout and accessibility, lifting UX and conversion ${MEASUREMENTS.conversion.value.replace("+","")}; the same push contributed to ~20% growth in client acquisition.`,
+      `Rebuilt the company website around responsive layout and accessibility, lifting UX and conversion ${MEASUREMENTS.conversion.value.replace("+","~")}; the same push contributed to ~20% growth in client acquisition.`,
       "Improved application performance through refactoring and component-level optimization, and ran code reviews and pair-programming sessions to keep the codebase maintainable as it grew.",
     ],
   },

@@ -84,7 +84,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "fields",
         fields: [
           { label: "Doc", value: "Reusable component library — API contract" },
-          { label: "Context", value: "Kodez enterprise CMS · team scaled 10 → 60+" },
+          { label: "Context", value: "Kodez enterprise CMS · company scaled 10 → 60+" },
           { label: "Stack", value: "React · TypeScript · SCSS · Material UI · Storybook" },
           { label: "Result", value: "~30% less frontend development time" },
         ],
@@ -92,7 +92,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
       {
         type: "section",
         title: "Why this exists",
-        text: `The CMS spans ${MEASUREMENTS.tables.value} SQL tables and enterprise integrations, and the team grew from 10 to 60+ people. Without a shared spine, every screen is authored from scratch and the product drifts. The library is how a screen becomes composition instead of authorship.`,
+        text: `The CMS spans ${MEASUREMENTS.tables.value} SQL tables and enterprise integrations, and the company grew from 10 to 60+ people. Without a shared spine, every screen is authored from scratch and the product drifts. The library is how a screen becomes composition instead of authorship.`,
       },
       {
         type: "steps",
@@ -224,7 +224,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         fields: [
           { label: "Doc", value: "Page-load budget — media web applications" },
           { label: "Context", value: "Axinom · Mosaic platform · global media clients" },
-          { label: "Result", value: `${MEASUREMENTS["load-axinom"].value.replace("−","")} reduction in page load time` },
+          { label: "Result", value: `${MEASUREMENTS["load-axinom"].value.replace("−","~")} reduction in page load time` },
           {
             label: "Read as",
             value: "Before/after vs. a defined baseline — not a controlled experiment",
