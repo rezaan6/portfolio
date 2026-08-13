@@ -330,10 +330,19 @@ export function SiteFrame({ children }: { children: ReactNode }) {
     const rect = btn.getBoundingClientRect();
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
-    const radius = Math.hypot(
-      Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y),
-    );
+
+    // Distance to the farthest corner, then 6% more. Without the overshoot the
+    // circle lands exactly on the corner pixel and the easing spends its final
+    // frames covering almost nothing — so the last sliver arrives when the
+    // pseudo-element is torn down rather than when the circle reaches it, which
+    // reads as the reveal snapping shut at the end. The snapshot can also be a
+    // scrollbar-width wider than innerWidth, which leaves a real strip behind.
+    const radius =
+      Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y),
+      ) * 1.06;
+
     const transition = doc.startViewTransition(() =>
       flushSync(() => toggle(false)),
     );
@@ -347,8 +356,19 @@ export function SiteFrame({ children }: { children: ReactNode }) {
             ],
           },
           {
-            duration: 680,
-            easing: "cubic-bezier(0.33, 0, 0.15, 1)",
+            // Deliberately near-linear. The eye tracks the leading edge of the
+            // circle, so an ease-out curve brings it almost to a stop well
+            // before the animation ends — the old curve covered 98% of the
+            // radius in the first 80% of the time, leaving a final stretch
+            // where nothing visibly moved and the reveal appeared to snap shut.
+            // A constant edge speed is what actually reads as paint flooding
+            // outwards; the slight ease-in only softens the start off the tap.
+            duration: 820,
+            easing: "cubic-bezier(0.25, 0.1, 0.5, 0.9)",
+            // Holds the final frame until the browser removes the pseudo-element.
+            // Without it the clip-path reverts the instant the animation ends,
+            // and the handoff to the real DOM is a visible pop.
+            fill: "forwards",
             pseudoElement: "::view-transition-new(root)",
           },
         );
