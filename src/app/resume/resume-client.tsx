@@ -104,7 +104,7 @@ const EXPERIENCE: Role[] = [
       "Google Maps API",
     ],
     points: [
-      "Sole frontend engineer on the Hobber vendor platform — the frontend is mine end to end, architected from an empty repository in React and TypeScript on a modular, feature-sliced structure.",
+      "VERCELPROBE Sole frontend engineer on the Hobber vendor platform — the frontend is mine end to end, architected from an empty repository in React and TypeScript on a modular, feature-sliced structure.",
       "Shipped seven core platform modules — authentication, vendor accounts, dashboards, scheduling, payouts, integrations, and team access — as independent slices over one shared component layer built on shadcn/ui and Radix primitives.",
       "Built the vendor workflows on top: activity management, booking flows, stock scheduling, discount logic, and content management.",
       "Set the architectural boundaries the codebase is held to, so a new domain is a new folder rather than a refactor, with cross-slice contracts enforced by TypeScript at build time.",
