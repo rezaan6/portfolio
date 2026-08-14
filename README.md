@@ -51,12 +51,15 @@ rather than softened — several were.
 
 | | |
 |---|---|
-| Framework | Next.js 16 (App Router, Turbopack) |
-| UI | React 19, Tailwind CSS 4 |
+| Framework | Next.js (App Router, Turbopack) |
+| UI | React (Server Components), Tailwind CSS |
 | Motion | `motion` |
 | Highlighting | Shiki — build-time, server-only |
-| Language | TypeScript 5.9 |
+| Language | TypeScript |
 | Hosting | Vercel |
+
+Versions are deliberately not listed. `package.json` is the source of truth and it tracks
+latest; a number in a table is a second copy that goes stale the day after it's written.
 
 **Seven production dependencies.** ~9.2k lines of TypeScript across 8 routes. `npm audit`
 reports zero vulnerabilities. Lighthouse is 100 across all four categories on the pages I

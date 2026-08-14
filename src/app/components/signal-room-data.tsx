@@ -506,6 +506,27 @@ export type Project = {
 // project content. `featured` entries have a real screenshot in /public.
 export const projects: Project[] = [
   {
+    slug: "this-site",
+    title: "This site",
+    blurb:
+      "The one codebase here I can hand over in full, since my production work is under NDA. Server Components are the default and I only cross the boundary where crossing it buys something: the case-study route is an async Server Component that awaits its params, highlights its code with Shiki on the server behind the server-only package, and hands the client finished HTML — so the tokenizer never reaches the browser. Every route is prerendered; the four that quote a figure derived from a date revalidate hourly, so the number stays right without a redeploy. It also carries a layout-shift bug I caused and then found properly: the case accordion animated flexGrow, which is a layout property, and my first hypothesis about the cause was wrong.",
+    learned:
+      "Where the server/client boundary actually pays for itself — and that a client component is still prerendered, so \"use client\" spends bundle, not first paint.",
+    tech: [
+      "Next.js",
+      "React",
+      "Server Components",
+      "TypeScript",
+      "Tailwind CSS",
+      "Shiki (build-time)",
+      "ISR",
+    ],
+    github: "https://github.com/rezaan6/portfolio",
+    featured: true,
+    category: "Web",
+    year: "2026",
+  },
+  {
     slug: "web-scraper",
     title: "Amazon Price Scraper",
     blurb:
@@ -1082,12 +1103,14 @@ export const tools: Tool[] = [
     group: "Core frontend",
     use: "Component architecture & rendering",
     howIUse:
-      `React is where most of my ${yearsPhrase()} live — I think in component boundaries and rendering behaviour before I think in screens. That means being deliberate about reconciliation and memoization, keeping controlled and uncontrolled components from mixing, and isolating components so one slow subtree doesn't drag a page down. At Hobber I used it to architect a vendor dashboard as independent feature slices; at Kodez it carried a CMS through ${MEASUREMENTS.releases.value} production releases without the render layer becoming the bottleneck.`,
-    sample: `Feature slice — the boundary rule
-features/payouts/     routes · components · state · api  (owns its domain)
-features/scheduling/  routes · components · state · api
-shared/ui/            generic primitives only — no domain knowledge
-Rule: a slice imports from shared/ui, never from another slice.`,
+      `React is where most of my ${yearsPhrase()} live — I think in component boundaries and rendering behaviour before I think in screens. That means being deliberate about reconciliation and memoization, keeping controlled and uncontrolled components from mixing, and isolating components so one slow subtree doesn't drag a page down. At Hobber I used it to architect a vendor dashboard as independent feature slices; at Kodez it carried a CMS through ${MEASUREMENTS.releases.value} production releases without the render layer becoming the bottleneck. The newer model I've pushed on my own code rather than at an employer, and this site is where — Server Components as the default, and a theme toggle that has to wrap its state update in flushSync, because the View Transitions API needs the DOM mutated synchronously inside its callback and React would otherwise batch the update out from under it.`,
+    sample: `Where React and the platform actually meet
+const t = document.startViewTransition(() =>
+  flushSync(() => toggle(false))   // batched ⇒ the "new" snapshot is the old one
+)
+t.ready.then(() => root.animate({ clipPath: [ /* … */ ] },
+  { pseudoElement: "::view-transition-new(root)" }))
+No startViewTransition → CSS cross-fade. reduce-motion → neither.`,
   },
   {
     name: "Next.js",
@@ -1095,11 +1118,12 @@ Rule: a slice imports from shared/ui, never from another slice.`,
     group: "Core frontend",
     use: "App Router, SSR/CSR & routing",
     howIUse:
-      `I use Next.js when the rendering strategy is itself a product decision — which parts must be server-rendered for SEO and first paint, which are client-interactive, and where the hydration boundary sits. At Axinom that mattered for media applications where load time was a deliverable: route-level code-splitting and deferred client bundles were a large part of the ${MEASUREMENTS["load-axinom"].value.replace("−","~")} improvement. I work across both the App Router and Pages, and I treat the server/client boundary as an explicit design choice rather than a default.`,
-    sample: `Rendering decision, per route
-/catalogue     server-rendered  — SEO + fast first paint
-/player        client            — DRM + playback state
-/account/*     client, lazy      — behind auth, not on the critical path
+      `I use Next.js when the rendering strategy is itself a product decision — which parts must be server-rendered for SEO and first paint, which are client-interactive, and where the hydration boundary sits. At Axinom that mattered for media applications where load time was a deliverable: route-level code-splitting and deferred client bundles were a large part of the ${MEASUREMENTS["load-axinom"].value.replace("−","~")} improvement. On the App Router I treat the boundary as something each file has to justify, and I'm precise about what it costs — a client component is still prerendered on the server, so "use client" spends bundle, not first paint. This site is the worked example: every route prerendered, the case-study route an async Server Component that awaits its params, and revalidate on the four pages quoting a figure derived from a date, so they can't go stale between deploys.`,
+    sample: `Rendering is a per-route decision, then a per-file one
+/work/[slug]         server · await params · generateStaticParams → 4 pages
+/ /about /resume /stack   prerendered + export const revalidate = 3600
+loading.tsx          9 of them — Next wraps the segment in Suspense
+"use client"         only where state, an event handler or a DOM API lives
 Guardrail: nothing on the path to first frame is lazy-loaded.`,
   },
   {
@@ -1324,6 +1348,21 @@ Contract confirmed in Postman before the typed client is written.`,
      panel below, against paid work with figures attached, and its one distinctive
      point — one resolve config shared with the test runner — already belongs to
      the Vitest panel. Vite stays on Hobber's stack chips and the project lists. */
+  {
+    name: "Shiki",
+    mono: "SK",
+    color: "#0b5fa5",
+    group: "Build & delivery",
+    use: "Build-time syntax highlighting",
+    howIUse:
+      "Shiki highlights every code block on this site, and the reason it's here rather than a client-side highlighter is a Server Component argument: the code is fully known at build time, so tokenizing it in the browser means shipping the grammars and themes to render text that will never change. It runs in one module guarded by the server-only package — an accidental import from a client component fails the build instead of quietly fattening the bundle — and the client receives finished HTML. Both themes render in a single pass, which is what lets the light/dark toggle be a CSS variable swap with no re-highlight and no flash. The constraint is real and worth stating: nothing user-supplied can be highlighted this way. For a portfolio that isn't a limitation, it's a guarantee.",
+    sample: `Do the work once, on the server
+lib/highlight.ts      import "server-only"   ← a client import is a build error
+                      codeToHtml(src, { themes: { light, dark } })
+work/[slug]/page.tsx  server: const codeHtml = await highlightCode(...)
+case-detail.tsx       "use client": renders the string, ships no tokenizer
+Check it: no Shiki JS in .next/static — only the .shiki CSS rules.`,
+  },
   {
     name: "Webpack",
     slug: "webpack",

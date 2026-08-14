@@ -194,6 +194,7 @@ const STACK: StackGroup[] = [
     items: [
       "React",
       "Next.js (App + Pages Router)",
+      "Server Components",
       "SSR / CSR / ISR",
       "Hydration",
       "Suspense",
