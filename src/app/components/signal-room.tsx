@@ -1609,19 +1609,19 @@ export function EducationSection() {
       award: "First Class",
       school: "University of Bedfordshire",
       year: "2022",
-      note: "Dissertation: BlockVote — a blockchain-based e-voting system on Ethereum, built and defended in 2022. Solidity contracts, Truffle, a React client and MetaMask, with a 78-page thesis on where the model holds and where it doesn't.",
+      note: "Dissertation: BlockVote — a blockchain-based e-voting system on Ethereum, built and defended in 2022. Solidity contracts, Truffle, a React client and MetaMask.",
     },
     {
-      degree: "Pearson BTEC Level 5 HND — Computing (Software Engineering)",
-      school: "British College of Applied Studies",
+      degree: "Higher National Diploma — Computing (Software Engineering)",
+      school: "Pearson College London",
       year: "2020",
-      note: "Where the software engineering foundation was actually laid — data structures, databases, and the first systems I built end to end, alongside the early RaSoft work.",
+      note: "Data structures, databases, and the first systems I built end to end, alongside the early RaSoft work.",
     },
     {
-      degree: "Higher Diploma — Mechatronics Engineering",
-      school: "ICBT, Sri Lanka",
+      degree: "Higher National Diploma — Mechatronics Engineering",
+      school: "Cardiff Metropolitan University",
       year: "2019",
-      note: "Externally moderated by Cardiff Metropolitan University. The starting point, and not a straight line: I came in for hardware and left through a C++ class that pulled me toward the web — which is also why I still reach for a measurement before an opinion.",
+      note: "The starting point, and not a straight line: I came in for hardware and left through a C++ class that pulled me toward the web — which is also why I still reach for a measurement before an opinion.",
     },
   ];
 

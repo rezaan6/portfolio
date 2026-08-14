@@ -315,12 +315,12 @@ const EDUCATION: { degree: string; school: string; note?: string }[] = [
     note: "Dissertation: BlockVote — blockchain-based e-voting on Ethereum (Solidity, Truffle, React, MetaMask)",
   },
   {
-    degree: "Pearson BTEC Level 5 HND — Computing (Software Engineering)",
-    school: "British College of Applied Studies · 2020",
+    degree: "Higher National Diploma — Computing (Software Engineering)",
+    school: "Pearson College London · 2020",
   },
   {
-    degree: "Higher Diploma — Mechatronics Engineering",
-    school: "ICBT, moderated by Cardiff Metropolitan University · 2019",
+    degree: "Higher National Diploma — Mechatronics Engineering",
+    school: "Cardiff Metropolitan University · 2019",
   },
 ];
 
