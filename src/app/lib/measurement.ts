@@ -64,9 +64,9 @@ export const MEASUREMENTS = {
     value: "~90%",
     kind: "reading",
     basis:
-      "Cypress coverage of the critical paths — authentication and permissions, anything that writes to the database, and every enterprise integration surface.",
+      "My own count of how many of the flows we had called critical — authentication and permissions, the consequential writes, and every enterprise integration surface — had a Cypress spec in the merge gate. Roughly nine in ten of that list.",
     limit:
-      "Flow coverage on those paths, not whole-repo line coverage. The number deliberately excludes the parts of the codebase that were cheaper to cover lower down the pyramid.",
+      "No tool produced this figure; it is my reading of a list, not a coverage report, and it is not whole-repo line coverage. It deliberately excludes the parts of the codebase that were cheaper to cover lower down the pyramid, and it describes the React application — routes still on the legacy stack were not behind this gate until they were migrated.",
   },
   releases: {
     value: "40+",

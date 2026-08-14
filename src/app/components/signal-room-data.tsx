@@ -100,7 +100,7 @@ export const caseStudies: CaseStudy[] = [
     problem:
       "A vendor platform needs auth, accounts, dashboards, scheduling, payouts, integrations, and team access — and none of it existed. Built as one surface, it turns into a monolith before the first release.",
     move:
-      "Architected the dashboard from scratch in React and TypeScript on a modular, feature-based structure, so each domain owns its own slice and ships on its own cadence.",
+      "Architected the dashboard from scratch in React and TypeScript as the sole frontend engineer, on a modular, feature-based structure, so each domain owns its own slice and ships on its own cadence.",
     result:
       "Seven core platform modules and five vendor workflows in production on one shared component layer — with the structure still legible enough that a new domain is a new folder, not a refactor.",
     tradeoffShort: "Upfront architecture vs. time to first screen",
@@ -636,6 +636,8 @@ export const artifacts: Artifact[] = [  {
 
 STATUS   Accepted
 OWNER    Rezaan Riyaz — Senior Frontend Engineer (Lead), Hobber
+SCOPE    Sole frontend engineer — the frontend is mine end to end, so this is the
+         boundary I hold myself to rather than one I enforce on others
 CONTEXT  Greenfield vendor platform (UAE marketplace: entertainment, recreation, dining, tourism)
 
 CONTEXT
@@ -772,6 +774,10 @@ WHAT BREAKS THE RULE
   more expensive.
 - An optimistic update with no rollback path. Optimism is a claim about the server
   that the server has not agreed to yet.
+- A real-time event written straight into component state. An event may invalidate a
+  cache key; it must never be the only way a piece of state arrives — a socket that
+  reconnects replays nothing, so the screen is then confidently wrong with no read
+  that can correct it.
 
 WHY IT MATTERS HERE
 Scheduling, payouts, and discount logic are financially consequential. A stale read on
@@ -1040,8 +1046,11 @@ type VendorService =
     group: "Styling & design systems",
     use: "Utility-first styling & design tokens",
     howIUse:
-      "I use Tailwind where speed of iteration matters and the design tokens are already settled, keeping the utility soup contained by pushing repeated combinations into components rather than into `@apply`. The discipline is the same as any design system: variants live in the component's API, not in class strings passed down through props, so a card can't be restyled arbitrarily from three call sites.",
-    sample: `Variant lives in the component, not the call site
+      "I have shipped both models in production and chose differently the second time, which is the only reason I have an opinion worth stating. At Kodez and Axinom the shared spine was Material UI with SCSS — a component library you consume, where you get correct behaviour immediately and pay for it later, at the point where a design calls for something the library did not anticipate and you are wrapping and overriding a component you cannot see inside. At Hobber I chose Tailwind with shadcn/ui instead, and the deciding factor was not the utilities. It was that shadcn's components are copied into the repository rather than installed from it: when one of seven feature slices needed different keyboard behaviour, the answer was to edit the component instead of wrapping it three props deep. The trade-off is real and goes the other way — nobody upgrades those components for you, and correctness is now yours. That is the right side of the trade for a platform being built from nothing by one engineer, and I would not make the same call on a large team that needed a library to be a contract. Either way the discipline is identical: variants live in the component's API, never in class strings passed down through props.",
+    sample: `Same discipline, different ownership
+MUI + SCSS   (Kodez, Axinom)  → behaviour you consume, override later
+shadcn + TW  (Hobber)         → component in the repo, edit not wrap
+The cost of the second: no one upgrades it for you.
 <Card tone="warning" density="compact" />   ✅ typed variant
 <Card className="bg-amber-50 p-2" />        ❌ style leaking in`,
   },
@@ -1168,19 +1177,10 @@ router.post("/services", validate(ServiceSchema), async (req, res, next) => {
 EXPLAIN SELECT ... ;      -- type: ALL means a full table scan
 → read the plan before blaming the render layer.`,
   },
-  {
-    name: "MongoDB",
-    slug: "mongodb",
-    group: "Backend & platform",
-    use: "Document storage for product builds",
-    howIUse:
-      "MongoDB with Mongoose backs several of my own products — the admin dashboard, the streaming platform, the image generator — where the data is document-shaped and the schema is still moving. I still define schemas explicitly rather than relying on the flexibility, because 'schemaless' in practice means the schema lives in application code where nobody can read it.",
-    sample: `Schemaless still needs a schema
-const Service = new Schema({
-  vendorId: { type: ObjectId, ref: "Vendor", index: true, required: true },
-  price:    { type: Number, min: 0 },
-}, { timestamps: true })`,
-  },
+  /* MongoDB has no panel on purpose. Its only evidence is side projects, and
+     "schemaless still needs a schema" is a smaller version of the argument the
+     MySQL panel above makes with paid-work behind it. It stays in the résumé
+     skills group and the project tech chips, so a keyword screen still sees it. */
   {
     name: "Vitest",
     slug: "vitest",
@@ -1245,17 +1245,10 @@ GET /vendors/:id/services
   → 200 shape matches the type?  → 404 shape?  → empty array vs null?
 Contract confirmed in Postman before the typed client is written.`,
   },
-  {
-    name: "Vite",
-    slug: "vite",
-    group: "Build & delivery",
-    use: "Fast builds & dev server",
-    howIUse:
-      "Vite is my default for new builds where the framework doesn't dictate otherwise — the dev-server feedback loop is short enough to change how you work, not just how long you wait. I use its bundle analysis output as the starting point for performance work, because the first question in any load-time investigation is what is actually being shipped.",
-    sample: `Start every perf investigation here
-vite build --mode production && npx vite-bundle-visualizer
-→ what's shipped, to whom, and what can be split or dropped.`,
-  },
+  /* No Vite panel. Its bundle-analysis argument is made better by the Webpack
+     panel below, against paid work with figures attached, and its one distinctive
+     point — one resolve config shared with the test runner — already belongs to
+     the Vitest panel. Vite stays on Hobber's stack chips and the project lists. */
   {
     name: "Webpack",
     slug: "webpack",
@@ -1285,24 +1278,18 @@ Hashed assets never revalidate; the document always does.`,
     name: "Vercel",
     slug: "vercel",
     group: "Build & delivery",
-    use: "Preview deploys & hosting",
+    use: "Rendering strategy per route",
     howIUse:
-      "Vercel hosts most of my own products and is where I lean on preview deployments hardest — a reviewable URL per pull request turns 'looks fine in the diff' into something a designer or a stakeholder can actually click. Combined with automated CI/CD deployment, it removes the release-day ceremony that makes teams ship less often.",
-    sample: `Preview per PR
-a pull request → preview URL → design + a11y check happen before merge
-Merge → production. No release-day ceremony.`,
+      "The interesting decision Vercel forces isn't hosting, it's which routes may be fully static. This site looks like it should be static everywhere, and most of it is — but a few pages print a length of career derived from a start date, so baking them at build time means the number is correct on the day I deploy and quietly wrong months later. Those routes revalidate on an interval instead; the rest are prerendered, and the case studies are generated from a known list of slugs. Static is the default and each exception is a route that would otherwise go stale without anything failing, which is the kind of bug nobody reports.",
+    sample: `Static by default; revalidate where content derives from today
+export const revalidate = 3600   // /, /about, /resume, /stack
+generateStaticParams()           // 4 case studies, prerendered
+A stale build breaks nothing loudly — which is why it needs deciding.`,
   },
-  {
-    name: "Docker",
-    slug: "docker",
-    group: "Build & delivery",
-    use: "Reproducible environments",
-    howIUse:
-      "Docker is how I keep 'works on my machine' out of the conversation — a containerized environment means the same Node version, the same dependencies, and the same service topology for everyone and for CI. On the platform side I've worked in Docker-based environments alongside Nginx.",
-    sample: `Same environment everywhere
-docker compose up   → app + api + db, identical locally and in CI
-No "which Node version are you on?" during a debugging session.`,
-  },
+  /* No Docker panel. "I've worked in Docker-based environments" is participation
+     rather than a decision, and `docker compose up` is not a senior frontend
+     signal. Environment parity already belongs to the GitHub panel below and to
+     the BrowserStack line in TEST STRATEGY. Docker stays in the résumé skills. */
   {
     name: "GitHub",
     slug: "github",
@@ -1389,6 +1376,47 @@ generate: vendors × {timezone drift, DST boundary, price = 0,
           partial pricing, 200-char names, RTL locale}
 → three real bugs the hand-written fixtures never reached.`,
   },
+  {
+    name: "Shaka Player",
+    mono: "SH",
+    color: "#004078",
+    group: "Core frontend",
+    use: "DRM playback, licences & entitlements",
+    howIUse:
+      "Shaka Player is where the Axinom work got genuinely difficult. Protected playback is not loading a file: the player fetches a manifest, works out which key system the device actually supports, acquires a licence for it, and only then decodes — and any of those can fail while the viewer sees one black rectangle. So the first thing I build around it is a failure taxonomy — manifest, key system, licence, decode, buffer — because \"the video is broken\" names none of them, and a report without that split is unactionable. Entitlement stays a server decision: whether this viewer may watch this title is answered by the entitlement and licence services, which at Axinom meant going through Mosaic's Entitlement and DRM services rather than a bespoke integration, because bespoke means owning DRM edge cases forever. Device variation is the other half — which key system exists, and at what robustness, depends on the browser and the hardware, so the test plan is a device matrix and my laptop is not a device. It is also where I stop optimising: the player and the licence path are never lazy-loaded, because a slow catalogue is a complaint while a title that will not play is indistinguishable from a title the viewer was never entitled to.",
+    sample: `Playback fails in stages — "it's broken" names none of them
+manifest → key system → licence → decode → buffer
+Entitlement: asked of the server, rendered by the client — "no" too
+Never lazy-loaded: the player chunk and the licence path
+Test plan is a device matrix. My laptop is not a device.`,
+  },
+  {
+    name: "Security",
+    mono: "SEC",
+    color: "#023047",
+    group: "Security & observability",
+    use: "Auth, permissions & what stays server-side",
+    howIUse:
+      "Most frontend security work comes down to one habit: never let the client be the thing that decides. At Hobber that runs through all seven domains — the UI reads a permission set to work out what to render, and the server re-checks the same permission on every write, because a hidden tab is a presentation choice, not a rule. Entitlement at Axinom is the sharper version of it: whether a viewer may play a title is answered by the entitlement and licence services, never by a flag the client could edit, and the frontend's job is to carry the request and render the answer — including the refusal. The payment boundary follows the same line: the browser talks to our own API, our API talks to the provider, and the provider's credentials reach neither the client nor CI. The rest is unglamorous and still the job — validate on both sides for different reasons, sanitise anything rendered as markup, keep tokens out of storage the page can read, and read what a dependency bump actually pulls in. I do this as the engineer building the feature rather than as a security specialist: the frontend half done properly, with every real decision pushed somewhere the user cannot reach.",
+    sample: `The client decides what to show. The server decides what is allowed.
+can("payouts.write") → hides the action          (presentation)
+POST /payouts/:id    → re-checks it server-side  (the control)
+Never client-trusted: entitlement, price, permission, identity.
+Provider keys sit behind our own API — not in the app, not in CI.`,
+  },
+  {
+    name: "Observability",
+    mono: "OBS",
+    color: "#023047",
+    group: "Security & observability",
+    use: "Production signal — and the gap I owned",
+    howIUse:
+      "This is the honest gap in my stack, so I would rather state it than dress it up. I had good build-time and release-time signal — bundle composition, before-and-after load measurements, the test suite and cross-browser results in the pipeline — and very little runtime signal. All of that is lab data: it tells you what you shipped, not what anyone experienced. At Axinom it meant I read page load as an aggregate for too long, which hides the regions and devices having the worst time. Setting it up now I would go in a deliberate order. One structured client-side failure report first, carrying the stage that failed, the device and platform, and the locale — because a playback failure is the most expensive thing in that product to reproduce, and a count you can group by beats a dashboard. Then real-user timings, segmented by region and device instead of averaged. Then one threshold with a name attached to it, because a signal nobody owns is just a chart. At one engineer that is about as much as I can genuinely keep looking at, which is why the order matters more than the list.",
+    sample: `What I had     bundle composition · before/after load · CI results
+What I lacked  real sessions · per-region · per-device · per-stage
+First thing I'd add: one structured failure report — stage, device, locale.
+That is the signal it costs the most to be without.`,
+  },
 ];
 
 // Craft — text-scannable so keyword screens (and recruiters) see the
@@ -1401,6 +1429,7 @@ export const methods = [
   "SSR/CSR & hydration trade-offs",
   "i18n & WCAG accessibility",
   "REST & GraphQL integration",
+  "DRM & protected playback",
   "Incremental legacy migration",
   "AI-assisted delivery & MCP",
 ];

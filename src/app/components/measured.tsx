@@ -49,7 +49,12 @@ export function Measured({
   className?: string;
 }) {
   const raw = useId();
-  // useId returns colons, which are not valid in a CSS custom ident.
+  // Stripped to alphanumerics because this id becomes a CSS custom ident (the
+  // anchor name below), and useId's output format is not a public contract —
+  // React 19 changed it from the React 18 colon form (":r0:", which is invalid
+  // in an ident) to an underscore form. Underscores happen to be legal, so this
+  // strip is currently belt-and-braces; it stays because the next format change
+  // would otherwise break anchor positioning silently rather than loudly.
   const key = `m${raw.replace(/[^a-zA-Z0-9]/g, "")}`;
   const panelRef = useRef<Pop | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);

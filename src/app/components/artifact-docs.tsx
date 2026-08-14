@@ -15,6 +15,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         fields: [
           { label: "Record", value: "ADR-001 — Feature-sliced architecture" },
           { label: "Deciders", value: "Me, with the backend lead. One dissent: start single-surface, split later." },
+          { label: "Scope", value: "Sole frontend engineer — the frontend is mine end to end, so this record is the boundary I hold myself to rather than one I enforce on others." },
           { label: "Status", value: "Accepted · amended after the first release" },
           { label: "Context", value: "Hobber vendor platform · greenfield · UAE" },
           { label: "Stack", value: "React · TypeScript" },
@@ -245,6 +246,10 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
           },
           {
             text: "An optimistic update with no rollback path. Optimism is a claim about the server that the server has not agreed to yet.",
+            good: false,
+          },
+          {
+            text: "A real-time event written straight into component state. An event may invalidate a cache key; it must never be the only way a piece of state arrives — a socket that reconnects replays nothing, so the screen is then confidently wrong with no read that can correct it.",
             good: false,
           },
         ],
