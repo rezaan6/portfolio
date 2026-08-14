@@ -165,7 +165,7 @@ const EXPERIENCE: Role[] = [
       `Introduced TDD with Cypress and drove automated coverage ${MEASUREMENTS.coverage.value} on critical paths, gated in CI/CD — which is what let releases stay frequent without a regression freeze.`,
       `Built a Storybook-based reusable component library that cut frontend development time ${MEASUREMENTS["dev-time"].value.replace("−","~")} across projects.`,
       `Reduced page load time ${MEASUREMENTS["load-kodez"].value.replace("−","~")} through code-splitting, lazy loading, and asset optimization, with assets served from AWS S3.`,
-      "Migrated a legacy Laravel, jQuery and Bootstrap application to React and ExpressJS incrementally without freezing client delivery — and built Node.js BFF layers with the backend team to reduce API latency.",
+      "Migrated a legacy Laravel, jQuery and Bootstrap application to React and ExpressJS incrementally without freezing client delivery — I had worked in that codebase before replacing it, which is why the seams were obvious — and built Node.js BFF layers with the backend team to reduce API latency.",
       `Built REST integrations against the client's enterprise vendor stack — Amtek (Australia), running on Fiserv, Toshiba, NTT DATA, Park Assist and City systems — across a ${MEASUREMENTS.tables.value} table schema.`,
       "Translated Figma designs into pixel-perfect, responsive interfaces; set frontend standards and ran code reviews as the company scaled from 10 to 60+ people.",
     ],

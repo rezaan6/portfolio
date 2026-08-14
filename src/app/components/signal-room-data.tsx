@@ -370,7 +370,7 @@ it("keeps a service unbookable when price is missing", () => {
       },
       {
         lp: "Migrate incrementally, never freeze",
-        why: "Moved a legacy Laravel and jQuery application to React and ExpressJS in steps — instead of a big-bang rewrite that would have stopped client delivery.",
+        why: "Moved a legacy Laravel and jQuery application I had worked in myself to React and ExpressJS in steps — instead of a big-bang rewrite that would have stopped client delivery.",
       },
     ],
   },
