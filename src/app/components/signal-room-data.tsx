@@ -142,7 +142,10 @@ export const caseStudies: CaseStudy[] = [
   rules: {
     "no-restricted-imports": ["error", {
       patterns: [{
-        group: ["@/features/*/*"],
+        // Both patterns are needed. A single-segment glob misses the bare
+        // barrel — "@/features/payouts" — which is exactly how anyone would
+        // actually reach across a slice.
+        group: ["@/features/*", "@/features/*/**"],
         message:
           "Cross-slice import. Compose at the route level, or promote the " +
           "shared piece into shared/ui.",
@@ -1018,11 +1021,12 @@ $space: (xs: 4px, sm: 8px, md: 16px, lg: 24px);
     group: "Styling & design systems",
     use: "Component foundation & theming",
     howIUse:
-      "At Kodez, Material UI was the foundation the CMS was built on, and the part that earned its licence was MUI X Data Grid Pro — the CMS's tables sat over a schema far too large to send to the client, so filtering, sorting and pagination all had to happen server-side with the grid driving the query rather than the row set. That makes theming the important skill — mapping the client's design language onto the theme rather than overriding components one by one. I wrap MUI primitives in our own components so the application never imports MUI directly; that way the library is an implementation detail we can change, not a dependency baked into 200 screens.",
+      "At Kodez, Material UI was the foundation the CMS was built on, and the part that earned its licence was MUI X Data Grid Pro — the CMS's tables sat over a schema far too large to send to the client, so filtering, sorting and pagination all had to happen server-side with the grid driving the query rather than the row set. That makes theming the important skill — mapping the client's design language onto the theme rather than overriding components one by one. I wrap MUI primitives in our own components so the application never imports MUI directly; that way a library change is scoped to the wrapper layer rather than to 200 screens. The honest exceptions are the theme and DataGrid, whose APIs surface in application code however carefully you wrap them.",
     sample: `Wrap, don't import directly
 shared/ui/Button.tsx   →  wraps MUI Button, exposes our variants only
 app/**/*               →  imports shared/ui/Button
-Result: swapping the library is one file, not a codemod.`,
+Blast radius of a library change: the wrapper layer, not 200 screens.
+Known exceptions: the theme, and DataGrid — both leak into app code.`,
   },
   {
     name: "shadcn/ui",
@@ -1141,12 +1145,13 @@ const Service = new Schema({
     group: "Testing & quality",
     use: "Unit & integration tests",
     howIUse:
-      "Vitest is what I set the Hobber test layer up on, from an empty repository. It runs through the same transform pipeline as the application, so there is no second build configuration to keep in sync with the first — the class of failure where the tests pass and the bundle doesn't simply isn't available. Below the unit tests I use it for integration tests at the slice boundaries, because in a feature-sliced codebase the contract between slices is exactly where a regression will hide.",
-    sample: `Integration tests live at the boundary, not inside the slice
-test("bookings slice reads availability without importing it", async () => {
+      "Vitest is what I set the Hobber test layer up on, from an empty repository. It shares the application's resolve and transform config, so there is no second build setup drifting out of sync with the first — one alias map, one plugin list. What it does not do is prove the production bundle: tests run through esbuild in test mode, while the release build adds tree-shaking, minification and chunking on top. That gap is real, and it is why bundle size is a merge gate rather than something I trust a green suite to catch. Below the unit tests I use it for integration tests at the slice boundaries, because in a feature-sliced codebase the contract between slices is exactly where a regression will hide.",
+    sample: `Assert the contract, not the internals
+test("reserve() holds a slot without exposing how", async () => {
   const slot = await bookings.reserve({ serviceId, start })
-  expect(slot.status).toBe("held")   // contract, not implementation
-})`,
+  expect(slot.status).toBe("held")   // the slice's public promise
+})
+// the import boundary is the lint rule's job, not this test's`,
   },
   {
     name: "Playwright",
@@ -1217,7 +1222,7 @@ vite build --mode production && npx vite-bundle-visualizer
     howIUse:
       `Webpack is where a lot of the real performance work happened — the ${MEASUREMENTS["load-axinom"].value.replace("−","~")} load-time reduction at Axinom and the ${MEASUREMENTS["load-kodez"].value.replace("−","~")} at Kodez both came out of bundle analysis, code-splitting, and lazy loading rather than anything visible in the UI. I treat an unexplained bundle-size increase as a merge blocker, because bundle growth is the one regression that never shows up in a test suite.`,
     sample: `Split by route, defer by need
-- vendor chunk cached across releases
+- granular chunks, so one dependency bump doesn't invalidate the rest
 - route chunks loaded on navigation
 - heavy libs (charts, editors) dynamic-imported at point of use
 Unexplained size increase → blocked, not noted.`,

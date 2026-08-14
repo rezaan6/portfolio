@@ -14,7 +14,8 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "fields",
         fields: [
           { label: "Record", value: "ADR-001 — Feature-sliced architecture" },
-          { label: "Status", value: "Accepted" },
+          { label: "Deciders", value: "Me, with the backend lead. One dissent: start single-surface, split later." },
+          { label: "Status", value: "Accepted · amended after the first release" },
           { label: "Context", value: "Hobber vendor platform · greenfield · UAE" },
           { label: "Stack", value: "React · TypeScript" },
         ],
@@ -42,7 +43,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
           {
             text: "Shared UI stays domain-agnostic. If it needs to know about payouts, it isn't shared.",
           },
-          { text: "A pattern is copied twice before it is promoted." },
+          { text: "A pattern is copied twice before it is promoted. — Added by amendment; see below." },
           {
             text: "Premature generalization — a shared component built for a use case that hasn't arrived.",
             good: false,
@@ -66,6 +67,12 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         tone: "note",
         title: "Trade-off on record",
         text: "Upfront architecture vs. time to first screen. Uncomfortable at a startup, and taken knowingly — the alternative is paying it back with interest during the first big feature.",
+      },
+      {
+        type: "callout",
+        tone: "note",
+        title: "Amendment, after the first release",
+        text: "The copy-twice rule was not in the original record. I built the shared layer slightly ahead of demand and a few early primitives were generalised for a second use case that never arrived, so the rule was added once the cost was visible. Recording it as an amendment rather than backdating it is the point: the decision was right, the promotion threshold was not, and only shipping told us which.",
       },
       {
         type: "callout",
