@@ -125,12 +125,26 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         ],
       },
       {
+        type: "steps",
+        title: "Changing one, once it is shared",
+        ordered: true,
+        items: [
+          "Additive by default — a new optional prop with a default that preserves current behaviour.",
+          "A breaking change updates every call site in the same pull request. If that is too large to review, it is too large to make in one go.",
+          "Never change a prop's meaning while keeping its name. Add the new one, deprecate the old one in the story, remove it once the call sites are gone.",
+        ],
+      },
+      {
         type: "checklist",
         title: "Accessibility floor — non-negotiable",
         checks: [
           { text: "Reachable and operable by keyboard, with a visible focus ring." },
           { text: "Correct role and accessible name; state exposed via ARIA, not colour alone." },
           { text: "Contrast meets WCAG AA in both the light and dark themes." },
+          {
+            text: "Enforced in review against this list, not by an automated check — see below.",
+            good: false,
+          },
         ],
       },
       {
@@ -143,7 +157,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "callout",
         tone: "insight",
         title: "What I'd do differently",
-        text: "I sold the library on consistency when I should have sold it on speed. Engineers adopt a design system when it visibly saves them an afternoon — publish the before/after build time for a real screen in week one and let the number argue.",
+        text: "Two things. I sold the library on consistency when I should have sold it on speed — engineers adopt a design system when it visibly saves them an afternoon, so publish the before/after build time for a real screen in week one and let the number argue. And I called the accessibility floor non-negotiable while enforcing it by review, which means it held exactly as long as the reviewer remembered. A rule with no check is a preference; it belongs in the pipeline next to the tests.",
       },
     ],
   },
@@ -214,6 +228,28 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         ],
       },
       {
+        type: "checklist",
+        title: "What breaks the rule",
+        checks: [
+          {
+            text: "Copying a query result into useState so it can be edited. Now there are two answers and no way to tell which is current — hold the draft separately and keep the cache as the read.",
+            good: false,
+          },
+          {
+            text: "A useEffect that syncs one store into another. That is the merge, written one field at a time.",
+            good: false,
+          },
+          {
+            text: "Storing a total that can be computed. It is one render cheaper and one class of stale bug more expensive.",
+            good: false,
+          },
+          {
+            text: "An optimistic update with no rollback path. Optimism is a claim about the server that the server has not agreed to yet.",
+            good: false,
+          },
+        ],
+      },
+      {
         type: "callout",
         tone: "note",
         title: "Why it matters here",
@@ -229,7 +265,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
       {
         type: "fields",
         fields: [
-          { label: "Doc", value: "Page-load budget — media web applications" },
+          { label: "Doc", value: "Page-load performance one-pager — media web applications" },
           { label: "Context", value: "Axinom · Mosaic platform · global media clients" },
           { label: "Result", value: `${MEASUREMENTS["load-axinom"].value.replace("−","~")} reduction in page load time` },
           {
@@ -258,8 +294,8 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         cols: ["What was measured", "Read"],
         rows: [
           { cells: ["Page load time", MEASUREMENTS["load-axinom"].value], tag: "Now" },
-          { cells: ["Bundle composition", "Audited"] },
-          { cells: ["Time to interactive, playback routes", "Watched"] },
+          { cells: ["Bundle composition, per locale", "Audited"] },
+          { cells: ["Time to first frame, playback routes", "Watched"] },
         ],
       },
       {
@@ -281,8 +317,14 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
       {
         type: "callout",
         tone: "insight",
+        title: "Where this stops being a budget",
+        text: "A budget is a number you are not allowed to exceed. This was a measurement pass with a target — real thresholds, in CI, failing the build on a regression, would have made the gain durable instead of a snapshot. It held because the same few people were watching it, which is not a mechanism.",
+      },
+      {
+        type: "callout",
+        tone: "insight",
         title: "What I'd add next",
-        text: "Segment the measurement by region and device from the first read, not the third. On an international product the aggregate is the least informative number available.",
+        text: "Segment the measurement by region and device from the first read, not the third. On an international product with global clients, the aggregate is the least informative number available — a good median hides the region having the worst time.",
       },
     ],
   },
@@ -304,7 +346,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "callout",
         tone: "insight",
         title: "The premise",
-        text: `Release throughput is not a function of moving fast. It's a function of how cheaply you can prove you didn't break anything. TDD and CI gates weren't overhead on the ${MEASUREMENTS.releases.value} releases — they're what made shipping at that rate safe.`,
+        text: `Release throughput is not a function of moving fast. It's a function of how cheaply you can prove you didn't break anything. TDD and CI gates weren't overhead on the ${MEASUREMENTS.releases.value} releases — they're what made shipping on that cadence safe.`,
       },
       {
         type: "table",
@@ -312,7 +354,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         rows: [
           { cells: ["Unit (Jest) — logic, reducers, transforms", "Many", "Fast"] },
           { cells: ["Component — rendering against the library", "Some", "Medium"] },
-          { cells: ["E2E (Cypress) — flows a client would notice", "Few", "Slow"], tag: "Now" },
+          { cells: ["E2E (Cypress) — flows a client would notice", "Fewest", "Slow"], tag: "Now" },
         ],
       },
       {
@@ -320,12 +362,19 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         title: "What always gets an E2E test",
         checks: [
           { text: "Authentication and permissions." },
-          { text: `Anything that writes to the ${MEASUREMENTS.tables.value} table schema.` },
           {
-            text: "Every integration surface in the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City).",
+            text: `Write paths into the core schema where a bad write isn't recoverable by a retry — not all ${MEASUREMENTS.tables.value} tables, the consequential ones.`,
+          },
+          {
+            text: "Every integration surface in the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City) — against a recorded contract, not the vendor's live endpoint.",
           },
           { text: "Any path a defect has been filed against. A bug gets a test before it gets a fix." },
         ],
+      },
+      {
+        type: "section",
+        title: "The third-party boundary",
+        text: "Five vendor integrations cannot be in the merge path. A suite that calls a payment or POS provider on every pull request is slow, needs credentials in CI, and goes red for reasons that have nothing to do with the diff — so the team stops trusting it, which is worse than not having it. The rule: our side of each contract is stubbed at the network boundary and the stub is the recorded shape of the real response. Contract drift is caught by exercising the live integration on a schedule against staging, where a failure is a conversation with the vendor rather than a blocked release.",
       },
       {
         type: "checklist",
@@ -358,7 +407,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
 
   "MIGRATION PLAN": {
     summary:
-      "How a legacy PHP/jQuery application moved to React and ExpressJS incrementally at Kodez — the strangler approach, the ordering, and the one rule that kept two coexisting stacks from doubling the work. removed, with no delivery freeze.",
+      "How a legacy PHP/jQuery application moved to React and ExpressJS incrementally at Kodez — the strangler approach, the ordering, and the one rule that kept two coexisting stacks from doubling the work. The legacy stack was retired without a delivery freeze.",
     blocks: [
       {
         type: "fields",

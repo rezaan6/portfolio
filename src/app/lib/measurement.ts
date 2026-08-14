@@ -78,17 +78,9 @@ export const MEASUREMENTS = {
     value: "−30%",
     kind: "estimate",
     basis:
-      "The time saved per screen once the Storybook library was the default starting point rather than authoring from scratch.",
+      "My comparison of elapsed delivery on comparable screens before and after the library became the default way to build — at sprint granularity, in a team that was also growing.",
     limit:
-      "My own retrospective estimate across projects, not a tracked metric. I did not publish a before/after build time at the time, which in hindsight is what would have made the case.",
-  },
-  "tech-debt": {
-    value: "−25%",
-    kind: "estimate",
-    basis:
-      "How much of the legacy Laravel and jQuery surface was retired over the incremental migration to React and ExpressJS.",
-    limit:
-      "There is no standard unit for technical debt, so treat this as a judgement rather than a measurement. The claim I would defend is the delivery record: the migration ran in steps and never froze client delivery.",
+      "Not an instrumented measurement, and I never published a before/after build time for a real screen — which is exactly the mistake the component spec records. Treat it as a judgement of roughly a third, not a figure.",
   },
   tables: {
     value: "250+",

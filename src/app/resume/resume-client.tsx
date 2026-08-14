@@ -62,7 +62,7 @@ const CONTACT_GLYPH: Record<string, string> = {
 };
 
 const POSITIONING = () =>
-  `Senior Frontend Engineer with ${yearsPhrase()} owning large React codebases from architecture through production. I lead frontend teams, work cross-functionally with design, backend and DevOps, and turn Figma into pixel-perfect, accessible interfaces. I make the structural decisions a codebase has to live with, and take responsibility for how it performs and how safely it ships.`;
+  `Senior Frontend Engineer with ${yearsPhrase()} owning large React codebases from architecture through production. I lead frontend teams, work cross-functionally with design, backend and DevOps, and I'm the one who flags where a design will fight the design system. I make the structural decisions a codebase has to live with, and take responsibility for how it performs and how safely it ships.`;
 
 // The five-second scan payload. Every figure is a before/after read against
 // a defined baseline — never a causal claim.
@@ -131,7 +131,7 @@ const EXPERIENCE: Role[] = [
       "Azure DevOps",
     ],
     points: [
-      "Led the frontend team building high-performance web applications for clients including the Goethe-Institut and the Lindau Nobel Laureate Meetings, delivering multiple products 0→1 through full development, testing, and production release cycles.",
+      "Led the frontend team building high-performance web applications for clients including the Goethe-Institut and the Lindau Nobel Laureate Meetings, delivering two client products 0→1 — the Goethe-Institut and Lindau builds — through full development, testing and production release cycles.",
       `Reduced page load time ${MEASUREMENTS["load-axinom"].value.replace("−","~")} through bundle optimization, lazy loading, and caching improvements.`,
       "Built on Axinom's Mosaic micro-frontends (Media, Catalogue, Entitlement, DRM) and its APIs for content synchronization and metadata management, rather than hand-rolling media delivery.",
       "Implemented secure DRM playback with Shaka Player, and designed i18n in from the start for multi-language experiences across regions.",
@@ -162,12 +162,12 @@ const EXPERIENCE: Role[] = [
     ],
     points: [
       `Architected and delivered a React CMS from 0→1 to MVP as a microarchitecture applying SOLID principles, then led ${MEASUREMENTS.releases.value} production releases on it.`,
-      `Introduced TDD with Cypress and drove automated coverage ${MEASUREMENTS.coverage.value} on critical paths, gated in CI/CD — which is what let releases stay frequent without a regression freeze.`,
+      `Introduced test-driven development with Jest and Cypress end-to-end gates, driving automated coverage ${MEASUREMENTS.coverage.value} on critical paths in CI/CD — which is what let releases stay frequent without a regression freeze.`,
       `Built a Storybook-based reusable component library that cut frontend development time ${MEASUREMENTS["dev-time"].value.replace("−","~")} across projects.`,
       `Reduced page load time ${MEASUREMENTS["load-kodez"].value.replace("−","~")} through code-splitting, lazy loading, and asset optimization, with assets served from AWS S3.`,
       "Migrated a legacy Laravel, jQuery and Bootstrap application to React and ExpressJS incrementally without freezing client delivery — I had worked in that codebase before replacing it, which is why the seams were obvious — and built Node.js BFF layers with the backend team to reduce API latency.",
       `Built REST integrations against the client's enterprise vendor stack — Amtek (Australia), running on Fiserv, Toshiba, NTT DATA, Park Assist and City systems — across a ${MEASUREMENTS.tables.value} table schema.`,
-      "Translated Figma designs into pixel-perfect, responsive interfaces; set frontend standards and ran code reviews as the company scaled from 10 to 60+ people.",
+      "Translated Figma designs into responsive interfaces; set frontend standards and ran code reviews as the company scaled from 10 to 60+ people.",
     ],
   },
   {
@@ -199,7 +199,6 @@ const STACK: StackGroup[] = [
       "Suspense",
       "Error boundaries",
       "Memoization & render isolation",
-      "Reconciliation",
     ],
   },
   {
@@ -217,7 +216,6 @@ const STACK: StackGroup[] = [
     items: [
       "Pixel-perfect Figma implementation",
       "Design collaboration & handoff",
-      "Interaction & motion design",
       "Storybook",
       "Design tokens & theming",
       "Tailwind CSS",
@@ -316,7 +314,7 @@ const EDUCATION: { degree: string; school: string; note?: string }[] = [
   },
   {
     degree: "Higher National Diploma — Computing (Software Engineering)",
-    school: "Pearson College London · 2020",
+    school: "Pearson · 2020",
   },
   {
     degree: "Higher National Diploma — Mechatronics Engineering",

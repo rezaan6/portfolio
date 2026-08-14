@@ -972,7 +972,10 @@ export function DeviceStage({ proto, brand, skinKey }: { proto: Proto; brand: st
       </div>
 
       {/* device picker */}
-      <div className="mt-7 flex items-center justify-center gap-2">
+      {/* Wraps rather than overflows: three pills exceed the viewport at 320px,
+          which pushed the whole document 7px wide and gave every case study a
+          horizontal scrollbar on the smallest phones. */}
+      <div className="mt-7 flex flex-wrap items-center justify-center gap-2">
         {DEVICES.map((d, i) => {
           const on = i === dev;
           return (

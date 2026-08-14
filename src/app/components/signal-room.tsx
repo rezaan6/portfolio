@@ -1483,7 +1483,7 @@ export function AboutBeyond() {
   const cards = [
     {
       t: "How I got here",
-      b: "It started in 2017 during a Mechatronics course, where a C++ class pulled me toward the web — HTML and CSS in Notepad, then React, then architecting full platforms. My dissertation went the other direction: a blockchain e-voting system on Ethereum, which is where the interest in onchain systems started. The hardware background is why I still reach for a measurement before an opinion.",
+      b: "It started in 2017 during a Mechatronics course, where a C++ class pulled me toward the web. My dissertation went the other direction: a blockchain e-voting system on Ethereum, which is where the interest in onchain systems started. The hardware background is why I still reach for a measurement before an opinion.",
     },
     {
       t: "How I collaborate",
@@ -1613,7 +1613,7 @@ export function EducationSection() {
     },
     {
       degree: "Higher National Diploma — Computing (Software Engineering)",
-      school: "Pearson College London",
+      school: "Pearson",
       year: "2020",
       note: "Data structures, databases, and the first systems I built end to end, alongside the early RaSoft work.",
     },
@@ -2194,7 +2194,7 @@ function V8HeroCard() {
     { company: "Hobber", label: "Vendor dashboard architected", value: "0→1", logo: "/logos/hobber.png", mark: "HB", note: "7 modules, feature-sliced React + TS" },
     { company: "Axinom", label: "Page load time", value: MEASUREMENTS["load-axinom"].value, logo: "/logos/axinom.png", mark: "AX", note: "bundle, lazy-load & caching" },
     { company: "Kodez", label: "Page load time", value: MEASUREMENTS["load-kodez"].value, logo: "/logos/kodez.png", mark: "KZ", note: `code-splitting across ${MEASUREMENTS.releases.value} releases` },
-    { company: "Kodez", label: "Automated test coverage", value: MEASUREMENTS.coverage.value, logo: "/logos/kodez.png", mark: "KZ", note: "TDD with Cypress, gated in CI" },
+    { company: "Kodez", label: "Automated test coverage", value: MEASUREMENTS.coverage.value, logo: "/logos/kodez.png", mark: "KZ", note: "Jest & Cypress, gated in CI" },
   ];
   return (
     <motion.div
@@ -2651,11 +2651,11 @@ function V8Focus() {
       t: "Full-stack delivery",
       d: "Node.js BFF layers, ExpressJS services, and relational schema work — plus incremental migration off a legacy stack without freezing delivery.",
       companies: ["Kodez", "RaSoft"],
-      outcome: `${MEASUREMENTS.tables.value} SQL tables · ${MEASUREMENTS["tech-debt"].value} tech debt`,
+      outcome: `${MEASUREMENTS.tables.value} SQL tables · legacy stack retired incrementally`,
     },
     {
       t: "Testing & release safety",
-      d: "TDD with Cypress and Jest, gated in CI, plus cross-browser validation — the reason releases stayed frequent and safe is safe rather than merely fast.",
+      d: "Test-first with Jest, Cypress at the gate in CI, plus cross-browser validation — the reason releases stayed frequent and safe rather than merely fast.",
       companies: ["Kodez"],
       outcome: `${MEASUREMENTS.coverage.value} coverage · ${MEASUREMENTS.releases.value} releases`,
     },
