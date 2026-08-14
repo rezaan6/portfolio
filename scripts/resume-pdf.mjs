@@ -29,6 +29,7 @@
  * ------------------------------------------------------------------ */
 
 import { spawn } from "node:child_process";
+import { existsSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { createServer } from "node:net";
 import path from "node:path";
@@ -36,13 +37,38 @@ import process from "node:process";
 
 import puppeteer from "puppeteer-core";
 
+import { resumeSourceHash } from "./resume-sources.mjs";
+
 const ROOT = path.resolve(import.meta.dirname, "..");
 const OUT = path.join(ROOT, "public");
 const MM_PER_PX = 25.4 / 96;
 
-const CHROME =
+/* Chrome has to come from somewhere different depending on where this runs.
+ *
+ * Locally that's the installed browser. On Vercel's build container there is no
+ * browser and no system libraries for one, which is the whole reason this used
+ * to be a manual script producing a committed file — and the reason that file
+ * could silently disagree with the page it was linked from.
+ *
+ * @sparticuz/chromium is a Chromium built for exactly that environment: it
+ * unpacks a binary and reports the flags it needs to run without a display or a
+ * sandbox. Resolved lazily so a local run never pays for loading it. */
+const LOCAL_CHROME =
   process.env.CHROME_PATH ??
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+
+async function resolveChrome() {
+  if (!existsSync(LOCAL_CHROME)) {
+    const { default: chromium } = await import("@sparticuz/chromium");
+    const executablePath = await chromium.executablePath();
+    return { executablePath, args: chromium.args, source: "@sparticuz/chromium" };
+  }
+  return {
+    executablePath: LOCAL_CHROME,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    source: "local Chrome",
+  };
+}
 
 const argUrl = process.argv.includes("--url")
   ? process.argv[process.argv.indexOf("--url") + 1]
@@ -99,11 +125,14 @@ async function main() {
     await waitForServer(base);
   }
 
-  log(`rendering ${base}/resume`);
+  const chrome = await resolveChrome();
+  log(`rendering ${base}/resume  (${chrome.source})`);
   const browser = await puppeteer.launch({
-    executablePath: CHROME,
+    executablePath: chrome.executablePath,
     headless: true,
-    args: ["--no-sandbox", "--font-render-hinting=none", "--disable-lcd-text"],
+    // Text rendering flags come last so they win: this is a print render, and
+    // subpixel antialiasing would bake the screen's LCD hinting into the file.
+    args: [...chrome.args, "--font-render-hinting=none", "--disable-lcd-text"],
   });
 
   try {
@@ -181,12 +210,17 @@ async function main() {
       const m = document.body.innerText.match(/(\d+)\+\s*years/i);
       return m ? `${m[1]}+ years` : null;
     });
+    // The hash of the files this PDF was rendered from. check-resume-pdf-fresh
+    // recomputes it during prebuild, so editing the résumé without
+    // regenerating now fails the build instead of quietly shipping a download
+    // that disagrees with the page it sits on.
+    const sourceHash = await resumeSourceHash();
     await mkdir(OUT, { recursive: true });
     await writeFile(
       path.join(OUT, "resume.meta.json"),
-      `${JSON.stringify({ yearsPhrase: years, widthMm, heightMm }, null, 2)}\n`,
+      `${JSON.stringify({ yearsPhrase: years, widthMm, heightMm, sourceHash }, null, 2)}\n`,
     );
-    log(`meta              yearsPhrase=${years}`);
+    log(`meta              yearsPhrase=${years} · source ${sourceHash}`);
   } finally {
     await browser.close();
     if (server) server.kill("SIGTERM");
