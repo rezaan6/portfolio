@@ -931,9 +931,14 @@ export function DeviceStage({ proto, brand, skinKey }: { proto: Proto; brand: st
 
   return (
     <div onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-      {/* fixed-height stage — the shell morphs inside it, so the page never shifts */}
-      <div className="-mx-5 flex h-[520px] items-center justify-center overflow-x-auto px-5 lg:mx-0 lg:overflow-x-visible lg:px-0">
-        <div className="relative">
+      {/* fixed-height stage — the shell morphs inside it, so the page never shifts.
+          justify-start, not justify-center: centring a flex child that overflows its
+          scroll container pushes the start edge to a negative offset, and scrollLeft
+          cannot go below zero — so roughly a quarter of the mock was unreachable on a
+          phone, cut off mid-word, on all four case studies. mx-auto on the child
+          centres it whenever it does fit, which is every width from lg up. */}
+      <div className="-mx-5 flex h-[520px] items-center justify-start overflow-x-auto px-5 lg:mx-0 lg:overflow-x-visible lg:px-0">
+        <div className="relative mx-auto">
           <motion.div
             animate={{ width: dim.w, height: dim.h, borderRadius: dim.r, borderWidth: dim.bw, borderColor: dim.bezel }}
             transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 120, damping: 20 }}

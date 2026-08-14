@@ -204,7 +204,7 @@ type RowProps    = { variant: "primary"; isPayoutRow: boolean }         // not s
     logo: "/logos/axinom.png",
     metric: `${MEASUREMENTS["load-axinom"].value} page load · secure DRM playback`,
     headline:
-      "Building on the platform instead of around it: Mosaic micro-frontends, Shaka Player DRM, and a 15% faster load.",
+      `Building on the platform instead of around it: Mosaic micro-frontends, Shaka Player DRM, and a ${MEASUREMENTS["load-axinom"].value.replace("−","~")} faster load.`,
     problem:
       "Global media clients needed film and audio delivered fast, in their own language, and protected — on a platform whose capabilities already existed as micro-frontends most teams were rebuilding by hand.",
     move:
@@ -224,7 +224,7 @@ type RowProps    = { variant: "primary"; isPayoutRow: boolean }         // not s
     tradeoff:
       "Reuse the platform vs. build it bespoke. Mosaic's micro-frontends come with their own conventions and integration seams, and there were moments a hand-rolled component would have been quicker for one client. I chose the platform anyway: bespoke media delivery means owning DRM edge cases and metadata sync forever, and that debt lands on whoever inherits the codebase. Where the platform genuinely didn't fit, we extended rather than forked — and I weighed each of those against the maintenance cost out loud, in client and internal reviews.",
     signal:
-      `Page load time was the number I could defend, measured before and after the bundle work, and it moved ${MEASUREMENTS["load-axinom"].value.replace("−","~")}. Alongside it I watched playback reliability through the Shaka Player integration, cross-region rendering once i18n was live, and the CI/CD pipelines I kept stable with DevOps — because a performance win that ships unreliably isn't a win. Delivery health was tracked in Azure DevOps and JIRA, with the process documented in Confluence.`,
+      `Page load time was the number I could defend, measured before and after the bundle work, and it moved ${MEASUREMENTS["load-axinom"].value.replace("−","~")}. Alongside it I watched playback through the player's own failure taxonomy and the support tickets that reached me — which is exactly the weak instrumentation I name elsewhere, cross-region rendering once i18n was live, and the CI/CD pipelines I kept stable with DevOps — because a performance win that ships unreliably isn't a win. Delivery health was tracked in Azure DevOps and JIRA, with the process documented in Confluence.`,
     outcome:
       `Two client products delivered 0→1 through full development, testing, and production release cycles; ${MEASUREMENTS["load-axinom"].value.replace("−","~")} faster page loads from bundle optimization, lazy loading, and caching; seamless multi-language experiences across regions; and reliable playback of protected content via Shaka Player and DRM workflows. Alongside the delivery work I strengthened the security posture by identifying vulnerabilities and adding validation and authentication layers, and mentored junior developers while enforcing coding standards.`,
     detail:
@@ -303,7 +303,7 @@ const messages = await import("../locales/" + locale + ".json")`,
     results: [
       { label: "Page load time", note: "code-splitting, lazy loading, asset optimization", m: "load-kodez" },
       { label: "Frontend development time", note: "after the Storybook library landed", m: "dev-time" },
-      { label: "Flow coverage, critical paths", note: "Cypress, gated in CI", m: "coverage" },
+      { label: "Automated coverage, overall", note: "Jest + Cypress merged, gated in CI", m: "coverage" },
       { label: "Production releases", m: "releases" },
     ],
     context:
@@ -334,7 +334,9 @@ export const TenThousandRows: Story = { args: { rows: many(10_000) } }  // virtu
 
 // The gate that made ${MEASUREMENTS.releases.value} releases safe: a bug gets a failing test before a fix.
 it("keeps a service unbookable when price is missing", () => {
-  expect(isBookable({ status: "bookable", price: undefined })).toBe(false)
+  // The type makes this unrepresentable in our code, so the cast is the point:
+  // this is unvalidated input crossing the boundary, which is what the guard is for.
+  expect(isBookable({ status: "bookable", price: undefined } as unknown as ApiService)).toBe(false)
 })`,
     },
     customerLede:
@@ -343,7 +345,7 @@ it("keeps a service unbookable when price is missing", () => {
       "Enterprise CMS · service mgmt + logistics",
       "HQ Melbourne, Australia",
       `${MEASUREMENTS.tables.value} SQL tables`,
-      "Team scaled 10 → 60+",
+      "Company scaled 10 → 60+",
     ],
     stack: [
       "React",
@@ -364,7 +366,7 @@ it("keeps a service unbookable when price is missing", () => {
       },
       {
         lp: "Reusable beats bespoke",
-        why: "Built a Storybook component library as the shared spine of the CMS, cutting frontend development time ~30% across projects.",
+        why: `Built a Storybook component library as the shared spine of the CMS. I judge it cut frontend delivery time by roughly a third across projects.`,
       },
       {
         lp: "Performance is a feature",
@@ -394,7 +396,7 @@ it("keeps a service unbookable when price is missing", () => {
     move:
       "Took the EMS from concept to production as the end-to-end UI owner in React, and rebuilt the company site around responsiveness and accessibility.",
     result:
-      `The EMS shipped to production, and the site revamp lifted UX and conversion ${MEASUREMENTS.conversion.value.replace("+","~")} while the same push contributed to ~20% growth in client acquisition.`,
+      `The EMS shipped to production, and the site revamp lifted UX and conversion ${MEASUREMENTS.conversion.value.replace("+","~")}.`,
     tradeoffShort: "Rapid delivery vs. scalable architecture",
     results: [
       { label: "Conversion after the UI revamp", note: "responsive redesign + accessibility", m: "conversion" },
@@ -509,7 +511,7 @@ export const projects: Project[] = [
     slug: "this-site",
     title: "This site",
     blurb:
-      "The one codebase here I can hand over in full, since my production work is under NDA. Server Components are the default and I only cross the boundary where crossing it buys something: the case-study route is an async Server Component that awaits its params, highlights its code with Shiki on the server behind the server-only package, and hands the client finished HTML — so the tokenizer never reaches the browser. Every route is prerendered; the four that quote a figure derived from a date revalidate hourly, so the number stays right without a redeploy. It also carries a layout-shift bug I caused and then found properly: the case accordion animated flexGrow, which is a layout property, and my first hypothesis about the cause was wrong.",
+      "The one codebase here I can hand over in full, since my production work is under NDA. Server Components are the default and I only cross the boundary where crossing it buys something: the case-study route is an async Server Component that awaits its params, highlights its code with Shiki on the server behind the server-only package, and hands the client finished HTML — so the tokenizer never reaches the browser. Every route is prerendered; the ones that quote a figure derived from a date revalidate hourly, so the number stays right without a redeploy. It also carries the record of a layout-shift bug I caused and then found properly: the case accordion animated flexGrow, which is a layout property, and my first hypothesis about the cause was wrong. It is fixed; the note stays because the diagnosis is the interesting part.",
     learned:
       "Where the server/client boundary actually pays for itself — and that a client component is still prerendered, so \"use client\" spends bundle, not first paint.",
     tech: [
@@ -644,7 +646,6 @@ export type Artifact = {
   company?: string;
   title: string;
   blurb: string;
-  body: string;
 };
 
 export const artifacts: Artifact[] = [  {
@@ -653,375 +654,42 @@ export const artifacts: Artifact[] = [  {
     title: "Feature-sliced architecture for the vendor dashboard",
     blurb:
       "The architecture decision record behind the Hobber vendor platform — why seven domains got their own slices instead of one dashboard surface, and what the boundary rules are.",
-    body: `ADR-001 — Feature-sliced architecture for the vendor dashboard
-
-STATUS   Accepted
-OWNER    Rezaan Riyaz — Senior Frontend Engineer (Lead), Hobber
-SCOPE    Sole frontend engineer — the frontend is mine end to end, so this is the
-         boundary I hold myself to rather than one I enforce on others
-CONTEXT  Greenfield vendor platform (UAE marketplace: entertainment, recreation, dining, tourism)
-
-CONTEXT
-The vendor platform needs authentication, vendor accounts, dashboards, scheduling,
-payouts, integrations, and team access management. That is seven domains, each with
-its own state, permissions, and backend surface — plus vendor workflows on top
-(activity management, booking, stock scheduling, discount logic, content management).
-Built as one dashboard surface, cross-domain coupling arrives before the first release.
-
-DECISION
-Organize the frontend by feature slice, not by technical layer. Each domain owns its
-routes, components, state, and API access together. Slices do not import from each
-other; anything genuinely shared is promoted into an explicit UI layer underneath.
-React + TypeScript throughout, so cross-slice contracts are compiler-checked.
-
-BOUNDARY RULES
-- A slice may import from the shared UI layer. It may not import from another slice.
-- Shared UI stays domain-agnostic. If it needs to know about payouts, it isn't shared.
-- A pattern is copied twice before it is promoted. Premature generalization is debt.
-- Cross-domain flows compose at the route level, not inside a slice.
-
-CONSEQUENCES
-+ A new domain is a new folder, not a refactor.
-+ Integration breaks surface at build time via TypeScript, not in review.
-- Real cost up front, before anything is demo-able. Accepted knowingly.
-- Some duplication is tolerated until a pattern has proven itself.
-
-ALTERNATIVES CONSIDERED
-A — Single dashboard surface, split later. Fastest to first screen; the "later"
-    never has a good week to happen.
-B — Layer-first structure (components/, hooks/, services/). Familiar, but a feature
-    change touches four directories and reviewers lose the thread.
-
-TRADE-OFF ON RECORD
-Upfront architecture vs. time to first screen. Taken because the scope was known
-to be seven modules on day one, not discovered later.`,
   },  {
     type: "COMPONENT SPEC",
     company: "Kodez",
     title: "Reusable component library — the API contract",
     blurb:
       `How a component earns its place in the Storybook library: the props contract, the accessibility floor, and what disqualifies a component from being shared. The spine that cut frontend dev time ${MEASUREMENTS["dev-time"].value.replace("−","~")}.`,
-    body: `COMPONENT SPEC — Storybook library, Kodez CMS
-
-OWNER   Rezaan Riyaz — Senior Frontend Engineer
-STACK   React · TypeScript · SCSS · Material UI · Storybook
-RESULT  ${MEASUREMENTS["dev-time"].value.replace("−","~")} reduction in frontend development time across projects
-
-WHY THIS EXISTS
-The CMS spans ${MEASUREMENTS.tables.value} SQL tables and enterprise integrations, and the company scaled from
-10 to 60+ people. Without a shared spine, every new screen is authored from scratch
-and the product drifts. The library is how a screen becomes composition instead of
-authorship.
-
-WHEN A COMPONENT IS PROMOTED
-- The pattern has appeared at least twice, in two different domains.
-- Its behavior can be described without naming a feature.
-- It has a story in Storybook covering default, loading, empty, and error states.
-
-THE PROPS CONTRACT
-- Typed, required-by-default. Optional props need a documented default.
-- No feature-specific props. A prop named "isPayoutRow" disqualifies the component.
-- Controlled by default; uncontrolled only where the DOM already owns the state.
-- Styling by variant token, never by passing raw class names through.
-
-CHANGING ONE, ONCE IT IS SHARED
-- Additive by default: a new optional prop whose default preserves current behaviour.
-- A breaking change updates every call site in the same pull request. If that is too
-  large to review, it is too large to make in one go.
-- Never change a prop's meaning while keeping its name. Add the new one, deprecate the
-  old one in the story, remove it once the call sites are gone.
-
-ACCESSIBILITY FLOOR (non-negotiable)
-- Reachable and operable by keyboard, with a visible focus ring.
-- Correct role and accessible name; state exposed via ARIA, not colour alone.
-- Contrast meets WCAG AA in both themes.
-
-WHAT DISQUALIFIES A COMPONENT
-Business logic inside it. Direct data fetching. Knowledge of the route it renders on.
-Any of those make it a feature, and features live in their own slice.
-
-DEFINITION OF DONE
-Story published · props documented · a11y checked · used in two places.
-
-WHAT I'D DO DIFFERENTLY
-Two things. I sold the library on consistency when I should have sold it on speed —
-engineers adopt a design system when it visibly saves them an afternoon, so publish the
-before/after build time for a real screen in week one and let the number argue. And I
-called the accessibility floor non-negotiable while enforcing it by review, which means
-it held exactly as long as the reviewer remembered. A rule with no check is a
-preference; it belongs in the pipeline next to the tests.`,
   },  {
     type: "STATE MODEL",
     company: "Hobber",
     title: "Server state vs. client state in the vendor dashboard",
     blurb:
       "The rule that keeps data-fetching bugs from becoming rendering bugs — what belongs in the cache, what belongs in the component, and why the two are never the same store.",
-    body: `STATE MODEL — Hobber vendor dashboard
-
-OWNER   Rezaan Riyaz — Senior Frontend Engineer (Lead)
-STACK   React · TypeScript · feature-sliced architecture
-
-THE RULE
-Server state and client state are different problems and do not share a store. Server
-state is a cache of something you do not own, with staleness and revalidation. Client
-state is what the user is doing right now, and it is yours. Merging them is how a
-network hiccup turns into a rendering bug.
-
-SERVER STATE — cached, keyed, revalidated
-Vendor accounts, services, schedules, pricing, payouts, integrations, team members.
-Owned by the query layer: cache key, staleness policy, invalidation on mutation.
-Never copied into component state "just to make the form work".
-
-CLIENT STATE — local by default
-Form drafts, filter selections, which panel is open, optimistic pending flags. Lives
-as close to the component that owns it as possible. Lifted only when a sibling truly
-needs it; put in a slice-level store only when a route does.
-
-DERIVED STATE — computed, never stored
-Vendor readiness, whether a service is bookable, totals. If it can be computed from
-server state, computing it is cheaper than keeping two versions in sync.
-
-MUTATION FLOW
-Mutate → invalidate the affected cache keys → let the query layer refetch. The screen
-reflects what the server actually accepted, not what the client hoped it would.
-
-WHAT BREAKS THE RULE
-- Copying a query result into useState so it can be edited. Now there are two answers
-  and no way to tell which is current — hold the draft separately, keep the cache as
-  the read.
-- A useEffect that syncs one store into another. That is the merge, written one field
-  at a time.
-- Storing a total that can be computed. One render cheaper, one class of stale bug
-  more expensive.
-- An optimistic update with no rollback path. Optimism is a claim about the server
-  that the server has not agreed to yet.
-- A real-time event written straight into component state. An event may invalidate a
-  cache key; it must never be the only way a piece of state arrives — a socket that
-  reconnects replays nothing, so the screen is then confidently wrong with no read
-  that can correct it.
-
-WHY IT MATTERS HERE
-Scheduling, payouts, and discount logic are financially consequential. A stale read on
-a payout screen is not a cosmetic bug, so the correctness rule is: when server and
-client disagree, the server wins and the UI says so.`,
   },  {
     type: "INCIDENT REVIEW",
     company: "Axinom",
     title: "Playback stopped part-way through long recordings",
     blurb:
       "A licence acquired once, at play time, and outlived by the content — a failure that could not appear on any asset short enough to sit through in development. What broke, how a viewer came to be the detector, and the gap I left open.",
-    body: `INCIDENT REVIEW — licence expiry mid-playback, Axinom
-
-OWNER       Rezaan Riyaz — Senior Frontend Engineer (Lead)
-DETECTED BY A viewer, via the client's support team — there was no client-side
-            error reporting to detect it for us
-STATUS      Closed, with one gap deliberately left open (stated at the end)
-
-WHAT HAPPENED
-Protected playback halted part-way through long recordings. A licence was acquired
-once, when the viewer pressed play, and on assets whose runtime exceeded that
-licence's own validity window the decryption keys expired mid-stream. The video
-stopped. Short assets were unaffected, which is why every build looked healthy:
-nothing played during development or QA ran long enough to cross the boundary.
-
-WHY IT TOOK A VIEWER TO FIND IT
-Two things, and only one is about tooling. There was no client-side error reporting
-on this product, so nobody was watching — a viewer told the client before the client
-told us. But the player did report it: Shaka raises an expiry error and it fired.
-The gap was that the error had nowhere to go. It reached a browser console no
-operator was reading, and the ticket that reached me said the video stopped working.
-A signal nobody routes anywhere is not a signal.
-
-CONTAINMENT, WHICH FIXED NOTHING
-01 · Licence validity for the affected titles was raised on the licence side, so
-     live viewers stopped losing sessions. That moved the boundary; it did not
-     remove it.
-02 · Support was given something accurate to say — long content only, the recording
-     is fine, reload and resume — instead of "the video is broken".
-03 · I pinned a deliberately short-lived licence in a non-production environment, so
-     the boundary could be crossed in a browser on demand rather than by watching a
-     full lecture. That is what made the real fix testable.
-
-ROOT CAUSE
-Licence acquisition was written as a one-shot step on the path to first frame.
-Nothing in the client owned what happens when a licence expires before the asset
-ends. The invariant I had not written down is the one that mattered: a licence
-shorter than the content it protects is a supported case, not an accident.
-
-THE STRUCTURAL FIX
-01 · Expiry became state the player owns rather than an event it reacts to — the DRM
-     module reads the expiration it is handed by the key session and acts before the
-     keys die, not after playback has stopped.
-02 · Renewal is a reload at the current position with a freshly minted entitlement
-     token, not an in-place licence swap. There is no API to inject a new licence
-     into a live session, so this is the honest mechanism, and it costs the viewer a
-     brief visible stall. A stall you can explain beats a stop you cannot.
-03 · The short-lived licence became a standing check, so the renewal path is crossed
-     every time it runs and a broken renewal fails in a check rather than in
-     somebody's lecture.
-04 · The expiry error was mapped to a distinct state — access expired, as against
-     cannot play on this device, as against network — so the next ticket arrives
-     carrying something to act on.
-
-WHAT I WOULD NOT DO AGAIN
-- Treat an acquisition on the path to first frame as a one-time step. Anything with
-  a validity window needs an owner for the moment it runs out.
-- Test a duration-dependent failure by making the test longer. Shrink the window
-  instead: the licence, not the lecture.
-- Leave a player error going only to the console. That is detection that exists and
-  is thrown away.
-
-THE GAP I LEFT OPEN
-The check runs on real browsers as a release step, not as a merge gate, because a
-real content decryption module does not exist in headless CI — and by my own
-standard a rule with no gate is a preference. I also did not rule out every
-adjacent cause before shipping; I could reproduce expiry and I fixed expiry. And
-the detector is still a person. That one is mine: I chose not to build client-side
-failure reporting on a product where a playback failure is the most expensive thing
-there is to reproduce. This is the incident that makes the argument for it.`,
   },  {
     type: "PERF BUDGET",
     company: "Axinom",
     title: `Page-load performance — how the ${MEASUREMENTS["load-axinom"].value.replace("−","~")} came out`,
     blurb:
       "The performance one-pager for the Axinom media build: what was measured, the three levers that moved it (bundle, lazy-load, caching), and the guardrails that stopped a fast page from becoming a broken one.",
-    body: `PERF BUDGET — Media web applications, Axinom (Mosaic)
-
-OWNER   Rezaan Riyaz — Senior Frontend Engineer (Lead)
-RESULT  ${MEASUREMENTS["load-axinom"].value.replace("−","~")} reduction in page load time
-READ AS Before/after against a defined baseline — not a controlled experiment
-
-WHY THIS EXISTS
-Global media clients, protected content, and multi-language UIs. Load time is the
-first thing every one of those users experiences, and it was being treated as a
-post-launch concern. This page makes it a deliverable with a number attached.
-
-WHAT WAS MEASURED
-- Page load time (the headline number, measured before and after)
-- Bundle composition — what is actually being shipped, and to whom
-- Time to first frame on the routes that carry playback
-
-THE THREE LEVERS
-01 · BUNDLE OPTIMIZATION
-     Analyse first, cut second. Remove what is shipped but unused; split what is
-     needed but not immediately.
-02 · LAZY LOADING
-     Defer everything below the fold and every route the user has not asked for.
-     Playback surfaces load first; catalogue browsing can wait 200ms.
-03 · CACHING
-     Cache what does not change per request. Metadata from the Mosaic APIs is the
-     obvious candidate; entitlement decisions are not.
-
-GUARDRAILS
-- Do not win load time by degrading playback reliability or DRM correctness.
-- Do not lazy-load anything on the critical path to first frame.
-- i18n bundles are split per locale, never shipped as one combined payload.
-- Do not read the average alone — it hides the regions and devices where the
-  experience is materially worse.
-
-WHERE THIS STOPS BEING A BUDGET
-A budget is a number you are not allowed to exceed. This was a measurement pass with
-a target — real thresholds, in CI, failing the build on a regression, would have made
-the gain durable instead of a snapshot. It held because the same few people were
-watching it, which is not a mechanism.
-
-WHAT I'D ADD NEXT
-Segment the measurement by region and device from the first read, not the third.
-On an international product, the aggregate is the least informative number available.`,
   },  {
     type: "TEST STRATEGY",
     company: "Kodez",
-    title: `Jest test-first, Cypress at the gate — ${MEASUREMENTS.coverage.value} on the paths that matter`,
+    title: `Jest test-first, Cypress at the gate — ${MEASUREMENTS.coverage.value} overall, every critical path gated`,
     blurb:
       `The testing strategy that made ${MEASUREMENTS.releases.value} production releases safe: what gets a test, what deliberately does not, and where the gate sits in CI/CD.`,
-    body: `TEST STRATEGY — Kodez CMS
-
-OWNER   Rezaan Riyaz — Senior Frontend Engineer
-RESULT  ${MEASUREMENTS.coverage.value} test coverage, Jest + Cypress merged · ${MEASUREMENTS.releases.value} production releases
-
-THE PREMISE
-Release throughput is not a function of moving fast. It is a function of how cheaply
-you can prove you did not break anything. TDD and CI gates were not overhead on the
-${MEASUREMENTS.releases.value} releases — they are what made shipping on that cadence safe.
-
-THE PYRAMID, AS ACTUALLY BUILT
-- Unit (Jest): pure logic, formatters, reducers, data transforms. Fast, plentiful.
-- Component: rendering and interaction against the Storybook primitives.
-- E2E (Cypress): the flows a client would notice breaking. Fewer, slower, decisive.
-
-WHAT ALWAYS GETS AN E2E TEST
-- Authentication and permissions.
-- Write paths into the core schema where a bad write is not recoverable by a retry —
-  not all ${MEASUREMENTS.tables.value} tables, the consequential ones.
-- Every integration surface in the client's vendor stack (Fiserv, Toshiba, NTT DATA,
-  Park Assist, City) — against a recorded contract, not the vendor's live endpoint.
-- Any path a defect has already been filed against. A bug gets a test before a fix.
-
-WHAT DELIBERATELY DOES NOT
-Presentational-only components with a Storybook story. Third-party library internals.
-Anything whose test would restate the implementation line for line.
-
-THE THIRD-PARTY BOUNDARY
-Five vendor integrations cannot sit in the merge path. A suite that calls a payment or
-POS provider on every pull request is slow, needs credentials in CI, and goes red for
-reasons unrelated to the diff — so the team stops trusting it, which is worse than not
-having it. Our side of each contract is stubbed at the network boundary, and the stub is
-the recorded shape of the real response. Contract drift is caught by exercising the live
-integration on a schedule against staging, where a failure is a conversation with the
-vendor rather than a blocked release.
-
-THE GATE
-Tests run in CI/CD on every pull request. A red pipeline blocks merge; there is no
-"we'll fix it after". Cross-browser behaviour is validated separately on BrowserStack,
-because a green suite on one engine is not a claim about the others.
-
-TDD, HONESTLY
-Test-first on logic and on bug fixes, where it genuinely shapes the design. Test-after
-on exploratory UI, where writing the assertion first would be inventing a spec I do
-not have yet. Claiming otherwise would be theatre.`,
   },  {
     type: "MIGRATION PLAN",
     company: "Kodez",
     title: "Laravel/jQuery → React + Express, across three years, never a regression freeze",
     blurb:
       "How a legacy application moved to a modern stack incrementally — the strangler approach, what shipped in which order, and the rule that kept two coexisting stacks from doubling the work.",
-    body: `MIGRATION PLAN — legacy Laravel/jQuery → React + ExpressJS
-
-OWNER   Rezaan Riyaz — Senior Frontend Engineer, Kodez
-RESULT  Legacy stack retired incrementally · zero delivery freeze
-
-THE CONSTRAINT
-The legacy application had users and client commitments. A big-bang rewrite means
-months with nothing shipped and a cutover weekend nobody sleeps through. Not available.
-
-THE APPROACH — STRANGLE, DON'T REPLACE
-New surfaces are built in React from day one. Existing surfaces are migrated when they
-are being changed anyway, so migration rides along with work that was already funded.
-The legacy app keeps running until its last route is gone.
-
-ORDERING
-01 · Routes already scheduled for a feature change — migration is nearly free.
-02 · High-traffic, high-latency paths — the 40% load-time work lives here.
-03 · Integration-heavy screens — moved once the API layer was behind ExpressJS.
-04 · Low-traffic legacy screens — last, and some deliberately never.
-
-THE RULE THAT KEPT IT HONEST
-One source of truth per feature. A screen is either legacy or migrated, never half.
-Two implementations of the same thing is not a migration, it is two products.
-
-BACKEND SIDE
-Node.js BFF layers in front of the existing services, so the React client talks to one
-coherent API instead of the legacy shape. This is what made screen-by-screen migration
-possible without renegotiating every backend contract.
-
-RISK CONTROLS
-- Every migrated route ships behind the same Cypress gate as new work.
-- Cross-browser validated on BrowserStack before the legacy route is retired.
-- Swagger kept current, so the contract is readable by both stacks.
-
-TRADE-OFF ON RECORD
-A period of two coexisting stacks — more surface area, more context-switching — in
-exchange for never stopping client delivery. Taken deliberately.`,
   },
 ];
 
@@ -1068,7 +736,7 @@ export const principles: { label: string; body: string }[] = [
   },
   {
     label: "Reusable beats bespoke",
-    body: "A screen should be composed, not authored. The Storybook library at Kodez cut frontend development time ~30% — but only after a pattern had proven itself twice. Premature generalization is just debt with better manners.",
+    body: `A screen should be composed, not authored. The Storybook library at Kodez is what turned screens into composition, and I judge it cut frontend delivery time by roughly a third — but only after a pattern had proven itself twice. Premature generalization is just debt with better manners.`,
   },
   {
     label: "Performance is a feature",
@@ -1145,7 +813,7 @@ type VendorService =
     group: "Styling & design systems",
     use: "Utility-first styling & design tokens",
     howIUse:
-      "I have shipped both models in production and chose differently the second time, which is the only reason I have an opinion worth stating. At Kodez and Axinom the shared spine was Material UI with SCSS — a component library you consume, where you get correct behaviour immediately and pay for it later, at the point where a design calls for something the library did not anticipate and you are wrapping and overriding a component you cannot see inside. At Hobber I chose Tailwind with shadcn/ui instead, and the deciding factor was not the utilities. It was that shadcn's components are copied into the repository rather than installed from it: when one of seven feature slices needed different keyboard behaviour, the answer was to edit the component instead of wrapping it three props deep. The trade-off is real and goes the other way — nobody upgrades those components for you, and correctness is now yours. That is the right side of the trade for a platform being built from nothing by one engineer, and I would not make the same call on a large team that needed a library to be a contract. Either way the discipline is identical: variants live in the component's API, never in class strings passed down through props.",
+      "I have shipped both models in production and chose differently the second time, which is the only reason I have an opinion worth stating. At Kodez the shared spine was Material UI with SCSS, and at Axinom it was SCSS over the Mosaic surfaces — a component library you consume, where you get correct behaviour immediately and pay for it later, at the point where a design calls for something the library did not anticipate and you are wrapping and overriding a component you cannot see inside. At Hobber I chose Tailwind with shadcn/ui instead, and the deciding factor was not the utilities. It was that shadcn's components are copied into the repository rather than installed from it: when one of seven feature slices needed different keyboard behaviour, the answer was to edit the component instead of wrapping it three props deep. The trade-off is real and goes the other way — nobody upgrades those components for you, and correctness is now yours. That is the right side of the trade for a platform being built from nothing by one engineer, and I would not make the same call on a large team that needed a library to be a contract. Either way the discipline is identical: variants live in the component's API, never in class strings passed down through props.",
     sample: `Same discipline, different ownership
 MUI + SCSS   (Kodez, Axinom)  → behaviour you consume, override later
 shadcn + TW  (Hobber)         → component in the repo, edit not wrap
@@ -1315,7 +983,9 @@ await expect(page.getByText("Booking confirmed")).toBeVisible()
       "Jest covers the base of the pyramid — pure logic, reducers, formatters, data transforms — the tests that are fast enough to run on every save and plentiful enough to catch the boring mistakes. I write them test-first for logic and for bug fixes, where the assertion genuinely shapes the design, and I avoid tests that just restate the implementation, because those only ever break when you refactor correctly.",
     sample: `A bug gets a failing test before it gets a fix
 it("keeps a service unbookable when price is missing", () => {
-  expect(isBookable({ status: "bookable", price: undefined })).toBe(false)
+  // The type makes this unrepresentable in our code, so the cast is the point:
+  // this is unvalidated input crossing the boundary, which is what the guard is for.
+  expect(isBookable({ status: "bookable", price: undefined } as unknown as ApiService)).toBe(false)
 })   // reproduce → then repair`,
   },
   {
@@ -1328,7 +998,7 @@ it("keeps a service unbookable when price is missing", () => {
     sample: `The gate, not the suite size
 Blocking specs: auth · permissions · writes · client integrations
 Red pipeline = no merge. No "we'll fix it after."
-${MEASUREMENTS.coverage.value} coverage on critical paths across ${MEASUREMENTS.releases.value} production releases.`,
+${MEASUREMENTS.coverage.value} overall coverage, every critical path behind the merge gate, across ${MEASUREMENTS.releases.value} production releases.`,
   },
   {
     name: "Postman",

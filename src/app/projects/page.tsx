@@ -5,7 +5,7 @@ import { PageIntro, ProjectsSection } from "../components/signal-room";
 export const metadata: Metadata = {
   title: "Projects — Mohammed Rezaan Riyaz",
   description:
-    "Personal and open-source builds: React, Next.js, and TypeScript applications spanning AI tooling, dashboards, streaming, and web scraping — plus the earlier C# desktop work.",
+    "This site as a work sample — Server Components, build-time highlighting, incremental static regeneration — plus personal and open-source builds in React, Next.js and TypeScript spanning AI tooling, dashboards, streaming and web scraping.",
 };
 
 export default function ProjectsPage() {

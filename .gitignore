@@ -41,3 +41,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated résumé PDFs
+# These are build outputs — `npm run build` renders /resume in headless Chrome and
+# writes them before next build collects public/. Tracking them made a silent
+# failure available: the committed blob went stale whenever the résumé changed, and
+# once shipped carrying a test probe string that only existed in a working tree.
+# The build is the only thing that should produce them.
+/public/resume.pdf
+/public/resume-a4.pdf
+/public/resume.meta.json

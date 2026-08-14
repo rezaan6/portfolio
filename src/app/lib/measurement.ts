@@ -18,7 +18,7 @@
  * About counters and the résumé endnotes, so the four can never drift.
  * ------------------------------------------------------------------ */
 
-export type Kind = "count" | "reading" | "estimate" | "reported";
+export type Kind = "count" | "reading" | "estimate" | "reported" | "report";
 
 export type Measurement = {
   /**
@@ -41,6 +41,11 @@ export const KIND_LABEL: Record<Kind, string> = {
   reading: "Before/after reading",
   estimate: "Estimate",
   reported: "Reported figure",
+  // Coverage came from a tool's report, which is neither a before/after read nor a
+  // judgement. It had been labelled "reading", so the résumé and both PDFs printed
+  // "Before/after reading" directly above a basis describing a coverage report that
+  // has no before and no after — the footnote contradicting its own label.
+  report: "Tool report",
 };
 
 export const MEASUREMENTS = {
@@ -62,7 +67,7 @@ export const MEASUREMENTS = {
   },
   coverage: {
     value: "~90%",
-    kind: "reading",
+    kind: "report",
     basis:
       "The overall figure on a coverage report combining the Jest unit runs with the instrumented Cypress end-to-end runs on the Kodez CMS, gated in CI.",
     limit:

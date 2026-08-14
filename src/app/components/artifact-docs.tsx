@@ -86,7 +86,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
 
   "COMPONENT SPEC": {
     summary:
-      "How a component earns its place in the Storybook library at Kodez: the promotion rule, the props contract, the accessibility floor, and what disqualifies a component from being shared. This library is what cut frontend development time ~30%.",
+      "How a component earns its place in the Storybook library at Kodez: the promotion rule, the props contract, the accessibility floor, and what disqualifies a component from being shared. I judge this library cut frontend delivery time by roughly a third.",
     blocks: [
       {
         type: "fields",
@@ -94,7 +94,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
           { label: "Doc", value: "Reusable component library — API contract" },
           { label: "Context", value: "Kodez enterprise CMS · company scaled 10 → 60+" },
           { label: "Stack", value: "React · TypeScript · SCSS · Material UI · Storybook" },
-          { label: "Result", value: "~30% less frontend development time" },
+          { label: "Result", value: `Frontend delivery time down by roughly a third (${MEASUREMENTS["dev-time"].value.replace("−","~")}) — my judgement, not an instrumented figure` },
         ],
       },
       {
@@ -265,7 +265,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
 
   "PERF BUDGET": {
     summary:
-      "The performance one-pager for the Axinom media build: what was measured, the three levers that moved it, and the guardrails that stopped a faster page from becoming a broken one. Page load came down ~15%.",
+      `The performance one-pager for the Axinom media build: what was measured, the three levers that moved it, and the guardrails that stopped a faster page from becoming a broken one. Page load was ${MEASUREMENTS["load-axinom"].value.replace("−","~")} lower after the work than before it.`,
     blocks: [
       {
         type: "fields",
@@ -314,7 +314,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
           },
           { text: "Lazy-loading anything on the critical path to first frame.", good: false },
           {
-            text: "Reading the average alone — it hides the regions and devices having the worst time.",
+            text: "Reading the average alone — it hides the regions and devices having the worst time. Added after the fact: the original pass had no segmentation guardrail, which is the mistake recorded below.",
             good: false,
           },
         ],
@@ -342,7 +342,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "fields",
         fields: [
           { label: "Doc", value: "Test strategy — Kodez CMS" },
-          { label: "Coverage", value: `${MEASUREMENTS.coverage.value} automated, on critical paths` },
+          { label: "Coverage", value: `${MEASUREMENTS.coverage.value} overall — Jest + Cypress merged; every critical path gated` },
           { label: "Releases", value: `${MEASUREMENTS.releases.value} production releases` },
           { label: "Tooling", value: "Jest · Cypress · CI/CD · BrowserStack" },
         ],
@@ -457,7 +457,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         ordered: true,
         items: [
           "Expiry became state the player owns rather than an event it reacts to. The DRM module reads the expiration it is handed by the key session and acts before the keys die, not after playback has already stopped.",
-          "Renewal is a reload at the current position with a freshly minted entitlement token — not an in-place licence swap. There is no API to inject a new licence into a live session, so this is the honest mechanism, and it costs the viewer a brief visible stall. A stall you can explain beats a stop you cannot.",
+          "Renewal is a reload at the current position with a freshly minted entitlement token, not an in-place licence swap. In-place renewal does exist — a CDM that is issued a renewable licence emits a license-renewal message, and the response goes back through MediaKeySession.update() without interrupting playback — but the licences we were issued carried no renewal policy, so no renewal message was ever emitted and there was nothing to pass to update(). Changing that is a licence-service decision, not a client one. Reload at position was the mechanism available to me, and it costs the viewer a brief visible stall. A stall you can explain beats a stop you cannot.",
           "The short-lived licence became a standing check, so the renewal path is crossed every time it runs and a broken renewal fails in a check rather than in somebody's lecture.",
           "The expiry error was mapped to a distinct state — access expired, as against cannot play on this device, as against network — so the next ticket arrives carrying something to act on.",
         ],
@@ -491,14 +491,14 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
 
   "MIGRATION PLAN": {
     summary:
-      "How a legacy PHP/jQuery application moved to React and ExpressJS incrementally at Kodez — the strangler approach, the ordering, and the one rule that kept two coexisting stacks from doubling the work. The legacy stack was retired without a delivery freeze.",
+      "How a legacy PHP/jQuery application moved to React and ExpressJS incrementally at Kodez — the strangler approach, the ordering, and the one rule that kept two coexisting stacks from doubling the work. The legacy surface was retired down to a low-traffic remainder, without a delivery freeze.",
     blocks: [
       {
         type: "fields",
         fields: [
           { label: "Doc", value: "Legacy PHP/jQuery → React + ExpressJS" },
           { label: "Constraint", value: "Live users and client commitments — no freeze available" },
-          { label: "Result", value: "Legacy stack retired · zero delivery freeze" },
+          { label: "Result", value: "Legacy surface retired down to a low-traffic remainder · zero delivery freeze" },
           { label: "Approach", value: "Strangler — migrate alongside funded work" },
         ],
       },

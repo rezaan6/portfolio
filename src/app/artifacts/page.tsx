@@ -5,7 +5,7 @@ import { ArtifactsSection, PageIntro } from "../components/signal-room";
 export const metadata: Metadata = {
   title: "Artifacts — Mohammed Rezaan Riyaz",
   description:
-    "Six working engineering documents across Hobber, Axinom, and Kodez — an architecture decision record, a component-library API contract, a server/client state model, a performance budget, a test strategy, and a legacy migration plan. Client code and data are kept out.",
+    "Seven working engineering documents across Hobber, Axinom, and Kodez — an architecture decision record, a component-library API contract, a server/client state model, an incident review, a page-load performance one-pager, a test strategy, and a legacy migration plan. Client code and data are kept out.",
 };
 
 export default function ArtifactsPage() {

@@ -165,7 +165,7 @@ const EXPERIENCE: Role[] = [
     ],
     points: [
       `Architected and delivered a React CMS from 0→1 to MVP as a microarchitecture applying SOLID principles, then led ${MEASUREMENTS.releases.value} production releases on it.`,
-      `Introduced test-driven development with Jest and Cypress end-to-end gates, driving automated coverage ${MEASUREMENTS.coverage.value} on critical paths in CI/CD — which is what let releases stay frequent without a regression freeze.`,
+      `Introduced test-driven development with Jest and Cypress end-to-end gates, driving overall automated coverage to ${MEASUREMENTS.coverage.value} with every critical path behind the merge gate in CI/CD — which is what let releases stay frequent without a regression freeze.`,
       `Built a Storybook-based reusable component library that cut frontend development time ${MEASUREMENTS["dev-time"].value.replace("−","~")} across projects.`,
       `Reduced page load time ${MEASUREMENTS["load-kodez"].value.replace("−","~")} through code-splitting, lazy loading, and asset optimization, with assets served from AWS S3.`,
       "Migrated a legacy Laravel, jQuery and Bootstrap application to React and ExpressJS incrementally without freezing client delivery — I had worked in that codebase before replacing it, which is why the seams were obvious — and built Node.js BFF layers with the backend team to reduce API latency.",
@@ -183,7 +183,7 @@ const EXPERIENCE: Role[] = [
     points: [
       "Joined as a Frontend Engineer Intern in December 2018 and moved into the full role in June 2019 — first end-to-end UI ownership at a seed-stage startup.",
       "Delivered an Employment Management System from concept to production as the end-to-end UI owner, in React.js, JavaScript, HTML, and SCSS.",
-      `Rebuilt the company website around responsive layout and accessibility, lifting UX and conversion ${MEASUREMENTS.conversion.value.replace("+","~")}; the same push contributed to ~20% growth in client acquisition.`,
+      `Rebuilt the company website around responsive layout and accessibility, lifting UX and conversion ${MEASUREMENTS.conversion.value.replace("+","~")}.`,
       "Improved application performance through refactoring and component-level optimization, and ran code reviews and pair-programming sessions to keep the codebase maintainable as it grew.",
     ],
   },
@@ -379,18 +379,177 @@ function Chip({ children }: { children: React.ReactNode }) {
   );
 }
 
+/* ------------------------------------------------------------------ *
+ * The phone résumé.
+ *
+ * The sheet below this is a fixed 232mm and was scaled to fit — which on a
+ * 390px phone meant multiplying 10.9px body text by 0.408, so the document
+ * a recruiter reaches from the most-clicked link on the site rendered at
+ * about four and a half pixels. It was legible only by pinch-zooming a
+ * transform-scaled page, and /resume is the destination of every "Resume"
+ * CTA on the site.
+ *
+ * So below the breakpoint the sheet is not scaled, it is not rendered:
+ * this reflows the same arrays into one column at normal type sizes. There
+ * is no second copy of the content — CONTACT, METRICS, EXPERIENCE, STACK,
+ * EDUCATION and ENDNOTES are the same module-level data the sheet reads,
+ * so the two cannot drift.
+ *
+ * The PDF generator renders at 1800px wide, so it always gets the sheet.
+ * ------------------------------------------------------------------ */
+function MobileResume() {
+  return (
+    <article className="w-full rounded-2xl bg-white px-5 py-7 text-[15px] leading-[1.6] text-neutral-800 shadow-sm">
+      <h1 className="font-[family-name:var(--font-heading)] text-[26px] font-bold leading-tight tracking-[-0.01em] text-neutral-950">
+        Mohammed Rezaan Riyaz
+      </h1>
+      <p className="mt-2 font-[family-name:var(--font-heading)] text-[12px] font-semibold uppercase tracking-[0.18em] text-[#023047]">
+        Senior Frontend Engineer
+      </p>
+      <p className="mt-1.5 text-[13px] text-neutral-600">
+        React · Next.js · TypeScript · {yearsPhrase()}
+      </p>
+
+      <ul className="mt-5 space-y-1.5 text-[13.5px]">
+        {CONTACT.map((line) => {
+          const href = CONTACT_HREF[line];
+          return (
+            <li key={line} className="flex gap-2">
+              <span aria-hidden="true" className="w-12 shrink-0 text-neutral-500">
+                {CONTACT_GLYPH[line] ?? ""}
+              </span>
+              {href ? (
+                <a href={href} className="text-[#023047] underline decoration-neutral-300 underline-offset-2">
+                  {line}
+                </a>
+              ) : (
+                <span className="text-neutral-700">{line}</span>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+
+      <p className="mt-6 text-[14.5px] leading-[1.65] text-neutral-700">{POSITIONING()}</p>
+
+      <dl className="mt-6 grid grid-cols-2 gap-3">
+        {METRICS.map((metric) => (
+          <div key={metric.m} className="rounded-xl bg-neutral-50 px-3 py-2.5">
+            <dt className="font-[family-name:var(--font-heading)] text-[19px] font-bold leading-none text-[#023047]">
+              {MEASUREMENTS[metric.m].value}
+            </dt>
+            <dd className="mt-1.5 text-[11.5px] leading-[1.35] text-neutral-600">{metric.label}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <h2 className="mt-8 border-b border-neutral-300 pb-1.5 font-[family-name:var(--font-heading)] text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-900">
+        Experience
+      </h2>
+      {EXPERIENCE.map((role) => (
+        <section key={role.company} className="mt-5">
+          <p className="font-[family-name:var(--font-heading)] text-[16px] font-semibold text-neutral-950">
+            {role.company}
+          </p>
+          <p className="text-[13px] text-neutral-600">
+            {role.location} · {role.period}
+          </p>
+          <p className="mt-1 text-[14px] font-medium text-[#023047]">{role.title}</p>
+          <p className="mt-0.5 text-[12.5px] uppercase tracking-[0.06em] text-neutral-500">
+            {role.descriptor}
+          </p>
+          <ul className="mt-2 flex flex-wrap gap-1.5">
+            {role.stack.map((s) => (
+              <li key={s} className="rounded-full bg-neutral-100 px-2 py-0.5 text-[11.5px] text-neutral-700">
+                {s}
+              </li>
+            ))}
+          </ul>
+          <ul className="mt-3 space-y-2 text-[14px] leading-[1.6]">
+            {role.points.map((p) => (
+              <li key={p} className="flex gap-2">
+                <span aria-hidden="true" className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-neutral-400" />
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+
+      <h2 className="mt-8 border-b border-neutral-300 pb-1.5 font-[family-name:var(--font-heading)] text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-900">
+        Core stack
+      </h2>
+      {STACK.map((group) => (
+        <div key={group.label} className="mt-4">
+          <p className="text-[11.5px] font-semibold uppercase tracking-[0.12em] text-neutral-500">
+            {group.label}
+          </p>
+          <ul className="mt-1.5 flex flex-wrap gap-1.5">
+            {group.items.map((item) => (
+              <li key={item} className="rounded-full bg-neutral-100 px-2 py-0.5 text-[12px] text-neutral-700">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+
+      <h2 className="mt-8 border-b border-neutral-300 pb-1.5 font-[family-name:var(--font-heading)] text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-900">
+        Education
+      </h2>
+      {EDUCATION.map((e) => (
+        <div key={e.degree} className="mt-4">
+          <p className="text-[14px] font-medium text-neutral-900">{e.degree}</p>
+          <p className="text-[13px] text-neutral-600">{e.school}</p>
+          {e.note ? <p className="mt-1 text-[12.5px] leading-[1.5] text-neutral-500">{e.note}</p> : null}
+        </div>
+      ))}
+
+      <h2 className="mt-8 border-b border-neutral-300 pb-1.5 font-[family-name:var(--font-heading)] text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-900">
+        Measurement notes
+      </h2>
+      <p className="mt-3 text-[12.5px] leading-[1.6] text-neutral-500">
+        What each headline figure is, and where it stops. Counts are checkable, readings depend on
+        conditions, estimates are judgements — they are not the same kind of claim and are not
+        presented as though they were.
+      </p>
+      <dl className="mt-3 space-y-3">
+        {ENDNOTES.map((note) => (
+          <div key={note.id}>
+            <dt className="text-[12.5px] font-semibold text-neutral-700">
+              {MEASUREMENTS[note.id].value} {note.label} · {KIND_LABEL[note.kind]}
+            </dt>
+            <dd className="mt-0.5 text-[12.5px] leading-[1.55] text-neutral-500">
+              {note.basis}
+              {"limit" in note && note.limit ? ` ${note.limit}` : ""}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </article>
+  );
+}
+
 export default function ResumePage() {
   const [copyState, setCopyState] = useState<"idle" | "copied" | "error">("idle");
+  const [isNarrow, setIsNarrow] = useState(false);
   const [scale, setScale] = useState(1);
   const [scaledHeight, setScaledHeight] = useState<number | undefined>();
   const resumeRef = useRef<HTMLElement | null>(null);
 
-  // The document is a fixed 232mm wide; scale it down to fit narrow viewports
-  // rather than letting it clip or reflow into something unreadable.
+  // The document is a fixed 232mm wide, so any viewport narrower than that can only
+  // see it scaled — and scaling 10.9px body text is how /resume ended up rendering
+  // at 4.45 effective pixels on a 390px phone. The breakpoint sits just above the
+  // sheet's own width: at 900px it renders at ~0.99 and needs no help, and below
+  // that MobileResume reflows the same data instead. The sheet is not mounted at
+  // all when narrow, so nothing is scaled into illegibility.
+  const NARROW_PX = 900;
   useEffect(() => {
     const PAGE_PX = 877; // 232mm at 96dpi
-    const fit = () =>
+    const fit = () => {
+      setIsNarrow(window.innerWidth < NARROW_PX);
       setScale(Math.min(1, Math.max(0.3, (window.innerWidth - 32) / PAGE_PX)));
+    };
     fit();
     window.addEventListener("resize", fit);
     return () => window.removeEventListener("resize", fit);
@@ -484,9 +643,11 @@ export default function ResumePage() {
           </div>
         </div>
 
+        {isNarrow ? <MobileResume /> : null}
+
         <div
-          className="w-full overflow-hidden print:contents"
-          style={scaledHeight ? { height: `${scaledHeight}px` } : undefined}
+          className={`w-full overflow-hidden print:contents ${isNarrow ? "hidden" : ""}`}
+          style={scaledHeight && !isNarrow ? { height: `${scaledHeight}px` } : undefined}
         >
           <div
             className="origin-top-left print:contents"

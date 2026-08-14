@@ -241,7 +241,7 @@ function CommandPalette({
                   }}
                   aria-label="Search pages and links"
                   placeholder="Search pages, resume, links…"
-                  className="sr-cmd-input flex-1 bg-transparent text-[15px] text-[var(--sr-text)] outline-none placeholder:text-[var(--sr-faint)]"
+                  className="sr-cmd-input flex-1 bg-transparent text-[16px] text-[var(--sr-text)] outline-none placeholder:text-[var(--sr-faint)] sm:text-[15px]"
                 />
                 <kbd className="hidden shrink-0 rounded-md border border-[var(--sr-hairline)] px-1.5 py-0.5 font-[family-name:var(--font-mono)] text-[10px] text-[var(--sr-faint)] sm:block">
                   esc
@@ -313,6 +313,15 @@ export function SiteFrame({ children }: { children: ReactNode }) {
   const [cmdkOpen, setCmdkOpen] = useState(false);
   const pathname = usePathname();
   const reduce = useReducedMotion();
+
+  // The mobile nav is a 390px window onto ~780px of pills, so the current section
+  // is frequently off-screen on arrival. `nearest` rather than a smooth scroll:
+  // this runs on navigation, and animating it would read as the strip drifting on
+  // its own. `block: "nearest"` keeps it from scrolling the page vertically.
+  const activeNavRef = useRef<HTMLAnchorElement | null>(null);
+  useEffect(() => {
+    activeNavRef.current?.scrollIntoView({ inline: "center", block: "nearest" });
+  }, [pathname]);
 
   // Theme toggle plays an "ink drop": the new theme is revealed by a circle that
   // grows out of the toggle icon itself and slowly floods the page — like paint
@@ -482,8 +491,14 @@ export function SiteFrame({ children }: { children: ReactNode }) {
               </Link>
             </div>
           </div>
-          {/* mobile nav row */}
-          <nav className="flex items-center gap-2 overflow-x-auto border-t border-[var(--sr-hairline)] px-5 py-2 lg:hidden">
+          {/* mobile nav row — 780px of pills in a 390px window, so four of the seven
+              sections start off-screen with nothing to indicate they exist. The active
+              pill is scrolled into view on navigation (landing on /artifacts otherwise
+              showed a strip that appeared to start at HOME with no current item), and
+              the right edge fades to signal there is more to the right. */}
+          <nav
+            className="flex items-center gap-2 overflow-x-auto border-t border-[var(--sr-hairline)] px-5 py-2 [-ms-overflow-style:none] [mask-image:linear-gradient(to_right,black_calc(100%-32px),transparent)] [scrollbar-width:none] lg:hidden"
+          >
             {navLinks.map((link) => {
               const active =
                 link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
@@ -491,6 +506,7 @@ export function SiteFrame({ children }: { children: ReactNode }) {
                 <Link
                   key={link.href}
                   href={link.href}
+                  ref={active ? activeNavRef : undefined}
                   className={`relative shrink-0 rounded-full px-3 py-1.5 font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.12em] transition-colors duration-200 ${
                     active
                       ? "text-[var(--sr-accent)]"
@@ -1314,14 +1330,13 @@ export function ArtifactsSection() {
                   </svg>
                 </button>
               </div>
+              {/* Every artifact type has a structured document in ARTIFACT_DOCS, so
+                  the old <pre>{open.body}</pre> fallback was unreachable — while ~18KB
+                  of duplicate plain text shipped in this chunk on all twelve routes.
+                  Worse than the weight: it was a second copy of every document, and
+                  several corrections this week had to be made twice because of it. */}
               <div className="overflow-auto p-5">
-                {ARTIFACT_DOCS[open.type] ? (
-                  <ArtifactDocView doc={ARTIFACT_DOCS[open.type]} brand={openBrand} />
-                ) : (
-                  <pre className="whitespace-pre-wrap break-words rounded-xl border border-[var(--sr-hairline)] bg-[var(--sr-bg)] p-4 font-[family-name:var(--font-mono)] text-[11.5px] leading-[1.7] text-[var(--sr-soft)]">
-                    {open.body}
-                  </pre>
-                )}
+                <ArtifactDocView doc={ARTIFACT_DOCS[open.type]} brand={openBrand} />
                 <p className="mt-4 text-[12px] leading-6 text-[var(--sr-faint)]">
                   A working document from my own engineering practice. Client
                   code and data are kept out; the reasoning and structure are
@@ -2087,9 +2102,9 @@ export function ProjectsSection() {
       <section className="border-b border-[var(--sr-hairline)]">
         <div className="mx-auto max-w-6xl px-5 py-20 lg:px-8">
           <Reveal>
-            <SectionLabel title="Side builds · 2023" />
+            <SectionLabel title="This site, and side builds" />
             <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-              Not portfolio pieces — questions I hadn’t hit at work.
+              This site, then questions I hadn’t hit at work.
             </h2>
             <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
               Personal projects, not production work — my production code is
@@ -2110,7 +2125,7 @@ export function ProjectsSection() {
                     <h3 className="mt-3 font-[family-name:var(--font-display)] text-[22px] font-medium leading-snug text-[var(--sr-text)]">
                       {p.title}
                     </h3>
-                    <p className="mt-3 text-[14px] leading-7 text-[var(--sr-soft)]">
+                    <p className="mt-3 max-w-[70ch] text-[14px] leading-7 text-[var(--sr-soft)]">
                       {p.blurb}
                     </p>
                     <p className="mt-4 border-l-2 border-[var(--sr-accent)] pl-3 text-[13px] leading-6 text-[var(--sr-muted)]">
@@ -2260,7 +2275,7 @@ function V8Hero() {
         }}
       />
       <div className="relative mx-auto max-w-6xl px-5 py-20 lg:px-8 lg:py-28">
-        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+        <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
           <div>
             <Reveal>
               <p className="font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.3em] text-[var(--sr-accent)]">
@@ -2321,25 +2336,36 @@ function V8Hero() {
 }
 
 function V8Impact() {
-  const stats = [
+  // Each tile carries its measurement id so the ⓘ can open the same basis and limit
+  // the résumé endnotes print. The section is headed "stated conservatively" and had
+  // been the one surface printing figures with no way to ask where they came from.
+  const stats: { value: string; label: string; fill?: boolean; m?: MeasurementId }[] = [
     {
       value: "0→1",
       label:
         "Vendor platform architected from an empty repo — 7 feature-sliced modules · Hobber",
       fill: true,
+      m: "modules",
     },
     {
       value: MEASUREMENTS["load-kodez"].value,
       label: "Page load time via code-splitting, lazy loading & asset optimization · Kodez",
+      m: "load-kodez",
     },
-    { value: MEASUREMENTS.coverage.value, label: "Automated test coverage — Jest + Cypress, gated in CI · Kodez" },
+    {
+      value: MEASUREMENTS.coverage.value,
+      label: "Automated test coverage — Jest + Cypress, gated in CI · Kodez",
+      m: "coverage",
+    },
     {
       value: MEASUREMENTS["dev-time"].value,
       label: "Frontend dev time after the Storybook component library landed · Kodez",
+      m: "dev-time",
     },
     {
       value: MEASUREMENTS.tables.value,
       label: "SQL tables in the schema behind the CMS I owned the frontend for",
+      m: "tables",
     },
   ];
   return (
@@ -2367,6 +2393,7 @@ function V8Impact() {
                 </p>
                 <p className="mt-4 text-[14px] leading-6 text-[var(--sr-muted)]">
                   {s.label}
+                  {s.m ? <Measured id={s.m} className="ml-1.5" /> : null}
                 </p>
               </div>
             </Reveal>
