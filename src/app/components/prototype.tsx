@@ -996,7 +996,17 @@ export function DeviceStage({ proto, brand, skinKey }: { proto: Proto; brand: st
               className="flex items-center gap-2 rounded-full border px-4 py-2 font-[family-name:var(--font-display)] text-[11.5px] font-medium uppercase tracking-[0.1em] transition"
               style={
                 on
-                  ? { borderColor: brand, color: bInk(brand), background: tint(brand, 10) }
+                  ? {
+                      borderColor: brand,
+                      // Not bInk() here. That blends toward the *light* palette ink,
+                      // correct inside the mock screen (every skin is light) and wrong
+                      // on this tab bar, which sits on the themed page — in dark mode the
+                      // selected tab measured 1.40:1 on Axinom, less legible than the
+                      // unselected ones at 7.14:1. Blending toward the theme's own text
+                      // colour keeps the brand hue and follows the theme.
+                      color: `color-mix(in srgb, ${brand}, var(--sr-text) 55%)`,
+                      background: tint(brand, 10),
+                    }
                   : { borderColor: "var(--sr-hairline)", color: "var(--sr-muted)" }
               }
             >

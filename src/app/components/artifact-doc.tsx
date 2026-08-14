@@ -37,9 +37,9 @@ export type ArtDoc = { summary: string; blocks: ArtBlock[] };
 
 const TONE: Record<string, { color: string; label: string }> = {
   insight: { color: "", label: "Insight" }, // color filled from brand at render
-  exclude: { color: "#d9522f", label: "Excluded" },
-  note: { color: "#c0872d", label: "Note" },
-  win: { color: "#b0894e", label: "Outcome" },
+  exclude: { color: "var(--sr-tone-bad)", label: "Excluded" },
+  note: { color: "var(--sr-tone-warn)", label: "Note" },
+  win: { color: "var(--sr-tone-good)", label: "Outcome" },
 };
 
 const tintP = (c: string, pct: number) => `color-mix(in srgb, ${c} ${pct}%, var(--sr-panel))`;
@@ -59,7 +59,7 @@ function Kicker({ children, color }: { children: React.ReactNode; color: string 
 function tagColor(brand: string, tag?: string) {
   const t = (tag || "").toLowerCase();
   if (t.includes("now") || t.includes("do")) return brand;
-  if (t.includes("next")) return "#c0872d";
+  if (t.includes("next")) return "var(--sr-tone-warn)";
   return "var(--sr-muted)";
 }
 
@@ -96,9 +96,9 @@ function ArtBlockView({ b, brand }: { b: ArtBlock; brand: string }) {
     case "tree": {
       return (
         <div className="rounded-xl border border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] p-4">
-          <div className="inline-flex items-center gap-2 rounded-lg px-3 py-1.5" style={{ background: "#efe7d4", color: "#7a6336" }}>
-            <span className="h-1.5 w-1.5 rounded-full" style={{ background: "#c9a45f" }} />
-            <span className="text-[12px] font-semibold" style={{ color: "#7a6336" }}>{b.root}</span>
+          <div className="inline-flex items-center gap-2 rounded-lg px-3 py-1.5" style={{ background: "var(--sr-tone-tree-bg)", color: "var(--sr-tone-tree-ink)" }}>
+            <span className="h-1.5 w-1.5 rounded-full" style={{ background: "var(--sr-tone-tree-dot)" }} />
+            <span className="text-[12px] font-semibold" style={{ color: "var(--sr-tone-tree-ink)" }}>{b.root}</span>
           </div>
           <div className="mt-2 space-y-2.5">
             {(b.branches ?? []).map((br, i) => {
@@ -140,7 +140,7 @@ function ArtBlockView({ b, brand }: { b: ArtBlock; brand: string }) {
               </div>
               <div className="mt-2 grid grid-cols-1 gap-1.5 sm:grid-cols-2">
                 {st.job ? <Line k="Job" v={st.job} c="var(--sr-muted)" /> : null}
-                {st.drop ? <Line k="Drop" v={st.drop} c="#d9522f" /> : null}
+                {st.drop ? <Line k="Drop" v={st.drop} c="var(--sr-tone-bad)" /> : null}
                 {st.signal ? <Line k="Signal" v={st.signal} c={brand} /> : null}
                 {st.ops ? <Line k="Ops" v={st.ops} c="var(--sr-muted)" /> : null}
               </div>
@@ -171,22 +171,57 @@ function ArtBlockView({ b, brand }: { b: ArtBlock; brand: string }) {
 
     case "table": {
       const cols = b.cols ?? [];
+      /* Two layouts, because a four-column grid does not survive a phone. The old
+         one hard-coded `1.6fr repeat(n-1, 0.7fr) auto` at every width, so in the
+         MIGRATION PLAN at 390px the "Order" column took 142px to hold "01" while
+         "What moved" got 62px and broke one word per line — on a document presented
+         as an engineering writing sample.
+
+         Below sm each row becomes a stacked label/value list. From sm up it is the
+         grid, now with minmax(0,…) so a long cell shrinks instead of forcing
+         overflow, and only genuinely short columns are right-aligned — a sentence
+         ragged on the left is harder to read for no benefit. */
+      const template = `minmax(0,1.6fr) repeat(${Math.max(0, cols.length - 1)}, minmax(0,0.8fr)) auto`;
+      const alignRight = (j: number) =>
+        j !== 0 && (b.rows ?? []).every((r) => (r.cells[j] ?? "").length <= 14);
       return (
         <div className="overflow-hidden rounded-xl border border-[var(--sr-hairline)]">
-          <div className="grid gap-2 border-b border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] px-3 py-2" style={{ gridTemplateColumns: `1.6fr repeat(${Math.max(0, cols.length - 1)}, 0.7fr) auto` }}>
+          <div
+            className="hidden gap-2 border-b border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] px-3 py-2 sm:grid"
+            style={{ gridTemplateColumns: template }}
+          >
             {cols.map((c, i) => (
-              <span key={i} className={`font-[family-name:var(--font-display)] text-[9.5px] font-semibold uppercase tracking-[0.08em] text-[var(--sr-muted)] ${i === 0 ? "" : "text-right"}`}>{c}</span>
+              <span key={i} className={`font-[family-name:var(--font-display)] text-[9.5px] font-semibold uppercase tracking-[0.08em] text-[var(--sr-muted)] ${alignRight(i) ? "text-right" : ""}`}>{c}</span>
             ))}
             <span />
           </div>
           {(b.rows ?? []).map((r, i) => (
-            <div key={i} className="grid items-center gap-2 border-b border-[var(--sr-hairline)] px-3 py-2 last:border-b-0" style={{ gridTemplateColumns: `1.6fr repeat(${Math.max(0, cols.length - 1)}, 0.7fr) auto` }}>
-              {r.cells.map((cell, j) => (
-                <span key={j} className={`text-[12px] ${j === 0 ? "font-medium text-[var(--sr-text)]" : "text-right text-[var(--sr-soft)]"}`}>{cell}</span>
-              ))}
-              {r.tag ? (
-                <span className="justify-self-end rounded-full px-2 py-0.5 text-[9px] font-semibold" style={{ background: tintT(tagColor(brand, r.tag), 14), color: tagColor(brand, r.tag) }}>{r.tag}</span>
-              ) : <span />}
+            <div key={i} className="border-b border-[var(--sr-hairline)] last:border-b-0">
+              {/* stacked, below sm */}
+              <dl className="flex flex-col gap-1.5 px-3 py-2.5 sm:hidden">
+                {r.cells.map((cell, j) => (
+                  <div key={j} className="flex items-baseline gap-2">
+                    <dt className="w-[5.5rem] shrink-0 font-[family-name:var(--font-display)] text-[9.5px] font-semibold uppercase tracking-[0.08em] text-[var(--sr-muted)]">
+                      {cols[j] ?? ""}
+                    </dt>
+                    <dd className={`min-w-0 text-[12.5px] ${j === 0 ? "font-medium text-[var(--sr-text)]" : "text-[var(--sr-soft)]"}`}>{cell}</dd>
+                  </div>
+                ))}
+                {r.tag ? (
+                  <div className="pt-0.5">
+                    <span className="inline-block rounded-full px-2 py-0.5 text-[9px] font-semibold" style={{ background: tintT(tagColor(brand, r.tag), 14), color: tagColor(brand, r.tag) }}>{r.tag}</span>
+                  </div>
+                ) : null}
+              </dl>
+              {/* grid, sm and up */}
+              <div className="hidden items-center gap-2 px-3 py-2 sm:grid" style={{ gridTemplateColumns: template }}>
+                {r.cells.map((cell, j) => (
+                  <span key={j} className={`min-w-0 text-[12px] ${j === 0 ? "font-medium text-[var(--sr-text)]" : "text-[var(--sr-soft)]"} ${alignRight(j) ? "text-right" : ""}`}>{cell}</span>
+                ))}
+                {r.tag ? (
+                  <span className="justify-self-end rounded-full px-2 py-0.5 text-[9px] font-semibold" style={{ background: tintT(tagColor(brand, r.tag), 14), color: tagColor(brand, r.tag) }}>{r.tag}</span>
+                ) : <span />}
+              </div>
             </div>
           ))}
         </div>
@@ -200,7 +235,7 @@ function ArtBlockView({ b, brand }: { b: ArtBlock; brand: string }) {
           <div className="space-y-2">
             {(b.checks ?? []).map((c, i) => {
               const good = c.good !== false;
-              const col = good ? brand : "#d9522f";
+              const col = good ? brand : "var(--sr-tone-bad)";
               return (
                 <div key={i} className="flex items-start gap-2.5">
                   <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[9px] font-bold text-white" style={{ background: col }}>{good ? "✓" : "✕"}</span>

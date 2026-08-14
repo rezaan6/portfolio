@@ -164,7 +164,7 @@ const EXPERIENCE: Role[] = [
       "AWS",
     ],
     points: [
-      `Architected and delivered a React CMS from 0→1 to MVP as a microarchitecture applying SOLID principles, then led ${MEASUREMENTS.releases.value} production releases on it.`,
+      `Architected and delivered a React CMS from 0→1 to MVP as domain modules with SOLID boundaries — each feature owning its components, state and API access, depending only on the shared UI layer beneath it — applying SOLID principles, then led ${MEASUREMENTS.releases.value} production releases on it.`,
       `Introduced test-driven development with Jest and Cypress end-to-end gates, driving overall automated coverage to ${MEASUREMENTS.coverage.value} with every critical path behind the merge gate in CI/CD — which is what let releases stay frequent without a regression freeze.`,
       `Built a Storybook-based reusable component library that cut frontend development time ${MEASUREMENTS["dev-time"].value.replace("−","~")} across projects.`,
       `Reduced page load time ${MEASUREMENTS["load-kodez"].value.replace("−","~")} through code-splitting, lazy loading, and asset optimization, with assets served from AWS S3.`,
@@ -218,7 +218,7 @@ const STACK: StackGroup[] = [
   {
     label: "UI, interaction & design systems",
     items: [
-      "Pixel-perfect Figma implementation",
+      "Design-system fidelity & Figma handoff",
       "Design collaboration & handoff",
       "Storybook",
       "Design tokens & theming",
@@ -587,7 +587,17 @@ export default function ResumePage() {
           data-theme="light"
         >
           <div className="flex items-center gap-3 bg-[var(--sr-panel)] px-4 py-2.5">
-            <nav className="flex items-center gap-1 overflow-x-auto">
+            {/* Below sm this was a 147px window onto 620px of links: only HOME and
+                WORK fitted and PROJECTS was clipped to a bare "P", which reads as a
+                rendering bug rather than an affordance. One back link instead — the
+                full nav returns at sm. */}
+            <Link
+              href="/"
+              className="shrink-0 rounded-full px-2.5 py-1.5 font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.1em] text-[var(--sr-muted)] transition hover:bg-[var(--sr-bg-alt)] hover:text-[var(--sr-text)] sm:hidden"
+            >
+              ← Back to site
+            </Link>
+            <nav className="hidden items-center gap-1 overflow-x-auto sm:flex">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -690,7 +700,7 @@ export default function ResumePage() {
                         const body = (
                           <>
                             {glyph ? (
-                              <span aria-hidden="true" className="mr-1.5 inline-block text-neutral-400">
+                              <span aria-hidden="true" className="mr-1.5 inline-block text-neutral-500">
                                 {glyph}
                               </span>
                             ) : null}

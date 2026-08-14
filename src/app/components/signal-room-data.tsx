@@ -238,7 +238,7 @@ const Catalogue = dynamic(() => import("./catalogue"), { loading: () => <RowSkel
 const Settings  = dynamic(() => import("./settings"))
 
 // ...but never anything on the critical path to first frame. A lazy player
-// chunk turns a 200ms stall into a "video is broken" support ticket.
+// chunk turns a stall into a "video is broken" support ticket.
 import { Player } from "./player"          // eager, always
 import { acquireLicense } from "./drm"     // eager, always
 
@@ -296,7 +296,7 @@ const messages = await import("../locales/" + locale + ".json")`,
     problem:
       `A React CMS spanning ${MEASUREMENTS.tables.value} SQL tables and enterprise integrations, sitting next to a legacy Laravel and jQuery codebase — every release risked a regression somewhere nobody was looking.`,
     move:
-      "Built the CMS 0→1 on a microarchitecture with SOLID boundaries, a Storybook component library as the shared spine, and test-driven development with Jest behind a Cypress gate on every release.",
+      "Built the CMS 0→1 as domain modules with SOLID boundaries, a Storybook component library as the shared spine, and test-driven development with Jest behind a Cypress gate on every release.",
     result:
       `${MEASUREMENTS.coverage.value} automated coverage, ${MEASUREMENTS["load-kodez"].value.replace("−","~")} faster page loads, ${MEASUREMENTS["dev-time"].value.replace("−","~")} less frontend development time, and ${MEASUREMENTS.releases.value} production releases while migrating the legacy stack incrementally.`,
     tradeoffShort: "Standardize on the system vs. per-project freedom",
@@ -309,7 +309,7 @@ const messages = await import("../locales/" + locale + ".json")`,
     context:
       `Kodez builds an enterprise CMS for service management and logistics. The client I worked across was Amtek in Australia, whose operation runs on enterprise vendor systems (Fiserv, Toshiba, NTT DATA, Park Assist and City), so the CMS had to integrate cleanly with all of them. The surface is large — database operations spanning ${MEASUREMENTS.tables.value} SQL tables — and it sat alongside a legacy Laravel and jQuery application that still had users. Meanwhile the startup itself grew from 10 to 60+ people. Two forces pull against each other in that setup: the codebase needs to change constantly for clients, and every change is a chance to break something that someone is paid to rely on.`,
     decision:
-      `I architected and delivered the CMS from 0→1 to MVP as a React microarchitecture applying SOLID principles, then made two investments that most teams defer. First, a Storybook-based reusable component library — the shared spine, so a new screen is composed rather than authored. Second, Test-Driven Development with Cypress, taken seriously enough to reach ${MEASUREMENTS.coverage.value} automated coverage and wired into CI/CD, so a release is gated by evidence rather than by whoever remembered to click through it. Redux handled state flow, TanStack React Query handled fetching, caching, and synchronization, and Node.js BFF layers cut API latency.`,
+      `I architected and delivered the CMS from 0→1 to MVP as React domain modules with SOLID boundaries, applying SOLID principles, then made two investments that most teams defer. First, a Storybook-based reusable component library — the shared spine, so a new screen is composed rather than authored. Second, Test-Driven Development with Cypress, taken seriously enough to reach ${MEASUREMENTS.coverage.value} automated coverage and wired into CI/CD, so a release is gated by evidence rather than by whoever remembered to click through it. Redux handled state flow, TanStack React Query handled fetching, caching, and synchronization, and Node.js BFF layers cut API latency.`,
     tradeoff:
       `Standardizing on the system vs. per-project freedom. A shared library and an enforced test gate slow down the first version of any given screen — engineers occasionally wanted a bespoke component and got a slightly more general one instead. I made that trade deliberately: at ${MEASUREMENTS.releases.value} releases and a company scaling past 60, consistency is what keeps velocity from decaying. The migration was the same call in a different costume — I moved the legacy Laravel and jQuery application to React and ExpressJS incrementally rather than in a big-bang rewrite, accepting a period of two coexisting stacks to avoid freezing client delivery.`,
     signal:

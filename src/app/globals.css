@@ -122,6 +122,17 @@ section[id] {
   --sr-track: #eef0f6;
   --sr-shadow: 0 1px 2px rgba(20, 21, 26, 0.05), 0 12px 32px rgba(20, 21, 26, 0.08);
 
+  /* Artifact-document tones. These were six inline hexes in artifact-doc.tsx —
+     which this site's own design-system panel calls a review comment — and being
+     literal they rendered identically in dark mode, so the cream callout stayed
+     cream on a near-black page. */
+  --sr-tone-warn: #c0872d;
+  --sr-tone-bad: #d9522f;
+  --sr-tone-good: #b0894e;
+  --sr-tone-tree-bg: #efe7d4;
+  --sr-tone-tree-ink: #7a6336;
+  --sr-tone-tree-dot: #c9a45f;
+
   background: var(--sr-bg);
   color: var(--sr-text);
   font-family: var(--font-body), Arial, Helvetica, sans-serif;
@@ -144,6 +155,12 @@ section[id] {
   --sr-scrim: rgba(0, 0, 0, 0.58);
   --sr-track: #22262f;
   --sr-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 12px 32px rgba(0, 0, 0, 0.5);
+  --sr-tone-warn: #e0a94f;
+  --sr-tone-bad: #f07a56;
+  --sr-tone-good: #d0a76a;
+  --sr-tone-tree-bg: #2a2519;
+  --sr-tone-tree-ink: #e3cf9f;
+  --sr-tone-tree-dot: #c9a45f;
 }
 
 /* Skip-to-content link — off-screen until keyboard focus (WCAG 2.4.1). */

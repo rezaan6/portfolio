@@ -53,6 +53,42 @@ import { ARTIFACT_DOCS } from "./artifact-docs";
 
 type Theme = "dark" | "light";
 
+/* Background scroll lock for the two modals.
+ *
+ * Both declare aria-modal="true" but nothing stopped the page behind them from
+ * scrolling: with a dialog open, window.scrollTo(0, 1200) moved the background.
+ * On a phone that reads as the page sliding away under your thumb while a panel
+ * is open.
+ *
+ * Locking is `position: fixed` on the body with the scroll offset preserved,
+ * rather than `overflow: hidden` — iOS Safari ignores overflow:hidden on body,
+ * and this restores the exact position on close instead of jumping to the top. */
+function useScrollLock(locked: boolean) {
+  useEffect(() => {
+    if (!locked) return;
+    const y = window.scrollY;
+    const { body } = document;
+    const prev = {
+      position: body.style.position,
+      top: body.style.top,
+      width: body.style.width,
+      overflowY: body.style.overflowY,
+    };
+    body.style.position = "fixed";
+    body.style.top = `-${y}px`;
+    body.style.width = "100%";
+    // Keep the scrollbar gutter so the layout does not shift by its width.
+    body.style.overflowY = "scroll";
+    return () => {
+      body.style.position = prev.position;
+      body.style.top = prev.top;
+      body.style.width = prev.width;
+      body.style.overflowY = prev.overflowY;
+      window.scrollTo(0, y);
+    };
+  }, [locked]);
+}
+
 function useTheme(): [Theme, boolean, (fade?: boolean) => void] {
   const [theme, setTheme] = useState<Theme>("light");
   // `theming` is true only for the ~400ms around an actual toggle; the CSS
@@ -165,6 +201,7 @@ function CommandPalette({
 }) {
   const [q, setQ] = useState("");
   const router = useRouter();
+  useScrollLock(open);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -630,8 +667,8 @@ export function PageIntro({
   subtitle?: string;
 }) {
   return (
-    <section className="px-4 pt-6 sm:px-5 lg:px-8">
-      <div className="mx-auto max-w-6xl">
+<section className="pt-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-5 lg:px-8">
         <div className="relative flex min-h-[430px] flex-col justify-center overflow-hidden rounded-[1.8rem] border border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] px-6 py-14 sm:px-12 sm:py-16 lg:px-14">
           {/* Decorative index number — spans the full section height on the
               right, blended into the background as a soft overlay (SVG so the
@@ -1171,6 +1208,7 @@ export function MethodSection() {
 export function ArtifactsSection() {
   const reduce = useReducedMotion();
   const [open, setOpen] = useState<(typeof artifacts)[number] | null>(null);
+  useScrollLock(!!open);
   const triggerRef = useRef<HTMLElement | null>(null);
 
   // Close the dialog and return focus to the button that opened it (a11y).
@@ -1208,7 +1246,14 @@ export function ArtifactsSection() {
             // below its content, so this card rendered wider than its 350px track
             // at 390px and pushed the whole page sideways.
             return (
-              <Reveal key={artifact.title} delay={0.03 * index} className="min-w-0">
+              <Reveal
+                key={artifact.title}
+                delay={0.03 * index}
+                // Seven cards in a three-column grid leaves the last one alone
+                // with two empty slots, on the shortest page here. Spanning two
+                // columns makes the final row read as a close, not a gap.
+                className={`min-w-0 ${index === artifacts.length - 1 ? "lg:col-span-2" : ""}`}
+              >
                 <div className="relative flex min-w-0 h-full flex-col overflow-hidden rounded-2xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)] p-6 transition hover:border-[var(--sr-accent)]">
                   {/* Every card gets a top accent — brand colour for a company
                       artifact, indigo for a general practice one. */}
@@ -1291,7 +1336,7 @@ export function ArtifactsSection() {
               exit={reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.98 }}
               transition={{ type: "spring", stiffness: 240, damping: 26 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative flex max-h-[82vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)] shadow-2xl"
+              className="relative flex max-h-[82vh] max-h-[82dvh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)] shadow-2xl"
             >
               <span
                 aria-hidden="true"
@@ -1335,7 +1380,7 @@ export function ArtifactsSection() {
                   of duplicate plain text shipped in this chunk on all twelve routes.
                   Worse than the weight: it was a second copy of every document, and
                   several corrections this week had to be made twice because of it. */}
-              <div className="overflow-auto p-5">
+              <div className="overflow-auto overscroll-contain p-5">
                 <ArtifactDocView doc={ARTIFACT_DOCS[open.type]} brand={openBrand} />
                 <p className="mt-4 text-[12px] leading-6 text-[var(--sr-faint)]">
                   A working document from my own engineering practice. Client
@@ -1355,8 +1400,8 @@ export function ArtifactsSection() {
 
 export function AboutHero() {
   return (
-    <section className="px-4 pt-6 sm:px-5 lg:px-8">
-      <div className="mx-auto max-w-6xl">
+<section className="pt-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-5 lg:px-8">
         <div className="relative flex min-h-[430px] flex-col justify-center overflow-hidden rounded-[1.8rem] border border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] px-6 py-12 sm:px-12 sm:py-14 lg:px-14">
           {/* Decorative index number — full-height watermark, matching the other
               pages (SVG so the faint overlay doesn't trip the contrast checker). */}
@@ -1742,10 +1787,10 @@ export function ContactSection() {
             relocation, onsite or remote.
           </h2>
           <p className="mt-6 max-w-2xl text-[17px] leading-8 text-[var(--sr-muted)]">
-            My inbox is always open. If you&apos;re hiring an engineer who
-            architects for the codebase you&apos;ll have in two years, treats
-            performance and accessibility as features, and ships behind a test
-            gate — let&apos;s talk.
+            If you&apos;re hiring an engineer who architects for the codebase
+            you&apos;ll have in two years, treats performance and accessibility
+            as features, and ships behind a test gate, those are the criteria I
+            work to. Get in touch.
           </p>
         </Reveal>
 
@@ -1951,7 +1996,7 @@ export function ToolsSection() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.98 }}
               transition={{ type: "spring", stiffness: 260, damping: 26 }}
-              className="relative flex max-h-[82vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)] shadow-2xl"
+              className="relative flex max-h-[82vh] max-h-[82dvh] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)] shadow-2xl"
             >
               <div className="flex items-center justify-between gap-4 border-b border-[var(--sr-hairline)] p-5">
                 <div className="flex items-center gap-3">
@@ -1986,7 +2031,7 @@ export function ToolsSection() {
                   </svg>
                 </button>
               </div>
-              <div className="overflow-auto p-5">
+              <div className="overflow-auto overscroll-contain p-5">
                 <p className="text-[14.5px] leading-7 text-[var(--sr-soft)]">
                   {openTool.howIUse}
                 </p>
@@ -2098,7 +2143,7 @@ function TechChips({ tech }: { tech: string[] }) {
 export function ProjectsSection() {
   return (
     <>
-      {/* Featured — the five builds with a real screenshot, alternating sides. */}
+      {/* Featured — the builds with a real screenshot, alternating sides. */}
       <section className="border-b border-[var(--sr-hairline)]">
         <div className="mx-auto max-w-6xl px-5 py-20 lg:px-8">
           <Reveal>
@@ -2593,8 +2638,8 @@ export function CaseAccordion() {
 
 function V8Work() {
   return (
-    <section className="border-y border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] px-5 py-20 lg:px-8">
-      <div className="mx-auto max-w-6xl">
+<section className="border-y border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] py-20">
+      <div className="mx-auto max-w-6xl px-5 lg:px-8">
         <Reveal>
           <SectionLabel title="Selected work" />
           <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
@@ -2658,7 +2703,7 @@ function V8Focus() {
   const items = [
     {
       t: "Frontend architecture",
-      d: "Feature-sliced structures with SOLID boundaries, so a codebase stays changeable after the third team joins it. Greenfield platforms and microarchitecture CMS builds.",
+      d: "Feature-sliced structures with SOLID boundaries, so a codebase stays changeable after the third team joins it. Greenfield platforms, and CMS builds organised as domain modules.",
       companies: ["Hobber", "Kodez"],
       outcome: "Two platforms architected 0→1",
     },
@@ -2694,8 +2739,8 @@ function V8Focus() {
     },
   ];
   return (
-    <section className="border-t border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] px-5 py-20 lg:px-8">
-      <div className="mx-auto max-w-6xl">
+<section className="border-t border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] py-20">
+      <div className="mx-auto max-w-6xl px-5 lg:px-8">
         <Reveal>
           <SectionLabel title="Where I fit" />
           <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">

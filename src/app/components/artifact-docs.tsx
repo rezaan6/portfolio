@@ -290,7 +290,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         ordered: true,
         items: [
           "Bundle optimization — analyse first, cut second. Remove what ships but is unused; split what is needed but not immediately.",
-          "Lazy loading — defer everything below the fold and every route the user hasn't asked for. Playback surfaces load first; catalogue browsing can wait 200ms.",
+          "Lazy loading — defer everything below the fold and every route the user hasn't asked for. Playback surfaces load first; catalogue browsing can wait, the playback path cannot.",
           "Caching — cache what doesn't change per request. Metadata from the Mosaic APIs qualifies; entitlement decisions do not.",
         ],
       },
