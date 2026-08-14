@@ -64,9 +64,9 @@ export const MEASUREMENTS = {
     value: "~90%",
     kind: "reading",
     basis:
-      "My own count of how many of the flows we had called critical — authentication and permissions, the consequential writes, and every enterprise integration surface — had a Cypress spec in the merge gate. Roughly nine in ten of that list.",
+      "The overall figure on a coverage report combining the Jest unit runs with the instrumented Cypress end-to-end runs on the Kodez CMS, gated in CI.",
     limit:
-      "No tool produced this figure; it is my reading of a list, not a coverage report, and it is not whole-repo line coverage. It deliberately excludes the parts of the codebase that were cheaper to cover lower down the pyramid, and it describes the React application — routes still on the legacy stack were not behind this gate until they were migrated.",
+      "The report's overall number, not one column — statement and branch coverage are different figures and branch is normally the lower of the two, so read this as the headline rather than a claim about every column. It describes the React application: routes still on the legacy stack were not behind this gate until they were migrated. The claim behind the number, and the one I would defend first, is that every path we had called critical had a spec in the merge gate.",
   },
   releases: {
     value: "40+",

@@ -292,7 +292,7 @@ const messages = await import("../locales/" + locale + ".json")`,
     logo: "/logos/kodez.png",
     metric: `${MEASUREMENTS["load-kodez"].value} load · ${MEASUREMENTS["dev-time"].value} dev time · ${MEASUREMENTS.coverage.value} coverage`,
     headline:
-      `A CMS built to be changed: a Storybook design system, ${MEASUREMENTS.coverage.value} Cypress coverage, and ${MEASUREMENTS.releases.value} releases across three years, never a regression freeze.`,
+      `A CMS built to be changed: a Storybook design system, ${MEASUREMENTS.coverage.value} test coverage, and ${MEASUREMENTS.releases.value} releases across three years, never a regression freeze.`,
     problem:
       `A React CMS spanning ${MEASUREMENTS.tables.value} SQL tables and enterprise integrations, sitting next to a legacy Laravel and jQuery codebase — every release risked a regression somewhere nobody was looking.`,
     move:
@@ -315,7 +315,7 @@ const messages = await import("../locales/" + locale + ".json")`,
     signal:
       `Three numbers, all of them things I could show. Automated test coverage — ${MEASUREMENTS.coverage.value}, running in CI/CD, which is what made frequent releases safe. Page load time, which came down ${MEASUREMENTS["load-kodez"].value.replace("−","~")} through code-splitting, lazy loading, and asset optimization, with AWS S3 serving assets. And frontend development time, which dropped ${MEASUREMENTS["dev-time"].value.replace("−","~")} once the Storybook library was the default way to build. Cross-browser behavior was validated on BrowserStack, and API contracts stayed documented in Swagger, with sprint work tracked in JIRA and Confluence.`,
     outcome:
-      `${MEASUREMENTS.releases.value} production releases delivered — new features, defect fixes, and database optimization across ${MEASUREMENTS.tables.value} SQL tables. Page loads ${MEASUREMENTS["load-kodez"].value.replace("−","~")} faster, frontend development ${MEASUREMENTS["dev-time"].value.replace("−","~")} faster, ${MEASUREMENTS.coverage.value} automated Cypress coverage, and a legacy Laravel and jQuery application migrated to React and ExpressJS without a delivery freeze. REST integrations against the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City) stayed interoperable throughout.`,
+      `${MEASUREMENTS.releases.value} production releases delivered — new features, defect fixes, and database optimization across ${MEASUREMENTS.tables.value} SQL tables. Page loads ${MEASUREMENTS["load-kodez"].value.replace("−","~")} faster, frontend development ${MEASUREMENTS["dev-time"].value.replace("−","~")} faster, ${MEASUREMENTS.coverage.value} automated test coverage, and a legacy Laravel and jQuery application migrated to React and ExpressJS without a delivery freeze. REST integrations against the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City) stayed interoperable throughout.`,
     detail:
       `What I'd do differently: I sold the component library on consistency when I should have sold it on speed. Engineers adopt a design system when it visibly saves them an afternoon, not when it's described as the right thing to do — I'd publish the before/after build time for a real screen in week one and let the number do the arguing. The lesson I carry: release cadence isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. TDD and Storybook weren't overhead on the ${MEASUREMENTS.releases.value} releases; they are what made shipping on that cadence feel safe.`,
     code: {
@@ -784,6 +784,81 @@ Scheduling, payouts, and discount logic are financially consequential. A stale r
 a payout screen is not a cosmetic bug, so the correctness rule is: when server and
 client disagree, the server wins and the UI says so.`,
   },  {
+    type: "INCIDENT REVIEW",
+    company: "Axinom",
+    title: "Playback stopped part-way through long recordings",
+    blurb:
+      "A licence acquired once, at play time, and outlived by the content — a failure that could not appear on any asset short enough to sit through in development. What broke, how a viewer came to be the detector, and the gap I left open.",
+    body: `INCIDENT REVIEW — licence expiry mid-playback, Axinom
+
+OWNER       Rezaan Riyaz — Senior Frontend Engineer (Lead)
+DETECTED BY A viewer, via the client's support team — there was no client-side
+            error reporting to detect it for us
+STATUS      Closed, with one gap deliberately left open (stated at the end)
+
+WHAT HAPPENED
+Protected playback halted part-way through long recordings. A licence was acquired
+once, when the viewer pressed play, and on assets whose runtime exceeded that
+licence's own validity window the decryption keys expired mid-stream. The video
+stopped. Short assets were unaffected, which is why every build looked healthy:
+nothing played during development or QA ran long enough to cross the boundary.
+
+WHY IT TOOK A VIEWER TO FIND IT
+Two things, and only one is about tooling. There was no client-side error reporting
+on this product, so nobody was watching — a viewer told the client before the client
+told us. But the player did report it: Shaka raises an expiry error and it fired.
+The gap was that the error had nowhere to go. It reached a browser console no
+operator was reading, and the ticket that reached me said the video stopped working.
+A signal nobody routes anywhere is not a signal.
+
+CONTAINMENT, WHICH FIXED NOTHING
+01 · Licence validity for the affected titles was raised on the licence side, so
+     live viewers stopped losing sessions. That moved the boundary; it did not
+     remove it.
+02 · Support was given something accurate to say — long content only, the recording
+     is fine, reload and resume — instead of "the video is broken".
+03 · I pinned a deliberately short-lived licence in a non-production environment, so
+     the boundary could be crossed in a browser on demand rather than by watching a
+     full lecture. That is what made the real fix testable.
+
+ROOT CAUSE
+Licence acquisition was written as a one-shot step on the path to first frame.
+Nothing in the client owned what happens when a licence expires before the asset
+ends. The invariant I had not written down is the one that mattered: a licence
+shorter than the content it protects is a supported case, not an accident.
+
+THE STRUCTURAL FIX
+01 · Expiry became state the player owns rather than an event it reacts to — the DRM
+     module reads the expiration it is handed by the key session and acts before the
+     keys die, not after playback has stopped.
+02 · Renewal is a reload at the current position with a freshly minted entitlement
+     token, not an in-place licence swap. There is no API to inject a new licence
+     into a live session, so this is the honest mechanism, and it costs the viewer a
+     brief visible stall. A stall you can explain beats a stop you cannot.
+03 · The short-lived licence became a standing check, so the renewal path is crossed
+     every time it runs and a broken renewal fails in a check rather than in
+     somebody's lecture.
+04 · The expiry error was mapped to a distinct state — access expired, as against
+     cannot play on this device, as against network — so the next ticket arrives
+     carrying something to act on.
+
+WHAT I WOULD NOT DO AGAIN
+- Treat an acquisition on the path to first frame as a one-time step. Anything with
+  a validity window needs an owner for the moment it runs out.
+- Test a duration-dependent failure by making the test longer. Shrink the window
+  instead: the licence, not the lecture.
+- Leave a player error going only to the console. That is detection that exists and
+  is thrown away.
+
+THE GAP I LEFT OPEN
+The check runs on real browsers as a release step, not as a merge gate, because a
+real content decryption module does not exist in headless CI — and by my own
+standard a rule with no gate is a preference. I also did not rule out every
+adjacent cause before shipping; I could reproduce expiry and I fixed expiry. And
+the detector is still a person. That one is mine: I chose not to build client-side
+failure reporting on a product where a playback failure is the most expensive thing
+there is to reproduce. This is the incident that makes the argument for it.`,
+  },  {
     type: "PERF BUDGET",
     company: "Axinom",
     title: `Page-load performance — how the ${MEASUREMENTS["load-axinom"].value.replace("−","~")} came out`,
@@ -841,7 +916,7 @@ On an international product, the aggregate is the least informative number avail
     body: `TEST STRATEGY — Kodez CMS
 
 OWNER   Rezaan Riyaz — Senior Frontend Engineer
-RESULT  ${MEASUREMENTS.coverage.value} flow coverage on critical paths · ${MEASUREMENTS.releases.value} production releases
+RESULT  ${MEASUREMENTS.coverage.value} test coverage, Jest + Cypress merged · ${MEASUREMENTS.releases.value} production releases
 
 THE PREMISE
 Release throughput is not a function of moving fast. It is a function of how cheaply
@@ -953,7 +1028,7 @@ export const timeline = [
     role: "Senior Frontend Engineer",
     place: "HQ Melbourne, Australia",
     scope:
-      `Built an enterprise CMS 0→1 and the standards a company scaling 10 → 60+ built against — Storybook system, ${MEASUREMENTS.coverage.value} Cypress coverage, ${MEASUREMENTS.releases.value} releases.`,
+      `Built an enterprise CMS 0→1 and the standards a company scaling 10 → 60+ built against — Storybook system, ${MEASUREMENTS.coverage.value} test coverage, ${MEASUREMENTS.releases.value} releases.`,
   },
   {
     year: "2018",
@@ -980,7 +1055,7 @@ export const principles: { label: string; body: string }[] = [
   },
   {
     label: "Tests are how you ship fast",
-    body: `Release throughput isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. ${MEASUREMENTS.coverage.value} Cypress coverage in CI wasn't overhead on ${MEASUREMENTS.releases.value} releases — it's why there were ${MEASUREMENTS.releases.value} releases.`,
+    body: `Release throughput isn't a function of moving fast, it's a function of how cheaply you can prove you didn't break anything. ${MEASUREMENTS.coverage.value} test coverage in CI wasn't overhead on ${MEASUREMENTS.releases.value} releases — it's why there were ${MEASUREMENTS.releases.value} releases.`,
   },
 ];
 
@@ -1225,7 +1300,7 @@ it("keeps a service unbookable when price is missing", () => {
     group: "Testing & quality",
     use: "End-to-end & regression testing",
     howIUse:
-      `Cypress is what made frequent releases safe at Kodez — I introduced TDD with it and drove automated coverage ${MEASUREMENTS.coverage.value} on the critical paths, wired into CI/CD as a merge gate. I'm selective about what earns an E2E test: authentication and permissions, anything that writes to the database, every enterprise integration surface, and any path a defect has already been filed against. Everything else is cheaper to cover lower down the pyramid.`,
+      `Cypress is what made frequent releases safe at Kodez — I introduced test-first practice with Jest alongside it, and the merged report reached ${MEASUREMENTS.coverage.value} overall, wired into CI/CD as a merge gate. I'm selective about what earns an E2E test: authentication and permissions, anything that writes to the database, every enterprise integration surface, and any path a defect has already been filed against. Everything else is cheaper to cover lower down the pyramid.`,
     sample: `The gate, not the suite size
 Blocking specs: auth · permissions · writes · client integrations
 Red pipeline = no merge. No "we'll fix it after."

@@ -410,6 +410,85 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
     ],
   },
 
+  "INCIDENT REVIEW": {
+    summary:
+      "Protected playback stopped part-way through long assets on the Axinom media build. The licence was acquired once, at play time, and outlived by the content — a failure that could not appear on any asset short enough for someone to sit through during development.",
+    blocks: [
+      {
+        type: "fields",
+        fields: [
+          { label: "Doc", value: "Incident review — licence expiry mid-playback" },
+          { label: "Context", value: "Axinom · DRM-protected long-form content · global media clients" },
+          { label: "Detected by", value: "A viewer, via the client's support team. There was no client-side error reporting to detect it for us." },
+          { label: "Status", value: "Closed · one gap deliberately left open, stated below" },
+          { label: "Stack", value: "React · Shaka Player · Mosaic Entitlement & DRM services" },
+        ],
+      },
+      {
+        type: "section",
+        n: "01",
+        title: "What happened",
+        text: "Playback halted part-way through long recordings. A licence was acquired once, when the viewer pressed play, and on assets whose runtime exceeded that licence's own validity window the decryption keys expired mid-stream. The video stopped. Short assets were unaffected, which is why every build looked healthy: nothing anyone played during development or QA ran long enough to cross the boundary.",
+      },
+      {
+        type: "section",
+        n: "02",
+        title: "Why it took a viewer to find it",
+        text: "Two things, and only one of them is about tooling. There was no client-side error reporting on this product, so nobody was watching for a failure — a viewer was the detector, and they told the client before the client told us. But the player did report it: Shaka raises an expiry error, and it fired. The gap was that the error had nowhere to go. It went to a browser console no operator was reading, and the ticket that reached me said the video stopped working. A signal nobody routes anywhere is not a signal.",
+      },
+      {
+        type: "steps",
+        title: "Containment, which fixed nothing",
+        ordered: true,
+        items: [
+          "The licence validity for the affected titles was raised on the licence side, so live viewers stopped losing sessions mid-recording. This moved the boundary further out; it did not remove it.",
+          "Support was given something accurate to say — long content only, the recording is fine, reload and resume — instead of \"the video is broken\".",
+          "I pinned a deliberately short-lived licence in a non-production environment, so the boundary could be crossed in a browser on demand rather than by watching a full lecture. That is what made the real fix testable.",
+        ],
+      },
+      {
+        type: "section",
+        title: "Root cause",
+        text: "Licence acquisition was written as a one-shot step on the path to first frame. Nothing in the client owned the question of what happens when a licence expires before the asset ends, so the keys died and playback stopped. The invariant I had not written down is the one that mattered: a licence shorter than the content it protects is a supported case, not an accident.",
+      },
+      {
+        type: "steps",
+        title: "The structural fix",
+        ordered: true,
+        items: [
+          "Expiry became state the player owns rather than an event it reacts to. The DRM module reads the expiration it is handed by the key session and acts before the keys die, not after playback has already stopped.",
+          "Renewal is a reload at the current position with a freshly minted entitlement token — not an in-place licence swap. There is no API to inject a new licence into a live session, so this is the honest mechanism, and it costs the viewer a brief visible stall. A stall you can explain beats a stop you cannot.",
+          "The short-lived licence became a standing check, so the renewal path is crossed every time it runs and a broken renewal fails in a check rather than in somebody's lecture.",
+          "The expiry error was mapped to a distinct state — access expired, as against cannot play on this device, as against network — so the next ticket arrives carrying something to act on.",
+        ],
+      },
+      {
+        type: "checklist",
+        title: "What I would not do again",
+        checks: [
+          {
+            text: "Treat an acquisition on the path to first frame as a one-time step. Anything with a validity window needs an owner for the moment it runs out.",
+            good: false,
+          },
+          {
+            text: "Test a duration-dependent failure by making the test longer. Shrink the window instead — the licence, not the lecture.",
+            good: false,
+          },
+          {
+            text: "Leave a player error going only to the console. It is detection that exists and is thrown away.",
+            good: false,
+          },
+        ],
+      },
+      {
+        type: "callout",
+        tone: "insight",
+        title: "The gap I left open",
+        text: "The check runs on real browsers as a release step, not as a merge gate, because a real content decryption module does not exist in headless CI — and by my own standard a rule with no gate is a preference. I also did not rule out every adjacent cause before shipping the fix; I could reproduce expiry and I fixed expiry. And the detector is still a person. That one is mine: I chose not to build client-side failure reporting on a product where a playback failure is the most expensive thing there is to reproduce. This is the incident that makes the argument for it.",
+      },
+    ],
+  },
+
   "MIGRATION PLAN": {
     summary:
       "How a legacy PHP/jQuery application moved to React and ExpressJS incrementally at Kodez — the strangler approach, the ordering, and the one rule that kept two coexisting stacks from doubling the work. The legacy stack was retired without a delivery freeze.",

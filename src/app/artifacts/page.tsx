@@ -15,7 +15,7 @@ export default function ArtifactsPage() {
         num="06"
         label="Artifacts"
         title="The documents behind the decisions."
-        subtitle="Six documents — the ones I'd actually hand a new engineer on day one. Open any card to read it in full. Client code and data are kept out."
+        subtitle="Seven documents — the ones I'd actually hand a new engineer on day one. Open any card to read it in full. Client code and data are kept out."
       />
       <ArtifactsSection />
     </>

@@ -1450,7 +1450,7 @@ export function AboutStats() {
   }[] = [
     { value: yearsOfExperience(), prefix: "", suffix: "+", label: "Years of hands-on React in production", m: "experience" },
     { value: digits("releases"), prefix: "", suffix: "+", label: "Production releases delivered at Kodez", m: "releases" },
-    { value: digits("coverage"), prefix: "~", suffix: "%", label: "Automated Cypress coverage on critical paths", m: "coverage" },
+    { value: digits("coverage"), prefix: "~", suffix: "%", label: "Automated test coverage, Jest + Cypress", m: "coverage" },
     { value: digits("tables"), prefix: "", suffix: "+", label: "SQL tables in the Kodez CMS schema", m: "tables" },
   ];
   return (
@@ -2332,7 +2332,7 @@ function V8Impact() {
       value: MEASUREMENTS["load-kodez"].value,
       label: "Page load time via code-splitting, lazy loading & asset optimization · Kodez",
     },
-    { value: MEASUREMENTS.coverage.value, label: "Automated Cypress coverage on critical paths, gated in CI · Kodez" },
+    { value: MEASUREMENTS.coverage.value, label: "Automated test coverage — Jest + Cypress, gated in CI · Kodez" },
     {
       value: MEASUREMENTS["dev-time"].value,
       label: "Frontend dev time after the Storybook component library landed · Kodez",

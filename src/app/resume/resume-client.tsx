@@ -72,7 +72,7 @@ const POSITIONING = () =>
 const METRICS: { label: string; m: MeasurementId }[] = [
   { label: "platforms architected 0→1 — Hobber, Kodez", m: "platforms" },
   { label: "page load time, Kodez CMS", m: "load-kodez" },
-  { label: "flow coverage, critical paths", m: "coverage" },
+  { label: "test coverage, Jest + Cypress", m: "coverage" },
   { label: "production releases shipped", m: "releases" },
 ];
 
