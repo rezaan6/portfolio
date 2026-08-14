@@ -51,14 +51,17 @@ const CONTACT_HREF: Record<string, string> = {
   "github.com/rezaan6": "https://github.com/rezaan6",
 };
 
-// Text glyphs rather than icon files: this block is ~10px, it prints, and it goes
-// through a plain-text export — an SVG sprite would cost a request and add nothing
-// legible at that size.
+// Short words rather than icon files or pictographs. An SVG sprite would cost a
+// request and add nothing legible at ~10px, and the symbol characters this used to
+// use (☏ ✉ ⌘) are not in the fonts the PDF renderer has — they came out as empty
+// boxes in the generated file, because the glyph was silently coming from a macOS
+// system font that the build container does not have. Words also parse: an ATS
+// reading "Tel +971…" gets a label, where "☏ +971…" gets a character it will drop.
 const CONTACT_GLYPH: Record<string, string> = {
-  "+971-56-618-4561": "☏",
-  "rezaan6@gmail.com": "✉",
+  "+971-56-618-4561": "Tel",
+  "rezaan6@gmail.com": "Email",
   "linkedin.com/in/rezaan6": "in",
-  "github.com/rezaan6": "⌘",
+  "github.com/rezaan6": "GitHub",
 };
 
 const POSITIONING = () =>
