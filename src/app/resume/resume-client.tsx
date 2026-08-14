@@ -51,14 +51,17 @@ const CONTACT_HREF: Record<string, string> = {
   "github.com/rezaan6": "https://github.com/rezaan6",
 };
 
-// Text glyphs rather than icon files: this block is ~10px, it prints, and it goes
-// through a plain-text export — an SVG sprite would cost a request and add nothing
-// legible at that size.
+// Short words rather than icon files or pictographs. An SVG sprite would cost a
+// request and add nothing legible at ~10px, and the symbol characters this used to
+// use (☏ ✉ ⌘) are not in the fonts the PDF renderer has — they came out as empty
+// boxes in the generated file, because the glyph was silently coming from a macOS
+// system font that the build container does not have. Words also parse: an ATS
+// reading "Tel +971…" gets a label, where "☏ +971…" gets a character it will drop.
 const CONTACT_GLYPH: Record<string, string> = {
-  "+971-56-618-4561": "☏",
-  "rezaan6@gmail.com": "✉",
+  "+971-56-618-4561": "Tel",
+  "rezaan6@gmail.com": "Email",
   "linkedin.com/in/rezaan6": "in",
-  "github.com/rezaan6": "⌘",
+  "github.com/rezaan6": "GitHub",
 };
 
 const POSITIONING = () =>
@@ -104,7 +107,7 @@ const EXPERIENCE: Role[] = [
       "Google Maps API",
     ],
     points: [
-      "VERCELPROBE Sole frontend engineer on the Hobber vendor platform — the frontend is mine end to end, architected from an empty repository in React and TypeScript on a modular, feature-sliced structure.",
+      "Sole frontend engineer on the Hobber vendor platform — the frontend is mine end to end, architected from an empty repository in React and TypeScript on a modular, feature-sliced structure.",
       "Shipped seven core platform modules — authentication, vendor accounts, dashboards, scheduling, payouts, integrations, and team access — as independent slices over one shared component layer built on shadcn/ui and Radix primitives.",
       "Built the vendor workflows on top: activity management, booking flows, stock scheduling, discount logic, and content management.",
       "Set the architectural boundaries the codebase is held to, so a new domain is a new folder rather than a refactor, with cross-slice contracts enforced by TypeScript at build time.",

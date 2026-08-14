@@ -30,7 +30,7 @@
 
 import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createServer } from "node:net";
 import path from "node:path";
 import process from "node:process";
@@ -148,6 +148,44 @@ async function main() {
     // alone captures an empty page. Wait for the document itself, then for
     // webfonts — capturing mid-swap bakes fallback metrics into the PDF.
     await page.waitForSelector(".resume-page", { timeout: 30_000 });
+
+    /* The arrow problem, and why the font is embedded here rather than shipped.
+     *
+     * "0→1" appears throughout the résumé. U+2192 is not in the next/font
+     * Google subsets the site loads, so the browser was quietly satisfying it
+     * from a system font — which macOS has and the build container does not. The
+     * first Vercel-built PDF rendered every arrow as an empty box, and nothing
+     * failed: the page was correct, the download was not.
+     *
+     * Injecting the font at render time rather than adding it to public/ keeps a
+     * 180KB file off every visitor's page load — no browser needs it, only this
+     * renderer does — and it makes the two environments produce the same bytes
+     * instead of relying on whatever each host happens to have installed. Only
+     * the glyphs actually used get embedded in the PDF. */
+    const symbols = await readFile(path.join(import.meta.dirname, "fonts", "noto-symbols.ttf"));
+    await page.evaluate(
+      (b64) => {
+        const style = document.createElement("style");
+        style.textContent = `@font-face{font-family:'SR Symbols';src:url(data:font/ttf;base64,${b64}) format('truetype');font-display:block}`;
+        document.head.appendChild(style);
+        // Append it to the existing stacks rather than overriding them: the real
+        // families must still win for every glyph they cover, so this only ever
+        // catches what would otherwise be a missing-glyph box. Read the computed
+        // values first because they are next/font's generated family names.
+        const cs = getComputedStyle(document.documentElement);
+        const vars = ["--font-display", "--font-heading", "--font-mono", "--font-body", "--font-sans"];
+        const decls = vars
+          .map((v) => [v, cs.getPropertyValue(v).trim()])
+          .filter(([, val]) => val)
+          .map(([v, val]) => `${v}: ${val}, 'SR Symbols';`)
+          .join("");
+        const patch = document.createElement("style");
+        patch.textContent = `:root{${decls}}body,.resume-page{font-family:${cs.fontFamily}, 'SR Symbols'}`;
+        document.head.appendChild(patch);
+      },
+      symbols.toString("base64"),
+    );
+
     await page.evaluate(() => document.fonts.ready);
     await page.evaluate(() => document.documentElement.classList.add("pdf-export"));
     await new Promise((r) => setTimeout(r, 350));

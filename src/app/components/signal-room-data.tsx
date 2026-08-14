@@ -1106,7 +1106,7 @@ export const tools: Tool[] = [
       `React is where most of my ${yearsPhrase()} live — I think in component boundaries and rendering behaviour before I think in screens. That means being deliberate about reconciliation and memoization, keeping controlled and uncontrolled components from mixing, and isolating components so one slow subtree doesn't drag a page down. At Hobber I used it to architect a vendor dashboard as independent feature slices; at Kodez it carried a CMS through ${MEASUREMENTS.releases.value} production releases without the render layer becoming the bottleneck. The newer model I've pushed on my own code rather than at an employer, and this site is where — Server Components as the default, and a theme toggle that has to wrap its state update in flushSync, because the View Transitions API needs the DOM mutated synchronously inside its callback and React would otherwise batch the update out from under it.`,
     sample: `Where React and the platform actually meet
 const t = document.startViewTransition(() =>
-  flushSync(() => toggle(false))   // batched ⇒ the "new" snapshot is the old one
+  flushSync(() => toggle(false))   // batched => the "new" snapshot is the old one
 )
 t.ready.then(() => root.animate({ clipPath: [ /* … */ ] },
   { pseudoElement: "::view-transition-new(root)" }))
