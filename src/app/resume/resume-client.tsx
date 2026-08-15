@@ -164,7 +164,7 @@ const EXPERIENCE: Role[] = [
       "AWS",
     ],
     points: [
-      `Architected and delivered a React CMS from 0→1 to MVP as domain modules with SOLID boundaries — each feature owning its components, state and API access, depending only on the shared UI layer beneath it — applying SOLID principles, then led ${MEASUREMENTS.releases.value} production releases on it.`,
+      `Architected and delivered a React CMS from 0→1 to MVP as domain modules with SOLID boundaries — each feature owning its components, state and API access, depending only on the shared UI layer beneath it — then led ${MEASUREMENTS.releases.value} production releases on it.`,
       `Introduced test-driven development with Jest and Cypress end-to-end gates, driving overall automated coverage to ${MEASUREMENTS.coverage.value} with every critical path behind the merge gate in CI/CD — which is what let releases stay frequent without a regression freeze.`,
       `Built a Storybook-based reusable component library that cut frontend development time ${MEASUREMENTS["dev-time"].value.replace("−","~")} across projects.`,
       `Reduced page load time ${MEASUREMENTS["load-kodez"].value.replace("−","~")} through code-splitting, lazy loading, and asset optimization, with assets served from AWS S3.`,
