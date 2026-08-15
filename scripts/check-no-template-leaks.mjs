@@ -35,10 +35,25 @@ const walk = (dir) =>
 const LEAK = /(["'])(?:[^"'\\\n]|\\.)*?\$\{/;
 
 const offenders = [];
-for (const file of walk(ROOT).filter((f) => /\.(tsx?|jsx?)$/.test(f))) {
+// Test files are not shipped to a reader, and they legitimately quote the very
+// pattern this guard looks for in order to describe it.
+const shipped = (f) => /\.(tsx?|jsx?)$/.test(f) && !/\.test\.(tsx?|jsx?)$/.test(f);
+
+for (const file of walk(ROOT).filter(shipped)) {
+  let inBlock = false;
   readFileSync(file, "utf8")
     .split("\n")
     .forEach((line, i) => {
+      // Comments are not rendered, and they discuss this pattern by name. Track
+      // block comments across lines rather than testing the first characters —
+      // a continuation line inside one starts with ordinary prose.
+      const t = line.trim();
+      const opens = t.includes("/*");
+      const closes = t.includes("*/");
+      const wasInBlock = inBlock;
+      if (opens && !closes) inBlock = true;
+      else if (closes) inBlock = false;
+      if (wasInBlock || opens || t.startsWith("//")) return;
       // a line that also contains a backtick is almost certainly a real template
       // literal with a quoted substring inside it — not a leak
       if (line.includes("`")) return;

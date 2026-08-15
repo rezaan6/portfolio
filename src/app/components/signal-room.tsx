@@ -669,7 +669,7 @@ export function PageIntro({
   return (
 <section className="pt-6">
       <div className="mx-auto max-w-6xl px-4 sm:px-5 lg:px-8">
-        <div className="relative flex min-h-[493px] flex-col justify-center overflow-hidden rounded-[1.8rem] border border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] px-6 py-14 sm:px-12 sm:py-16 lg:px-14">
+        <div className="relative flex min-h-[var(--sr-hero-min-h)] flex-col justify-center overflow-hidden rounded-[1.8rem] border border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] px-6 py-14 sm:px-12 sm:py-16 lg:px-14">
           {/* Decorative index number — spans the full section height on the
               right, blended into the background as a soft overlay (SVG so the
               faint watermark doesn't trip the contrast checker). */}
@@ -1400,7 +1400,7 @@ export function AboutHero() {
   return (
 <section className="pt-6">
       <div className="mx-auto max-w-6xl px-4 sm:px-5 lg:px-8">
-        <div className="relative flex min-h-[493px] flex-col justify-center overflow-hidden rounded-[1.8rem] border border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] px-6 py-12 sm:px-12 sm:py-14 lg:px-14">
+        <div className="relative flex min-h-[var(--sr-hero-min-h)] flex-col justify-center overflow-hidden rounded-[1.8rem] border border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] px-6 py-12 sm:px-12 sm:py-14 lg:px-14">
           {/* Decorative index number — full-height watermark, matching the other
               pages (SVG so the faint overlay doesn't trip the contrast checker). */}
           <svg

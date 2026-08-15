@@ -122,6 +122,18 @@ section[id] {
   --sr-track: #eef0f6;
   --sr-shadow: 0 1px 2px rgba(20, 21, 26, 0.05), 0 12px 32px rgba(20, 21, 26, 0.08);
 
+  /* Height of the page-hero panel, shared by PageIntro and AboutHero.
+     ONE value on purpose. It used to be a magic 430px written into two
+     components, and /about outgrew it and sat 63px taller than the other
+     five — a difference nobody notices individually and everybody feels
+     flicking between pages.
+
+     It is set to the tallest page's natural height, so no page is cropped
+     to fit. If a hero needs more room, RAISE THIS — and know that doing so
+     moves all six panels together, which is the point. Do not add a
+     one-off min-height to a single hero; that is the state this replaced. */
+  --sr-hero-min-h: 493px;
+
   /* Artifact-document tones. These were six inline hexes in artifact-doc.tsx —
      which this site's own design-system panel calls a review comment — and being
      literal they rendered identically in dark mode, so the cream callout stayed
