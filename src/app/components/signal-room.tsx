@@ -522,7 +522,7 @@ export function SiteFrame({ children }: { children: ReactNode }) {
               <ThemeToggle theme={theme} onToggle={handleToggle} />
               <Link
                 href={contact.resume}
-                className="rounded-full sr-cta px-4 py-1.5 text-[12px] font-semibold text-[var(--sr-accent-ink)]"
+                className="rounded-full sr-cta px-4 py-1.5 text-[12px] font-semibold"
               >
                 Resume
               </Link>
@@ -1798,7 +1798,7 @@ export function ContactSection() {
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
               href={`mailto:${contact.email}?subject=Engineering%20role%20%E2%80%94%20let%27s%20talk`}
-              className="rounded-full sr-cta px-5 py-3 text-[14px] font-semibold text-[var(--sr-accent-ink)]"
+              className="rounded-full sr-cta px-5 py-3 text-[14px] font-semibold"
             >
               Email me
             </a>
@@ -2348,7 +2348,7 @@ function V8Hero() {
               <div className="mt-9 flex flex-wrap items-center gap-3">
                 <Link
                   href="/work"
-                  className="rounded-full sr-cta px-6 py-3 text-[14px] font-semibold text-[var(--sr-accent-ink)]"
+                  className="rounded-full sr-cta px-6 py-3 text-[14px] font-semibold"
                 >
                   See the work
                 </Link>

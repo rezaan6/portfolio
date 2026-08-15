@@ -198,29 +198,33 @@ section[id] {
   z-index: 1;
 }
 
-/* Primary CTA — gradient indigo with a sheen + lively hover-lift / press. */
+/* Primary CTA.
+   Outlined rather than filled, matching the case cards: the brand colour on the
+   border, a light tint inside, and the label in the same colour. The filled
+   gradient version read as a generic SaaS button and fought the restraint of
+   everything around it.
+
+   The hover is the theme toggle's — border to the accent and a 1px lift, and
+   nothing else. It previously lifted 3px, scaled 3.5%, raised saturation and
+   brightness and swapped a large shadow, which is four things happening at once
+   on a single pointer-enter. */
 .signal-room .sr-cta {
-  background: var(--sr-accent-grad);
-  color: var(--sr-accent-ink);
-  box-shadow:
-    0 6px 18px -6px color-mix(in srgb, var(--sr-accent-solid) 55%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.12);
-  transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.16s ease,
-    filter 0.16s ease;
+  border: 1px solid color-mix(in srgb, var(--sr-accent-solid) 45%, transparent);
+  background: color-mix(in srgb, var(--sr-accent-solid) 8%, var(--sr-bg));
+  color: var(--sr-accent);
+  transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.16s ease,
+    background-color 0.16s ease;
 }
 .signal-room .sr-cta:hover {
-  transform: translateY(-3px) scale(1.035);
-  filter: saturate(1.12) brightness(1.07);
-  box-shadow:
-    0 16px 38px -8px color-mix(in srgb, var(--sr-accent-solid) 72%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.16);
+  transform: translateY(-1px);
+  border-color: var(--sr-accent-solid);
+  background: color-mix(in srgb, var(--sr-accent-solid) 14%, var(--sr-bg));
 }
 .signal-room .sr-cta:active {
-  transform: translateY(1px) scale(0.94);
-  filter: brightness(0.96);
+  transform: translateY(0);
+  background: color-mix(in srgb, var(--sr-accent-solid) 18%, var(--sr-bg));
 }
+
 /* Icon / secondary controls — springy tap feedback. */
 .signal-room .sr-tap {
   transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.16s ease,
