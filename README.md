@@ -2,7 +2,7 @@
 
 React · Next.js · TypeScript. Based in the UAE, open to relocation and remote.
 
-**Live:** https://swe-portfolio-gold.vercel.app
+**Live:** https://rezaanriyaz.com
 
 This repository is two things at once: the site that describes my work, and a sample of
 it. If you are here to judge how I build rather than to read about it, the section below
@@ -41,6 +41,19 @@ bug with two symptoms. Footer links measured 17px tall, under the WCAG 2.5.8 min
 were given height without moving the type. Where an action matters, its link is never a
 bare glyph.
 
+**One number in one place.** Every figure lives in `src/app/lib/measurement.ts` with its
+value, what it is, and where it stops — typed as a count, a reading, an estimate, a
+reported figure or a tool report, because those are not the same kind of claim. The
+résumé tiles, the case tables and the ⓘ disclosures all read from it. They used to carry
+their own copies, and the coverage figure had drifted into five spellings across four
+files before anyone noticed.
+
+**Two guards, both added after the thing they guard against shipped.** `prebuild` fails
+the build on any quoted string containing `${`, because three template literals once
+rendered to the page as those exact characters and neither typecheck nor lint nor build
+has an opinion about a string containing a dollar sign. And the résumé PDF is produced by
+the build rather than committed, because a committed build output goes stale in silence.
+
 **Claims are auditable.** Every figure is a before/after read against a defined baseline,
 never a causal claim. Where a number could not be traced to an instrument it was removed
 rather than softened — several were.
@@ -61,10 +74,10 @@ rather than softened — several were.
 Versions are deliberately not listed. `package.json` is the source of truth and it tracks
 latest; a number in a table is a second copy that goes stale the day after it's written.
 
-**Seven production dependencies.** ~9.2k lines of TypeScript across 8 routes. `npm audit`
-reports zero vulnerabilities. Lighthouse is 100 across all four categories on the pages I
-have measured — CLS is sensitive to a cold font cache in some environments, so measure it
-yourself rather than trust a badge.
+**Seven production dependencies** — `clsx`, `motion`, `next`, `react`, `react-dom`,
+`server-only`, `shiki`. ~10k lines of TypeScript across 34 files and 9 routes. `npm audit`
+reports zero vulnerabilities. Measure performance yourself rather than trust a badge in a
+README; CLS in particular is sensitive to a cold font cache.
 
 Node **≥ 22** (see `.nvmrc` — developed on 24.11.0).
 
@@ -81,7 +94,9 @@ npm run dev      # http://localhost:3000
 | Script | What it does |
 |---|---|
 | `npm run dev` | Dev server (Turbopack) |
-| `npm run build` | Production build |
+| `npm run build` | Renders the résumé to PDF, then builds. Ordering matters — see below |
+| `npm run build:fast` | Build without regenerating the PDF |
+| `npm run resume:pdf` | Render `/resume` to `public/resume.pdf` + `resume-a4.pdf` |
 | `npm start` | Serve the production build |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | `tsc --noEmit` |
@@ -97,7 +112,7 @@ npm run dev      # http://localhost:3000
 | `/projects` | Personal and open-source builds |
 | `/stack` | Tools grouped by purpose, each with how it shows up in real work |
 | `/method` | The Architect → Build → Harden → Measure loop |
-| `/artifacts` | Engineering documents (ADR, perf budget, test strategy, …) |
+| `/artifacts` | Seven engineering documents — ADR, component spec, state model, incident review, perf, test strategy, migration plan |
 | `/about` | Career path, principles, education, contact |
 | `/resume` | Digital-first résumé — prints to A4, or copies as plain text |
 
@@ -112,6 +127,9 @@ Editing copy means editing one of these. None of it is in JSX.
 - **`src/app/components/prototype-data.tsx`** — per-case UI reference builds, keyed by
   case-study slug.
 - **`src/app/resume/resume-client.tsx`** — résumé data and layout.
+- **`src/app/lib/measurement.ts`** — every figure on the site, with its basis and its
+  limit. One number in one place, so the résumé, the case tables and the ⓘ disclosures
+  cannot disagree. They used to.
 - **`src/app/lib/experience.ts`** — the single date every "years of experience" figure
   derives from.
 
@@ -124,8 +142,17 @@ Editing copy means editing one of these. None of it is in JSX.
   fetched from a CDN, each pinned to its brand colour.
 - The light theme is default; the toggle persists to `localStorage` and animates via the
   View Transitions API where supported.
-- The résumé prints to a real, selectable, ATS-parseable PDF from the live page, so it can
-  never drift out of date relative to the site.
+- **The résumé PDF is generated during the build, not committed.** `npm run build` renders
+  the real `/resume` route in headless Chrome and writes `public/resume.pdf` *before*
+  `next build` collects `public/` — a file written after the final build is not picked up.
+  It was a committed file once and went stale silently, so the download disagreed with the
+  page it was linked from. Now editing the résumé and deploying is sufficient. One page,
+  selectable text, ATS-parseable.
+
+- The résumé has two layouts, not one stylesheet stretched. The sheet is a fixed 232mm
+  document; below 900px it is not scaled but replaced by a reflow reading the same arrays,
+  because scaling 10.9px type to fit a phone produced 4.5px text on the page every
+  "Resume" link points at.
 
 ## Licence
 
