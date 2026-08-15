@@ -54,6 +54,15 @@ rendered to the page as those exact characters and neither typecheck nor lint no
 has an opinion about a string containing a dollar sign. And the résumé PDF is produced by
 the build rather than committed, because a committed build output goes stale in silence.
 
+**The editorial rules are tests.** There is barely any behaviour here — the site is data
+and layout — so the suite asserts the rules this repo has actually broken rather than
+chasing a coverage number, which is the position its own test strategy takes. Every
+artifact type must have a document that can render it; every figure must state a basis,
+and a reading or an estimate must state its limit; no percentage may be hardcoded where
+it could drift from `lib/measurement`; no version number may reach a reader; no quoted
+string may contain a template literal. Each of those is a defect that shipped once and
+was found by reading output, late. `npm test` runs in under a second.
+
 **Claims are auditable.** Every figure is a before/after read against a defined baseline,
 never a causal claim. Where a number could not be traced to an instrument it was removed
 rather than softened — several were.
@@ -108,6 +117,8 @@ npm run dev      # http://localhost:3000
 | `npm run lint` | ESLint |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run audit` | `npm audit` at moderate+ severity |
+| `npm test` | Vitest, once |
+| `npm run test:watch` | Vitest, watching |
 
 ## Routes
 

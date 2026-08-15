@@ -669,7 +669,7 @@ export function PageIntro({
   return (
 <section className="pt-6">
       <div className="mx-auto max-w-6xl px-4 sm:px-5 lg:px-8">
-        <div className="relative flex min-h-[430px] flex-col justify-center overflow-hidden rounded-[1.8rem] border border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] px-6 py-14 sm:px-12 sm:py-16 lg:px-14">
+        <div className="relative flex min-h-[493px] flex-col justify-center overflow-hidden rounded-[1.8rem] border border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] px-6 py-14 sm:px-12 sm:py-16 lg:px-14">
           {/* Decorative index number — spans the full section height on the
               right, blended into the background as a soft overlay (SVG so the
               faint watermark doesn't trip the contrast checker). */}
@@ -1246,14 +1246,12 @@ export function ArtifactsSection() {
             // below its content, so this card rendered wider than its 350px track
             // at 390px and pushed the whole page sideways.
             return (
-              <Reveal
-                key={artifact.title}
-                delay={0.03 * index}
-                // Seven cards in a three-column grid leaves the last one alone
-                // with two empty slots, on the shortest page here. Spanning two
-                // columns makes the final row read as a close, not a gap.
-                className={`min-w-0 ${index === artifacts.length - 1 ? "lg:col-span-2" : ""}`}
-              >
+              // Seven cards in a three-column grid does leave the last one alone
+              // in its row. That was worth less than it cost: spanning it across
+              // two columns made one card twice the width of the other six, which
+              // reads as a mistake rather than a deliberate close. A trailing gap
+              // is ordinary; an odd-sized card is not.
+              <Reveal key={artifact.title} delay={0.03 * index} className="min-w-0">
                 <div className="relative flex min-w-0 h-full flex-col overflow-hidden rounded-2xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)] p-6 transition hover:border-[var(--sr-accent)]">
                   {/* Every card gets a top accent — brand colour for a company
                       artifact, indigo for a general practice one. */}
@@ -1402,7 +1400,7 @@ export function AboutHero() {
   return (
 <section className="pt-6">
       <div className="mx-auto max-w-6xl px-4 sm:px-5 lg:px-8">
-        <div className="relative flex min-h-[430px] flex-col justify-center overflow-hidden rounded-[1.8rem] border border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] px-6 py-12 sm:px-12 sm:py-14 lg:px-14">
+        <div className="relative flex min-h-[493px] flex-col justify-center overflow-hidden rounded-[1.8rem] border border-[var(--sr-hairline)] bg-[var(--sr-bg-alt)] px-6 py-12 sm:px-12 sm:py-14 lg:px-14">
           {/* Decorative index number — full-height watermark, matching the other
               pages (SVG so the faint overlay doesn't trip the contrast checker). */}
           <svg
@@ -1783,7 +1781,7 @@ export function ContactSection() {
         <Reveal>
           <SectionLabel title="Contact" />
           <h2 className="mt-4 max-w-4xl font-[family-name:var(--font-display)] text-[clamp(1.7rem,3.2vw,2.55rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-            Open to Senior Frontend Engineer roles — UAE / GCC, and open to
+            Open to Senior Frontend Engineer roles — based in the UAE, open to
             relocation, onsite or remote.
           </h2>
           <p className="mt-6 max-w-2xl text-[17px] leading-8 text-[var(--sr-muted)]">

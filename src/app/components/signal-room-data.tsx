@@ -685,6 +685,18 @@ export const artifacts: Artifact[] = [  {
     blurb:
       `The testing strategy that made ${MEASUREMENTS.releases.value} production releases safe: what gets a test, what deliberately does not, and where the gate sits in CI/CD.`,
   },  {
+    type: "ACCESSIBILITY BASELINE",
+    company: "RaSoft",
+    title: "The floor a rebuild had to clear before it shipped",
+    blurb:
+      "The accessibility and responsive baseline the company site was rebuilt against — what had to be true of every screen, why keyboard order came before colour, and the part I got wrong first.",
+  },  {
+    type: "API CONTRACT",
+    company: "Hobber",
+    title: "Pinning the contract before either side builds",
+    blurb:
+      "How the frontend and the .NET backend agree on a shape before code exists — the contract is pinned in Swagger first, typed on our side, and a change to it is a conversation rather than a surprise in production.",
+  },  {
     type: "MIGRATION PLAN",
     company: "Kodez",
     title: "Laravel/jQuery → React + Express, across three years, never a regression freeze",

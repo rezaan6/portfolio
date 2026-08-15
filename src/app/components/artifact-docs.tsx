@@ -489,6 +489,107 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
     ],
   },
 
+  "ACCESSIBILITY BASELINE": {
+    summary:
+      "The floor the RaSoft company-site rebuild had to clear before it could ship — what had to be true of every screen, why keyboard order came before colour, and the thing I had backwards at the start.",
+    blocks: [
+      {
+        type: "fields",
+        fields: [
+          { label: "Doc", value: "Accessibility & responsive baseline — company site rebuild" },
+          { label: "Context", value: "RaSoft · seed-stage startup · first end-to-end UI ownership" },
+          { label: "Stack", value: "React · JavaScript · SCSS" },
+          { label: "Status", value: "Applied to the rebuild; written up here from what the work required" },
+        ],
+      },
+      {
+        type: "section",
+        title: "Why a floor and not a checklist",
+        text: "A checklist gets run once, near the end, by whoever remembers. A floor is a condition for shipping, so it is cheaper: the cost of keyboard order is minutes while a screen is being built and hours once it exists. This was my first project owning the UI end to end, and the useful lesson was that accessibility is a structural property, not a pass you make over finished markup.",
+      },
+      {
+        type: "checklist",
+        title: "True of every screen before it ships",
+        checks: [
+          { text: "Reachable and operable by keyboard, in an order that matches the visual one." },
+          { text: "One h1, and headings that descend without skipping a level — the document outline is the mental model a screen reader user gets." },
+          { text: "Every control has an accessible name. An icon-only button without one is unusable and reads as \"button\"." },
+          { text: "Text meets WCAG AA against its actual background, not against white." },
+          { text: "Layout holds from 320px up, and text reflows rather than being scaled down to fit." },
+          { text: "Colour as the only signal — a red border with no text is invisible to the people most likely to need it.", good: false },
+          { text: "A div with a click handler standing in for a button. It is not focusable and does not fire on Enter.", good: false },
+        ],
+      },
+      {
+        type: "callout",
+        tone: "insight",
+        title: "What I had backwards",
+        text: "I started with contrast, because it is the part you can see and check quickly. It was the wrong order. Contrast is a property of a finished style; keyboard order and semantics are properties of the structure, and by the time a screen looks right the structure is expensive to change. Semantics first, then focus order, then colour — that sequence costs the least and I only learned it by paying the other one.",
+      },
+      {
+        type: "callout",
+        tone: "note",
+        title: "Where this stops",
+        text: "This was manual: keyboard passes, a contrast checker and reading the markup. No automated audit ran in CI, and I did not test with a real screen-reader user — the closest I got was navigating with one myself, which tells you a page is operable and not whether it is comprehensible. A floor enforced by attention is a floor that holds while someone is paying attention.",
+      },
+    ],
+  },
+
+  "API CONTRACT": {
+    summary:
+      "How the frontend and the .NET backend at Hobber agree on a shape before either side builds it — pinned in Swagger, typed on our side, and changed by conversation rather than discovered in production.",
+    blocks: [
+      {
+        type: "fields",
+        fields: [
+          { label: "Doc", value: "Frontend ↔ backend API contract" },
+          { label: "Context", value: "Hobber vendor platform · React + TypeScript client, .NET backend" },
+          { label: "Rule", value: "Agree the shape before either side writes the code that depends on it" },
+          { label: "Stack", value: "TypeScript · REST · Swagger/OpenAPI · SignalR" },
+        ],
+      },
+      {
+        type: "section",
+        title: "Why this exists",
+        text: "Two people building both halves of an integration from a conversation produces two different guesses, and the difference surfaces at the worst moment — usually in a browser, usually the day it is demoed. Pinning the shape first turns an integration bug into a five-minute disagreement held before either side has written anything worth defending.",
+      },
+      {
+        type: "steps",
+        title: "The order",
+        ordered: true,
+        items: [
+          "The shape is agreed and pinned in Swagger before either side builds — request, response, and what an error looks like.",
+          "It is typed on our side, so a response that stops matching is a compile error rather than an undefined halfway down a render.",
+          "The client is written against the pinned shape. Where the backend is not ready, the shape is enough to build and test against.",
+          "A change to the contract is a change to the document first. Discovering it from a failing screen means the document was not the contract.",
+        ],
+      },
+      {
+        type: "checklist",
+        title: "What the shape has to say",
+        checks: [
+          { text: "What is optional and what is guaranteed. \"Usually present\" is not a contract." },
+          { text: "What an error looks like, with the same shape every time — a client cannot branch on prose." },
+          { text: "What an empty result is: an empty array and a null are different states and read differently on screen." },
+          { text: "Which fields are money or dates, and in what units and timezone." },
+          { text: "A field whose meaning depends on another field's value, with nothing saying so.", good: false },
+        ],
+      },
+      {
+        type: "callout",
+        tone: "note",
+        title: "The real-time half",
+        text: "SignalR does not remove the need for this, it adds one. A socket event carries a payload with a shape, and the same rules apply — but an event is also not a source of truth on its own, because a hub restores a connection and replays nothing sent during the gap. The event invalidates a cache key; the read is still the REST contract. That rule is in the state model.",
+      },
+      {
+        type: "callout",
+        tone: "insight",
+        title: "What this does not solve",
+        text: "A pinned document is a shared intention, not a guarantee — nothing here fails a build if the deployed API drifts from what Swagger says. Generating the client types from the spec, and checking the running API against it on a schedule, is what would turn agreement into enforcement. By my own standard that makes this a preference with a good habit around it.",
+      },
+    ],
+  },
+
   "MIGRATION PLAN": {
     summary:
       "How a legacy PHP/jQuery application moved to React and ExpressJS incrementally at Kodez — the strangler approach, the ordering, and the one rule that kept two coexisting stacks from doubling the work. The legacy surface was retired down to a low-traffic remainder, without a delivery freeze.",

@@ -186,6 +186,18 @@ section[id] {
    toggle icon (the JS animates its clip-path). We kill the default cross-fade so
    only the circle animates, and stack the new theme above the old so the reveal
    floods over the previous look like spreading paint. */
+/* All four root pseudo-elements, not two.
+   The UA animates ::view-transition-group(root) and -image-pair(root) as well
+   as old and new. With only old/new neutralised, the group's default
+   position-and-size tween still ran — and it is most visible on the first
+   transition of a page load, when there is no prior snapshot geometry to
+   interpolate from, so the reveal appeared to come from the top of the
+   viewport rather than from the toggle. Every later transition looked right
+   because by then the geometry matched and the tween was a no-op.
+   The clip-path animation in signal-room.tsx is the only thing that should
+   move here. */
+::view-transition-group(root),
+::view-transition-image-pair(root),
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -199,30 +211,30 @@ section[id] {
 }
 
 /* Primary CTA.
-   Outlined rather than filled, matching the case cards: the brand colour on the
-   border, a light tint inside, and the label in the same colour. The filled
-   gradient version read as a generic SaaS button and fought the restraint of
-   everything around it.
+   The same shape as the secondary button beside it — a hairline border and no
+   fill — with the accent as the hint that marks it primary: the border and the
+   label carry it, and there is the faintest wash behind. The filled gradient it
+   replaced read as a shaded block against a page that is otherwise flat.
 
-   The hover is the theme toggle's — border to the accent and a 1px lift, and
-   nothing else. It previously lifted 3px, scaled 3.5%, raised saturation and
-   brightness and swapped a large shadow, which is four things happening at once
-   on a single pointer-enter. */
+   Hover is the theme toggle's, which is the one that felt right: the border
+   goes to the accent and it lifts a pixel. It previously did four things at
+   once — a 3px lift, a 3.5% scale, a saturation and brightness bump, and a
+   shadow swap. No shadow at any state. */
 .signal-room .sr-cta {
-  border: 1px solid color-mix(in srgb, var(--sr-accent-solid) 45%, transparent);
-  background: color-mix(in srgb, var(--sr-accent-solid) 8%, var(--sr-bg));
+  border: 1px solid color-mix(in srgb, var(--sr-accent-solid) 38%, transparent);
+  background: color-mix(in srgb, var(--sr-accent-solid) 4%, transparent);
   color: var(--sr-accent);
+  box-shadow: none;
   transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.16s ease,
     background-color 0.16s ease;
 }
 .signal-room .sr-cta:hover {
   transform: translateY(-1px);
-  border-color: var(--sr-accent-solid);
-  background: color-mix(in srgb, var(--sr-accent-solid) 14%, var(--sr-bg));
+  border-color: var(--sr-accent);
+  background: color-mix(in srgb, var(--sr-accent-solid) 9%, transparent);
 }
 .signal-room .sr-cta:active {
   transform: translateY(0);
-  background: color-mix(in srgb, var(--sr-accent-solid) 18%, var(--sr-bg));
 }
 
 /* Icon / secondary controls — springy tap feedback. */
