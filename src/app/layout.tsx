@@ -6,6 +6,9 @@ import {
   Oswald,
   Sora,
 } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 import "./globals.css";
 import { SiteFrame } from "./components/signal-room";
 
@@ -109,6 +112,14 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <SiteFrame>{children}</SiteFrame>
+        {/* Real-user data, which this site otherwise argues it lacks. The
+            Observability panel says the honest gap in my stack was runtime
+            signal — lab numbers tell you what you shipped, not what anyone
+            experienced — and that the order to fix it in starts with field
+            timings. This is that, on the one product I own outright.
+            Both are deferred and send nothing until the page is interactive. */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

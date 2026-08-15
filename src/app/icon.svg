@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Rezaan Riyaz">
+  <!--
+    Tab icon. Drawn rather than exported so it stays sharp at every size and
+    weighs a few hundred bytes.
+
+    Constraints a favicon actually has: it is read at 16px, so it gets one
+    letterform, a high-contrast fill and no detail that survives being an
+    eighth of this size. The accent is the same #023047 the site uses, and
+    the corner radius matches the rounded-2xl language of the cards.
+  -->
+  <rect width="64" height="64" rx="14" fill="#023047" />
+  <path
+    d="M20 46V18h12.6c6.2 0 10 3.2 10 8.6 0 4-2.1 6.8-5.7 7.9L44 46h-7.2l-6-10.2h-4.2V46H20zm6.6-15.5h5.3c2.7 0 4.3-1.4 4.3-3.8s-1.6-3.7-4.3-3.7h-5.3v7.5z"
+    fill="#ffffff"
+  />
+</svg>

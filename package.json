@@ -1,7 +1,15 @@
 {
-  "name": "portfolio",
+  "name": "rezaanriyaz-portfolio",
   "version": "1.0.0",
   "private": true,
+  "description": "Senior Frontend Engineer portfolio and r\u00e9sum\u00e9 for Mohammed Rezaan Riyaz \u2014 Next.js App Router, React Server Components, build-time syntax highlighting, and a r\u00e9sum\u00e9 rendered to PDF during the build.",
+  "author": "Mohammed Rezaan Riyaz <rezaan6@gmail.com> (https://rezaanriyaz.com)",
+  "homepage": "https://rezaanriyaz.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rezaan6/portfolio.git"
+  },
+  "license": "UNLICENSED",
   "engines": {
     "node": ">=22.0.0"
   },
@@ -17,6 +25,8 @@
     "build:fast": "next build"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "clsx": "^2.1.1",
     "motion": "^13.1.0",
     "next": "^16.3.0",

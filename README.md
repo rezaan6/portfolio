@@ -74,10 +74,17 @@ rather than softened — several were.
 Versions are deliberately not listed. `package.json` is the source of truth and it tracks
 latest; a number in a table is a second copy that goes stale the day after it's written.
 
-**Seven production dependencies** — `clsx`, `motion`, `next`, `react`, `react-dom`,
-`server-only`, `shiki`. ~10k lines of TypeScript across 34 files and 9 routes. `npm audit`
-reports zero vulnerabilities. Measure performance yourself rather than trust a badge in a
-README; CLS in particular is sensitive to a cold font cache.
+**Nine production dependencies** — `clsx`, `motion`, `next`, `react`, `react-dom`,
+`server-only`, `shiki`, and Vercel's `@vercel/analytics` and `@vercel/speed-insights`.
+~10k lines of TypeScript across 34 files and 9 routes. `npm audit` reports zero
+vulnerabilities. Measure performance yourself rather than trust a badge in a README; CLS
+in particular is sensitive to a cold font cache.
+
+The two Vercel packages are the point of a note elsewhere on the site: the observability
+panel says the honest gap in my stack was runtime signal — lab numbers tell you what you
+shipped, not what anyone experienced — and that the order to close it starts with field
+timings. This is that, on the one product I own outright. Both defer until the page is
+interactive.
 
 Node **≥ 22** (see `.nvmrc` — developed on 24.11.0).
 
@@ -139,7 +146,9 @@ Editing copy means editing one of these. None of it is in JSX.
   under NDA. The case-study prototypes are reference builds written from scratch; they
   contain no client code, data, or interface.
 - **Icons** are [Simple Icons](https://simpleicons.org) (CC0), stored locally rather than
-  fetched from a CDN, each pinned to its brand colour.
+  fetched from a CDN, each pinned to its brand colour. The tab icon is `src/app/icon.svg` —
+  drawn as a path rather than exported, so it is a few hundred bytes and sharp at every
+  size. A favicon is read at 16px, which permits one letterform and no detail.
 - The light theme is default; the toggle persists to `localStorage` and animates via the
   View Transitions API where supported.
 - **The résumé PDF is generated during the build, not committed.** `npm run build` renders
