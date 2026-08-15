@@ -60,8 +60,14 @@ chasing a coverage number, which is the position its own test strategy takes. Ev
 artifact type must have a document that can render it; every figure must state a basis,
 and a reading or an estimate must state its limit; no percentage may be hardcoded where
 it could drift from `lib/measurement`; no version number may reach a reader; no quoted
-string may contain a template literal. Each of those is a defect that shipped once and
-was found by reading output, late. `npm test` runs in under a second.
+string may contain a template literal. Each of those is a defect that shipped once and was
+found by reading output, late. 58 tests, under a second.
+
+**One value, one place.** The page-hero panel height is `--sr-hero-min-h`, read by both
+components that render one. It used to be a literal written into each, which is how
+`/about` came to sit 63px taller than the other five pages — a difference nobody notices
+on one page and everybody feels flicking between them. Raising the token moves all six
+together, deliberately.
 
 **Claims are auditable.** Every figure is a before/after read against a defined baseline,
 never a causal claim. Where a number could not be traced to an instrument it was removed
@@ -85,8 +91,8 @@ latest; a number in a table is a second copy that goes stale the day after it's 
 
 **Nine production dependencies** — `clsx`, `motion`, `next`, `react`, `react-dom`,
 `server-only`, `shiki`, and Vercel's `@vercel/analytics` and `@vercel/speed-insights`.
-~10k lines of TypeScript across 34 files and 9 routes. `npm audit` reports zero
-vulnerabilities. Measure performance yourself rather than trust a badge in a README; CLS
+~10.1k lines of TypeScript across 34 files and 9 routes, plus 278 lines of tests in 3
+files. `npm audit` reports zero vulnerabilities. Measure performance yourself rather than trust a badge in a README; CLS
 in particular is sensitive to a cold font cache.
 
 The two Vercel packages are the point of a note elsewhere on the site: the observability
@@ -130,7 +136,7 @@ npm run dev      # http://localhost:3000
 | `/projects` | Personal and open-source builds |
 | `/stack` | Tools grouped by purpose, each with how it shows up in real work |
 | `/method` | The Architect → Build → Harden → Measure loop |
-| `/artifacts` | Seven engineering documents — ADR, component spec, state model, incident review, perf, test strategy, migration plan |
+| `/artifacts` | Nine engineering documents — ADR, component spec, state model, incident review, perf, test strategy, accessibility baseline, API contract, migration plan |
 | `/about` | Career path, principles, education, contact |
 | `/resume` | Digital-first résumé — prints to A4, or copies as plain text |
 
