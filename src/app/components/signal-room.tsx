@@ -2436,10 +2436,14 @@ function V8Impact() {
                 >
                   {s.value}
                 </p>
-                <p className="mt-4 text-[14px] leading-6 text-[var(--sr-muted)]">
+                {/* div, not p: Measured renders a popover <div> containing <p>s, and
+                    neither may be a descendant of a <p>. The browser silently
+                    restructures the DOM to fix it, which is exactly what made
+                    hydration fail on the homepage. Same block box, same type. */}
+                <div className="mt-4 text-[14px] leading-6 text-[var(--sr-muted)]">
                   {s.label}
                   {s.m ? <Measured id={s.m} className="ml-1.5" /> : null}
-                </p>
+                </div>
               </div>
             </Reveal>
           ))}
