@@ -592,12 +592,12 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
 
   "MIGRATION PLAN": {
     summary:
-      "How a legacy PHP/jQuery application moved to React and ExpressJS incrementally at Kodez — the strangler approach, the ordering, and the one rule that kept two coexisting stacks from doubling the work. The legacy surface was retired down to a low-traffic remainder, without a delivery freeze.",
+      "How a legacy Laravel and jQuery application moved to React and ExpressJS incrementally at Kodez — the strangler approach, the ordering, and the one rule that kept two coexisting stacks from doubling the work. The legacy surface was retired down to a low-traffic remainder, without a delivery freeze.",
     blocks: [
       {
         type: "fields",
         fields: [
-          { label: "Doc", value: "Legacy PHP/jQuery → React + ExpressJS" },
+          { label: "Doc", value: "Legacy Laravel + jQuery → React + ExpressJS" },
           { label: "Constraint", value: "Live users and client commitments — no freeze available" },
           { label: "Result", value: "Legacy surface retired down to a low-traffic remainder · zero delivery freeze" },
           { label: "Approach", value: "Strangler — migrate alongside funded work" },
