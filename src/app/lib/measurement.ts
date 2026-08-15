@@ -53,9 +53,9 @@ export const MEASUREMENTS = {
     value: "−40%",
     kind: "reading",
     basis:
-      "A before/after page-load read on the Kodez CMS, taken against the app as it stood before the code-splitting, lazy-loading and asset work.",
+      "A before/after page-load read on the Kodez CMS, measured against the app as it stood before the code-splitting, lazy-loading and asset work.",
     limit:
-      "Approximate, and a lab reading rather than real-user field data. Several changes shipped across that period, so it is a contribution to the improvement rather than the sole cause.",
+      "Approximate, and a lab reading rather than real-user field data. Several changes shipped in that period, so this is a contribution rather than the sole cause.",
   },
   "load-axinom": {
     value: "−15%",
@@ -71,7 +71,7 @@ export const MEASUREMENTS = {
     basis:
       "The overall figure on a coverage report combining the Jest unit runs with the instrumented Cypress end-to-end runs on the Kodez CMS, gated in CI.",
     limit:
-      "The report's overall number, not one column — statement and branch coverage are different figures and branch is normally the lower of the two, so read this as the headline rather than a claim about every column. It describes the React application: routes still on the legacy stack were not behind this gate until they were migrated. The claim behind the number, and the one I would defend first, is that every path we had called critical had a spec in the merge gate.",
+      "The report's overall number, not one column — branch coverage sits lower. Covers the React application, not the legacy routes still waiting to be migrated. The claim I would defend first: every critical path had a spec in the merge gate.",
   },
   releases: {
     value: "40+",

@@ -509,9 +509,8 @@ function MobileResume() {
         Measurement notes
       </h2>
       <p className="mt-3 text-[12.5px] leading-[1.6] text-neutral-500">
-        What each headline figure is, and where it stops. Counts are checkable, readings depend on
-        conditions, estimates are judgements — they are not the same kind of claim and are not
-        presented as though they were.
+        What each figure is, and where it stops. A count, a reading and a judgement are not
+        the same kind of claim, so they are not presented as one.
       </p>
       <dl className="mt-3 space-y-3">
         {ENDNOTES.map((note) => (
@@ -856,10 +855,9 @@ export default function ResumePage() {
                 <section className="break-inside-avoid border-t border-neutral-200 px-11 pb-9 pt-7">
                   <SectionHeading>Measurement Notes</SectionHeading>
                   <p className="mb-3 text-[9.6px] leading-[1.5] text-neutral-500">
-                    What each headline figure is, and where it stops. Counts are
-                    checkable, readings depend on conditions, estimates are
-                    judgements — they are not the same kind of claim and are not
-                    presented as though they were.
+                    What each figure is, and where it stops. A count, a reading
+                    and a judgement are not the same kind of claim, so they are
+                    not presented as one.
                   </p>
                   <div className="grid grid-cols-2 gap-x-8 gap-y-3">
                     {ENDNOTES.map((e) => (
