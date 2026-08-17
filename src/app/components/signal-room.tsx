@@ -2755,9 +2755,15 @@ function V8Focus() {
             a title.
           </p>
         </Reveal>
-        <div className="mt-10 flex flex-wrap justify-center gap-4">
+        {/* Grid, not flex-wrap. These are six cards of unequal text length, and in a
+            wrapping flex container `h-full` on the item resolves height:100% against
+            the container's auto height — which is indefinite, so it collapses back to
+            content height and the default stretch never happens. That is why the
+            performance card sat shorter than the two beside it. A grid stretches its
+            row by definition, and six items fill two rows of three exactly. */}
+        <div className="mt-10 grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((it, i) => (
-            <Reveal key={it.t} delay={0.05 * i} className="h-full w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]">
+            <Reveal key={it.t} delay={0.05 * i} className="min-w-0">
               <motion.div
                 whileHover={hoverLift}
                 transition={springHover}
