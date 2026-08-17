@@ -1092,7 +1092,7 @@ A stale build breaks nothing loudly — which is why it needs deciding.`,
     group: "Build & delivery",
     use: "Code review, Actions & CI/CD",
     howIUse:
-      "GitHub is where the quality gates actually live for me: Actions running the test suite and the lint pass on every pull request, branch protection so a red pipeline can't be merged around, and code review as the place standards are enforced rather than documented. I've also used automated PR workflows and CI/CD deployment automation to take the manual steps out of releasing.",
+      "GitHub is where the quality gates actually live for me: Actions running the test suite and the lint pass on every pull request, branch protection so a red pipeline can't be merged around, and code review as the place standards are enforced rather than documented. This repository runs the same shape — lint, typecheck, tests and a build on every pull request — because a panel claiming gates, in a repo without them, is the failure its own artifacts warn about. I've also used automated PR workflows and CI/CD deployment automation to take the manual steps out of releasing.",
     sample: `Branch protection is the standard
 required checks: lint · typecheck · jest · cypress(critical)
 required review: 1 approval, author can't self-approve

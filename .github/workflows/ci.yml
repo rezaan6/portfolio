@@ -1,0 +1,56 @@
+name: CI
+
+# The /stack GitHub panel says the quality gates live here — Actions on every pull
+# request, and a red pipeline you cannot merge around. That was true of the work it
+# describes and not of this repository, which had no .github directory at all while
+# linking itself as the readable work sample. A claim about gates, in a repo with no
+# gates, is the exact failure the site's own artifacts warn about: a rule with no
+# check is a preference.
+#
+# Branch protection is the other half and cannot be set from a file — turn on
+# "Require status checks to pass" for `verify` in Settings → Branches.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      # Ordered cheapest-first, so a failure reports in seconds rather than minutes.
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      # The template-literal guard runs in prebuild, so building proves it too.
+      # `build:fast` rather than `build`: the full build renders the résumé to PDF in
+      # headless Chrome, which is the deploy's job and not a useful CI signal.
+      - name: Build
+        run: npm run build:fast
+
+      - name: Audit
+        run: npm run audit

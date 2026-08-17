@@ -87,6 +87,7 @@ describe("figures come from the module, never a copy", () => {
         // the compiler has already constrained to a MeasurementId.
         const id = m[1] ?? m[2];
         if (!id) continue;
+        expect(ids.has(id), `${rel(f)} references MEASUREMENTS.${id}, which does not exist`).toBe(true);
       }
     }
   });
