@@ -208,7 +208,7 @@ type RowProps    = { variant: "primary"; isPayoutRow: boolean }         // not s
     problem:
       "Global media clients needed film and audio delivered fast, in their own language, and protected — on a platform whose capabilities already existed as micro-frontends most teams were rebuilding by hand.",
     move:
-      "Led the frontend team onto Axinom's Mosaic micro-frontends (Media, Catalogue, Entitlement, DRM), wired secure playback through Shaka Player, and attacked load time at the bundle.",
+      "Led the frontend team onto Axinom's Mosaic micro-frontends (Media, Catalogue, Entitlement, DRM), wired secure playback through Shaka Player, and attacked load time at the bundle. Built the player interface as our own event-driven components on top of Shaka's defaults, because browser-native controls and caption rendering differ on every engine, and held it across Chrome, Edge, Firefox and Safari on macOS, Windows, iOS, iPadOS and Android.",
     result:
       `Page load times down ${MEASUREMENTS["load-axinom"].value.replace("−","~")} through bundle optimization, lazy loading, and caching, with reliable protected playback and multi-language UIs shipped across regions.`,
     tradeoffShort: "Reuse the platform vs. build it bespoke",
@@ -1179,12 +1179,14 @@ generate: vendors × {timezone drift, DST boundary, price = 0,
     group: "Core frontend",
     use: "DRM playback, licences & entitlements",
     howIUse:
-      "Shaka Player is where the Axinom work got genuinely difficult. Protected playback is not loading a file: the player fetches a manifest, works out which key system the device actually supports, acquires a licence for it, and only then decodes — and any of those can fail while the viewer sees one black rectangle. So the first thing I build around it is a failure taxonomy — manifest, key system, licence, decode, buffer — because \"the video is broken\" names none of them, and a report without that split is unactionable. Entitlement stays a server decision: whether this viewer may watch this title is answered by the entitlement and licence services, which at Axinom meant going through Mosaic's Entitlement and DRM services rather than a bespoke integration, because bespoke means owning DRM edge cases forever. Device variation is the other half — which key system exists, and at what robustness, depends on the browser and the hardware, so the test plan is a device matrix and my laptop is not a device. It is also where I stop optimising: the player and the licence path are never lazy-loaded, because a slow catalogue is a complaint while a title that will not play is indistinguishable from a title the viewer was never entitled to.",
+      "Shaka Player is where the Axinom work got genuinely difficult. Protected playback is not loading a file: the player fetches a manifest, works out which key system the device actually supports, acquires a licence for it, and only then decodes — and any of those can fail while the viewer sees one black rectangle. So the first thing I build around it is a failure taxonomy — manifest, key system, licence, decode, buffer — because \"the video is broken\" names none of them, and a report without that split is unactionable. Entitlement stays a server decision: whether this viewer may watch this title is answered by the entitlement and licence services, which at Axinom meant going through Mosaic's Entitlement and DRM services rather than a bespoke integration, because bespoke means owning DRM edge cases forever. The part that was mine is the interface. Shaka gives you a player and the browser gives you default controls and native caption rendering, and neither of those looks the same on two engines — control chrome differs, captions are only partly stylable, and changing a subtitle label does not behave consistently. So the UI is our own components driven off the player's events rather than anything inherited, which is the only way one appearance survives Chrome, Edge, Firefox and Safari across macOS, Windows, iOS, iPadOS and Android. The trap on that matrix is iOS, where every browser is WebKit underneath: a bug filed against Chrome on an iPhone is a Safari bug, and chasing it as a Chrome bug costs you a day. It is also where I stop optimising: the player and the licence path are never lazy-loaded, because a slow catalogue is a complaint while a title that will not play is indistinguishable from a title the viewer was never entitled to.",
     sample: `Playback fails in stages — "it's broken" names none of them
 manifest → key system → licence → decode → buffer
 Entitlement: asked of the server, rendered by the client — "no" too
 Never lazy-loaded: the player chunk and the licence path
-Test plan is a device matrix. My laptop is not a device.`,
+UI is ours, driven off player events — not inherited chrome
+Matrix: Chrome · Edge · Firefox · Safari  ×  macOS · Win · iOS · iPadOS · Android
+On iOS every browser is WebKit. "iOS Chrome" is a Safari bug.`,
   },
   {
     name: "Security",
