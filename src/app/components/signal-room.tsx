@@ -581,7 +581,7 @@ export function SiteFrame({ children }: { children: ReactNode }) {
               Mohammed Rezaan Riyaz
             </p>
             <p className="mt-1 font-[family-name:var(--font-display)] text-[10.5px] uppercase tracking-[0.14em] text-[var(--sr-faint)]">
-              Senior Frontend Engineer · Open to roles worldwide
+              Senior Frontend Engineer · Open to roles
             </p>
           </div>
 
@@ -1443,18 +1443,12 @@ export function AboutHero() {
                 measurement pick the next optimization.
               </p>
               <div className="mt-7 flex flex-wrap gap-2">
-                {[
-                  "Senior Frontend Engineer",
-                  "Sri Lankan",
-                  // One chip, not two. "UAE · GCC" beside "open to relocation"
-                  // reads as a contradiction, and a reader resolves it the
-                  // restrictive way: the region is what he wants, relocation is
-                  // boilerplate. Location goes last so the row ends on the
-                  // opening rather than the constraint. Kept identical to the
-                  // resume contact line (resume/resume-client.tsx) — the same
-                  // fact on two surfaces has to read the same way.
-                  "UAE — open to relocation, onsite & remote",
-                ].map((chip) => (
+                {/* No location chip. A place in a chip row is read as a filter,
+                    not as a fact, and this row is above the fold on /about. The
+                    location does still exist where a recruiter needs it — the
+                    resume contact line (resume/resume-client.tsx) states it
+                    alongside relocation — so it is moved, not hidden. */}
+                {["Senior Frontend Engineer", "Sri Lankan"].map((chip) => (
                   <span
                     key={chip}
                     className="rounded-full border border-[var(--sr-hairline)] bg-[var(--sr-panel)] px-3 py-1.5 font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.12em] text-[var(--sr-muted)]"
@@ -1787,14 +1781,20 @@ export function ContactSection() {
         <Reveal>
           <SectionLabel title="Contact" />
           <h2 className="mt-4 max-w-4xl font-[family-name:var(--font-display)] text-[clamp(1.7rem,3.2vw,2.55rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-            Open to Senior Frontend Engineer roles worldwide — onsite or remote,
-            and I relocate.
+            Open to Senior Frontend Engineer roles — onsite or remote, and I
+            relocate.
           </h2>
+          {/* This was a three-part conditional: "If you're hiring an engineer
+              who architects for the codebase you'll have in two years, treats
+              performance and accessibility as features, and ships behind a test
+              gate, those are the criteria I work to." Every clause was true and
+              the shape was wrong — an if-then makes the reader check three boxes
+              about their own role before they qualify to write, and a normal
+              feature-team req ticks none of them. The site spends eight pages
+              demonstrating those three things; the contact section does not need
+              to restate them as terms. */}
           <p className="mt-6 max-w-2xl text-[17px] leading-8 text-[var(--sr-muted)]">
-            If you&apos;re hiring an engineer who architects for the codebase
-            you&apos;ll have in two years, treats performance and accessibility
-            as features, and ships behind a test gate, those are the criteria I
-            work to. Get in touch.
+            Get in touch.
           </p>
         </Reveal>
 

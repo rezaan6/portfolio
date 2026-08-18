@@ -10,7 +10,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Resume — Mohammed Rezaan Riyaz",
   description:
-    "Senior Frontend Engineer resume — React, Next.js, and TypeScript. Frontend architecture, performance, and design systems. Open to roles worldwide.",
+    "Senior Frontend Engineer resume — React, Next.js, and TypeScript. Frontend architecture, performance, and design systems. Open to roles, onsite or remote.",
 };
 
 export default function Page() {

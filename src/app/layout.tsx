@@ -55,15 +55,15 @@ const numeralFont = Oswald({
 
 const SITE_URL = "https://rezaanriyaz.com";
 const TITLE = "Mohammed Rezaan Riyaz | Senior Frontend Engineer";
-// 153 characters, deliberately. The previous version ran to 180 and Google cuts
-// a description around 158, so its tail ("Based in the UAE.") was never in a
-// search result — but it was in every LinkedIn, Slack and WhatsApp unfurl, which
-// is where a recruiter reads this first. Location now states the opening rather
-// than the constraint, because a location line with no relocation beside it is
-// read as a boundary. One constant, three surfaces: description, openGraph and
-// twitter all take it, so it cannot drift between them.
+// Under 158 characters, deliberately: the previous version ran to 180 and Google
+// cuts a description at about that point, so its tail was silently dropped from
+// every search result — while still appearing in full in each LinkedIn, Slack
+// and WhatsApp unfurl, which is where a recruiter reads this first. No country
+// here: a place in a description is read as a filter and applied before anyone
+// reads a word of the site. One constant, three surfaces — description,
+// openGraph and twitter all take it, so it cannot drift between them.
 const DESCRIPTION =
-  "Senior Frontend Engineer — React, Next.js, TypeScript. Frontend architecture, performance, and design systems. Open to roles worldwide, onsite or remote.";
+  "Senior Frontend Engineer — React, Next.js, TypeScript. Frontend architecture, performance, and design systems. Open to roles, onsite or remote.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
