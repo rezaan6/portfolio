@@ -69,9 +69,9 @@ export const MEASUREMENTS = {
     value: "~90%",
     kind: "report",
     basis:
-      "The overall number on the merged Kodez coverage report, gated in CI.",
+      "The overall number on the merged Kodez coverage report. The suite ran as a merge gate in CI — every critical path had to pass before a merge.",
     limit:
-      "Not one column — branch sits lower.",
+      "Not one column — branch sits lower. And the suite was gated, the number was not: a change that kept every test green while dropping the percentage would not have been stopped by CI.",
   },
   releases: {
     value: "40+",

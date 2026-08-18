@@ -100,7 +100,7 @@ export const caseStudies: CaseStudy[] = [
     problem:
       "A vendor platform needs auth, accounts, dashboards, scheduling, payouts, integrations, and team access — and none of it existed. Built as one surface, it turns into a monolith before the first release.",
     move:
-      "Architected the dashboard from scratch in React and TypeScript as the sole frontend engineer, on a modular, feature-based structure, so each domain owns its own slice and ships on its own cadence.",
+      "Architected the dashboard from scratch in React and TypeScript as the sole frontend engineer, on a modular, feature-based structure, so each domain owns its own slice and adding one is adding a folder rather than a refactor.",
     result:
       "Seven core platform modules and five vendor workflows in production on one shared component layer — with the structure still legible enough that a new domain is a new folder, not a refactor.",
     tradeoffShort: "Upfront architecture vs. time to first screen",
@@ -210,7 +210,7 @@ type RowProps    = { variant: "primary"; isPayoutRow: boolean }         // not s
     move:
       "Led the frontend team onto Axinom's Mosaic micro-frontends (Media, Catalogue, Entitlement, DRM), wired secure playback through Shaka Player, and attacked load time at the bundle. Built the player interface as our own event-driven components on top of Shaka's defaults, because browser-native controls and caption rendering differ on every engine, and held it across Chrome, Edge, Firefox and Safari on macOS, Windows, iOS, iPadOS and Android.",
     result:
-      `Page load times down ${MEASUREMENTS["load-axinom"].value.replace("−","~")} through bundle optimization, lazy loading, and caching, with reliable protected playback and multi-language UIs shipped across regions.`,
+      `Page load times down ${MEASUREMENTS["load-axinom"].value.replace("−","~")} through bundle optimization, lazy loading, and caching, with protected playback and multi-language UIs shipped across regions.`,
     tradeoffShort: "Reuse the platform vs. build it bespoke",
     results: [
       { label: "Page load time", note: "bundle, lazy-load, caching", m: "load-axinom" },
@@ -226,7 +226,7 @@ type RowProps    = { variant: "primary"; isPayoutRow: boolean }         // not s
     signal:
       `Page load time was the number I could defend, measured before and after the bundle work, and it moved ${MEASUREMENTS["load-axinom"].value.replace("−","~")}. Alongside it I watched playback through the player's own failure taxonomy and the support tickets that reached me — which is exactly the weak instrumentation I name elsewhere, cross-region rendering once i18n was live, and the CI/CD pipelines I kept stable with DevOps — because a performance win that ships unreliably isn't a win. Delivery health was tracked in Azure DevOps and JIRA, with the process documented in Confluence.`,
     outcome:
-      `Two client products delivered 0→1 through full development, testing, and production release cycles; ${MEASUREMENTS["load-axinom"].value.replace("−","~")} faster page loads from bundle optimization, lazy loading, and caching; seamless multi-language experiences across regions; and reliable playback of protected content via Shaka Player and DRM workflows. Alongside the delivery work I strengthened the security posture by identifying vulnerabilities and adding validation and authentication layers, and mentored junior developers while enforcing coding standards.`,
+      `Two client products delivered 0→1 through full development, testing, and production release cycles; ${MEASUREMENTS["load-axinom"].value.replace("−","~")} faster page loads from bundle optimization, lazy loading, and caching; seamless multi-language experiences across regions; and protected content playback via Shaka Player and DRM workflows. Alongside the delivery work I strengthened the security posture by identifying vulnerabilities and adding validation and authentication layers, and mentored junior developers while enforcing coding standards.`,
     detail:
       "What I'd do differently: I measured page load as an aggregate for too long. Averages hide the regions and devices where the experience is materially worse, and on an international media product that's exactly where the users you're localizing for live — I'd segment by region and device from the first measurement, not the third. The broader lesson: on a platform like Mosaic, the engineering skill isn't writing more code, it's knowing which capability already exists and integrating it cleanly enough that the next team doesn't rewrite it.",
     code: {
@@ -307,7 +307,7 @@ const messages = await import("../locales/" + locale + ".json")`,
     results: [
       { label: "Page load time", note: "code-splitting, lazy loading, asset optimization", m: "load-kodez" },
       { label: "Frontend development time", note: "after the Storybook library landed", m: "dev-time" },
-      { label: "Automated coverage, overall", note: "Jest + Cypress merged, gated in CI", m: "coverage" },
+      { label: "Automated coverage, overall", note: "Jest + Cypress merged; the suite gated in CI, not the number", m: "coverage" },
       { label: "Production releases", m: "releases" },
     ],
     context:
@@ -1055,7 +1055,7 @@ Check it: no Shiki JS in .next/static — only the .shiki CSS rules.`,
     group: "Build & delivery",
     use: "Bundle optimization & code-splitting",
     howIUse:
-      `Webpack is where a lot of the real performance work happened — the ${MEASUREMENTS["load-axinom"].value.replace("−","~")} load-time reduction at Axinom and the ${MEASUREMENTS["load-kodez"].value.replace("−","~")} at Kodez both came out of bundle analysis, code-splitting, and lazy loading rather than anything visible in the UI. I treat an unexplained bundle-size increase as a merge blocker, because bundle growth is the one regression that never shows up in a test suite.`,
+      `Webpack is where a lot of the real performance work happened — the ${MEASUREMENTS["load-axinom"].value.replace("−","~")} load-time reduction at Axinom and the ${MEASUREMENTS["load-kodez"].value.replace("−","~")} at Kodez both came out of bundle analysis, code-splitting, and lazy loading rather than anything visible in the UI. An unexplained bundle-size increase is something I check on every diff, because bundle growth is the one regression that never shows up in a test suite. It was a habit rather than a threshold in CI, which is the difference between a practice and a gate.`,
     sample: `Split by route, defer by need
 - granular chunks, so one dependency bump doesn't invalidate the rest
 - route chunks loaded on navigation

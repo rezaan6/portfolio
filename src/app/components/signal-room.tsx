@@ -619,16 +619,49 @@ export function SiteFrame({ children }: { children: ReactNode }) {
 
 /* --------------------------- primitives ---------------------------- */
 
+/*
+ * `immediate` is a performance control, not a styling one — pass it to anything
+ * above the fold.
+ *
+ * Measured on the live site before this existed: LCP 784ms on unthrottled
+ * desktop, of which 749ms — 95.5% — was *render delay*, not network. On Fast 4G
+ * with 4x CPU: FCP 392ms but LCP 1192ms, with the hero H1 not registering as
+ * painted until 1124ms. TTFB was 35ms and 122ms. So the LCP element was a text
+ * heading, present in the HTML almost immediately, that took three quarters of a
+ * second to count as painted.
+ *
+ * The cause was this component. `initial={{ opacity: 0 }}` is serialised into the
+ * prerendered HTML, so the hero shipped as
+ *   <div style="opacity:0;transform:translateY(34px) scale(0.97)"><h1>…
+ * and a browser cannot count a zero-opacity element as contentful. The heading
+ * therefore waited on framer-motion downloading, React hydrating, whileInView
+ * firing, and a spring running — and the last script did not land until 1085ms on
+ * mobile. The ~730-750ms gap appeared on both profiles, which is what identified
+ * it as a JS dependency rather than bandwidth.
+ *
+ * Rejected: keeping the animation but dropping only `opacity` from `initial`.
+ * Transforms genuinely do not gate LCP, so that fixes the metric — but the hero
+ * would then paint 34px low and 3% small and sit there until hydration, which on
+ * a slow connection is most of a second in the wrong place. Trading a real visual
+ * defect for a green metric is the kind of thing this site argues against.
+ *
+ * So above-the-fold content renders in its final position on first paint, with no
+ * animation and no dependency on JS at all. Everything the user has to scroll to
+ * keeps the reveal, which is what the effect is for.
+ */
 export function Reveal({
   children,
   className,
   delay = 0,
+  immediate = false,
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
+  immediate?: boolean;
 }) {
   const reduce = useReducedMotion();
+  if (immediate) return <div className={className}>{children}</div>;
   return (
     <motion.div
       className={className}
@@ -697,7 +730,7 @@ export function PageIntro({
             </text>
           </svg>
           <div className="relative">
-            <Reveal>
+            <Reveal immediate>
               {/* Label only. The number is already the watermark filling the
                   right of this panel, and the nav above it reads "04 Stack" —
                   printing it a third time in the eyebrow told the reader
@@ -1427,7 +1460,7 @@ export function AboutHero() {
             </text>
           </svg>
           <div className="relative grid gap-10 lg:grid-cols-[1.35fr_0.85fr] lg:items-center">
-            <Reveal>
+            <Reveal immediate>
               {/* Label only, matching PageIntro — the 07 is already the
                   watermark behind this panel and the nav above it. */}
               <p className="font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.3em] text-[var(--sr-accent)]">
@@ -1466,7 +1499,7 @@ export function AboutHero() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.1}>
+            <Reveal immediate>
               <div className="mx-auto w-full max-w-xs rounded-[1.6rem] border border-[var(--sr-hairline)] bg-[var(--sr-panel)] p-6 text-center">
                 <Image
                   src="/me.jpg"
@@ -2227,7 +2260,7 @@ function V8HeroCard() {
     { company: "Hobber", label: "Vendor dashboard architected", value: "0→1", logo: "/logos/hobber.png", mark: "HB", note: "7 modules, feature-sliced React + TS" },
     { company: "Axinom", label: "Page load time", value: MEASUREMENTS["load-axinom"].value, logo: "/logos/axinom.png", mark: "AX", note: "bundle, lazy-load & caching" },
     { company: "Kodez", label: "Page load time", value: MEASUREMENTS["load-kodez"].value, logo: "/logos/kodez.png", mark: "KZ", note: `code-splitting across ${MEASUREMENTS.releases.value} releases` },
-    { company: "Kodez", label: "Automated test coverage", value: MEASUREMENTS.coverage.value, logo: "/logos/kodez.png", mark: "KZ", note: "Jest & Cypress, gated in CI" },
+    { company: "Kodez", label: "Automated test coverage", value: MEASUREMENTS.coverage.value, logo: "/logos/kodez.png", mark: "KZ", note: "Jest & Cypress — the suite gated in CI, not the number" },
   ];
   return (
     <motion.div
@@ -2295,12 +2328,12 @@ function V8Hero() {
       <div className="relative mx-auto max-w-6xl px-5 py-20 lg:px-8 lg:py-28">
         <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
           <div>
-            <Reveal>
+            <Reveal immediate>
               <p className="font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.3em] text-[var(--sr-accent)]">
                 Senior Frontend Engineer · React · Next.js · TypeScript
               </p>
             </Reveal>
-            <Reveal delay={0.06}>
+            <Reveal immediate>
               <h1 className="mt-6 font-[family-name:var(--font-display)] text-[clamp(1.95rem,4vw,3rem)] font-medium leading-[1.03] tracking-[-0.01em] text-[var(--sr-text)]">
                 I architect and optimize
                 <br />
@@ -2309,7 +2342,7 @@ function V8Hero() {
                 hold up at scale.
               </h1>
             </Reveal>
-            <Reveal delay={0.12}>
+            <Reveal immediate>
               <p className="mt-7 max-w-lg text-[16px] leading-7 text-[var(--sr-muted)]">
                 {yearsPhrase()} across marketplace, media, and enterprise products —
                 frontend architecture with full-stack range. I draw the
@@ -2317,7 +2350,7 @@ function V8Hero() {
                 measurement pick the next optimization.
               </p>
             </Reveal>
-            <Reveal delay={0.18}>
+            <Reveal immediate>
               <div className="mt-9 flex flex-wrap items-center gap-3">
                 <Link
                   href="/work"
@@ -2333,7 +2366,7 @@ function V8Hero() {
                 </Link>
               </div>
             </Reveal>
-            <Reveal delay={0.24}>
+            <Reveal immediate>
               <div className="mt-8 flex flex-wrap gap-2">
                 {archetypeChips.map((c) => (
                   <span
@@ -2372,7 +2405,7 @@ function V8Impact() {
     },
     {
       value: MEASUREMENTS.coverage.value,
-      label: "Automated test coverage — Jest + Cypress, gated in CI · Kodez",
+      label: "Automated test coverage — Jest + Cypress, suite gated in CI · Kodez",
       m: "coverage",
     },
     {
