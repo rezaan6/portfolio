@@ -174,10 +174,14 @@ const EXPERIENCE: Role[] = [
     ],
     points: [
       `Architected and delivered a React CMS from 0→1 to MVP as domain modules with SOLID boundaries — each feature owning its components, state and API access, depending only on the shared UI layer beneath it — then led ${MEASUREMENTS.releases.value} production releases on it.`,
+      // Second, not fifth. This is the hardest thing on the role and the closest
+      // match to what most senior React openings actually are — an inherited
+      // codebase, not an empty one. Below the page-load bullet it was read after
+      // a skimmer had already filed the role as "greenfield CMS".
+      "Migrated a legacy Laravel, jQuery and Bootstrap application to React and ExpressJS incrementally without freezing client delivery — I had worked in that codebase before replacing it, which is why the seams were obvious — and built Node.js BFF layers with the backend team to reduce API latency.",
       `Introduced test-driven development with Jest and Cypress end-to-end gates, driving overall automated coverage to ${MEASUREMENTS.coverage.value} with every critical path behind the merge gate in CI/CD — which is what let releases stay frequent without a regression freeze.`,
       `Built a Storybook-based reusable component library that cut frontend development time ${MEASUREMENTS["dev-time"].value.replace("−","~")} across projects.`,
       `Reduced page load time ${MEASUREMENTS["load-kodez"].value.replace("−","~")} through code-splitting, lazy loading, and asset optimization, with assets served from AWS S3.`,
-      "Migrated a legacy Laravel, jQuery and Bootstrap application to React and ExpressJS incrementally without freezing client delivery — I had worked in that codebase before replacing it, which is why the seams were obvious — and built Node.js BFF layers with the backend team to reduce API latency.",
       `Built REST integrations against the client's enterprise vendor stack — Amtek (Australia), running on Fiserv, Toshiba, NTT DATA, Park Assist and City systems — across a ${MEASUREMENTS.tables.value} table schema.`,
       "Translated Figma designs into responsive interfaces; set frontend standards and ran code reviews as the company scaled from 10 to 60+ people.",
     ],

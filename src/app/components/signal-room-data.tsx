@@ -295,8 +295,12 @@ const messages = await import("../locales/" + locale + ".json")`,
       `A CMS built to be changed: a Storybook design system, ${MEASUREMENTS.coverage.value} test coverage, and ${MEASUREMENTS.releases.value} releases across three years, never a regression freeze.`,
     problem:
       `A React CMS spanning ${MEASUREMENTS.tables.value} SQL tables and enterprise integrations, sitting next to a legacy Laravel and jQuery codebase — every release risked a regression somewhere nobody was looking.`,
+    // The problem above names the legacy Laravel and jQuery codebase; the move
+    // has to answer it. It previously described only the new CMS, so the case
+    // read as a greenfield build that happened to sit next to something old —
+    // when the new CMS was that application's replacement, ported in steps.
     move:
-      "Built the CMS 0→1 as domain modules with SOLID boundaries, a Storybook component library as the shared spine, and test-driven development with Jest behind a Cypress gate on every release.",
+      "Built the CMS 0→1 as domain modules with SOLID boundaries, a Storybook component library as the shared spine, and test-driven development with Jest behind a Cypress gate on every release — then moved the legacy application onto it screen by screen rather than in one switch, so it kept serving users the whole way.",
     result:
       `${MEASUREMENTS.coverage.value} automated coverage, ${MEASUREMENTS["load-kodez"].value.replace("−","~")} faster page loads, ${MEASUREMENTS["dev-time"].value.replace("−","~")} less frontend development time, and ${MEASUREMENTS.releases.value} production releases while migrating the legacy stack incrementally.`,
     tradeoffShort: "Standardize on the system vs. per-project freedom",
