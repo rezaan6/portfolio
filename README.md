@@ -1,6 +1,6 @@
 # Senior Frontend Engineer portfolio — Mohammed Rezaan Riyaz
 
-React · Next.js · TypeScript. Based in the UAE, open to relocation and remote.
+React · Next.js · TypeScript. Open to roles worldwide — onsite or remote, and I relocate.
 
 **Live:** https://rezaanriyaz.com
 

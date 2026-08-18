@@ -581,7 +581,7 @@ export function SiteFrame({ children }: { children: ReactNode }) {
               Mohammed Rezaan Riyaz
             </p>
             <p className="mt-1 font-[family-name:var(--font-display)] text-[10.5px] uppercase tracking-[0.14em] text-[var(--sr-faint)]">
-              Senior Frontend Engineer · Open to roles · UAE
+              Senior Frontend Engineer · Open to roles worldwide
             </p>
           </div>
 
@@ -1445,9 +1445,15 @@ export function AboutHero() {
               <div className="mt-7 flex flex-wrap gap-2">
                 {[
                   "Senior Frontend Engineer",
-                  "UAE · GCC",
                   "Sri Lankan",
-                  "Open to relocation, onsite & remote",
+                  // One chip, not two. "UAE · GCC" beside "open to relocation"
+                  // reads as a contradiction, and a reader resolves it the
+                  // restrictive way: the region is what he wants, relocation is
+                  // boilerplate. Location goes last so the row ends on the
+                  // opening rather than the constraint. Kept identical to the
+                  // resume contact line (resume/resume-client.tsx) — the same
+                  // fact on two surfaces has to read the same way.
+                  "UAE — open to relocation, onsite & remote",
                 ].map((chip) => (
                   <span
                     key={chip}
@@ -1474,7 +1480,7 @@ export function AboutHero() {
                   Mohammed Rezaan Riyaz
                 </p>
                 <p className="mt-0.5 text-[13px] text-[var(--sr-muted)]">
-                  Senior Frontend Engineer · UAE
+                  Senior Frontend Engineer
                 </p>
                 <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-[var(--sr-accent-soft)] px-3 py-1.5">
                   <span className="relative flex h-2 w-2">
@@ -1781,8 +1787,8 @@ export function ContactSection() {
         <Reveal>
           <SectionLabel title="Contact" />
           <h2 className="mt-4 max-w-4xl font-[family-name:var(--font-display)] text-[clamp(1.7rem,3.2vw,2.55rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-            Open to Senior Frontend Engineer roles — based in the UAE, open to
-            relocation, onsite or remote.
+            Open to Senior Frontend Engineer roles worldwide — onsite or remote,
+            and I relocate.
           </h2>
           <p className="mt-6 max-w-2xl text-[17px] leading-8 text-[var(--sr-muted)]">
             If you&apos;re hiring an engineer who architects for the codebase
