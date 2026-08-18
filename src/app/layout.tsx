@@ -63,7 +63,7 @@ const TITLE = "Mohammed Rezaan Riyaz | Senior Frontend Engineer";
 // reads a word of the site. One constant, three surfaces — description,
 // openGraph and twitter all take it, so it cannot drift between them.
 const DESCRIPTION =
-  "Senior Frontend Engineer — React, Next.js, TypeScript. Frontend architecture, performance, and design systems. Open to roles, onsite or remote.";
+  "Senior Frontend Engineer — React, Next.js, TypeScript. Frontend architecture, performance, and design systems. Open to onsite, remote, or relocation.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

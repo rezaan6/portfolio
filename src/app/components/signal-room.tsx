@@ -1781,8 +1781,8 @@ export function ContactSection() {
         <Reveal>
           <SectionLabel title="Contact" />
           <h2 className="mt-4 max-w-4xl font-[family-name:var(--font-display)] text-[clamp(1.7rem,3.2vw,2.55rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-            Open to Senior Frontend Engineer roles — onsite or remote, and I
-            relocate.
+            Open to Senior Frontend Engineer roles — onsite, remote, or
+            relocation.
           </h2>
           {/* This was a three-part conditional: "If you're hiring an engineer
               who architects for the codebase you'll have in two years, treats
