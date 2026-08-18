@@ -98,7 +98,7 @@ const ENDNOTES = METRICS.map((x) => ({ id: x.m, label: x.label, ...MEASUREMENTS[
 const EXPERIENCE: Role[] = [
   {
     company: "Hobber",
-    location: "HQ Abu Dhabi, UAE",
+    location: "Abu Dhabi, UAE",
     descriptor:
       "Marketplace platform for entertainment, recreation, dining & tourism vendors",
     title: "Senior Frontend Engineer — Lead",
@@ -117,7 +117,13 @@ const EXPERIENCE: Role[] = [
       "Sole frontend engineer on the Hobber vendor platform — the frontend is mine end to end, architected from an empty repository in React and TypeScript on a modular, feature-sliced structure.",
       "Shipped seven core platform modules — authentication, vendor accounts, dashboards, scheduling, payouts, integrations, and team access — as independent slices over one shared component layer built on shadcn/ui and Radix primitives.",
       "Built the vendor workflows on top: activity management, booking flows, stock scheduling, discount logic, and content management.",
-      "Set the architectural boundaries the codebase is held to, so a new domain is a new folder rather than a refactor, with cross-slice contracts enforced by TypeScript at build time.",
+      // Was "cross-slice contracts enforced by TypeScript at build time". That is
+      // not what enforces it: TypeScript compiles a cross-slice import perfectly
+      // happily. The control is an ESLint no-restricted-imports rule on the import
+      // direction; TypeScript checks the contract where slices actually compose,
+      // at the route. Conflating a lint rule with a compiler guarantee is the
+      // fastest way to lose a senior interviewer on this exact topic.
+      "Set the architectural boundaries the codebase is held to, so a new domain is a new folder rather than a refactor — cross-slice imports blocked by a lint rule rather than a convention, and the contracts type-checked where slices compose.",
       "Set up the testing layer from scratch — Vitest for unit and integration, Playwright for end-to-end across the vendor workflows.",
       "Built real-time vendor messaging on SignalR against the .NET backend, and the location and routing surfaces on the Google Maps API.",
       "Partner with backend and DevOps engineers on API contracts — pinned against Swagger before building — authentication systems, and platform features.",
@@ -125,7 +131,7 @@ const EXPERIENCE: Role[] = [
   },
   {
     company: "Axinom",
-    location: "HQ Fürth, Germany",
+    location: "Colombo, Sri Lanka (HQ Fürth, Germany)",
     descriptor: "Enterprise media technology delivered on the Mosaic platform",
     title: "Senior Frontend Engineer — Lead",
     period: "Mar 2024 — Nov 2025",
@@ -154,7 +160,7 @@ const EXPERIENCE: Role[] = [
   },
   {
     company: "Kodez",
-    location: "HQ Melbourne, Australia",
+    location: "Colombo, Sri Lanka (HQ Melbourne, Australia)",
     descriptor: "Enterprise CMS for service management and logistics",
     title: "Senior Frontend Engineer",
     period: "Mar 2021 — Feb 2024",
@@ -188,7 +194,7 @@ const EXPERIENCE: Role[] = [
   },
   {
     company: "RaSoft",
-    location: "HQ Colombo, Sri Lanka",
+    location: "Colombo, Sri Lanka",
     descriptor: "Seed-stage startup — internal systems and web products",
     title: "Frontend Engineer",
     period: "Dec 2018 — Feb 2021",

@@ -250,7 +250,7 @@ const messages = await import("../locales/" + locale + ".json")`,
       "Viewers of global media clients get protected film and audio that starts reliably, loads about 15% faster, and reads in their own language.",
     scale: [
       "Enterprise media platform on Mosaic",
-      "HQ Fürth, Germany",
+      "Colombo, Sri Lanka (HQ Fürth, Germany)",
       "Clients: Goethe-Institut · Lindau Nobel Laureate Meetings",
       "Led the frontend team",
     ],
@@ -347,7 +347,7 @@ it("keeps a service unbookable when price is missing", () => {
       "Client service and logistics teams work in a CMS that loads about 40% faster and keeps working release after release, across integrations with the vendor systems their operation runs on.",
     scale: [
       "Enterprise CMS · service mgmt + logistics",
-      "HQ Melbourne, Australia",
+      "Colombo, Sri Lanka (HQ Melbourne, Australia)",
       `${MEASUREMENTS.tables.value} SQL tables`,
       "Company scaled 10 → 60+",
     ],
@@ -714,7 +714,7 @@ export const timeline = [
     year: "2026",
     company: "Hobber",
     role: "Senior Frontend Engineer — Lead",
-    place: "HQ Abu Dhabi, UAE",
+    place: "Abu Dhabi, UAE",
     // One line. The title carries the seniority; this carries the substance.
     scope:
       "Architected a vendor marketplace platform 0→1 — seven feature-sliced modules on one shared React + TypeScript component layer.",
@@ -723,7 +723,7 @@ export const timeline = [
     year: "2024",
     company: "Axinom",
     role: "Senior Frontend Engineer — Lead",
-    place: "HQ Fürth, Germany",
+    place: "Colombo, Sri Lanka (HQ Fürth, Germany)",
     scope:
       `Led the frontend team on an enterprise media platform — Mosaic micro-frontends, Shaka Player DRM, i18n, and ${MEASUREMENTS["load-axinom"].value.replace("−","~")} faster page loads.`,
   },
@@ -731,7 +731,7 @@ export const timeline = [
     year: "2021",
     company: "Kodez",
     role: "Senior Frontend Engineer",
-    place: "HQ Melbourne, Australia",
+    place: "Colombo, Sri Lanka (HQ Melbourne, Australia)",
     scope:
       `Built an enterprise CMS 0→1 and the standards a company scaling 10 → 60+ built against — Storybook system, ${MEASUREMENTS.coverage.value} test coverage, ${MEASUREMENTS.releases.value} releases.`,
   },
@@ -739,7 +739,7 @@ export const timeline = [
     year: "2018",
     company: "RaSoft",
     role: "Frontend Engineer",
-    place: "HQ Colombo, Sri Lanka",
+    place: "Colombo, Sri Lanka",
     scope:
       `Joined as an intern and left owning the UI end to end — an employment system from concept to production, and a site revamp that lifted conversion ${MEASUREMENTS.conversion.value.replace("+","~")}.`,
   },

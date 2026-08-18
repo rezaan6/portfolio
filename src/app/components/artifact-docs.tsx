@@ -31,7 +31,12 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "section",
         n: "02",
         title: "Decision",
-        text: "Organize the frontend by feature slice, not by technical layer. Each domain owns its routes, components, state, and API access together. Slices never import from each other; anything genuinely shared is promoted into an explicit UI layer underneath. TypeScript throughout, so cross-slice contracts are compiler-checked rather than convention-checked.",
+        // The last sentence used to read "TypeScript throughout, so cross-slice
+        // contracts are compiler-checked rather than convention-checked" — which
+        // credits the wrong tool. TypeScript compiles a cross-slice import
+        // happily; a lint rule is what refuses it. The compiler's real job here is
+        // the contract at the composition point, which is a different guarantee.
+        text: "Organize the frontend by feature slice, not by technical layer. Each domain owns its routes, components, state, and API access together. Slices never import from each other; anything genuinely shared is promoted into an explicit UI layer underneath. The import direction is lint-checked rather than convention-checked, and TypeScript checks the contracts where slices compose.",
       },
       { type: "heading", title: "Boundary rules" },
       {
@@ -79,7 +84,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "callout",
         tone: "win",
         title: "Consequence",
-        text: "A new domain is a new folder, not a refactor. Integration breaks surface at build time via TypeScript rather than in review or in production.",
+        text: "A new domain is a new folder, not a refactor. A boundary violation is refused by lint on the import direction, and a contract that has drifted fails to typecheck where the slices compose — rather than either surfacing in review, or in production.",
       },
     ],
   },
