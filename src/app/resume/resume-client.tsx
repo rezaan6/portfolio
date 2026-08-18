@@ -64,8 +64,15 @@ const CONTACT_GLYPH: Record<string, string> = {
   "github.com/rezaan6": "GitHub",
 };
 
+// Every verb in the first draft of this was a deciding verb — lead, make the
+// structural decisions, take responsibility — and none was a building verb.
+// Read in the six seconds a screener gives a summary, directly above two titles
+// ending "— Lead", that profiles an architect and invites the "over-levelled for
+// this role" pass on the hands-on senior roles that are the actual target. The
+// hands-on clause comes first for that reason, and it is not a new claim: the
+// Hobber bullet below already says the frontend is his end to end.
 const POSITIONING = () =>
-  `Senior Frontend Engineer with ${yearsPhrase()} owning large React codebases from architecture through production. I lead frontend teams, work cross-functionally with design, backend and DevOps, and I'm the one who flags where a design will fight the design system. I make the structural decisions a codebase has to live with, and take responsibility for how it performs and how safely it ships.`;
+  `Senior Frontend Engineer with ${yearsPhrase()} owning large React codebases from architecture through production — hands-on as the primary engineer, and leading frontend teams. I work cross-functionally with design, backend and DevOps, and I'm the one who flags where a design will fight the design system. I make the structural decisions a codebase has to live with, and take responsibility for how it performs and how safely it ships.`;
 
 // The five-second scan payload. Every figure is a before/after read against
 // a defined baseline — never a causal claim.

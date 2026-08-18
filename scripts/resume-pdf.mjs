@@ -248,10 +248,21 @@ async function main() {
       const m = document.body.innerText.match(/(\d+)\+\s*years/i);
       return m ? `${m[1]}+ years` : null;
     });
-    // The hash of the files this PDF was rendered from. check-resume-pdf-fresh
-    // recomputes it during prebuild, so editing the résumé without
-    // regenerating now fails the build instead of quietly shipping a download
-    // that disagrees with the page it sits on.
+    // The hash of the files this PDF was rendered from.
+    //
+    // This comment used to claim a `check-resume-pdf-fresh` script recomputed
+    // the hash during prebuild, "so editing the résumé without regenerating now
+    // fails the build". No such script exists — prebuild runs only
+    // check-no-template-leaks.mjs — and nothing reads this hash back. On a site
+    // whose argument is that a rule with no check is a preference, a comment
+    // asserting a check that isn't there is the worst kind of stale.
+    //
+    // What actually makes a stale download impossible: both PDFs are gitignored
+    // rather than committed, and `build` is `resume-pdf.mjs && next build`, so
+    // every deploy re-renders them from the live route. The hash stays because
+    // it is cheap provenance in resume.meta.json — a record of which sources
+    // produced this file — not because anything gates on it. The one copy that
+    // can drift is a local one: run `npm run resume:pdf` before sending it.
     const sourceHash = await resumeSourceHash();
     await mkdir(OUT, { recursive: true });
     await writeFile(

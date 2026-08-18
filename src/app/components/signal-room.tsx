@@ -1443,17 +1443,19 @@ export function AboutHero() {
                 measurement pick the next optimization.
               </p>
               <div className="mt-7 flex flex-wrap gap-2">
-                {/* Two chips came out of this row. The location, because a place
-                    in a chip row is read as a filter rather than a fact and this
-                    row is above the fold — it still exists where a recruiter
-                    needs it, on the resume contact line
-                    (resume/resume-client.tsx), stated alongside relocation. And
-                    the title, because the profile card sits in the same grid row
-                    at lg and its caption is the same four words; two identical
-                    labels one viewport apart is a copy bug, not emphasis. Kept
-                    as a map so the styling stays in one place if the row grows
-                    again. */}
-                {["Sri Lankan"].map((chip) => (
+                {/* The title chip came out of this row: the profile card sits in
+                    the same grid row at lg and its caption is the same four
+                    words, and two identical labels one viewport apart is a copy
+                    bug rather than emphasis.
+
+                    The two facts that stay are nationality and where he is right
+                    now. "Currently in" rather than "based in" is the whole point
+                    — a base is somewhere you return to, a current location is a
+                    starting point — and it sits beside relocation everywhere
+                    else on the site, so the pair reads as disclosure rather than
+                    as a boundary. The full version, with relocation attached, is
+                    on the resume contact line. */}
+                {["Sri Lankan", "Currently in the UAE"].map((chip) => (
                   <span
                     key={chip}
                     className="rounded-full border border-[var(--sr-hairline)] bg-[var(--sr-panel)] px-3 py-1.5 font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.12em] text-[var(--sr-muted)]"
@@ -1554,7 +1556,14 @@ export function AboutBeyond() {
     },
     {
       t: "What I want next",
-      b: "A Senior Frontend Engineer role — React-first — where architecture, performance, and design systems genuinely matter — and where AI-native delivery is treated as leverage on execution rather than a substitute for judgment. Open to relocation, onsite and remote.",
+      // This asked the employer to qualify twice — a role "where architecture,
+      // performance, and design systems genuinely matter", and one "where
+      // AI-native delivery is treated as leverage". No job ad describes itself
+      // in either of those terms, so an honest reader concludes she is not the
+      // fit and stops. Same defect as the conditional that used to close the
+      // contact section. Both clauses are now his own practice rather than
+      // conditions on hers, and the seat is stated instead of left to inference.
+      b: "A Senior Frontend Engineer role, React-first, owning frontend architecture, performance and design systems — as the primary senior engineer or as the lead. I treat AI-native delivery as leverage on execution, not a substitute for judgment. Open to onsite, remote, or relocation.",
     },
   ];
   return (
@@ -2716,7 +2725,15 @@ function V8Focus() {
   const items = [
     {
       t: "Frontend architecture",
-      d: "Feature-sliced structures with SOLID boundaries, so a codebase stays changeable after the third team joins it. Greenfield platforms, and CMS builds organised as domain modules.",
+      // This named only new codebases — greenfield, plus a CMS also built 0→1 —
+      // while most senior React roles are an inherited app nobody remembers the
+      // shape of. A manager with that problem read the Core card as not applying
+      // to her. The migration half was already his (Kodez: primary developer on
+      // both the legacy system and its React replacement, moved over
+      // incrementally without freezing client delivery) but it was filed one
+      // card lower, badged Adjacent. "screen by screen" is the MIGRATION PLAN's
+      // own phrasing, so nothing here is a new claim.
+      d: "Feature-sliced structures with SOLID boundaries, so a codebase stays changeable after the third team joins it. Greenfield platforms, CMS builds organised as domain modules, and legacy surfaces migrated onto those boundaries screen by screen.",
       companies: ["Hobber", "Kodez"],
       outcome: "Two platforms architected 0→1",
     },
@@ -2760,10 +2777,15 @@ function V8Focus() {
             Frontend architecture is my spine — and where it extends.
           </h2>
           <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
-            Architecture and performance are the core I&apos;ve shipped against.
-            Full-stack delivery, testing discipline, and AI-native workflows are
-            where that same instinct extends — each backed by a number, not just
-            a title.
+            {/* Three, not two. The grid below badges the first three cards Core
+                (i < 3), and the third is Design systems — so naming two here
+                demoted a capability this section's own UI promotes, inside one
+                viewport. Design systems is also one of the things the target
+                role screens for, which made it the worst one to drop. */}
+            Architecture, performance, and design systems are the core
+            I&apos;ve shipped against. Full-stack delivery, testing discipline,
+            and AI-native workflows are where that same instinct extends — each
+            backed by a number, not just a title.
           </p>
         </Reveal>
         {/* Grid, not flex-wrap. These are six cards of unequal text length, and in a

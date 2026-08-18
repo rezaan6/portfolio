@@ -84,6 +84,12 @@ export const metadata: Metadata = {
     "Design Systems",
     "Web Performance",
     "Mohammed Rezaan Riyaz",
+    // No search engine has ranked on the keywords tag since 2009, so this earns
+    // nothing from Google. It is here because some sourcing tools still scrape
+    // raw meta, and the UAE is the one market he can start in with no visa step
+    // — a free, invisible-to-readers signal with no cost. It is not the thing
+    // that makes him findable by location; the body copy on /about is.
+    "UAE",
   ],
   alternates: { canonical: SITE_URL },
   robots: {
