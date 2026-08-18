@@ -107,6 +107,8 @@ export const MEASUREMENTS = {
     kind: "count",
     basis:
       "The Hobber vendor platform and the Kodez CMS, each architected from an empty repository through to production.",
+    limit:
+      "An empty repository is not an empty problem. Hobber was greenfield in both senses; the Kodez CMS replaced a live Laravel and jQuery application whose feature set defined most of the requirements, and it was migrated onto in steps rather than switched over.",
   },
   modules: {
     value: "7",
