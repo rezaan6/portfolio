@@ -1542,62 +1542,17 @@ export function AboutStats() {
   );
 }
 
-export function AboutBeyond() {
-  const reduce = useReducedMotion();
-  const hoverLift = reduce ? undefined : { y: -4 };
-  const cards = [
-    {
-      t: "How I got here",
-      b: "It started in 2017 during a Mechatronics course, where a C++ class pulled me toward the web. My dissertation went the other direction: a blockchain e-voting system on Ethereum, which is where the interest in onchain systems started. The hardware background is why I still reach for a measurement before an opinion.",
-    },
-    {
-      t: "How I collaborate",
-      b: "I've led frontend teams, mentored juniors, and authored the onboarding docs — which is the fastest way to find out which parts of your architecture aren't actually explainable. I run client-facing technical conversations too: feasibility, UX trade-offs, and scope, in plain language.",
-    },
-    {
-      t: "What I want next",
-      // This asked the employer to qualify twice — a role "where architecture,
-      // performance, and design systems genuinely matter", and one "where
-      // AI-native delivery is treated as leverage". No job ad describes itself
-      // in either of those terms, so an honest reader concludes she is not the
-      // fit and stops. Same defect as the conditional that used to close the
-      // contact section. Both clauses are now his own practice rather than
-      // conditions on hers, and the seat is stated instead of left to inference.
-      b: "A Senior Frontend Engineer role, React-first, owning frontend architecture, performance and design systems — as the primary senior engineer or as the lead. I treat AI-native delivery as leverage on execution, not a substitute for judgment. Open to onsite, remote, or relocation.",
-    },
-  ];
-  return (
-    <section className="border-b border-[var(--sr-hairline)]">
-      <div className="mx-auto max-w-6xl px-5 py-20 lg:px-8">
-        <Reveal>
-          <SectionLabel title="Beyond the resume" />
-          <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-            How I actually work — and what I want next.
-          </h2>
-        </Reveal>
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          {cards.map((c, i) => (
-            <Reveal key={c.t} delay={0.05 * i}>
-              <motion.div
-                whileHover={hoverLift}
-                transition={springHover}
-                className="flex h-full flex-col rounded-2xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)] p-7 transition hover:border-[var(--sr-accent)]"
-              >
-                <span className="h-1.5 w-8 rounded-full bg-[var(--sr-accent)]" />
-                <h3 className="mt-4 font-[family-name:var(--font-display)] text-[18px] font-medium text-[var(--sr-text)]">
-                  {c.t}
-                </h3>
-                <p className="mt-3 text-[14.5px] leading-7 text-[var(--sr-soft)]">
-                  {c.b}
-                </p>
-              </motion.div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+// AboutBeyond ("Beyond the resume" — how I got here / how I collaborate / what I
+// want next) was removed from /about on 2026-08-18. The "what I want next" card
+// was the last conditional on the site: it asked the employer to qualify twice,
+// for a role "where architecture, performance, and design systems genuinely
+// matter" and one "where AI-native delivery is treated as leverage". Rewriting it
+// fixed that, but the frame itself is the problem — a card about what he wants is
+// structurally a list of constraints on the reader, and he does not hold the
+// constraints it implied. Nothing was lost: the mentoring and client-facing work
+// is a Kodez bullet on the résumé, and the Mechatronics course and the BlockVote
+// dissertation are in its education block. Openness now lives once, in the
+// contact heading, where the email button is.
 
 export function PathSection() {
   const reduce = useReducedMotion();
