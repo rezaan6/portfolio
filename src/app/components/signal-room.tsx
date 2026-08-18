@@ -2255,7 +2255,9 @@ export function ProjectsSection() {
  * ------------------------------------------------------------------ */
 
 function V8HeroCard() {
-  const reduce = useReducedMotion();
+  // No useReducedMotion here any more: this card no longer animates at all, so
+  // there is no motion to reduce. Rendering above-the-fold content statically is
+  // the same answer prefers-reduced-motion wanted, applied to everyone.
   const rows = [
     { company: "Hobber", label: "Vendor dashboard architected", value: "0→1", logo: "/logos/hobber.png", mark: "HB", note: "7 modules, feature-sliced React + TS" },
     { company: "Axinom", label: "Page load time", value: MEASUREMENTS["load-axinom"].value, logo: "/logos/axinom.png", mark: "AX", note: "bundle, lazy-load & caching" },
@@ -2263,11 +2265,14 @@ function V8HeroCard() {
     { company: "Kodez", label: "Automated test coverage", value: MEASUREMENTS.coverage.value, logo: "/logos/kodez.png", mark: "KZ", note: "Jest & Cypress — the suite gated in CI, not the number" },
   ];
   return (
-    <motion.div
-      initial={reduce ? false : { opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.55, ease: "easeOut", delay: 0.1 }}
+    /* Not a motion.div, and not Reveal either. This card is the hero's right
+       column, so it is above the fold on every desktop width — and because it
+       animated itself with a raw `initial={{ opacity: 0 }}` rather than going
+       through Reveal, the first pass at the LCP fix (Reveal's `immediate` prop)
+       missed it entirely. LCP stayed at ~800ms with ~776ms of render delay; only
+       the LCP element had changed, from the H1 to this card. Anything above the
+       fold that ships at zero opacity is the LCP, whichever component owns it. */
+    <div
       className="relative mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)] p-6 shadow-[0_24px_50px_-28px_rgba(20,30,70,0.35)]"
     >
       <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-1" style={{ background: "var(--sr-accent-grad)" }} />
@@ -2311,7 +2316,7 @@ function V8HeroCard() {
       <p className="mt-5 border-t border-[var(--sr-hairline)] pt-3 text-[10.5px] leading-4 text-[var(--sr-faint)]">
         Measured before/after against a defined baseline — not claimed causal.
       </p>
-    </motion.div>
+    </div>
   );
 }
 
