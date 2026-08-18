@@ -1443,12 +1443,17 @@ export function AboutHero() {
                 measurement pick the next optimization.
               </p>
               <div className="mt-7 flex flex-wrap gap-2">
-                {/* No location chip. A place in a chip row is read as a filter,
-                    not as a fact, and this row is above the fold on /about. The
-                    location does still exist where a recruiter needs it — the
-                    resume contact line (resume/resume-client.tsx) states it
-                    alongside relocation — so it is moved, not hidden. */}
-                {["Senior Frontend Engineer", "Sri Lankan"].map((chip) => (
+                {/* Two chips came out of this row. The location, because a place
+                    in a chip row is read as a filter rather than a fact and this
+                    row is above the fold — it still exists where a recruiter
+                    needs it, on the resume contact line
+                    (resume/resume-client.tsx), stated alongside relocation. And
+                    the title, because the profile card sits in the same grid row
+                    at lg and its caption is the same four words; two identical
+                    labels one viewport apart is a copy bug, not emphasis. Kept
+                    as a map so the styling stays in one place if the row grows
+                    again. */}
+                {["Sri Lankan"].map((chip) => (
                   <span
                     key={chip}
                     className="rounded-full border border-[var(--sr-hairline)] bg-[var(--sr-panel)] px-3 py-1.5 font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.12em] text-[var(--sr-muted)]"
