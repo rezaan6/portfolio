@@ -121,7 +121,7 @@ export const caseStudies: CaseStudy[] = [
     context:
       "Hobber is a marketplace for entertainment, recreation, dining, and tourism vendors, and the vendor platform is the side those businesses actually operate on. When I joined there was no dashboard — just a list of everything it would eventually need: authentication, vendor accounts, dashboards, scheduling, payouts, integrations, and team access management. Each of those is a real domain with its own state, its own permissions, and its own backend surface. The default path is to start with one screen and keep adding to it; three months later every change touches everything.",
     decision:
-      "I architected the frontend from scratch on a modular, feature-based structure: each domain owns its own slice — routes, components, state, and API layer together — and shares only an explicit, reusable UI layer underneath. React and TypeScript throughout, so the contract between slices is checked by the compiler rather than by convention. That let me build activity management, booking flows, stock scheduling, discount logic, and vendor content management as separate workflows that compose instead of colliding.",
+      "I architected the frontend from scratch on a modular, feature-based structure: each domain owns its own slice — routes, components, state, and API layer together — and shares only an explicit, reusable UI layer underneath. A lint rule refuses a cross-slice import, and TypeScript checks the shape where slices compose at the route — two different guarantees, and neither is a convention. That let me build activity management, booking flows, stock scheduling, discount logic, and vendor content management as separate workflows that compose instead of colliding.",
     tradeoff:
       "Upfront architecture vs. time to first screen. Feature slicing and a shared component layer cost real days before anything is demo-able, and at a startup that is a genuinely uncomfortable trade. I took it because the platform's scope was known up front — seven modules, not one — and the alternative is paying it back with interest during the first big feature. What I protected was the boundary: shared UI stays generic, and anything domain-specific lives in its slice, even when copying it would have been faster that afternoon.",
     signal:
@@ -186,8 +186,8 @@ type RowProps    = { variant: "primary"; isPayoutRow: boolean }         // not s
         why: "Built one shared component layer under every workflow — activity management, booking, stock scheduling, discounts, and content — so vendor features compose rather than each shipping its own UI.",
       },
       {
-        lp: "Types as the contract",
-        why: "Used TypeScript across every slice so integration breaks between feature modules surface at build time, not in a code review or in production.",
+        lp: "The boundary is a check, not a convention",
+        why: "A lint rule refuses a cross-slice import outright; TypeScript catches a shape that has drifted where the slices compose. Two different guarantees — neither of them a code review remembering.",
       },
     ],
   },
@@ -821,7 +821,7 @@ Guardrail: nothing on the path to first frame is lazy-loaded.`,
     group: "Core frontend",
     use: "Type-safe contracts across the codebase",
     howIUse:
-      "TypeScript is how I make architectural boundaries enforceable instead of aspirational. In a feature-sliced codebase the contract between slices is a type, so an integration break surfaces at build time rather than in review or production. I type API responses at the edge and let inference carry from there, keep unions narrow so impossible states are unrepresentable, and avoid the escape hatches — an `any` in a shared component is a boundary quietly dissolving.",
+      "TypeScript does a specific job at an architectural boundary, and it is worth being exact about which — because it is not the one people assume. It will not stop a cross-slice import: there is nothing type-unsound about payouts importing scheduling, so the compiler has no opinion at all, and refusing that is a lint rule's job. What the compiler does own is the shape at the composition point — a slice's public entry changes its props and the route stops building. I type API responses at the edge and let inference carry from there, keep unions narrow so impossible states are unrepresentable, and avoid the escape hatches — an `any` in a shared component is a boundary quietly dissolving.",
     sample: `Make the impossible state unrepresentable
 type VendorService =
   | { status: "draft";     price?: never }
