@@ -36,20 +36,35 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         // credits the wrong tool. TypeScript compiles a cross-slice import
         // happily; a lint rule is what refuses it. The compiler's real job here is
         // the contract at the composition point, which is a different guarantee.
-        text: "Organize the frontend by feature slice, not by technical layer. Each domain owns its routes, components, state, and API access together. Slices never import from each other; anything genuinely shared is promoted into an explicit UI layer underneath. The import direction is lint-checked rather than convention-checked, and TypeScript checks the contracts where slices compose.",
+        // This used to name one shared layer — UI — which describes a structure
+        // that cannot actually hold an application. Slices may not import each
+        // other and shared UI may not know a domain, so the HTTP client, the auth
+        // token and its refresh, the permission check, the shape a .NET error is
+        // normalised into and a Money type had nowhere legal to live. They exist
+        // in the repo; the document just didn't admit the layer they live in.
+        // Naming two shared layers is the honest version, and it is where
+        // feature-sliced architectures actually fail.
+        text: "Organize the frontend by feature slice, not by technical layer. Each domain owns its routes, components, state, and API access together, and slices never import from each other. Two shared layers sit underneath, not one: generic UI primitives that know no domain, and a domain layer for the things every slice needs but no slice owns — the HTTP client, auth and token refresh, permission checks, error normalisation, shared types. Slices may import both; neither may import a slice; and shared UI may not import the domain layer. The import direction is lint-checked rather than convention-checked, and TypeScript checks the contracts where slices compose.",
       },
       { type: "heading", title: "Boundary rules" },
       {
         type: "checklist",
         checks: [
-          { text: "A slice may import from the shared UI layer." },
+          { text: "A slice may import from the shared UI layer, and from the shared domain layer." },
           {
             text: "A slice may not import from another slice — cross-domain flows compose at the route level.",
           },
           {
             text: "Shared UI stays domain-agnostic. If it needs to know about payouts, it isn't shared.",
           },
+          {
+            text: "Shared UI may not import the domain layer. That direction is what stops the primitives becoming a second place domain logic hides.",
+          },
           { text: "A pattern is copied twice before it is promoted. — Added by amendment; see below." },
+          {
+            text: "The lint rule only enforces the slice-to-slice direction. Domain logic put into shared UI is caught by review, which holds as long as the reviewer remembers — the next rule I'd add, not one I have.",
+            good: false,
+          },
           {
             text: "Premature generalization — a shared component built for a use case that hasn't arrived.",
             good: false,
