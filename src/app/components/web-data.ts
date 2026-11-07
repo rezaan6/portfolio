@@ -3,11 +3,12 @@
  *
  * The rest of the site is written for product teams and argues in
  * architecture. A holding group asks a different question: can one
- * person keep twenty brands' websites current, bilingual, measurable
- * and safe? This file answers it with the cr8v work — capabilities, case
- * studies and the way the work is run — and the sites themselves live in
- * lib/clients.ts. Every line traces to my work log; figures come from
- * lib/measurement like everywhere else.
+ * person keep every brand's website current, bilingual, measurable and
+ * safe? This file answers at the level a group thinks at. Capabilities
+ * are claimed across the estate, and each one is true across several of
+ * its sites; depth is kept for the case studies, where the work had it.
+ * Figures come from lib/measurement like everywhere else, and the sites
+ * themselves live in lib/clients.ts.
  * ------------------------------------------------------------------ */
 
 import { MEASUREMENTS } from "../lib/measurement";
@@ -19,35 +20,35 @@ export const webCapabilities: WebCapability[] = [
     title: "Every brand's site, kept current",
     body: "Content, new pages and documents across the group's companies, on WordPress, Laravel and Shopify.",
     proof: [
-      "A monthly group magazine, career-fair pages and company profiles as flipbooks",
-      "Privacy, quality and food-safety policy pages",
-      "News, investor and property pages kept up to date",
+      "A monthly group magazine and company profiles, published as flipbooks",
+      "Career-fair, news, investor and property pages",
+      "Privacy, quality and food-safety policies",
     ],
   },
   {
     title: "Arabic and English, properly",
     body: "Bilingual pages that read right in both — right-to-left layouts, Arabic dates, translated pages kept in step with the English.",
     proof: [
-      "Arabic versions rebuilt on WPML for group brands",
-      "Right-to-left news with Arabic dates and buttons",
-      "A bilingual menu, admin panel and print PDF for a restaurant",
+      "Arabic versions rebuilt on WPML",
+      "Right-to-left layouts with Arabic dates and numerals",
+      "Bilingual investor, property and menu pages",
     ],
   },
   {
     title: "Leads that actually arrive",
     body: "A form is only useful if the enquiry lands. I trace the ones that don't, back to the cause.",
     proof: [
-      "Contact and job forms repaired, CV uploads stored",
-      "Spam stopped with reCAPTCHA",
-      "A reservation form given a real backend, with email and WhatsApp alerts",
+      "Contact, job and booking forms traced and repaired",
+      "CV uploads stored, and spam stopped with reCAPTCHA",
+      "Enquiry alerts by email and WhatsApp",
     ],
   },
   {
     title: "Tracking marketing can trust",
     body: `Google Tag Manager with lead tracking on ${MEASUREMENTS.tracking.value} sites, the old tags removed, and purchase tracking fixed where it was double-counting.`,
     proof: [
-      "Meta purchase events de-duplicated, with order values",
-      "Looker Studio sales dashboards for two stores",
+      "Purchase events de-duplicated, with order values",
+      "Looker Studio sales dashboards",
       "Traffic and enquiry reports for the brands",
     ],
   },
@@ -55,16 +56,16 @@ export const webCapabilities: WebCapability[] = [
     title: "E-commerce",
     body: "Shopify and WooCommerce stores: storefront features, checkout changes, and the apps around them.",
     proof: [
-      "A product carousel, bundles and add-ons",
+      "Product carousels, bundles and add-ons",
       "Delivery charges and checkout messages",
-      "Fixes worked through with the stores' app vendors",
+      "Fixes worked through with app vendors",
     ],
   },
   {
     title: "Security and upkeep, planned",
-    body: `A security review of the group's ${MEASUREMENTS["das-sites"].value} production sites, the penetration-test findings fixed, and a ${MEASUREMENTS["upgrade-plan"].value}-day upgrade plan the group approved.`,
+    body: `A security review of the group's ${MEASUREMENTS["das-sites"].value} production sites, the penetration-test findings worked through, and a ${MEASUREMENTS["upgrade-plan"].value}-day upgrade plan the group approved.`,
     proof: [
-      "Threat-intelligence blocklists applied across the estate",
+      "Blocklists from the group's security team applied across the estate",
       "Backups and server housekeeping",
       "Outages diagnosed, and sites brought back",
     ],
@@ -79,12 +80,12 @@ export const webCapabilities: WebCapability[] = [
     ],
   },
   {
-    title: "The small requests too",
-    body: "QR codes, digital business cards, HTML email signatures and emailers, alongside the bigger work.",
+    title: "The everyday requests",
+    body: "The requests a group sends every week, handled alongside the bigger work rather than queued behind it.",
     proof: [
-      "Scan-to-save contact cards for staff",
-      "App-download QR codes",
-      "Email signatures and emailers in HTML",
+      "QR codes and digital business cards",
+      "HTML email signatures and emailers",
+      "Company profiles and documents published online",
     ],
   },
 ];
@@ -92,35 +93,23 @@ export const webCapabilities: WebCapability[] = [
 export type WebCaseStudy = {
   slug: string;
   title: string;
-  /** Client slugs from lib/clients.ts — the first one's screenshot leads. */
-  sites: string[];
+  /** Client slug whose screenshot leads the card. */
+  image: string;
+  /** Client slugs linked live from the card — empty when the work spans the estate. */
+  links: string[];
   tags: string[];
   situation: string;
   did: string[];
   result: string;
 };
 
+// Ordered for a group reading them: the estate first, the one-off build last.
 export const webCaseStudies: WebCaseStudy[] = [
-  {
-    slug: "fifty-four",
-    title: "A restaurant site, from an empty repository to its own admin",
-    sites: ["fifty-four"],
-    tags: ["React", "TypeScript", "Cloudflare", "English & Arabic"],
-    situation:
-      "A new restaurant needed a site to carry its menu, bookings and brand in English and Arabic — and one the restaurant could update itself, without a developer for every price change.",
-    did: [
-      "Built it from an empty repository in React and TypeScript, with the full menu rebuilt from the client's own spreadsheet.",
-      "Gave the reservation and feedback forms a real backend, with email and WhatsApp alerts to the restaurant.",
-      "Carried it through a full rebrand, then moved it onto company-owned accounts on Cloudflare with an admin panel I built.",
-      "Added a staging site that deploys on every push, nightly content backups, and email from the restaurant's own domain.",
-    ],
-    result:
-      "Live at 54dining.com. The restaurant publishes menu and page changes itself and sees them within seconds; bookings and feedback reach it by email and WhatsApp; nothing reaches the live site without passing through staging first.",
-  },
   {
     slug: "security-programme",
     title: `One security programme, ${MEASUREMENTS["das-sites"].value} production sites`,
-    sites: ["das-holding", "eifm", "tawasul-limo", "udi"],
+    image: "das-holding",
+    links: [],
     tags: ["WordPress", "Laravel", "Custom PHP", "cPanel"],
     situation: `The group's ${MEASUREMENTS["das-sites"].value} production sites share one server and span WordPress, Laravel and custom PHP. Its security team needed to know where each one stood — and then to see it fixed.`,
     did: [
@@ -130,54 +119,74 @@ export const webCaseStudies: WebCaseStudy[] = [
       `Planned the upgrades site by site, grouped by risk with an effort estimate for each — ${MEASUREMENTS["upgrade-plan"].value} working days, approved — and started delivery with the group's own site.`,
     ],
     result:
-      "A written record of where every site stands, the test's findings fixed site by site, and an approved plan the group can hold to — instead of patching whichever site breaks next.",
+      "A written record of where every site stands, the test's findings worked through site by site, and an approved plan the group can hold to — instead of patching whichever site breaks next.",
   },
   {
-    slug: "commerce-reporting",
-    title: "E-commerce numbers two stores can trust",
-    sites: ["plantaflora", "camelia"],
-    tags: ["Shopify", "WooCommerce", "GA4", "Meta", "Looker Studio"],
+    slug: "bilingual",
+    title: "Arabic and English across the group's brands",
+    image: "citiscape",
+    links: ["citiscape", "east-and-west", "ewp", "grove"],
+    tags: ["WordPress", "WPML", "Laravel", "Right-to-left"],
     situation:
-      "Two flower stores were spending on Meta and Google ads, but the numbers did not add up: purchases were counted several times over, and many arrived without an order value.",
+      "The group's brands needed Arabic that works as Arabic — right-to-left layouts, Arabic dates and numerals, and translated pages that keep up with the English site.",
     did: [
-      "Reviewed the stores' tracking end to end — Google tag, GA4 and the Meta pixel — and removed the duplicate setup.",
-      "Fixed the Meta purchase events: no more duplicates, and an order value on every purchase.",
-      "Rebuilt both sales dashboards in Looker Studio — overview, campaigns, Meta Ads, placements, a glossary and a store-versus-store comparison — with commentary that stays true for any date range.",
-      "Added a weekly page-speed test, and a client view shared only within the agency.",
+      "Rebuilt Arabic versions on WPML from the current English sites, and tested both languages end to end.",
+      "Added an Arabic language toggle where a brand had none, repairing English pages found broken along the way.",
+      "Right-to-left news with Arabic dates and buttons.",
+      "A commercial-properties section with category and emirate filters, in both languages.",
     ],
     result:
-      "Ad spend and sales now read from the same source, and the two stores can be compared side by side — the figures the agency's campaign reviews are built on.",
+      "Arabic built to the same standard as the English, and proven on a demo for each brand's review before anything changes on the live site.",
   },
   {
     slug: "investor-relations",
     title: "Investor relations for an investment company",
-    sites: ["esic"],
+    image: "esic",
+    links: ["esic"],
     tags: ["WordPress", "Custom PHP", "English & Arabic"],
     situation:
       "Emirates Strategic Investment Company publishes results and credit ratings to investors through a locked portal, in English and Arabic — where a wrong figure is a disclosure problem, not a typo.",
     did: [
-      "Added the 2026 first-half results to the investor portal, built from the live files rather than a stale copy.",
-      "Published a Moody's rating action across the four investor pages, and a credit opinion under Regulated Information.",
+      "Added the half-year results to the investor portal, built from the live files rather than a stale copy.",
+      "Published rating actions and credit opinions across the investor pages.",
       "Built every change on a demo first, and took it live only after the client approved it.",
     ],
     result:
       "Results and ratings published in both languages, and nothing reached investors that had not been approved first.",
   },
   {
-    slug: "bilingual",
-    title: "Arabic and English across the group's brands",
-    sites: ["citiscape", "east-and-west", "ewp", "grove"],
-    tags: ["WordPress", "WPML", "Laravel", "Right-to-left"],
+    slug: "commerce-reporting",
+    title: "E-commerce numbers two stores can trust",
+    image: "plantaflora",
+    links: ["plantaflora", "camelia"],
+    tags: ["Shopify", "WooCommerce", "GA4", "Meta", "Looker Studio"],
     situation:
-      "Several of the group's brands needed Arabic that works as Arabic — right-to-left layouts, Arabic dates and numerals, and translated pages that keep up with the English site.",
+      "Two flower stores were spending on Meta and Google ads, but the numbers did not add up: purchases were counted several times over, and many arrived without an order value.",
     did: [
-      "Rebuilt Citiscape's Arabic version on a demo from the current English site, and tested both languages end to end.",
-      "Built an Arabic language toggle for Grove Landscape, repairing English pages found broken along the way.",
-      "Gave East & West Properties right-to-left Arabic news cards with Arabic dates and buttons.",
-      "Built East & West's Commercial Properties section with category and emirate filters, in both languages.",
+      "Reviewed the stores' tracking end to end — Google tag, GA4 and the Meta pixel — and removed the duplicate setup.",
+      "Fixed the purchase events: no more duplicates, and an order value on every purchase.",
+      "Rebuilt both sales dashboards in Looker Studio — overview, campaigns, ads, placements and a store-versus-store comparison — with commentary that stays true for any date range.",
+      "Storefront work alongside it: product carousels, bundles and add-ons, and checkout delivery changes.",
     ],
     result:
-      "Arabic built to the same standard as the English, proven on demos for each brand's review before anything changes on the live site.",
+      "Ad spend and sales now read from the same source, and the two stores can be compared side by side — the figures the agency's campaign reviews are built on.",
+  },
+  {
+    slug: "fifty-four",
+    title: "A restaurant site, from an empty repository to its own admin",
+    image: "fifty-four",
+    links: ["fifty-four"],
+    tags: ["React", "TypeScript", "Cloudflare", "English & Arabic"],
+    situation:
+      "A new restaurant needed a site to carry its menu, bookings and brand in English and Arabic — and one it could update itself, without a developer for every price change.",
+    did: [
+      "Built it from an empty repository in React and TypeScript, with the full menu rebuilt from the client's own spreadsheet.",
+      "Gave the reservation and feedback forms a real backend, with email and WhatsApp alerts to the restaurant.",
+      "Carried it through a full rebrand, then moved it onto company-owned accounts on Cloudflare with an admin panel I built.",
+      "Added a staging site that deploys on every push, nightly content backups, and email from the restaurant's own domain.",
+    ],
+    result:
+      "Live at 54dining.com. The restaurant publishes menu and page changes itself and sees them within seconds; bookings and feedback reach it by email and WhatsApp; nothing reaches the live site without passing through staging first.",
   },
 ];
 
@@ -200,7 +209,7 @@ export const webProcess: { label: string; body: string }[] = [
   },
   {
     label: "Reported in plain language",
-    body: `Marketing hears what changed for them; IT and security get the technical detail. ${MEASUREMENTS.tasks.value} tasks since June, each one on record.`,
+    body: `Marketing hears what changed for them; IT and security get the technical detail. ${MEASUREMENTS.tasks.value} tasks so far, each one on record.`,
   },
 ];
 

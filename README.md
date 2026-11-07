@@ -61,7 +61,7 @@ artifact type must have a document that can render it; every figure must state a
 and a reading or an estimate must state its limit; no percentage may be hardcoded where
 it could drift from `lib/measurement`; no version number may reach a reader; no quoted
 string may contain a template literal. Each of those is a defect that shipped once and was
-found by reading output, late. 123 tests, under a second.
+found by reading output, late. 101 tests, under a second.
 
 **One value, one place.** The page-hero panel height is `--sr-hero-min-h`, read by both
 components that render one. It used to be a literal written into each, which is how
@@ -91,7 +91,7 @@ latest; a number in a table is a second copy that goes stale the day after it's 
 
 **Nine production dependencies** — `clsx`, `motion`, `next`, `react`, `react-dom`,
 `server-only`, `shiki`, and Vercel's `@vercel/analytics` and `@vercel/speed-insights`.
-~11.7k lines of TypeScript across 41 files and 12 routes, plus 324 lines of tests in 3
+~11.3k lines of TypeScript across 39 files and 11 routes, plus 317 lines of tests in 3
 files. `npm audit` reports zero vulnerabilities in production dependencies; the moderate
 advisories left are in lint tooling, which never ships, and have no fixed release yet. Measure performance yourself rather than trust a badge in a README; CLS
 in particular is sensitive to a cold font cache.
@@ -135,8 +135,7 @@ npm run dev      # http://localhost:3000
 | `/` | Hero, impact numbers, case accordion, role lenses, method, focus areas |
 | `/work` | Four company case studies, written as engineering decisions |
 | `/work/[slug]` | Case detail — decision arc, UI reference build, practices |
-| `/web` | The web-platform work, for groups hiring for it — capabilities, case studies, process, and every client site live (`/clients` redirects here) |
-| `/web/[slug]` | One client site — what I did on it, from the work log |
+| `/web` | The web-platform work, for groups hiring for it — capabilities, case studies, process, and the client sites live (`/clients` redirects here) |
 | `/projects` | Personal and open-source builds |
 | `/stack` | Tools grouped by purpose, each with how it shows up in real work |
 | `/method` | The Architect → Build → Harden → Measure loop |
@@ -156,8 +155,8 @@ Editing copy means editing one of these. None of it is in JSX.
 - **`src/app/components/prototype-data.tsx`** — per-case UI reference builds, keyed by
   case-study slug.
 - **`src/app/resume/resume-client.tsx`** — résumé data and layout, for both versions.
-- **`src/app/lib/clients.ts`** — the client sites on `/web`, with what I did on each. Plain
-  TypeScript with no imports, so `scripts/client-shots.mjs` loads the same list the pages render.
+- **`src/app/lib/clients.ts`** — the client sites on `/web`. Plain TypeScript with no imports,
+  so `scripts/client-shots.mjs` loads the same list the page renders.
 - **`src/app/components/web-data.ts`** — the rest of `/web`: capabilities, case studies,
   process and stack.
 - **`src/app/lib/measurement.ts`** — every figure on the site, with its basis and its

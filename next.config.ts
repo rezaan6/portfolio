@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
     return [
       { source: "/colophon", destination: "/", permanent: true },
       { source: "/clients", destination: "/web", permanent: true },
+      { source: "/web/:slug", destination: "/web", permanent: true },
     ];
   },
   turbopack: {

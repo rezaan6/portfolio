@@ -135,7 +135,7 @@ export const MEASUREMENTS = {
     value: "20",
     kind: "count",
     basis:
-      "Companies under the DAS Holding account whose websites, stores or reporting I work on — one file each in my work log, and one page each on /web.",
+      "Companies under the DAS Holding account whose websites, stores or reporting I work on — one file each in my work log.",
     limit:
       "Twenty companies, not twenty builds: most are existing sites I run and extend, and for two of them the work is reporting or an assessment rather than the site itself.",
   },
