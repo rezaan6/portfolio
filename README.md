@@ -92,7 +92,8 @@ latest; a number in a table is a second copy that goes stale the day after it's 
 **Nine production dependencies** — `clsx`, `motion`, `next`, `react`, `react-dom`,
 `server-only`, `shiki`, and Vercel's `@vercel/analytics` and `@vercel/speed-insights`.
 ~10.9k lines of TypeScript across 38 files and 11 routes, plus 307 lines of tests in 3
-files. `npm audit` reports zero vulnerabilities. Measure performance yourself rather than trust a badge in a README; CLS
+files. `npm audit` reports zero vulnerabilities in production dependencies; the moderate
+advisories left are in lint tooling, which never ships, and have no fixed release yet. Measure performance yourself rather than trust a badge in a README; CLS
 in particular is sensitive to a cold font cache.
 
 The two Vercel packages are the point of a note elsewhere on the site: the observability
@@ -123,7 +124,7 @@ npm run dev      # http://localhost:3000
 | `npm start` | Serve the production build |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | `tsc --noEmit` |
-| `npm run audit` | `npm audit` at moderate+ severity |
+| `npm run audit` | `npm audit`: production dependencies at moderate+, everything at high+ |
 | `npm test` | Vitest, once |
 | `npm run test:watch` | Vitest, watching |
 

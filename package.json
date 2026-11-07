@@ -19,7 +19,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "audit": "npm audit --audit-level=moderate",
+    "audit": "npm audit --omit=dev --audit-level=moderate && npm audit --audit-level=high",
     "resume:pdf": "node scripts/resume-pdf.mjs",
     "clients:shots": "node scripts/client-shots.mjs",
     "prebuild": "node scripts/check-no-template-leaks.mjs",
