@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/colophon", destination: "/", permanent: true },
+      { source: "/clients", destination: "/web", permanent: true },
     ];
   },
   turbopack: {

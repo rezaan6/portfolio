@@ -61,7 +61,7 @@ artifact type must have a document that can render it; every figure must state a
 and a reading or an estimate must state its limit; no percentage may be hardcoded where
 it could drift from `lib/measurement`; no version number may reach a reader; no quoted
 string may contain a template literal. Each of those is a defect that shipped once and was
-found by reading output, late. 97 tests, under a second.
+found by reading output, late. 123 tests, under a second.
 
 **One value, one place.** The page-hero panel height is `--sr-hero-min-h`, read by both
 components that render one. It used to be a literal written into each, which is how
@@ -91,7 +91,7 @@ latest; a number in a table is a second copy that goes stale the day after it's 
 
 **Nine production dependencies** — `clsx`, `motion`, `next`, `react`, `react-dom`,
 `server-only`, `shiki`, and Vercel's `@vercel/analytics` and `@vercel/speed-insights`.
-~10.9k lines of TypeScript across 38 files and 11 routes, plus 307 lines of tests in 3
+~11.7k lines of TypeScript across 41 files and 12 routes, plus 324 lines of tests in 3
 files. `npm audit` reports zero vulnerabilities in production dependencies; the moderate
 advisories left are in lint tooling, which never ships, and have no fixed release yet. Measure performance yourself rather than trust a badge in a README; CLS
 in particular is sensitive to a cold font cache.
@@ -120,7 +120,7 @@ npm run dev      # http://localhost:3000
 | `npm run build` | Renders both résumés to PDF, then builds. Ordering matters — see below |
 | `npm run build:fast` | Build without regenerating the PDFs |
 | `npm run resume:pdf` | Render `/resume` and `/resume/web-platform` to `public/resume{,-web-platform}.pdf`, each with an `-a4` twin |
-| `npm run clients:shots` | Retake the `/clients` screenshots from the live sites (`-- <slug>` for one) |
+| `npm run clients:shots` | Retake the `/web` screenshots from the live sites (`-- <slug>` for one) |
 | `npm start` | Serve the production build |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | `tsc --noEmit` |
@@ -135,7 +135,8 @@ npm run dev      # http://localhost:3000
 | `/` | Hero, impact numbers, case accordion, role lenses, method, focus areas |
 | `/work` | Four company case studies, written as engineering decisions |
 | `/work/[slug]` | Case detail — decision arc, UI reference build, practices |
-| `/clients` | The cr8v client sites, live — how the estate is run, then every site with what I did on it |
+| `/web` | The web-platform work, for groups hiring for it — capabilities, case studies, process, and every client site live (`/clients` redirects here) |
+| `/web/[slug]` | One client site — what I did on it, from the work log |
 | `/projects` | Personal and open-source builds |
 | `/stack` | Tools grouped by purpose, each with how it shows up in real work |
 | `/method` | The Architect → Build → Harden → Measure loop |
@@ -155,8 +156,10 @@ Editing copy means editing one of these. None of it is in JSX.
 - **`src/app/components/prototype-data.tsx`** — per-case UI reference builds, keyed by
   case-study slug.
 - **`src/app/resume/resume-client.tsx`** — résumé data and layout, for both versions.
-- **`src/app/lib/clients.ts`** — the client sites on `/clients`. Plain TypeScript with no
-  imports, so `scripts/client-shots.mjs` loads the same list the page renders.
+- **`src/app/lib/clients.ts`** — the client sites on `/web`, with what I did on each. Plain
+  TypeScript with no imports, so `scripts/client-shots.mjs` loads the same list the pages render.
+- **`src/app/components/web-data.ts`** — the rest of `/web`: capabilities, case studies,
+  process and stack.
 - **`src/app/lib/measurement.ts`** — every figure on the site, with its basis and its
   limit. One number in one place, so the résumé, the case tables and the ⓘ disclosures
   cannot disagree. They used to.
@@ -167,7 +170,7 @@ Editing copy means editing one of these. None of it is in JSX.
 
 - **No client code is in this repository.** Production work at Hobber, Axinom and Kodez is
   under NDA. The case-study prototypes are reference builds written from scratch; they
-  contain no client code, data, or interface. The `/clients` screenshots are of public
+  contain no client code, data, or interface. The `/web` screenshots are of public
   homepages, published with the agency's permission, and retaken by `npm run clients:shots`
   rather than edited by hand.
 - **Icons** are [Simple Icons](https://simpleicons.org) (CC0), stored locally rather than

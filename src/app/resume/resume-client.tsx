@@ -116,7 +116,7 @@ const CR8V: Role = {
     "Looker Studio",
   ],
   points: [
-    `Sole developer on the DAS Holding account — the websites of ${MEASUREMENTS["das-companies"].value} group companies across real estate, healthcare, retail, investment and e-commerce, scoped, built, tested and deployed end to end. Every site is live at rezaanriyaz.com/clients.`,
+    `Sole developer on the DAS Holding account — the websites of ${MEASUREMENTS["das-companies"].value} group companies across real estate, healthcare, retail, investment and e-commerce, scoped, built, tested and deployed end to end. Every site is live at rezaanriyaz.com/web.`,
     `Ran the security and upgrade work across the group's ${MEASUREMENTS["das-sites"].value} production sites: closed the penetration-test findings and planned a ${MEASUREMENTS["upgrade-plan"].value}-day, site-by-site upgrade programme the client approved.`,
     "Built 54dining.com from an empty repository for a separate client — React and TypeScript, now on Cloudflare with an admin panel I also built: real-time publishing, photo cropping, English and Arabic content, a staging site and nightly backups.",
     `Rolled out lead tracking on ${MEASUREMENTS.tracking.value} sites and built Looker Studio sales dashboards on GA4 and Meta Ads data — ${MEASUREMENTS.tasks.value} tasks delivered since June 2026.`,

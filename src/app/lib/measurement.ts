@@ -129,13 +129,13 @@ export const MEASUREMENTS = {
     basis:
       "Derived from a single start date — my first professional role in December 2018 — rather than written down, and floored so it can never overstate.",
   },
-  // The cr8v figures. Each one is checkable against /clients, where every site
+  // The cr8v figures. Each one is checkable against /web, where every site
   // they count is listed and live.
   "das-companies": {
     value: "20",
     kind: "count",
     basis:
-      "Companies under the DAS Holding account whose websites, stores or reporting I work on — one file each in my work log, and one card each on /clients.",
+      "Companies under the DAS Holding account whose websites, stores or reporting I work on — one file each in my work log, and one page each on /web.",
     limit:
       "Twenty companies, not twenty builds: most are existing sites I run and extend, and for two of them the work is reporting or an assessment rather than the site itself.",
   },

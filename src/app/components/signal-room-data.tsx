@@ -25,7 +25,9 @@ export const contact = {
 export const navLinks = [
   { href: "/", num: "01", label: "Home" },
   { href: "/work", num: "02", label: "Work" },
-  { href: "/clients", num: "03", label: "Clients" },
+  // No-break space: the nav wraps each item at its first space ("01" over "Home"),
+  // so a two-word label has to stay one unit to sit under its number like the rest.
+  { href: "/web", num: "03", label: "Web\u00a0work" },
   { href: "/projects", num: "04", label: "Projects" },
   { href: "/stack", num: "05", label: "Stack" },
   { href: "/method", num: "06", label: "Method" },
@@ -758,28 +760,6 @@ export const timeline = [
     place: "Colombo, Sri Lanka",
     scope:
       `Joined as an intern and left owning the UI end to end — an employment system from concept to production, and a site revamp that lifted conversion ${MEASUREMENTS.conversion.value.replace("+","~")}.`,
-  },
-];
-
-// How the cr8v estate is run — the part of /clients a screenshot cannot show.
-// The sites themselves live in lib/clients.ts, which the screenshot script
-// also reads; these stay here because they quote figures from the module.
-export const clientPractices: { label: string; body: string }[] = [
-  {
-    label: "Proven on a copy first",
-    body: "Every change is made and tested on a copy of the site, then shipped to the live one after the client signs off. Nothing is edited live.",
-  },
-  {
-    label: "Every task on record",
-    body: `A work-log entry for every task — ${MEASUREMENTS.tasks.value} since June — so the history of any site, and the reason behind a change, is a search away.`,
-  },
-  {
-    label: "Security planned, not patched",
-    body: `A site-by-site assessment of the group's ${MEASUREMENTS["das-sites"].value} production sites, the penetration-test findings closed, and a ${MEASUREMENTS["upgrade-plan"].value}-day upgrade plan the client approved.`,
-  },
-  {
-    label: "One change, every site",
-    body: `Group-wide work ships once across the estate rather than site by site — lead tracking on ${MEASUREMENTS.tracking.value} sites, and the same supplier-registration link added to the group's menus and footers.`,
   },
 ];
 

@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
 import { ARTIFACT_DOCS } from "./components/artifact-docs";
 import { artifacts, caseStudies, projects, tools } from "./components/signal-room-data";
 import { clientSites } from "./lib/clients";
+import { webCaseStudies } from "./components/web-data";
 import { MEASUREMENTS } from "./lib/measurement";
 
 /* ------------------------------------------------------------------ *
@@ -159,11 +160,27 @@ describe("content is complete", () => {
 });
 
 describe("client sites are checkable", () => {
-  // /clients is the one page whose claims a reader can verify in a click, so
-  // every card has to carry what that check needs: a live address, a picture
-  // that matches it, and a plain statement wherever the work was not simply
-  // running the site.
+  // /web is the one part of the site whose claims a reader can verify in a
+  // click, so every site has to carry what that check needs: a live address, a
+  // picture that matches it, what I did on it, and a plain statement wherever
+  // the work was not simply running the site.
   const PUBLIC = path.join(SRC, "..", "public");
+  const caseSlugs = new Set(webCaseStudies.map((c) => c.slug));
+
+  it.each(clientSites.map((s) => [s.slug, s] as const))("%s says what I did there, and since when", (_slug, s) => {
+    expect(s.work.length, `${s.slug} has no work listed`).toBeGreaterThan(0);
+    expect(s.tasks, `${s.slug} has no tasks counted`).toBeGreaterThan(0);
+    expect(s.since, `${s.slug} has no start month`).toMatch(/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) 20\d\d$/);
+    if (s.caseStudy) expect(caseSlugs.has(s.caseStudy), `${s.slug} points at a missing case study`).toBe(true);
+  });
+
+  it.each(webCaseStudies.map((c) => [c.slug, c] as const))("case study %s is complete and points at real sites", (_slug, cs) => {
+    const slugs = new Set(clientSites.map((s) => s.slug));
+    for (const site of cs.sites) expect(slugs.has(site), `${cs.slug} lists unknown site ${site}`).toBe(true);
+    expect(cs.situation.length, `${cs.slug} has no situation`).toBeGreaterThan(40);
+    expect(cs.result.length, `${cs.slug} has no result`).toBeGreaterThan(40);
+    expect(cs.did.length, `${cs.slug} says too little about what was done`).toBeGreaterThan(1);
+  });
 
   it.each(clientSites.map((s) => [s.slug, s] as const))("%s links a live site and shows it", (_slug, s) => {
     expect(s.url, `${s.slug} is not a bare https address`).toMatch(/^https:\/\/[a-z0-9.-]+\.[a-z]{2,}$/);
