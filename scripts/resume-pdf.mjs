@@ -20,6 +20,9 @@
  *                          @media print reflow. This is the one to
  *                          upload to an ATS, and the one that prints.
  *
+ *   public/resume-web-platform.pdf and -a4.pdf — the same pair, rendered
+ *                          from /resume/web-platform.
+ *
  * Two files because a 232 × ~590mm page scaled onto A4 lands the body
  * type near 5pt. The tall page is for reading; A4 is for filing.
  *
@@ -41,6 +44,14 @@ import { resumeSourceHash } from "./resume-sources.mjs";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const OUT = path.join(ROOT, "public");
+
+/* Two résumés from one layout (see resume-client.tsx): the frontend one at
+ * /resume and the web-platform one beside it. Each is photographed the same
+ * way, into its own pair of files, so neither can drift from its page. */
+const VARIANTS = [
+  { route: "/resume", file: "resume" },
+  { route: "/resume/web-platform", file: "resume-web-platform" },
+];
 const MM_PER_PX = 25.4 / 96;
 
 /* Chrome has to come from somewhere different depending on where this runs.
@@ -126,7 +137,7 @@ async function main() {
   }
 
   const chrome = await resolveChrome();
-  log(`rendering ${base}/resume  (${chrome.source})`);
+  log(`rendering ${VARIANTS.map((v) => v.route).join(" and ")} at ${base}  (${chrome.source})`);
   const browser = await puppeteer.launch({
     executablePath: chrome.executablePath,
     headless: true,
@@ -136,140 +147,143 @@ async function main() {
   });
 
   try {
-    const page = await browser.newPage();
+    for (const { route, file } of VARIANTS) {
+      const page = await browser.newPage();
 
-    // Wide viewport BEFORE navigating. The résumé scales itself down to fit
-    // narrow screens; at 1800px the fit-to-viewport transform stays at 1 and
-    // we capture the document at its true size rather than a shrunk preview.
-    await page.setViewport({ width: 1800, height: 2400, deviceScaleFactor: 2 });
-    await page.goto(`${base}/resume`, { waitUntil: "networkidle0", timeout: 60_000 });
+      // Wide viewport BEFORE navigating. The résumé scales itself down to fit
+      // narrow screens; at 1800px the fit-to-viewport transform stays at 1 and
+      // we capture the document at its true size rather than a shrunk preview.
+      await page.setViewport({ width: 1800, height: 2400, deviceScaleFactor: 2 });
+      await page.goto(`${base}${route}`, { waitUntil: "networkidle0", timeout: 60_000 });
 
-    // The route is a client component behind a loading skeleton, so `load`
-    // alone captures an empty page. Wait for the document itself, then for
-    // webfonts — capturing mid-swap bakes fallback metrics into the PDF.
-    await page.waitForSelector(".resume-page", { timeout: 30_000 });
+      // The route is a client component behind a loading skeleton, so `load`
+      // alone captures an empty page. Wait for the document itself, then for
+      // webfonts — capturing mid-swap bakes fallback metrics into the PDF.
+      await page.waitForSelector(".resume-page", { timeout: 30_000 });
 
-    /* The arrow problem, and why the font is embedded here rather than shipped.
-     *
-     * "0→1" appears throughout the résumé. U+2192 is not in the next/font
-     * Google subsets the site loads, so the browser was quietly satisfying it
-     * from a system font — which macOS has and the build container does not. The
-     * first Vercel-built PDF rendered every arrow as an empty box, and nothing
-     * failed: the page was correct, the download was not.
-     *
-     * Injecting the font at render time rather than adding it to public/ keeps a
-     * 180KB file off every visitor's page load — no browser needs it, only this
-     * renderer does — and it makes the two environments produce the same bytes
-     * instead of relying on whatever each host happens to have installed. Only
-     * the glyphs actually used get embedded in the PDF. */
-    const symbols = await readFile(path.join(import.meta.dirname, "fonts", "noto-symbols.ttf"));
-    await page.evaluate(
-      (b64) => {
-        const style = document.createElement("style");
-        style.textContent = `@font-face{font-family:'SR Symbols';src:url(data:font/ttf;base64,${b64}) format('truetype');font-display:block}`;
-        document.head.appendChild(style);
-        // Append it to the existing stacks rather than overriding them: the real
-        // families must still win for every glyph they cover, so this only ever
-        // catches what would otherwise be a missing-glyph box. Read the computed
-        // values first because they are next/font's generated family names.
-        const cs = getComputedStyle(document.documentElement);
-        const vars = ["--font-display", "--font-heading", "--font-mono", "--font-body", "--font-sans"];
-        const decls = vars
-          .map((v) => [v, cs.getPropertyValue(v).trim()])
-          .filter(([, val]) => val)
-          .map(([v, val]) => `${v}: ${val}, 'SR Symbols';`)
-          .join("");
-        const patch = document.createElement("style");
-        patch.textContent = `:root{${decls}}body,.resume-page{font-family:${cs.fontFamily}, 'SR Symbols'}`;
-        document.head.appendChild(patch);
-      },
-      symbols.toString("base64"),
-    );
+      /* The arrow problem, and why the font is embedded here rather than shipped.
+       *
+       * "0→1" appears throughout the résumé. U+2192 is not in the next/font
+       * Google subsets the site loads, so the browser was quietly satisfying it
+       * from a system font — which macOS has and the build container does not. The
+       * first Vercel-built PDF rendered every arrow as an empty box, and nothing
+       * failed: the page was correct, the download was not.
+       *
+       * Injecting the font at render time rather than adding it to public/ keeps a
+       * 180KB file off every visitor's page load — no browser needs it, only this
+       * renderer does — and it makes the two environments produce the same bytes
+       * instead of relying on whatever each host happens to have installed. Only
+       * the glyphs actually used get embedded in the PDF. */
+      const symbols = await readFile(path.join(import.meta.dirname, "fonts", "noto-symbols.ttf"));
+      await page.evaluate(
+        (b64) => {
+          const style = document.createElement("style");
+          style.textContent = `@font-face{font-family:'SR Symbols';src:url(data:font/ttf;base64,${b64}) format('truetype');font-display:block}`;
+          document.head.appendChild(style);
+          // Append it to the existing stacks rather than overriding them: the real
+          // families must still win for every glyph they cover, so this only ever
+          // catches what would otherwise be a missing-glyph box. Read the computed
+          // values first because they are next/font's generated family names.
+          const cs = getComputedStyle(document.documentElement);
+          const vars = ["--font-display", "--font-heading", "--font-mono", "--font-body", "--font-sans"];
+          const decls = vars
+            .map((v) => [v, cs.getPropertyValue(v).trim()])
+            .filter(([, val]) => val)
+            .map(([v, val]) => `${v}: ${val}, 'SR Symbols';`)
+            .join("");
+          const patch = document.createElement("style");
+          patch.textContent = `:root{${decls}}body,.resume-page{font-family:${cs.fontFamily}, 'SR Symbols'}`;
+          document.head.appendChild(patch);
+        },
+        symbols.toString("base64"),
+      );
 
-    await page.evaluate(() => document.fonts.ready);
-    await page.evaluate(() => document.documentElement.classList.add("pdf-export"));
-    await new Promise((r) => setTimeout(r, 350));
+      await page.evaluate(() => document.fonts.ready);
+      await page.evaluate(() => document.documentElement.classList.add("pdf-export"));
+      await new Promise((r) => setTimeout(r, 350));
 
-    /* ---------------- 1. continuous, 232mm wide, one page --------------- */
-    // Print media for BOTH files. The site chrome — nav, the Download and
-    // Copy buttons, the page background — is hidden by `print:hidden` classes
-    // in the JSX, not by the stylesheet, so rendering in screen media would
-    // photograph the whole website and spill onto a second page. Rendering in
-    // print media and widening the document back to its screen measure gets
-    // the clean document at the width it was designed for.
-    await page.emulateMediaType("print");
-    const widthMm = 232;
-    const wide = await page.addStyleTag({
-      content: `
-        .resume-page { width: ${widthMm}mm !important; font-size: 10.9px !important; min-height: 0 !important }
-        .resume-paper-frame { width: ${widthMm}mm !important }
-      `,
-    });
-    await new Promise((r) => setTimeout(r, 250));
+      /* ---------------- 1. continuous, 232mm wide, one page --------------- */
+      // Print media for BOTH files. The site chrome — nav, the Download and
+      // Copy buttons, the page background — is hidden by `print:hidden` classes
+      // in the JSX, not by the stylesheet, so rendering in screen media would
+      // photograph the whole website and spill onto a second page. Rendering in
+      // print media and widening the document back to its screen measure gets
+      // the clean document at the width it was designed for.
+      await page.emulateMediaType("print");
+      const widthMm = 232;
+      const wide = await page.addStyleTag({
+        content: `
+          .resume-page { width: ${widthMm}mm !important; font-size: 10.9px !important; min-height: 0 !important }
+          .resume-paper-frame { width: ${widthMm}mm !important }
+        `,
+      });
+      await new Promise((r) => setTimeout(r, 250));
 
-    const heightMm = await page.evaluate((mmPerPx) => {
-      const el = document.querySelector(".resume-page");
-      // offsetHeight, not getBoundingClientRect — the latter reports the
-      // post-transform box, and any residual fit-to-viewport scale would
-      // under-measure the page and clip the last section.
-      return Math.ceil(el.offsetHeight * mmPerPx) + 2;
-    }, MM_PER_PX);
+      const heightMm = await page.evaluate((mmPerPx) => {
+        const el = document.querySelector(".resume-page");
+        // offsetHeight, not getBoundingClientRect — the latter reports the
+        // post-transform box, and any residual fit-to-viewport scale would
+        // under-measure the page and clip the last section.
+        return Math.ceil(el.offsetHeight * mmPerPx) + 2;
+      }, MM_PER_PX);
 
-    // paperWidth/paperHeight alone is NOT enough: globals.css declares
-    // `@page { size: A4 }` and that is what drives pagination, so a taller
-    // sheet still fragments. The size has to be overridden in CSS and Chrome
-    // told to prefer it.
-    const sized = await page.addStyleTag({
-      content: `@page { size: ${widthMm}mm ${heightMm}mm; margin: 0 }`,
-    });
-    await page.pdf({
-      path: path.join(OUT, "resume.pdf"),
-      printBackground: true,
-      preferCSSPageSize: true,
-      tagged: true,
-    });
-    await sized.evaluate((el) => el.remove());
-    await wide.evaluate((el) => el.remove());
-    log(`resume.pdf        ${widthMm} × ${heightMm} mm, continuous`);
+      // paperWidth/paperHeight alone is NOT enough: globals.css declares
+      // `@page { size: A4 }` and that is what drives pagination, so a taller
+      // sheet still fragments. The size has to be overridden in CSS and Chrome
+      // told to prefer it.
+      const sized = await page.addStyleTag({
+        content: `@page { size: ${widthMm}mm ${heightMm}mm; margin: 0 }`,
+      });
+      await page.pdf({
+        path: path.join(OUT, `${file}.pdf`),
+        printBackground: true,
+        preferCSSPageSize: true,
+        tagged: true,
+      });
+      await sized.evaluate((el) => el.remove());
+      await wide.evaluate((el) => el.remove());
+      log(`${file}.pdf  ${widthMm} × ${heightMm} mm, continuous`);
 
-    /* ---------------- 2. real A4, via the existing print CSS ------------ */
-    await new Promise((r) => setTimeout(r, 250));
-    await page.pdf({
-      path: path.join(OUT, "resume-a4.pdf"),
-      printBackground: true,
-      preferCSSPageSize: true,
-      tagged: true,
-    });
-    log("resume-a4.pdf     A4, paginated");
+      /* ---------------- 2. real A4, via the existing print CSS ------------ */
+      await new Promise((r) => setTimeout(r, 250));
+      await page.pdf({
+        path: path.join(OUT, `${file}-a4.pdf`),
+        printBackground: true,
+        preferCSSPageSize: true,
+        tagged: true,
+      });
+      log(`${file}-a4.pdf  A4, paginated`);
 
-    // Recorded so a prebuild check can tell whether the committed PDFs still
-    // match the derived figures on the live page.
-    const years = await page.evaluate(() => {
-      const m = document.body.innerText.match(/(\d+)\+\s*years/i);
-      return m ? `${m[1]}+ years` : null;
-    });
-    // The hash of the files this PDF was rendered from.
-    //
-    // This comment used to claim a `check-resume-pdf-fresh` script recomputed
-    // the hash during prebuild, "so editing the résumé without regenerating now
-    // fails the build". No such script exists — prebuild runs only
-    // check-no-template-leaks.mjs — and nothing reads this hash back. On a site
-    // whose argument is that a rule with no check is a preference, a comment
-    // asserting a check that isn't there is the worst kind of stale.
-    //
-    // What actually makes a stale download impossible: both PDFs are gitignored
-    // rather than committed, and `build` is `resume-pdf.mjs && next build`, so
-    // every deploy re-renders them from the live route. The hash stays because
-    // it is cheap provenance in resume.meta.json — a record of which sources
-    // produced this file — not because anything gates on it. The one copy that
-    // can drift is a local one: run `npm run resume:pdf` before sending it.
-    const sourceHash = await resumeSourceHash();
-    await mkdir(OUT, { recursive: true });
-    await writeFile(
-      path.join(OUT, "resume.meta.json"),
-      `${JSON.stringify({ yearsPhrase: years, widthMm, heightMm, sourceHash }, null, 2)}\n`,
-    );
-    log(`meta              yearsPhrase=${years} · source ${sourceHash}`);
+      // Recorded so a prebuild check can tell whether the committed PDFs still
+      // match the derived figures on the live page.
+      const years = await page.evaluate(() => {
+        const m = document.body.innerText.match(/(\d+)\+\s*years/i);
+        return m ? `${m[1]}+ years` : null;
+      });
+      // The hash of the files this PDF was rendered from.
+      //
+      // This comment used to claim a `check-resume-pdf-fresh` script recomputed
+      // the hash during prebuild, "so editing the résumé without regenerating now
+      // fails the build". No such script exists — prebuild runs only
+      // check-no-template-leaks.mjs — and nothing reads this hash back. On a site
+      // whose argument is that a rule with no check is a preference, a comment
+      // asserting a check that isn't there is the worst kind of stale.
+      //
+      // What actually makes a stale download impossible: the PDFs are gitignored
+      // rather than committed, and `build` is `resume-pdf.mjs && next build`, so
+      // every deploy re-renders them from the live route. The hash stays because
+      // it is cheap provenance in resume.meta.json — a record of which sources
+      // produced this file — not because anything gates on it. The one copy that
+      // can drift is a local one: run `npm run resume:pdf` before sending it.
+      const sourceHash = await resumeSourceHash();
+      await mkdir(OUT, { recursive: true });
+      await writeFile(
+        path.join(OUT, `${file}.meta.json`),
+        `${JSON.stringify({ yearsPhrase: years, widthMm, heightMm, sourceHash }, null, 2)}\n`,
+      );
+      log(`${file}.meta.json  yearsPhrase=${years} · source ${sourceHash}`);
+      await page.close();
+    }
   } finally {
     await browser.close();
     if (server) server.kill("SIGTERM");

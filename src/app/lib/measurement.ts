@@ -129,6 +129,42 @@ export const MEASUREMENTS = {
     basis:
       "Derived from a single start date — my first professional role in December 2018 — rather than written down, and floored so it can never overstate.",
   },
+  // The cr8v figures. Each one is checkable against /clients, where every site
+  // they count is listed and live.
+  "das-companies": {
+    value: "20",
+    kind: "count",
+    basis:
+      "Companies under the DAS Holding account whose websites, stores or reporting I work on — one file each in my work log, and one card each on /clients.",
+    limit:
+      "Twenty companies, not twenty builds: most are existing sites I run and extend, and for two of them the work is reporting or an assessment rather than the site itself.",
+  },
+  "das-sites": {
+    value: "16",
+    kind: "count",
+    basis:
+      "Production websites on the group's shared server — the set the security assessment and the upgrade plan cover.",
+  },
+  tasks: {
+    value: "320+",
+    kind: "count",
+    basis:
+      "Entries in my work log since 30 June 2026 — one per task, from a content change to a security fix or a new feature.",
+    limit: "A count of tasks, not of hours: they range from minutes to days.",
+  },
+  "upgrade-plan": {
+    value: "54",
+    kind: "estimate",
+    basis:
+      "Working days in the site-by-site upgrade plan the client approved — every site grouped by risk, with an effort estimate for each.",
+    limit: "Planned effort, not elapsed time, and a plan still being delivered.",
+  },
+  tracking: {
+    value: "8",
+    kind: "count",
+    basis:
+      "Sites where I rolled out Google Tag Manager with lead-form tracking and removed the old tags.",
+  },
 } satisfies Record<string, Measurement>;
 
 export type MeasurementId = keyof typeof MEASUREMENTS;

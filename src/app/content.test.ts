@@ -1,10 +1,11 @@
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 
 import { describe, expect, it } from "vitest";
 
 import { ARTIFACT_DOCS } from "./components/artifact-docs";
 import { artifacts, caseStudies, projects, tools } from "./components/signal-room-data";
+import { clientSites } from "./lib/clients";
 import { MEASUREMENTS } from "./lib/measurement";
 
 /* ------------------------------------------------------------------ *
@@ -154,5 +155,32 @@ describe("content is complete", () => {
     for (const p of projects) {
       expect(String(p.learned ?? "").length, `${p.slug} does not say what it was for`).toBeGreaterThan(20);
     }
+  });
+});
+
+describe("client sites are checkable", () => {
+  // /clients is the one page whose claims a reader can verify in a click, so
+  // every card has to carry what that check needs: a live address, a picture
+  // that matches it, and a plain statement wherever the work was not simply
+  // running the site.
+  const PUBLIC = path.join(SRC, "..", "public");
+
+  it.each(clientSites.map((s) => [s.slug, s] as const))("%s links a live site and shows it", (_slug, s) => {
+    expect(s.url, `${s.slug} is not a bare https address`).toMatch(/^https:\/\/[a-z0-9.-]+\.[a-z]{2,}$/);
+    expect(
+      existsSync(path.join(PUBLIC, "clients", `${s.slug}.webp`)),
+      `no screenshot for ${s.slug} — run npm run clients:shots -- ${s.slug}`,
+    ).toBe(true);
+  });
+
+  it("says what I did wherever it was more or less than running the site", () => {
+    for (const s of clientSites.filter((c) => c.scope !== "run")) {
+      expect(String(s.note ?? "").length, `${s.slug} is "${s.scope}" but does not say what`).toBeGreaterThan(40);
+    }
+  });
+
+  it("has one card per company", () => {
+    const slugs = clientSites.map((s) => s.slug);
+    expect(new Set(slugs).size).toBe(slugs.length);
   });
 });

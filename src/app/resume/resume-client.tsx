@@ -95,6 +95,34 @@ const METRICS: { label: string; m: MeasurementId }[] = [
 // like the ordinal marker this replaced.
 const ENDNOTES = METRICS.map((x) => ({ id: x.m, label: x.label, ...MEASUREMENTS[x.m] }));
 
+// Hobber and cr8v run under the same CEO, so the two roles overlap: the vendor
+// platform from January, the agency's client work from June. The title is the
+// plain one — this is web platform work, and the résumé says so.
+const CR8V: Role = {
+  company: "cr8v",
+  location: "Abu Dhabi, UAE",
+  descriptor: "Digital agency under Hobber's CEO — the DAS Holding group and other clients",
+  title: "Full-Stack Web Developer",
+  period: "Jun 2026 — Present",
+  stack: [
+    "WordPress",
+    "Laravel",
+    "PHP",
+    "Shopify",
+    "React",
+    "TypeScript",
+    "Cloudflare",
+    "GA4",
+    "Looker Studio",
+  ],
+  points: [
+    `Sole developer on the DAS Holding account — the websites of ${MEASUREMENTS["das-companies"].value} group companies across real estate, healthcare, retail, investment and e-commerce, scoped, built, tested and deployed end to end. Every site is live at rezaanriyaz.com/clients.`,
+    `Ran the security and upgrade work across the group's ${MEASUREMENTS["das-sites"].value} production sites: closed the penetration-test findings and planned a ${MEASUREMENTS["upgrade-plan"].value}-day, site-by-site upgrade programme the client approved.`,
+    "Built 54dining.com from an empty repository for a separate client — React and TypeScript, now on Cloudflare with an admin panel I also built: real-time publishing, photo cropping, English and Arabic content, a staging site and nightly backups.",
+    `Rolled out lead tracking on ${MEASUREMENTS.tracking.value} sites and built Looker Studio sales dashboards on GA4 and Meta Ads data — ${MEASUREMENTS.tasks.value} tasks delivered since June 2026.`,
+  ],
+};
+
 const EXPERIENCE: Role[] = [
   {
     company: "Hobber",
@@ -129,6 +157,7 @@ const EXPERIENCE: Role[] = [
       "Partner with backend and DevOps engineers on API contracts — pinned against Swagger before building — authentication systems, and platform features.",
     ],
   },
+  CR8V,
   {
     company: "Axinom",
     location: "Colombo, Sri Lanka (HQ Fürth, Germany)",
@@ -350,10 +379,109 @@ const EDUCATION: { degree: string; school: string; note?: string }[] = [
   },
 ];
 
-const buildResumeText = () =>
-  [
+/* ------------------------------------------------------------------ *
+ * Two résumés, one layout.
+ *
+ * The frontend résumé above is the default, for product teams. The web
+ * platform version is for groups that run many brand sites: it leads with
+ * the cr8v estate and puts the CMS and tracking stack first, and reuses
+ * everything else as it stands. Each renderer below reads its variant's
+ * data under the names the frontend résumé always used, so the sheet, the
+ * phone reflow and the plain-text export stay one code path and the two
+ * versions cannot drift apart in layout — only in what they lead with.
+ * ------------------------------------------------------------------ */
+
+export type ResumeVariant = "frontend" | "web-platform";
+
+const WEB_POSITIONING = () =>
+  `Senior engineer with ${yearsPhrase()} on the web, currently the sole developer for the DAS Holding group — ${MEASUREMENTS["das-companies"].value} companies' websites on WordPress, Laravel, PHP and Shopify, alongside new builds in React and TypeScript. Before that I led frontend teams on enterprise and media platforms, and I run a multi-brand estate the same way: every change proven on a copy first, every task on record, and security and upgrades planned rather than patched.`;
+
+const WEB_METRICS: { label: string; m: MeasurementId }[] = [
+  { label: "group companies — the DAS Holding account", m: "das-companies" },
+  { label: "production sites on one shared server", m: "das-sites" },
+  { label: "tasks delivered since June 2026", m: "tasks" },
+  { label: "platforms architected 0→1 — Hobber, Kodez", m: "platforms" },
+];
+
+// The cr8v role at full length, because here it is the lead role rather than
+// the second one.
+const CR8V_WEB: Role = {
+  ...CR8V,
+  points: [
+    CR8V.points[0],
+    "Every change is proven on a copy of the site and goes live only after client sign-off, and every task is logged — so the history of any site, and the reason behind a change, is on record.",
+    CR8V.points[1],
+    "Work across WordPress (Elementor, WPML, WooCommerce, ACF), Laravel, custom PHP and Shopify Liquid, including an investor-relations portal in English and Arabic.",
+    ...CR8V.points.slice(2),
+  ],
+};
+
+const WEB_STACK: StackGroup[] = [
+  {
+    label: "Web platforms & CMS",
+    items: [
+      "WordPress",
+      "Elementor",
+      "WPML",
+      "WooCommerce",
+      "ACF",
+      "Laravel",
+      "PHP",
+      "Shopify & Liquid",
+      "cPanel",
+      "Apache",
+    ],
+  },
+  {
+    label: "Analytics & tracking",
+    items: ["Google Tag Manager", "GA4", "Search Console", "Meta Pixel", "Looker Studio"],
+  },
+  ...STACK,
+];
+
+const RESUMES = {
+  frontend: {
+    headline: "Senior Frontend Engineer",
+    tagline: "React · Next.js · TypeScript",
+    positioning: POSITIONING,
+    metrics: METRICS,
+    endnotes: ENDNOTES,
+    experience: EXPERIENCE,
+    stack: STACK,
+    pdf: "/resume.pdf",
+    download: "Mohammed-Rezaan-Riyaz-Resume.pdf",
+  },
+  "web-platform": {
+    headline: "Senior Full-Stack Web Engineer",
+    tagline: "React · TypeScript · WordPress · Laravel · Shopify",
+    positioning: WEB_POSITIONING,
+    metrics: WEB_METRICS,
+    endnotes: WEB_METRICS.map((x) => ({ id: x.m, label: x.label, ...MEASUREMENTS[x.m] })),
+    experience: [CR8V_WEB, ...EXPERIENCE.filter((r) => r !== CR8V)],
+    stack: WEB_STACK,
+    pdf: "/resume-web-platform.pdf",
+    download: "Mohammed-Rezaan-Riyaz-Resume-Web-Platform.pdf",
+  },
+} satisfies Record<ResumeVariant, unknown>;
+
+const VERSIONS: { variant: ResumeVariant; href: string; label: string }[] = [
+  { variant: "frontend", href: "/resume", label: "Frontend" },
+  { variant: "web-platform", href: "/resume/web-platform", label: "Web platform" },
+];
+
+const buildResumeText = (variant: ResumeVariant) => {
+  const {
+    headline,
+    tagline,
+    positioning: POSITIONING,
+    metrics: METRICS,
+    endnotes: ENDNOTES,
+    experience: EXPERIENCE,
+    stack: STACK,
+  } = RESUMES[variant];
+  return [
     "MOHAMMED REZAAN RIYAZ",
-    `Senior Frontend Engineer — React · Next.js · TypeScript · ${yearsOfExperience()}+ Years`,
+    `${headline} — ${tagline} · ${yearsOfExperience()}+ Years`,
     "",
     CONTACT.join("\n"),
     "",
@@ -384,6 +512,7 @@ ${r.points.map((pt) => `- ${pt}`).join("\n")}`,
     "EDUCATION",
     EDUCATION.map((e) => `${e.degree} — ${e.school}${e.note ? "\n  " + e.note : ""}`).join("\n"),
   ].join("\n");
+};
 
 /* ----------------------------- sections ---------------------------- */
 
@@ -416,22 +545,31 @@ function Chip({ children }: { children: React.ReactNode }) {
  * So below the breakpoint the sheet is not scaled, it is not rendered:
  * this reflows the same arrays into one column at normal type sizes. There
  * is no second copy of the content — CONTACT, METRICS, EXPERIENCE, STACK,
- * EDUCATION and ENDNOTES are the same module-level data the sheet reads,
- * so the two cannot drift.
+ * EDUCATION and ENDNOTES are the same data the sheet reads for the same
+ * variant, so the two cannot drift.
  *
  * The PDF generator renders at 1800px wide, so it always gets the sheet.
  * ------------------------------------------------------------------ */
-function MobileResume() {
+function MobileResume({ variant }: { variant: ResumeVariant }) {
+  const {
+    headline,
+    tagline,
+    positioning: POSITIONING,
+    metrics: METRICS,
+    endnotes: ENDNOTES,
+    experience: EXPERIENCE,
+    stack: STACK,
+  } = RESUMES[variant];
   return (
     <article className="w-full rounded-2xl bg-white px-5 py-7 text-[15px] leading-[1.6] text-neutral-800 shadow-sm">
       <h1 className="font-[family-name:var(--font-heading)] text-[26px] font-bold leading-tight tracking-[-0.01em] text-neutral-950">
         Mohammed Rezaan Riyaz
       </h1>
       <p className="mt-2 font-[family-name:var(--font-heading)] text-[12px] font-semibold uppercase tracking-[0.18em] text-[#023047]">
-        Senior Frontend Engineer
+        {headline}
       </p>
       <p className="mt-1.5 text-[13px] text-neutral-600">
-        React · Next.js · TypeScript · {yearsPhrase()}
+        {tagline} · {yearsPhrase()}
       </p>
 
       <ul className="mt-5 space-y-1.5 text-[13.5px]">
@@ -553,7 +691,18 @@ function MobileResume() {
   );
 }
 
-export default function ResumePage() {
+export default function ResumePage({ variant = "frontend" }: { variant?: ResumeVariant }) {
+  const {
+    headline,
+    tagline,
+    positioning: POSITIONING,
+    metrics: METRICS,
+    endnotes: ENDNOTES,
+    experience: EXPERIENCE,
+    stack: STACK,
+    pdf,
+    download,
+  } = RESUMES[variant];
   const [copyState, setCopyState] = useState<"idle" | "copied" | "error">("idle");
   const [isNarrow, setIsNarrow] = useState(false);
   const [scale, setScale] = useState(1);
@@ -592,7 +741,7 @@ export default function ResumePage() {
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(buildResumeText());
+      await navigator.clipboard.writeText(buildResumeText(variant));
       setCopyState("copied");
       window.setTimeout(() => setCopyState("idle"), 1600);
     } catch {
@@ -620,17 +769,20 @@ export default function ResumePage() {
             >
               ← Back to site
             </Link>
-            <nav className="hidden items-center gap-1 overflow-x-auto sm:flex">
+            {/* Spacing tightened when Clients became the eighth link: at the
+                original padding the row overflowed the 250mm toolbar and clipped
+                ARTIFACTS mid-word — the same reads-as-a-bug failure as above. */}
+            <nav className="hidden items-center gap-0.5 overflow-x-auto sm:flex">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="shrink-0 rounded-full px-2.5 py-1.5 font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.12em] text-[var(--sr-muted)] transition duration-200 hover:bg-[var(--sr-bg-alt)] hover:text-[var(--sr-text)]"
+                  className="shrink-0 rounded-full px-2 py-1.5 font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.1em] text-[var(--sr-muted)] transition duration-200 hover:bg-[var(--sr-bg-alt)] hover:text-[var(--sr-text)]"
                 >
                   {link.label}
                 </Link>
               ))}
-              <span className="shrink-0 rounded-full bg-[var(--sr-accent-soft)] px-2.5 py-1.5 font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.14em] text-[var(--sr-accent)]">
+              <span className="shrink-0 rounded-full bg-[var(--sr-accent-soft)] px-2 py-1.5 font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.12em] text-[var(--sr-accent)]">
                 Resume
               </span>
             </nav>
@@ -665,8 +817,8 @@ export default function ResumePage() {
                   ATS uploads, but it isn't surfaced here — two download buttons made
                   the reader choose before they had any reason to care. */}
               <a
-                href="/resume.pdf"
-                download="Mohammed-Rezaan-Riyaz-Resume.pdf"
+                href={pdf}
+                download={download}
                 title="One continuous page, generated from this document"
                 className="inline-flex items-center rounded-full bg-[var(--sr-accent-solid)] px-4 py-1.5 text-[12px] font-semibold text-[var(--sr-accent-ink)] transition hover:opacity-90 print:hidden"
               >
@@ -676,7 +828,34 @@ export default function ResumePage() {
           </div>
         </div>
 
-        {isNarrow ? <MobileResume /> : null}
+        {/* Which résumé — below the toolbar rather than in it, because the
+            toolbar is already full at desktop widths, and here it works on a
+            phone too. Excluded from print, so neither PDF carries it. */}
+        <nav
+          aria-label="Résumé version"
+          className="signal-room flex items-center gap-1 rounded-full border border-[var(--sr-hairline)] bg-[var(--sr-panel)] p-1 print:hidden"
+          data-theme="light"
+        >
+          {VERSIONS.map((v) => {
+            const current = v.variant === variant;
+            return (
+              <Link
+                key={v.variant}
+                href={v.href}
+                aria-current={current ? "page" : undefined}
+                className={`rounded-full px-3 py-1.5 font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.12em] transition ${
+                  current
+                    ? "bg-[var(--sr-accent-soft)] text-[var(--sr-accent)]"
+                    : "text-[var(--sr-muted)] hover:bg-[var(--sr-bg-alt)] hover:text-[var(--sr-text)]"
+                }`}
+              >
+                {v.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {isNarrow ? <MobileResume variant={variant} /> : null}
 
         <div
           className={`w-full overflow-hidden print:contents ${isNarrow ? "hidden" : ""}`}
@@ -703,10 +882,10 @@ export default function ResumePage() {
                         Mohammed Rezaan Riyaz
                       </h1>
                       <p className="mt-2.5 font-[family-name:var(--font-heading)] text-[13px] font-semibold uppercase tracking-[0.22em] text-[#023047]">
-                        Senior Frontend Engineer
+                        {headline}
                       </p>
                       <p className="mt-1.5 text-[11.5px] tracking-[0.04em] text-neutral-600">
-                        React · Next.js · TypeScript · {yearsPhrase()}
+                        {tagline} · {yearsPhrase()}
                       </p>
                     </div>
                     {/* Four of these six lines are addressable — a phone number, an

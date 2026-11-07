@@ -25,11 +25,12 @@ export const contact = {
 export const navLinks = [
   { href: "/", num: "01", label: "Home" },
   { href: "/work", num: "02", label: "Work" },
-  { href: "/projects", num: "03", label: "Projects" },
-  { href: "/stack", num: "04", label: "Stack" },
-  { href: "/method", num: "05", label: "Method" },
-  { href: "/artifacts", num: "06", label: "Artifacts" },
-  { href: "/about", num: "07", label: "About" },
+  { href: "/clients", num: "03", label: "Clients" },
+  { href: "/projects", num: "04", label: "Projects" },
+  { href: "/stack", num: "05", label: "Stack" },
+  { href: "/method", num: "06", label: "Method" },
+  { href: "/artifacts", num: "07", label: "Artifacts" },
+  { href: "/about", num: "08", label: "About" },
 ];
 
 export const archetypeChips = [
@@ -725,6 +726,16 @@ export const timeline = [
       "Architected a vendor marketplace platform 0→1 — seven feature-sliced modules on one shared React + TypeScript component layer.",
   },
   {
+    // Same CEO as Hobber, and the roles overlap: the vendor platform from
+    // January, the agency's client work from June.
+    year: "2026",
+    company: "cr8v",
+    role: "Full-Stack Web Developer",
+    place: "Abu Dhabi, UAE",
+    scope:
+      `Sole developer for the DAS Holding group — ${MEASUREMENTS["das-companies"].value} companies' sites on WordPress, Laravel and Shopify — and a restaurant site built from an empty repository.`,
+  },
+  {
     year: "2024",
     company: "Axinom",
     role: "Senior Frontend Engineer — Lead",
@@ -747,6 +758,28 @@ export const timeline = [
     place: "Colombo, Sri Lanka",
     scope:
       `Joined as an intern and left owning the UI end to end — an employment system from concept to production, and a site revamp that lifted conversion ${MEASUREMENTS.conversion.value.replace("+","~")}.`,
+  },
+];
+
+// How the cr8v estate is run — the part of /clients a screenshot cannot show.
+// The sites themselves live in lib/clients.ts, which the screenshot script
+// also reads; these stay here because they quote figures from the module.
+export const clientPractices: { label: string; body: string }[] = [
+  {
+    label: "Proven on a copy first",
+    body: "Every change is made and tested on a copy of the site, then shipped to the live one after the client signs off. Nothing is edited live.",
+  },
+  {
+    label: "Every task on record",
+    body: `A work-log entry for every task — ${MEASUREMENTS.tasks.value} since June — so the history of any site, and the reason behind a change, is a search away.`,
+  },
+  {
+    label: "Security planned, not patched",
+    body: `A site-by-site assessment of the group's ${MEASUREMENTS["das-sites"].value} production sites, the penetration-test findings closed, and a ${MEASUREMENTS["upgrade-plan"].value}-day upgrade plan the client approved.`,
+  },
+  {
+    label: "One change, every site",
+    body: `Group-wide work ships once across the estate rather than site by site — lead tracking on ${MEASUREMENTS.tracking.value} sites, and the same supplier-registration link added to the group's menus and footers.`,
   },
 ];
 

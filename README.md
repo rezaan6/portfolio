@@ -61,7 +61,7 @@ artifact type must have a document that can render it; every figure must state a
 and a reading or an estimate must state its limit; no percentage may be hardcoded where
 it could drift from `lib/measurement`; no version number may reach a reader; no quoted
 string may contain a template literal. Each of those is a defect that shipped once and was
-found by reading output, late. 58 tests, under a second.
+found by reading output, late. 97 tests, under a second.
 
 **One value, one place.** The page-hero panel height is `--sr-hero-min-h`, read by both
 components that render one. It used to be a literal written into each, which is how
@@ -91,7 +91,7 @@ latest; a number in a table is a second copy that goes stale the day after it's 
 
 **Nine production dependencies** — `clsx`, `motion`, `next`, `react`, `react-dom`,
 `server-only`, `shiki`, and Vercel's `@vercel/analytics` and `@vercel/speed-insights`.
-~10.1k lines of TypeScript across 34 files and 9 routes, plus 278 lines of tests in 3
+~10.9k lines of TypeScript across 38 files and 11 routes, plus 307 lines of tests in 3
 files. `npm audit` reports zero vulnerabilities. Measure performance yourself rather than trust a badge in a README; CLS
 in particular is sensitive to a cold font cache.
 
@@ -116,9 +116,10 @@ npm run dev      # http://localhost:3000
 | Script | What it does |
 |---|---|
 | `npm run dev` | Dev server (Turbopack) |
-| `npm run build` | Renders the résumé to PDF, then builds. Ordering matters — see below |
-| `npm run build:fast` | Build without regenerating the PDF |
-| `npm run resume:pdf` | Render `/resume` to `public/resume.pdf` + `resume-a4.pdf` |
+| `npm run build` | Renders both résumés to PDF, then builds. Ordering matters — see below |
+| `npm run build:fast` | Build without regenerating the PDFs |
+| `npm run resume:pdf` | Render `/resume` and `/resume/web-platform` to `public/resume{,-web-platform}.pdf`, each with an `-a4` twin |
+| `npm run clients:shots` | Retake the `/clients` screenshots from the live sites (`-- <slug>` for one) |
 | `npm start` | Serve the production build |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | `tsc --noEmit` |
@@ -133,12 +134,14 @@ npm run dev      # http://localhost:3000
 | `/` | Hero, impact numbers, case accordion, role lenses, method, focus areas |
 | `/work` | Four company case studies, written as engineering decisions |
 | `/work/[slug]` | Case detail — decision arc, UI reference build, practices |
+| `/clients` | The cr8v client sites, live — how the estate is run, then every site with what I did on it |
 | `/projects` | Personal and open-source builds |
 | `/stack` | Tools grouped by purpose, each with how it shows up in real work |
 | `/method` | The Architect → Build → Harden → Measure loop |
 | `/artifacts` | Nine engineering documents — ADR, component spec, state model, incident review, perf, test strategy, accessibility baseline, API contract, migration plan |
 | `/about` | Career path, principles, education, contact |
 | `/resume` | Digital-first résumé — prints to A4, or copies as plain text |
+| `/resume/web-platform` | The same résumé led by the multi-brand web work, for groups that run many sites |
 
 ## Where the content lives
 
@@ -150,7 +153,9 @@ Editing copy means editing one of these. None of it is in JSX.
   by artifact `type`, rendered by `artifact-doc.tsx`.
 - **`src/app/components/prototype-data.tsx`** — per-case UI reference builds, keyed by
   case-study slug.
-- **`src/app/resume/resume-client.tsx`** — résumé data and layout.
+- **`src/app/resume/resume-client.tsx`** — résumé data and layout, for both versions.
+- **`src/app/lib/clients.ts`** — the client sites on `/clients`. Plain TypeScript with no
+  imports, so `scripts/client-shots.mjs` loads the same list the page renders.
 - **`src/app/lib/measurement.ts`** — every figure on the site, with its basis and its
   limit. One number in one place, so the résumé, the case tables and the ⓘ disclosures
   cannot disagree. They used to.
@@ -161,15 +166,17 @@ Editing copy means editing one of these. None of it is in JSX.
 
 - **No client code is in this repository.** Production work at Hobber, Axinom and Kodez is
   under NDA. The case-study prototypes are reference builds written from scratch; they
-  contain no client code, data, or interface.
+  contain no client code, data, or interface. The `/clients` screenshots are of public
+  homepages, published with the agency's permission, and retaken by `npm run clients:shots`
+  rather than edited by hand.
 - **Icons** are [Simple Icons](https://simpleicons.org) (CC0), stored locally rather than
   fetched from a CDN, each pinned to its brand colour. The tab icon is `src/app/icon.svg` —
   drawn as a path rather than exported, so it is a few hundred bytes and sharp at every
   size. A favicon is read at 16px, which permits one letterform and no detail.
 - The light theme is default; the toggle persists to `localStorage` and animates via the
   View Transitions API where supported.
-- **The résumé PDF is generated during the build, not committed.** `npm run build` renders
-  the real `/resume` route in headless Chrome and writes `public/resume.pdf` *before*
+- **The résumé PDFs are generated during the build, not committed.** `npm run build` renders
+  the real `/resume` routes in headless Chrome and writes `public/resume.pdf` *before*
   `next build` collects `public/` — a file written after the final build is not picked up.
   It was a committed file once and went stale silently, so the download disagreed with the
   page it was linked from. Now editing the résumé and deploying is sufficient. One page,

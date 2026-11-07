@@ -21,6 +21,7 @@
     "typecheck": "tsc --noEmit",
     "audit": "npm audit --audit-level=moderate",
     "resume:pdf": "node scripts/resume-pdf.mjs",
+    "clients:shots": "node scripts/client-shots.mjs",
     "prebuild": "node scripts/check-no-template-leaks.mjs",
     "build:fast": "next build",
     "test": "vitest run",

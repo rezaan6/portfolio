@@ -21,7 +21,7 @@ export default function StackPage() {
   return (
     <>
       <PageIntro
-        num="04"
+        num="05"
         label="Stack"
         title="What I build with, and how I actually use it."
         subtitle="Grouped by what each part is for rather than listed alphabetically. Open any one to see how it shows up in real work — the craft below is what moves it."

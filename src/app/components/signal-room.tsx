@@ -28,6 +28,7 @@ import {
   archetypeChips,
   artifacts,
   caseStudies,
+  clientPractices,
   contact,
   methods,
   methodSteps,
@@ -38,6 +39,7 @@ import {
   tools,
 } from "./signal-room-data";
 import { Measured } from "./measured";
+import { clientSites, type ClientSite } from "../lib/clients";
 import { MEASUREMENTS, type MeasurementId } from "../lib/measurement";
 import { yearsOfExperience, yearsPhrase } from "../lib/experience";
 import { ArtifactDocView } from "./artifact-doc";
@@ -1456,7 +1458,7 @@ export function AboutHero() {
                 transformOrigin: "center",
               }}
             >
-              07
+              08
             </text>
           </svg>
           <div className="relative grid gap-10 lg:grid-cols-[1.35fr_0.85fr] lg:items-center">
@@ -2244,6 +2246,214 @@ export function ProjectsSection() {
         </div>
       </section>
 
+    </>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ * Clients — the cr8v estate, every site live.
+ *
+ * The case studies argue in decisions because the code behind them is
+ * under NDA. This page is the other kind of evidence: sites a reader can
+ * open. Cards are grouped by how much of each site is mine (`scope` in
+ * lib/clients.ts), so narrow work is labelled as narrow instead of sitting
+ * in the grid looking like the rest.
+ * ------------------------------------------------------------------ */
+
+function ClientShot({ site, sizes }: { site: ClientSite; sizes: string }) {
+  // Taken at 1280×800 by scripts/client-shots.mjs — the same 16:10 as this
+  // box, so object-cover only ever trims, never letterboxes.
+  return (
+    <div className="relative aspect-[16/10] overflow-hidden bg-[var(--sr-bg-alt)]">
+      <Image
+        src={`/clients/${site.slug}.webp`}
+        alt={`The ${site.name} homepage`}
+        fill
+        sizes={sizes}
+        className="object-cover object-top"
+      />
+    </div>
+  );
+}
+
+function ClientLink({ url }: { url: string }) {
+  // The host, not "Visit site": the domain is the claim, and it is what a
+  // reader would type to check it.
+  const host = url.replace(/^https:\/\/(www\.)?/, "");
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`${host} (opens in a new tab)`}
+      className="inline-flex items-center gap-1.5 rounded-full border border-[var(--sr-hairline)] px-3 py-1.5 font-[family-name:var(--font-mono)] text-[11px] text-[var(--sr-text)] transition hover:bg-[var(--sr-bg-alt)]"
+    >
+      <svg
+        aria-hidden="true"
+        className="h-3.5 w-3.5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+        <path d="M15 3h6v6M10 14L21 3" />
+      </svg>
+      {host}
+    </a>
+  );
+}
+
+function ClientCard({ site }: { site: ClientSite }) {
+  return (
+    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)]">
+      <div className="border-b border-[var(--sr-hairline)]">
+        <ClientShot site={site} sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw" />
+      </div>
+      <div className="flex flex-1 flex-col p-5">
+        <p className="font-[family-name:var(--font-display)] text-[10px] uppercase tracking-[0.14em] text-[var(--sr-faint)]">
+          {site.sector} · {site.platform}
+        </p>
+        <h3 className="mt-1.5 font-[family-name:var(--font-display)] text-[16px] font-medium text-[var(--sr-text)]">
+          {site.name}
+        </h3>
+        {site.note ? (
+          <p className="mt-2 text-[12.5px] leading-6 text-[var(--sr-muted)]">{site.note}</p>
+        ) : null}
+        <div className="mt-auto pt-4">
+          <ClientLink url={site.url} />
+        </div>
+      </div>
+    </article>
+  );
+}
+
+export function ClientsSection() {
+  const built = clientSites.filter((s) => s.scope === "built");
+  const run = clientSites.filter((s) => s.scope === "run");
+  const partial = clientSites.filter((s) => s.scope === "partial");
+  const companies = MEASUREMENTS["das-companies"].value;
+  return (
+    <>
+      {/* How the estate is run — first, because it is the part a screenshot
+          cannot show. */}
+      <section className="border-b border-[var(--sr-hairline)]">
+        <div className="mx-auto max-w-6xl px-5 py-20 lg:px-8">
+          <Reveal>
+            <SectionLabel title="How I run them" />
+            <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
+              One developer, one way of working, every site.
+            </h2>
+            <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
+              {companies} companies and one developer works only if the process
+              does the remembering. These are the four rules that keep a change
+              to one site from surprising another.
+            </p>
+          </Reveal>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {clientPractices.map((p, i) => (
+              <Reveal key={p.label} delay={0.04 * i} className="h-full">
+                <article className="h-full rounded-2xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)] p-5">
+                  <h3 className="font-[family-name:var(--font-display)] text-[15px] font-medium text-[var(--sr-text)]">
+                    {p.label}
+                  </h3>
+                  <p className="mt-2 text-[13px] leading-6 text-[var(--sr-muted)]">{p.body}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Built from an empty repository — the one site here that is mine
+          end to end, so it gets the room the projects page gives its builds. */}
+      <section className="border-b border-[var(--sr-hairline)]">
+        <div className="mx-auto max-w-6xl px-5 py-20 lg:px-8">
+          <Reveal>
+            <SectionLabel title="Built from scratch" />
+            <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
+              From an empty repository to the restaurant&apos;s own admin.
+            </h2>
+          </Reveal>
+
+          <div className="mt-10 space-y-6">
+            {built.map((site) => (
+              <Reveal key={site.slug}>
+                <article className="grid overflow-hidden rounded-3xl border border-[var(--sr-hairline)] bg-[var(--sr-panel)] lg:grid-cols-[1.15fr_1fr]">
+                  <div className="border-b border-[var(--sr-hairline)] lg:border-b-0 lg:border-r">
+                    <ClientShot site={site} sizes="(min-width: 1024px) 620px, 100vw" />
+                  </div>
+                  <div className="flex flex-col justify-center p-7 sm:p-9">
+                    <p className="font-[family-name:var(--font-display)] text-[10px] uppercase tracking-[0.16em] text-[var(--sr-accent)]">
+                      {site.sector}
+                    </p>
+                    <h3 className="mt-3 font-[family-name:var(--font-display)] text-[22px] font-medium leading-snug text-[var(--sr-text)]">
+                      {site.name}
+                    </h3>
+                    <p className="mt-3 max-w-[60ch] text-[14px] leading-7 text-[var(--sr-soft)]">{site.note}</p>
+                    <TechChips tech={site.platform.split(" · ")} />
+                    <div className="mt-5">
+                      <ClientLink url={site.url} />
+                    </div>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-[var(--sr-hairline)]">
+        <div className="mx-auto max-w-6xl px-5 py-20 lg:px-8">
+          <Reveal>
+            <SectionLabel title="The DAS Holding group" />
+            <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
+              {run.length} sites I run and extend.
+            </h2>
+            <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
+              For each of these I keep the site running and build on it —
+              content, fixes and new features, each one proven on a copy before
+              it goes live. Where there is more to say than that, the card says it.
+            </p>
+          </Reveal>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {run.map((site, i) => (
+              <Reveal key={site.slug} delay={0.03 * (i % 3)} className="h-full">
+                <ClientCard site={site} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Listed rather than dropped: they are part of the count in the page
+          title, so leaving them out would make that number unverifiable. */}
+      <section className="border-b border-[var(--sr-hairline)]">
+        <div className="mx-auto max-w-6xl px-5 py-16 lg:px-8">
+          <Reveal>
+            <SectionLabel title="Narrower work" />
+            <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.3rem,2.4vw,1.9rem)] font-medium leading-[1.1] text-[var(--sr-text)]">
+              The rest of the group, where the work was smaller than the site.
+            </h2>
+            <p className="mt-3 max-w-2xl text-[15px] leading-7 text-[var(--sr-muted)]">
+              Part of the {companies}, so they are here — and each card says
+              exactly what I did, which is less than the site.
+            </p>
+          </Reveal>
+
+          <div className="mt-9 grid gap-4 md:grid-cols-2">
+            {partial.map((site, i) => (
+              <Reveal key={site.slug} delay={0.04 * i} className="h-full">
+                <ClientCard site={site} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
     </>
   );
 }

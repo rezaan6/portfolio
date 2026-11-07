@@ -12,7 +12,7 @@ export default function ArtifactsPage() {
   return (
     <>
       <PageIntro
-        num="06"
+        num="07"
         label="Artifacts"
         title="The documents behind the decisions."
         subtitle="Nine documents — the ones I'd actually hand a new engineer on day one. Open any card to read it in full. Client code and data are kept out."
