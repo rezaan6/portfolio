@@ -451,7 +451,7 @@ const RESUMES = {
     download: "Mohammed-Rezaan-Riyaz-Resume.pdf",
   },
   "web-platform": {
-    headline: "Senior Full-Stack Web Engineer",
+    headline: "Senior Web Developer",
     tagline: "React · TypeScript · WordPress · Laravel · Shopify",
     positioning: WEB_POSITIONING,
     metrics: WEB_METRICS,
