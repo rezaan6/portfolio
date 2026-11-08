@@ -2599,7 +2599,7 @@ function V8HeroCard() {
   // there is no motion to reduce. Rendering above-the-fold content statically is
   // the same answer prefers-reduced-motion wanted, applied to everyone.
   const rows = [
-    { company: "cr8v", label: "Group websites, one developer", value: MEASUREMENTS["das-companies"].value, logo: "", mark: "CR", note: "DAS Holding · WordPress, Laravel & Shopify" },
+    { company: "cr8v", label: "Group websites, one developer", value: MEASUREMENTS["das-companies"].value, logo: "/logos/cr8v.png", mark: "CR", note: "DAS Holding · WordPress, Laravel & Shopify" },
     { company: "Hobber", label: "Vendor dashboard architected", value: "0→1", logo: "/logos/hobber.png", mark: "HB", note: "7 modules, feature-sliced React + TS" },
     { company: "Axinom", label: "Page load time", value: MEASUREMENTS["load-axinom"].value, logo: "/logos/axinom.png", mark: "AX", note: "bundle, lazy-load & caching" },
     { company: "Kodez", label: "Page load time", value: MEASUREMENTS["load-kodez"].value, logo: "/logos/kodez.png", mark: "KZ", note: `code-splitting across ${MEASUREMENTS.releases.value} releases` },

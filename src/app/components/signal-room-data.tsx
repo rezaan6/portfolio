@@ -101,9 +101,8 @@ export const caseStudies: CaseStudy[] = [
     // cr8v's own purple, from the gradient on cr8v.com.
     color: "#9820fe",
     brand: "#9820fe",
-    // No logo file: cr8v.com serves its assets only to its own pages, so the
-    // mark carries the brand rather than a fabricated logo.
-    logo: "",
+    // cr8v's own mark — the gradient 8 — from the agency's brand files.
+    logo: "/logos/cr8v.png",
     metric: `${MEASUREMENTS["das-companies"].value} companies' websites, one developer`,
     headline:
       "Running a holding group's web estate as its only developer: one way of working across twenty companies.",
