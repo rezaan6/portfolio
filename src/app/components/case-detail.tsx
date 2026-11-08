@@ -7,7 +7,14 @@ import { Measured } from "./measured";
 import { MEASUREMENTS } from "../lib/measurement";
 import { DeviceStage } from "./prototype";
 import { PROTOTYPES } from "./prototype-data";
-import { Magnetic } from "./signal-room";
+import {
+  Magnetic,
+  WebCapabilitiesSection,
+  WebCaseStudiesSection,
+  WebProcessSection,
+  WebResumeCta,
+  WebSitesSection,
+} from "./signal-room";
 import type { CaseStudy } from "./signal-room-data";
 
 /* ------------------------------------------------------------------ *
@@ -143,6 +150,10 @@ export function CaseDetail({
             </p>
           </div>
         </section>
+      ) : cs.estate ? (
+        // An estate has no reference build to draw — the sites are live, so they
+        // are the evidence, in the slot where the other cases show their build.
+        <WebSitesSection />
       ) : null}
 
       {/* The pattern, in code. Illustrative — it shows the shape of the
@@ -269,6 +280,14 @@ export function CaseDetail({
         </section>
       ) : null}
 
+      {cs.estate ? (
+        <>
+          <WebCapabilitiesSection />
+          <WebCaseStudiesSection />
+          <WebProcessSection />
+          <WebResumeCta />
+        </>
+      ) : null}
     </div>
   );
 }

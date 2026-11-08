@@ -16,7 +16,7 @@ export default function MethodPage() {
   return (
     <>
       <PageIntro
-        num="06"
+        num="05"
         label="Method"
         title="How I build — one loop, four rules."
         subtitle="The repeatable process behind every case study, and the calls I make the same way regardless of the codebase."

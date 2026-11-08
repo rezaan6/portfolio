@@ -72,7 +72,7 @@ const CONTACT_GLYPH: Record<string, string> = {
 // hands-on clause comes first for that reason, and it is not a new claim: the
 // Hobber bullet below already says the frontend is his end to end.
 const POSITIONING = () =>
-  `Senior Frontend Engineer with ${yearsPhrase()} owning large React codebases from architecture through production — hands-on as the primary engineer, and leading frontend teams. I work cross-functionally with design, backend and DevOps, and I'm the one who flags where a design will fight the design system. I make the structural decisions a codebase has to live with, and take responsibility for how it performs and how safely it ships.`;
+  `Senior Frontend Engineer with ${yearsPhrase()} owning large React codebases from architecture through production — hands-on as the primary engineer, and leading frontend teams. I work cross-functionally with design, backend and DevOps, and I'm the one who flags where a design will fight the design system. I make the structural decisions a codebase has to live with, and take responsibility for how it performs and how safely it ships. Today I'm also the sole developer for a ${MEASUREMENTS["das-companies"].value}-company holding group's websites, on WordPress, Laravel and Shopify.`;
 
 // The five-second scan payload. Every figure is a before/after read against
 // a defined baseline — never a causal claim.
@@ -95,9 +95,8 @@ const METRICS: { label: string; m: MeasurementId }[] = [
 // like the ordinal marker this replaced.
 const ENDNOTES = METRICS.map((x) => ({ id: x.m, label: x.label, ...MEASUREMENTS[x.m] }));
 
-// Two current roles side by side: cr8v's client work from June, Hobber's vendor
-// platform from January. Hobber stays first on this résumé because it is the
-// frontend role; the web-platform version below leads with cr8v.
+// Two current roles, newest first: cr8v's client work from June, Hobber's
+// vendor platform from January.
 const CR8V: Role = {
   company: "cr8v",
   location: "Abu Dhabi, UAE",
@@ -124,6 +123,7 @@ const CR8V: Role = {
 };
 
 const EXPERIENCE: Role[] = [
+  CR8V,
   {
     company: "Hobber",
     location: "Abu Dhabi, UAE",
@@ -157,7 +157,6 @@ const EXPERIENCE: Role[] = [
       "Partner with backend and DevOps engineers on API contracts — pinned against Swagger before building — authentication systems, and platform features.",
     ],
   },
-  CR8V,
   {
     company: "Axinom",
     location: "Colombo, Sri Lanka (HQ Fürth, Germany)",

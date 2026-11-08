@@ -802,8 +802,10 @@ export function Magnetic({
 // Where each case's numbers actually come from — shown next to the bars so the
 // percentages read as measured (or as a delivery count), never as invented.
 const caseBarSource: Record<string, string> = {
+  cr8v:
+    "Counts from my work log and the group's security review — most of this work is running and extending sites that already existed, so the honest figures are counts, not before/after reads.",
   hobber:
-    "Composition and boundary reads across the codebase I architected — a structural measure, not a performance one. The platform is 7 months in, so there is no before/after perf number to report yet.",
+    "Composition and boundary reads across the codebase I architected — a structural measure, not a performance one. The platform is still in its first year, so there is no before/after perf number to report yet.",
   axinom:
     "Load-time measured before/after the bundle, lazy-load, and caching work, plus the Mosaic micro-frontends integrated for client delivery.",
   kodez:
@@ -1458,7 +1460,7 @@ export function AboutHero() {
                 transformOrigin: "center",
               }}
             >
-              08
+              07
             </text>
           </svg>
           <div className="relative grid gap-10 lg:grid-cols-[1.35fr_0.85fr] lg:items-center">
@@ -1473,9 +1475,10 @@ export function AboutHero() {
               </h1>
               <p className="mt-6 max-w-xl text-[16px] leading-8 text-[var(--sr-muted)]">
                 {yearsPhrase()} building accessible, high-performance web products —
-                marketplace platforms, enterprise media, and CMS at scale. I
-                draw the boundaries first, prove the work with tests, and let a
-                measurement pick the next optimization.
+                marketplace platforms, enterprise media, CMS at scale, and today
+                the websites of a {MEASUREMENTS["das-companies"].value}-company
+                holding group. I draw the boundaries first, prove the work with
+                tests, and let a measurement pick the next optimization.
               </p>
               <div className="mt-7 flex flex-wrap gap-2">
                 {/* The title chip came out of this row: the profile card sits in
@@ -1516,7 +1519,7 @@ export function AboutHero() {
                   Mohammed Rezaan Riyaz
                 </p>
                 <p className="mt-0.5 text-[13px] text-[var(--sr-muted)]">
-                  Senior Frontend Engineer
+                  Senior Web &amp; Frontend Engineer
                 </p>
                 <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-[var(--sr-accent-soft)] px-3 py-1.5">
                   <span className="relative flex h-2 w-2">
@@ -1549,9 +1552,9 @@ export function AboutStats() {
     value: number; prefix: string; suffix: string; label: string; m: MeasurementId;
   }[] = [
     { value: yearsOfExperience(), prefix: "", suffix: "+", label: "Years of hands-on React in production", m: "experience" },
+    { value: digits("das-companies"), prefix: "", suffix: "", label: "Group companies' websites I run, at cr8v", m: "das-companies" },
     { value: digits("releases"), prefix: "", suffix: "+", label: "Production releases delivered at Kodez", m: "releases" },
     { value: digits("coverage"), prefix: "~", suffix: "%", label: "Automated test coverage, Jest + Cypress", m: "coverage" },
-    { value: digits("tables"), prefix: "", suffix: "+", label: "SQL tables in the Kodez CMS schema", m: "tables" },
   ];
   return (
     <section className="px-4 pt-10 sm:px-5 lg:px-8 lg:pt-14">
@@ -1785,7 +1788,7 @@ export function ContactSection() {
         <Reveal>
           <SectionLabel title="Contact" />
           <h2 className="mt-4 max-w-4xl font-[family-name:var(--font-display)] text-[clamp(1.7rem,3.2vw,2.55rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-            Open to Senior Frontend Engineer roles — onsite, remote, or
+            Open to senior web and frontend roles — onsite, remote, or
             relocation.
           </h2>
           {/* This was a three-part conditional: "If you're hiring an engineer
@@ -2251,7 +2254,8 @@ export function ProjectsSection() {
 }
 
 /* ------------------------------------------------------------------ *
- * Web work — the cr8v estate, for groups hiring for web platforms.
+ * The cr8v case study's web sections — rendered by case-detail.tsx for a
+ * case marked `estate`.
  *
  * The rest of the site argues in architecture, for product teams. A
  * holding group asks something narrower and harder to fake: can one
@@ -2356,50 +2360,25 @@ function SiteTile({ site }: { site: ClientSite }) {
   );
 }
 
-export function WebProofSection() {
-  // The four numbers a group would ask for first. Years is derived, like
-  // everywhere else on the site; the rest come from lib/measurement.
-  const tiles = [
-    { value: MEASUREMENTS["das-companies"].value, label: "group companies on the account", basis: MEASUREMENTS["das-companies"].basis },
-    { value: MEASUREMENTS["das-sites"].value, label: "production sites on one shared server", basis: MEASUREMENTS["das-sites"].basis },
-    { value: MEASUREMENTS.tasks.value, label: "tasks delivered", basis: MEASUREMENTS.tasks.basis },
-    { value: `${yearsOfExperience()}+`, label: "years building for the web", basis: MEASUREMENTS.experience.basis },
-  ];
+export function WebResumeCta() {
   return (
     <section className="border-b border-[var(--sr-hairline)]">
-      <div className="mx-auto max-w-6xl px-5 py-14 lg:px-8">
-        <Reveal>
-          <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[var(--sr-hairline)] bg-[var(--sr-hairline)] lg:grid-cols-4">
-            {tiles.map((t) => (
-              <div key={t.label} className="bg-[var(--sr-panel)] p-5 sm:p-6" title={t.basis}>
-                <dt className="font-[family-name:var(--font-display)] text-[clamp(1.6rem,3vw,2.2rem)] font-medium leading-none text-[var(--sr-text)]">
-                  {t.value}
-                </dt>
-                <dd className="mt-2 text-[12.5px] leading-5 text-[var(--sr-muted)]">{t.label}</dd>
-              </div>
-            ))}
-          </dl>
-        </Reveal>
-        <Reveal>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Link href="/resume/web-platform" className="rounded-full sr-cta px-6 py-3 text-[14px] font-semibold">
-              Web platform résumé
-            </Link>
-            <a
-              href="/resume-web-platform.pdf"
-              download="Mohammed-Rezaan-Riyaz-Resume-Web-Platform.pdf"
-              className="rounded-full border border-[var(--sr-hairline)] px-6 py-3 text-[14px] font-semibold text-[var(--sr-text)] transition hover:border-[var(--sr-accent)] hover:text-[var(--sr-accent)]"
-            >
-              Download PDF
-            </a>
-            <a
-              href={`mailto:${contact.email}`}
-              className="rounded-full border border-[var(--sr-hairline)] px-6 py-3 text-[14px] font-semibold text-[var(--sr-text)] transition hover:border-[var(--sr-accent)] hover:text-[var(--sr-accent)]"
-            >
-              Email me
-            </a>
-          </div>
-        </Reveal>
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-6 px-5 py-14 lg:px-8">
+        <p className="max-w-xl font-[family-name:var(--font-display)] text-[clamp(1.2rem,2.2vw,1.6rem)] font-medium leading-snug text-[var(--sr-text)]">
+          Hiring for a group&apos;s websites? The web platform résumé leads with this work.
+        </p>
+        <div className="flex flex-wrap items-center gap-3">
+          <Link href="/resume/web-platform" className="rounded-full sr-cta px-6 py-3 text-[14px] font-semibold">
+            Web platform résumé
+          </Link>
+          <a
+            href="/resume-web-platform.pdf"
+            download="Mohammed-Rezaan-Riyaz-Resume-Web-Platform.pdf"
+            className="rounded-full border border-[var(--sr-hairline)] px-6 py-3 text-[14px] font-semibold text-[var(--sr-text)] transition hover:border-[var(--sr-accent)] hover:text-[var(--sr-accent)]"
+          >
+            Download PDF
+          </a>
+        </div>
       </div>
     </section>
   );
@@ -2620,10 +2599,10 @@ function V8HeroCard() {
   // there is no motion to reduce. Rendering above-the-fold content statically is
   // the same answer prefers-reduced-motion wanted, applied to everyone.
   const rows = [
+    { company: "cr8v", label: "Group websites, one developer", value: MEASUREMENTS["das-companies"].value, logo: "", mark: "CR", note: "DAS Holding · WordPress, Laravel & Shopify" },
     { company: "Hobber", label: "Vendor dashboard architected", value: "0→1", logo: "/logos/hobber.png", mark: "HB", note: "7 modules, feature-sliced React + TS" },
     { company: "Axinom", label: "Page load time", value: MEASUREMENTS["load-axinom"].value, logo: "/logos/axinom.png", mark: "AX", note: "bundle, lazy-load & caching" },
     { company: "Kodez", label: "Page load time", value: MEASUREMENTS["load-kodez"].value, logo: "/logos/kodez.png", mark: "KZ", note: `code-splitting across ${MEASUREMENTS.releases.value} releases` },
-    { company: "Kodez", label: "Automated test coverage", value: MEASUREMENTS.coverage.value, logo: "/logos/kodez.png", mark: "KZ", note: "Jest & Cypress — the suite gated in CI, not the number" },
   ];
   return (
     /* Not a motion.div, and not Reveal either. This card is the hero's right
@@ -2694,21 +2673,9 @@ function V8Hero() {
       <div className="relative mx-auto max-w-6xl px-5 py-20 lg:px-8 lg:py-28">
         <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
           <div>
-            {/* The second door. A holding group hiring for its websites lands on
-                a hero written for product teams; this sends it to the work it
-                is actually hiring for, before it decides this is the wrong site. */}
-            <Reveal immediate>
-              <Link
-                href="/web"
-                className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--sr-hairline)] bg-[var(--sr-panel)] px-3.5 py-1.5 font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.12em] text-[var(--sr-muted)] transition hover:border-[var(--sr-accent)] hover:text-[var(--sr-accent)]"
-              >
-                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[var(--sr-accent)]" />
-                Hiring for a group&apos;s websites? See the web work →
-              </Link>
-            </Reveal>
             <Reveal immediate>
               <p className="font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.3em] text-[var(--sr-accent)]">
-                Senior Frontend Engineer · React · Next.js · TypeScript
+                Senior Web & Frontend Engineer · React · WordPress · Laravel
               </p>
             </Reveal>
             <Reveal immediate>
@@ -2723,9 +2690,10 @@ function V8Hero() {
             <Reveal immediate>
               <p className="mt-7 max-w-lg text-[16px] leading-7 text-[var(--sr-muted)]">
                 {yearsPhrase()} across marketplace, media, and enterprise products —
-                frontend architecture with full-stack range. I draw the
-                boundaries first, prove the work with tests, and let a
-                measurement pick the next optimization.
+                and today the sole developer for a{" "}
+                {MEASUREMENTS["das-companies"].value}-company holding group&apos;s
+                websites. I draw the boundaries first, prove the work with tests,
+                and let a measurement pick the next optimization.
               </p>
             </Reveal>
             <Reveal immediate>
@@ -2770,10 +2738,15 @@ function V8Impact() {
   // been the one surface printing figures with no way to ask where they came from.
   const stats: { value: string; label: string; fill?: boolean; m?: MeasurementId }[] = [
     {
+      value: MEASUREMENTS["das-companies"].value,
+      label: "Group companies' websites run as the sole developer · cr8v",
+      fill: true,
+      m: "das-companies",
+    },
+    {
       value: "0→1",
       label:
         "Vendor platform architected from an empty repo — 7 feature-sliced modules · Hobber",
-      fill: true,
       m: "modules",
     },
     {
@@ -2790,11 +2763,6 @@ function V8Impact() {
       value: MEASUREMENTS["dev-time"].value,
       label: "Frontend dev time after the Storybook component library landed · Kodez",
       m: "dev-time",
-    },
-    {
-      value: MEASUREMENTS.tables.value,
-      label: "SQL tables in the schema behind the CMS I owned the frontend for",
-      m: "tables",
     },
   ];
   return (
@@ -3031,7 +2999,7 @@ function V8Work() {
         <Reveal>
           <SectionLabel title="Selected work" />
           <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-            Four codebases, written as engineering decisions.
+            Five companies, written as engineering decisions.
           </h2>
           <p className="mt-3 font-[family-name:var(--font-display)] text-[12px] uppercase tracking-[0.14em] text-[var(--sr-faint)]">
             Tap or hover a case to open it
@@ -3090,6 +3058,15 @@ function V8Focus() {
   const hoverLift = reduce ? undefined : { y: -4 };
   const items = [
     {
+      // Web platforms first: the cr8v estate is the current role, and the old
+      // Full-stack card folds in here — its Node BFF, schema and migration work
+      // is the same "whole platform" range, so six cards stay six.
+      t: "Web platforms & full-stack",
+      d: "WordPress, Laravel and Shopify estates run as one — bilingual sites, forms that deliver, tracking marketing can trust — plus Node.js BFF layers, relational schema work, and legacy stacks migrated without freezing delivery.",
+      companies: ["cr8v", "Kodez", "RaSoft"],
+      outcome: `${MEASUREMENTS["das-companies"].value} companies' sites · legacy stack retired incrementally`,
+    },
+    {
       t: "Frontend architecture",
       // This named only new codebases — greenfield, plus a CMS also built 0→1 —
       // while most senior React roles are an inherited app nobody remembers the
@@ -3116,12 +3093,6 @@ function V8Focus() {
       outcome: `${MEASUREMENTS["dev-time"].value} frontend dev time`,
     },
     {
-      t: "Full-stack delivery",
-      d: "Node.js BFF layers, ExpressJS services, and relational schema work — plus incremental migration off a legacy stack without freezing delivery.",
-      companies: ["Kodez", "RaSoft"],
-      outcome: `${MEASUREMENTS.tables.value} SQL tables · legacy stack retired incrementally`,
-    },
-    {
       t: "Testing & release safety",
       d: "Test-first with Jest, Cypress at the gate in CI, plus cross-browser validation — the reason releases stayed frequent and safe rather than merely fast.",
       companies: ["Kodez"],
@@ -3140,18 +3111,16 @@ function V8Focus() {
         <Reveal>
           <SectionLabel title="Where I fit" />
           <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-            Frontend architecture is my spine — and where it extends.
+            Web platforms and frontend architecture — and where they extend.
           </h2>
           <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
-            {/* Three, not two. The grid below badges the first three cards Core
-                (i < 3), and the third is Design systems — so naming two here
-                demoted a capability this section's own UI promotes, inside one
-                viewport. Design systems is also one of the things the target
-                role screens for, which made it the worst one to drop. */}
-            Architecture, performance, and design systems are the core
-            I&apos;ve shipped against. Full-stack delivery, testing discipline,
-            and AI-native workflows are where that same instinct extends — each
-            backed by a number, not just a title.
+            {/* Four, matching the grid below, which badges the first four cards
+                Core (i < 4). Naming fewer here once demoted a capability the
+                section's own UI promotes, inside one viewport. */}
+            Web platforms, architecture, performance, and design systems are
+            the core I&apos;ve shipped against. Testing discipline and AI-native
+            workflows are where that same instinct extends — each backed by a
+            number, not just a title.
           </p>
         </Reveal>
         {/* Grid, not flex-wrap. These are six cards of unequal text length, and in a
@@ -3171,12 +3140,12 @@ function V8Focus() {
                 <span
                   className="mb-2.5 inline-flex w-fit rounded-full px-2 py-0.5 font-[family-name:var(--font-display)] text-[9px] font-semibold uppercase tracking-[0.12em]"
                   style={
-                    i < 3
+                    i < 4
                       ? { background: "var(--sr-accent-soft)", color: "var(--sr-accent)" }
                       : { background: "var(--sr-bg-alt)", color: "var(--sr-muted)" }
                   }
                 >
-                  {i < 3 ? "Core" : "Adjacent"}
+                  {i < 4 ? "Core" : "Adjacent"}
                 </span>
                 <p
                   className="flex min-h-[3.1rem] items-start font-[family-name:var(--font-display)] text-[18px] font-medium leading-snug"

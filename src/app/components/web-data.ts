@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------ *
- * /web — the web-platform side of the work, for groups hiring for it.
+ * The cr8v case study's web content — the web-platform side of the work.
  *
  * The rest of the site is written for product teams and argues in
  * architecture. A holding group asks a different question: can one

@@ -14,7 +14,7 @@ export default function WorkPage() {
       <PageIntro
         num="02"
         label="Work"
-        title="Four codebases, written as decisions."
+        title="Five companies, written as decisions."
         subtitle="Each follows the same arc — the context, the decision, the trade-off on record, what I measured, the outcome, and what I'd do differently. Tagged by what it demonstrates."
       />
       <EvidenceSection />

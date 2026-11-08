@@ -12,8 +12,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/colophon", destination: "/", permanent: true },
-      { source: "/clients", destination: "/web", permanent: true },
-      { source: "/web/:slug", destination: "/web", permanent: true },
+      // The web-platform work lives on the cr8v case study now; its earlier
+      // addresses still land there.
+      { source: "/web", destination: "/work/cr8v", permanent: true },
+      { source: "/web/:slug", destination: "/work/cr8v", permanent: true },
+      { source: "/clients", destination: "/work/cr8v", permanent: true },
     ];
   },
   turbopack: {

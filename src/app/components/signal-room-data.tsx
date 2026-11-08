@@ -25,17 +25,15 @@ export const contact = {
 export const navLinks = [
   { href: "/", num: "01", label: "Home" },
   { href: "/work", num: "02", label: "Work" },
-  // No-break space: the nav wraps each item at its first space ("01" over "Home"),
-  // so a two-word label has to stay one unit to sit under its number like the rest.
-  { href: "/web", num: "03", label: "Web\u00a0work" },
-  { href: "/projects", num: "04", label: "Projects" },
-  { href: "/stack", num: "05", label: "Stack" },
-  { href: "/method", num: "06", label: "Method" },
-  { href: "/artifacts", num: "07", label: "Artifacts" },
-  { href: "/about", num: "08", label: "About" },
+  { href: "/projects", num: "03", label: "Projects" },
+  { href: "/stack", num: "04", label: "Stack" },
+  { href: "/method", num: "05", label: "Method" },
+  { href: "/artifacts", num: "06", label: "Artifacts" },
+  { href: "/about", num: "07", label: "About" },
 ];
 
 export const archetypeChips = [
+  "Multi-Brand Web Platforms",
   "Frontend Architecture",
   "Performance",
   "Design Systems",
@@ -83,9 +81,90 @@ export type CaseStudy = {
    * under NDA). Highlighted at build time; see lib/highlight.ts.
    */
   code?: { caption: string; lang?: "tsx" | "typescript" | "bash"; source: string };
+  /**
+   * A web estate rather than one codebase (cr8v): the detail page shows the
+   * live client sites where the other cases show a reference build, then the
+   * capabilities, selected work and process from components/web-data.
+   */
+  estate?: boolean;
 };
 
 export const caseStudies: CaseStudy[] = [
+  {
+    company: "cr8v",
+    slug: "cr8v",
+    mark: "CR",
+    tag: "MULTI-BRAND WEB PLATFORMS · GROUP WEB LEAD",
+    domain:
+      "Digital agency · sole developer on the DAS Holding account, a holding group's websites across real estate, healthcare, retail, investment and e-commerce · UAE",
+    period: "Jun 2026 — Present",
+    // cr8v's own purple, from the gradient on cr8v.com.
+    color: "#9820fe",
+    brand: "#9820fe",
+    // No logo file: cr8v.com serves its assets only to its own pages, so the
+    // mark carries the brand rather than a fabricated logo.
+    logo: "",
+    metric: `${MEASUREMENTS["das-companies"].value} companies' websites, one developer`,
+    headline:
+      "Running a holding group's web estate as its only developer: one way of working across twenty companies.",
+    problem:
+      "Twenty companies, each with its own website — WordPress, Laravel, custom PHP and Shopify, most of them in English and Arabic, sixteen on one shared server — and requests arriving from every brand's marketing, HR, IT and security teams at once.",
+    move:
+      "Ran it as one estate rather than twenty sites: every change built on a copy and shipped after sign-off, every task logged, group-wide changes made once across every site, and security and upgrades planned site by site instead of patched as things broke.",
+    result: `${MEASUREMENTS.tasks.value} tasks delivered, a security review of all ${MEASUREMENTS["das-sites"].value} production sites with an approved ${MEASUREMENTS["upgrade-plan"].value}-day upgrade plan, lead tracking marketing can trust, and a restaurant site built from an empty repository.`,
+    tradeoffShort: "Consistency across the estate vs. each brand's own request",
+    results: [
+      { label: "Group companies on the account", note: "websites, stores and reporting", m: "das-companies" },
+      { label: "Production sites on one shared server", note: "every one in the security review", m: "das-sites" },
+      { label: "Tasks delivered", note: "each one in the work log", m: "tasks" },
+      { label: "Working days in the approved upgrade plan", note: "planned effort, site by site", m: "upgrade-plan" },
+    ],
+    context:
+      "cr8v is a digital agency, and the DAS Holding account is the largest thing it runs: twenty group companies across real estate, facilities, investment, healthcare, retail, legal, transport, automotive and e-commerce, each with its own website. They span WordPress, Laravel, custom PHP and Shopify; sixteen share one server; most are in English and Arabic. I am the only developer on the account. Requests arrive from the agency's account manager, the group's management and each brand's own teams — often on the same day — and every site came with a history nobody had written down.",
+    decision:
+      "I ran the account as one estate rather than twenty sites. Every change is made and tested on a local or demo copy and shipped by hand only after sign-off; nothing is edited live. Every task gets an entry in a work log, so the history of any site, and the reason behind a change, is a search away. Changes the group needs everywhere — a supplier-registration link, lead tracking, retiring old tags — are made once, across the estate. And when the group's security team asked where the sites stood, the answer was a site-by-site review and a plan, not a list of patches.",
+    tradeoff:
+      "Consistency across the estate vs. each brand's own request. Every brand wants its change today, and a copy-first, sign-off-then-ship process is slower on any single afternoon than editing the live site. I kept the rule even for small requests, because on a shared server a quick fix on one site is a risk to fifteen others — and a queue with a written record is what lets one developer serve twenty companies without dropping one.",
+    signal: `What I watch is whether the estate stays knowable: whether any site's last change, and the reason for it, can be found in minutes; whether a group-wide change lands everywhere it should; whether forms deliver and tracking counts each lead and each purchase once. The figures I can state are counts — ${MEASUREMENTS.tasks.value} logged tasks, ${MEASUREMENTS["das-sites"].value} production sites reviewed, lead tracking on ${MEASUREMENTS.tracking.value} sites — rather than before/after reads, because most of the work is running and extending sites that already existed.`,
+    outcome: `A written status for every production site, and a ${MEASUREMENTS["upgrade-plan"].value}-day, site-by-site upgrade plan the group approved and I have started delivering. The penetration test's findings worked through across the estate. Arabic versions rebuilt and tested on demos for the brands' review. Lead tracking and sales dashboards that marketing can read without second-guessing. And, for a separate client, a restaurant site built from an empty repository — now on Cloudflare, with an admin panel I built.`,
+    detail:
+      "What I'd do differently: start the site-by-site register — platform, plugins, owners, what each site depends on — on the first day, not when the security review asked for it. The work log made every site's history findable; a register makes its current state findable, and on an estate this size you want both before the first emergency rather than after it.",
+    customerLede:
+      "Every brand's marketing, HR and IT team gets its site changed safely and quickly — without one brand's request breaking another's.",
+    scale: [
+      `${MEASUREMENTS["das-companies"].value} group companies`,
+      `${MEASUREMENTS["das-sites"].value} production sites on one server`,
+      "English & Arabic",
+      "Sole developer",
+    ],
+    stack: [
+      "WordPress",
+      "Laravel",
+      "PHP",
+      "Shopify",
+      "React",
+      "TypeScript",
+      "Google Tag Manager",
+      "GA4",
+      "Looker Studio",
+      "Cloudflare",
+    ],
+    practices: [
+      {
+        lp: "Ownership end to end",
+        why: "One developer for twenty companies means scoping, building, testing, deploying and reporting are all the same person's job — which is why every change goes through a copy and a sign-off rather than through memory.",
+      },
+      {
+        lp: "Security as a programme, not a reaction",
+        why: "A site-by-site review for the group's management, the penetration test's findings worked through across the estate, and upgrades planned by risk with an effort estimate for each — then delivered in that order.",
+      },
+      {
+        lp: "Measurement marketing can trust",
+        why: "Lead tracking rolled out once across the group's sites, old tags retired, and purchase events fixed until each order counts once — so the dashboards built on top of them are worth reading.",
+      },
+    ],
+    estate: true,
+  },
   {
     company: "Hobber",
     slug: "hobber",
@@ -523,7 +602,7 @@ export const projects: Project[] = [
     slug: "this-site",
     title: "This site",
     blurb:
-      "The one codebase here I can hand over in full, since my production work is under NDA. Server Components are the default and I only cross the boundary where crossing it buys something: the case-study route is an async Server Component that awaits its params, highlights its code with Shiki on the server behind the server-only package, and hands the client finished HTML — so the tokenizer never reaches the browser. Every route is prerendered; the ones that quote a figure derived from a date revalidate hourly, so the number stays right without a redeploy. It also carries the record of a layout-shift bug I caused and then found properly: the case accordion animated flexGrow, which is a layout property, and my first hypothesis about the cause was wrong. It is fixed; the note stays because the diagnosis is the interesting part.",
+      "The one codebase here I can hand over in full, since my production code is under NDA. Server Components are the default and I only cross the boundary where crossing it buys something: the case-study route is an async Server Component that awaits its params, highlights its code with Shiki on the server behind the server-only package, and hands the client finished HTML — so the tokenizer never reaches the browser. Every route is prerendered; the ones that quote a figure derived from a date revalidate hourly, so the number stays right without a redeploy. It also carries the record of a layout-shift bug I caused and then found properly: the case accordion animated flexGrow, which is a layout property, and my first hypothesis about the cause was wrong. It is fixed; the note stays because the diagnosis is the interesting part.",
     learned:
       "Where the server/client boundary actually pays for itself — and that a client component is still prerendered, so \"use client\" spends bundle, not first paint.",
     tech: [
@@ -833,10 +912,10 @@ No startViewTransition → CSS cross-fade. reduce-motion → neither.`,
     group: "Core frontend",
     use: "App Router, SSR/CSR & routing",
     howIUse:
-      `I use Next.js when the rendering strategy is itself a product decision — which parts must be server-rendered for SEO and first paint, which are client-interactive, and where the hydration boundary sits. At Axinom that mattered for media applications where load time was a deliverable: route-level code-splitting and deferred client bundles were a large part of the ${MEASUREMENTS["load-axinom"].value.replace("−","~")} improvement. On the App Router I treat the boundary as something each file has to justify, and I'm precise about what it costs — a client component is still prerendered on the server, so "use client" spends bundle, not first paint. This site is the worked example: every route prerendered, the case-study route an async Server Component that awaits its params, and revalidate on the four pages quoting a figure derived from a date, so they can't go stale between deploys.`,
+      `I use Next.js when the rendering strategy is itself a product decision — which parts must be server-rendered for SEO and first paint, which are client-interactive, and where the hydration boundary sits. At Axinom that mattered for media applications where load time was a deliverable: route-level code-splitting and deferred client bundles were a large part of the ${MEASUREMENTS["load-axinom"].value.replace("−","~")} improvement. On the App Router I treat the boundary as something each file has to justify, and I'm precise about what it costs — a client component is still prerendered on the server, so "use client" spends bundle, not first paint. This site is the worked example: every route prerendered, the case-study route an async Server Component that awaits its params, and revalidate on the five pages quoting a figure derived from a date, so they can't go stale between deploys.`,
     sample: `Rendering is a per-route decision, then a per-file one
-/work/[slug]         server · await params · generateStaticParams → 4 pages
-/ /about /resume /stack   prerendered + export const revalidate = 3600
+/work/[slug]         server · await params · generateStaticParams → 5 pages
+/ /about /stack /resume /resume/web-platform   prerendered + revalidate = 3600
 loading.tsx          9 of them — Next wraps the segment in Suspense
 "use client"         only where state, an event handler or a DOM API lives
 Guardrail: nothing on the path to first frame is lazy-loaded.`,
@@ -853,6 +932,30 @@ type VendorService =
   | { status: "draft";     price?: never }
   | { status: "bookable";  price: Money }   // bookable implies a price
 // The compiler now rejects a bookable service with no price.`,
+  },
+  {
+    name: "WordPress",
+    slug: "wordpress",
+    group: "Web platforms & CMS",
+    use: "Multi-brand sites, WPML, WooCommerce",
+    howIUse:
+      "Most of the DAS Holding group's sites run on WordPress — Elementor, WPBakery, WPML for Arabic, WooCommerce and ACF — and I run them as one estate rather than as separate sites. Every change is made on a copy first and shipped by hand after sign-off; Arabic versions are rebuilt on WPML from the current English rather than translated once and left to drift; and plugins and themes are tracked site by site, because on a shared server one neglected plugin is every site's problem.",
+  },
+  {
+    name: "Laravel",
+    slug: "laravel",
+    group: "Web platforms & CMS",
+    use: "Custom sites & applications",
+    howIUse:
+      "Several of the group's sites are Laravel applications of different ages, which means reading an app before changing it — where its routes, views and config live, and what an upgrade will touch. I've built bilingual property listings with category and emirate filters, repaired contact flows that weren't registering leads, and planned upgrades by risk rather than by date. Kodez is where I first worked in Laravel, on the legacy application I later helped move onto React.",
+  },
+  {
+    name: "Shopify",
+    slug: "shopify",
+    group: "Web platforms & CMS",
+    use: "Storefronts, Liquid & store apps",
+    howIUse:
+      "On Shopify the work is the store as a business tool: a product carousel on the homepage, bundles and add-ons that show out-of-stock items rather than hiding them, delivery charges and checkout messages, and fixes worked through with the subscription and delivery-scheduling app vendors. The theme lives in Liquid; the part that mattered most was making the purchase tracking count each order once.",
   },
   {
     name: "Tailwind CSS",
@@ -996,6 +1099,30 @@ EXPLAIN SELECT ... ;      -- type: ALL means a full table scan
      MySQL panel above makes with paid-work behind it. It stays in the résumé
      skills group and the project tech chips, so a keyword screen still sees it. */
   {
+    name: "Google Tag Manager",
+    slug: "googletagmanager",
+    group: "Tracking & analytics",
+    use: "Lead and purchase tracking",
+    howIUse: `I rolled Google Tag Manager out across ${MEASUREMENTS.tracking.value} of the group's sites with lead-form tracking, and retired the old hard-coded tags it replaced — so marketing's numbers come from one container per site rather than from whatever an earlier agency left behind. On the stores the job ran the other way: tracing purchase events that fired several times per order back to the duplicate setup, and fixing them until ad spend and sales read from the same source.`,
+  },
+  {
+    name: "Google Analytics",
+    slug: "googleanalytics",
+    group: "Tracking & analytics",
+    use: "GA4 traffic & enquiry reporting",
+    howIUse:
+      "GA4 is where the brands' traffic and enquiry reports come from, and the store analytics behind the sales dashboards. I treat it as one source among several rather than as the truth: on the stores it is read alongside the orders themselves, because a purchase analytics recorded and the order system never saw is a tracking bug, not a sale.",
+  },
+  {
+    name: "Looker Studio",
+    mono: "LS",
+    color: "#4285F4",
+    group: "Tracking & analytics",
+    use: "Sales dashboards for the stores",
+    howIUse:
+      "The stores' sales dashboards are Looker Studio reports built on GA4, Meta Ads and the stores' own orders — an overview, campaigns, ads, placements, a glossary and a store-versus-store comparison — with commentary written to stay true for whatever date range a client picks, and sharing limited to the agency.",
+  },
+  {
     name: "Vitest",
     slug: "vitest",
     group: "Testing & quality",
@@ -1121,6 +1248,14 @@ A stale build breaks nothing loudly — which is why it needs deciding.`,
      rather than a decision, and `docker compose up` is not a senior frontend
      signal. Environment parity already belongs to the GitHub panel below and to
      the BrowserStack line in TEST STRATEGY. Docker stays in the résumé skills. */
+  {
+    name: "Cloudflare",
+    slug: "cloudflare",
+    group: "Build & delivery",
+    use: "Hosting, database & media for client sites",
+    howIUse:
+      "54dining.com runs on Cloudflare — the site, its database and its photo store — on the restaurant's own account, with a staging environment that deploys on every push and nightly content backups. I moved it there from Vercel when the client needed its own admin panel and real-time publishing, so content edits reach the live site in seconds without a rebuild.",
+  },
   {
     name: "GitHub",
     slug: "github",
