@@ -3062,8 +3062,8 @@ function V8Focus() {
       // Full-stack card folds in here — its Node BFF, schema and migration work
       // is the same "whole platform" range, so six cards stay six.
       t: "Web platforms & full-stack",
-      d: "WordPress, Laravel and Shopify estates run as one — bilingual sites, forms that deliver, tracking marketing can trust — plus Node.js BFF layers, relational schema work, and legacy stacks migrated without freezing delivery.",
-      companies: ["cr8v", "Kodez", "RaSoft"],
+      d: "WordPress, Laravel and Shopify estates run as one — bilingual sites, forms that deliver, tracking marketing can trust — plus .NET and Node.js backends, relational schema work, and legacy stacks migrated without freezing delivery.",
+      companies: ["cr8v", "Hobber", "Kodez", "RaSoft"],
       outcome: `${MEASUREMENTS["das-companies"].value} companies' sites · legacy stack retired incrementally`,
     },
     {

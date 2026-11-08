@@ -10,7 +10,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Resume — Mohammed Rezaan Riyaz",
   description:
-    "Senior Web Developer resume — sole developer for a twenty-company holding group's websites on WordPress, Laravel and Shopify, with a frontend engineering record in React, Next.js and TypeScript.",
+    "Senior Web Developer resume — sole developer for a twenty-company holding group's websites on WordPress, Laravel and Shopify, backed by full-stack work in React, Node.js and .NET.",
 };
 
 export default function Page() {

@@ -484,24 +484,24 @@ it("keeps a service unbookable when price is missing", () => {
     problem:
       "A seed-stage startup needed an Employment Management System that did not exist yet, and a company site that was losing people before they ever got in touch.",
     move:
-      "Took the EMS from concept to production as the end-to-end UI owner in React, and rebuilt the company site around responsiveness and accessibility.",
+      "Took the EMS from concept to production across the stack — React over Node.js — and rebuilt the company site on Laravel and jQuery around responsiveness and accessibility.",
     result:
       `The EMS shipped to production, and the site revamp lifted UX and conversion ${MEASUREMENTS.conversion.value.replace("+","~")}.`,
     tradeoffShort: "Rapid delivery vs. scalable architecture",
     results: [
       { label: "Conversion after the UI revamp", note: "responsive redesign + accessibility", m: "conversion" },
-      { label: "EMS", value: "concept → production", note: "end-to-end UI ownership" },
+      { label: "EMS", value: "concept → production", note: "end-to-end ownership, React to Node.js" },
     ],
     context:
-      "RaSoft is where I started — first as a Frontend Engineer Intern in December 2018, then as a Frontend Engineer through February 2021. It was seed-stage, which in practice means there is no separate frontend team, no design system, and no one else to hand the hard part to. Two problems sat in front of me. The company's own website was underperforming: the UI was dated, it wasn't responsive, and people dropped out before they ever made contact. And internally, employment management had no system at all — it needed to be designed and built.",
+      "RaSoft is where I started — first as an intern in December 2018, then as a Full-Stack Engineer through February 2021. It was seed-stage, which in practice means there is no separate frontend or backend team, no design system, and no one else to hand the hard part to. Two problems sat in front of me. The company's own website was underperforming: the UI was dated, it wasn't responsive, and people dropped out before they ever made contact. And internally, employment management had no system at all — it needed to be designed and built.",
     decision:
-      "I took end-to-end ownership of the UI rather than picking up tickets. On the site, I revamped the interface around responsive layout and accessibility, on the theory that most of the lost conversions were friction rather than persuasion. On the EMS, I delivered the whole thing from concept to production in React.js, JavaScript, HTML, and SCSS — designing the interactions with the backend engineers rather than waiting for a spec. In a startup that small, the choice on every feature is speed versus a structure that survives the next six months, and I made that call consciously each time instead of always defaulting to speed.",
+      "I took end-to-end ownership rather than picking up tickets. On the site, I rebuilt it on Laravel and jQuery around responsive layout and accessibility, on the theory that most of the lost conversions were friction rather than persuasion. On the EMS, I delivered the whole thing from concept to production — the React.js frontend and the Node.js backend behind it — designing the API and the interactions together rather than waiting for a spec. In a startup that small, the choice on every feature is speed versus a structure that survives the next six months, and I made that call consciously each time instead of always defaulting to speed.",
     tradeoff:
       "Rapid delivery vs. scalable architecture. The honest answer is that I leaned slightly toward architecture and shipped a little slower than I could have — refactoring components rather than duplicating them, and improving performance at the component level while features were still landing. At seed stage that's a defensible but not free choice: some things reached users later than they might have. What I'd defend is the direction, because the EMS was going to be lived in daily, and the site was the company's front door.",
     signal:
       `The site had a number: UX and conversion improved ${MEASUREMENTS.conversion.value.replace("+","~")} after the responsive redesign and accessibility work — reported internally, over the months after launch, and it was one of several things changing at once. The EMS was the other half of the job: an internal system that did not exist, designed and built end to end.`,
     outcome:
-      `A complete Employment Management System delivered from concept to production with end-to-end UI development, and a company site rebuilt for responsiveness and accessibility that lifted conversion ${MEASUREMENTS.conversion.value.replace("+","~")}. Along the way I ran code reviews and pair-programming sessions to hold quality, improved performance through refactoring and component-level optimization.`,
+      `A complete Employment Management System delivered from concept to production, built end to end from the React frontend to the Node.js backend, and a company site rebuilt for responsiveness and accessibility that lifted conversion ${MEASUREMENTS.conversion.value.replace("+","~")}. Along the way I ran code reviews and pair-programming sessions to hold quality, improved performance through refactoring and component-level optimization.`,
     detail:
       "What I'd do differently: I optimized components before I had any measurement, which is guessing with extra steps. Now I'd profile first and let the numbers pick the target — a habit that later turned into the 40% and 15% load-time wins at Kodez and Axinom, both of which started from a measurement rather than an instinct. The lesson I carry from RaSoft: pair programming and code review were where I actually learned to write maintainable code, and both cost time that always felt like it could be spent shipping. It couldn't.",
     code: {
@@ -523,11 +523,11 @@ $ node --cpu-prof server.js                  # where the time really goes
       "Staff got an actual system for employment management instead of ad-hoc process, and visitors to the company site could find and contact the business on any device.",
     scale: [
       "Seed-stage startup · Sri Lanka",
-      "Intern → Frontend Engineer",
+      "Intern → Full-Stack Engineer",
       "EMS built concept → production",
-      "End-to-end UI ownership",
+      "End-to-end ownership, React to Node.js",
     ],
-    stack: ["React.js", "JavaScript", "HTML", "SCSS", "Agile / Scrum"],
+    stack: ["React.js", "JavaScript", "Node.js", "PHP / Laravel", "jQuery", "HTML", "SCSS", "Agile / Scrum"],
     practices: [
       {
         lp: "Own it end to end",
@@ -821,12 +821,12 @@ export const timeline: {
   {
     year: "2026",
     company: "Hobber",
-    role: "Senior Frontend Engineer — Lead",
+    role: "Senior Full-Stack Engineer — Lead",
     place: "Abu Dhabi, UAE",
     current: true,
     // One line. The title carries the seniority; this carries the substance.
     scope:
-      "Architected a vendor marketplace platform 0→1 — seven feature-sliced modules on one shared React + TypeScript component layer.",
+      "Architected a vendor marketplace platform 0→1 — seven feature-sliced modules on one shared React + TypeScript component layer, over a .NET backend I also work in.",
   },
   {
     year: "2024",
@@ -839,18 +839,18 @@ export const timeline: {
   {
     year: "2021",
     company: "Kodez",
-    role: "Senior Frontend Engineer",
+    role: "Senior Full-Stack Engineer",
     place: "Colombo, Sri Lanka (HQ Melbourne, Australia)",
     scope:
-      `Built an enterprise CMS 0→1 and the standards a company scaling 10 → 60+ built against — Storybook system, ${MEASUREMENTS.coverage.value} test coverage, ${MEASUREMENTS.releases.value} releases.`,
+      `Built an enterprise CMS 0→1 on React and Node.js, and the standards a company scaling 10 → 60+ built against — Storybook system, ${MEASUREMENTS.coverage.value} test coverage, ${MEASUREMENTS.releases.value} releases.`,
   },
   {
     year: "2018",
     company: "RaSoft",
-    role: "Frontend Engineer",
+    role: "Full-Stack Engineer",
     place: "Colombo, Sri Lanka",
     scope:
-      `Joined as an intern and left owning the UI end to end — an employment system from concept to production, and a site revamp that lifted conversion ${MEASUREMENTS.conversion.value.replace("+","~")}.`,
+      `Joined as an intern and left owning the product end to end — an employment system from concept to production on React and Node.js, and a Laravel site revamp that lifted conversion ${MEASUREMENTS.conversion.value.replace("+","~")}.`,
   },
 ];
 

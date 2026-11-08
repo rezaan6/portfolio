@@ -72,7 +72,7 @@ const CONTACT_GLYPH: Record<string, string> = {
 // hands-on clause comes first for that reason, and it is not a new claim: the
 // Hobber bullet below already says the frontend is his end to end.
 const POSITIONING = () =>
-  `Senior Frontend Engineer with ${yearsPhrase()} owning large React codebases from architecture through production — hands-on as the primary engineer, and leading frontend teams. I work cross-functionally with design, backend and DevOps, and I'm the one who flags where a design will fight the design system. I make the structural decisions a codebase has to live with, and take responsibility for how it performs and how safely it ships. Today I'm also the sole developer for a ${MEASUREMENTS["das-companies"].value}-company holding group's websites, on WordPress, Laravel and Shopify.`;
+  `Senior Frontend Engineer with ${yearsPhrase()} owning large React codebases from architecture through production — hands-on as the primary engineer, and leading frontend teams — and working in the Node.js, .NET and Laravel backends behind them. I work cross-functionally with design, backend and DevOps, and I'm the one who flags where a design will fight the design system. I make the structural decisions a codebase has to live with, and take responsibility for how it performs and how safely it ships. Today I'm also the sole developer for a ${MEASUREMENTS["das-companies"].value}-company holding group's websites, on WordPress, Laravel and Shopify.`;
 
 // The five-second scan payload. Every figure is a before/after read against
 // a defined baseline — never a causal claim.
@@ -129,20 +129,22 @@ const EXPERIENCE: Role[] = [
     location: "Abu Dhabi, UAE",
     descriptor:
       "Marketplace platform for entertainment, recreation, dining & tourism vendors",
-    title: "Senior Frontend Engineer — Lead",
+    title: "Senior Full-Stack Engineer — Lead",
     period: "Jan 2026 — Present",
     stack: [
       "React",
       "TypeScript",
+      ".NET (C#)",
       "Vite",
       "shadcn/ui",
       "Feature-sliced architecture",
       "REST",
       "SignalR",
+      "PostgreSQL",
       "Google Maps API",
     ],
     points: [
-      "Sole frontend engineer on the Hobber vendor platform — the frontend is mine end to end, architected from an empty repository in React and TypeScript on a modular, feature-sliced structure.",
+      "Full-stack engineer on the Hobber vendor platform — the frontend is mine end to end, architected from an empty repository in React and TypeScript on a modular, feature-sliced structure, and I work in the .NET backend behind it.",
       "Shipped seven core platform modules — authentication, vendor accounts, dashboards, scheduling, payouts, integrations, and team access — as independent slices over one shared component layer built on shadcn/ui and Radix primitives.",
       "Built the vendor workflows on top: activity management, booking flows, stock scheduling, discount logic, and content management.",
       // Was "cross-slice contracts enforced by TypeScript at build time". That is
@@ -153,8 +155,8 @@ const EXPERIENCE: Role[] = [
       // fastest way to lose a senior interviewer on this exact topic.
       "Set the architectural boundaries the codebase is held to, so a new domain is a new folder rather than a refactor — cross-slice imports blocked by a lint rule rather than a convention, and the contracts type-checked where slices compose.",
       "Set up the testing layer from scratch — Vitest for unit and integration, Playwright for end-to-end across the vendor workflows.",
-      "Built real-time vendor messaging on SignalR against the .NET backend, and the location and routing surfaces on the Google Maps API.",
-      "Partner with backend and DevOps engineers on API contracts — pinned against Swagger before building — authentication systems, and platform features.",
+      "Built real-time vendor messaging on SignalR end to end — the .NET hub and the React client — and the location and routing surfaces on the Google Maps API.",
+      "Work in the .NET (C#) backend on the APIs the vendor workflows run on — endpoints, authentication and platform features over PostgreSQL — with every contract pinned in Swagger before either side is built, alongside the backend and DevOps engineers.",
     ],
   },
   {
@@ -168,6 +170,8 @@ const EXPERIENCE: Role[] = [
       "Next.js",
       "TypeScript",
       "GraphQL",
+      "Node.js",
+      "Handlebars",
       "SCSS",
       "Shaka Player / DRM",
       "Zustand",
@@ -181,6 +185,7 @@ const EXPERIENCE: Role[] = [
       "Led the frontend team building high-performance web applications for clients including the Goethe-Institut and the Lindau Nobel Laureate Meetings, delivering two client products 0→1 — the Goethe-Institut and Lindau builds — through full development, testing and production release cycles.",
       `Reduced page load time ${MEASUREMENTS["load-axinom"].value.replace("−","~")} through bundle optimization, lazy loading, and caching improvements.`,
       "Built on Axinom's Mosaic micro-frontends (Media, Catalogue, Entitlement, DRM) and its APIs for content synchronization and metadata management, rather than hand-rolling media delivery.",
+      "Worked on the Node.js backend as well as the frontend — services and Handlebars-rendered templates for the client builds, alongside the Mosaic platform APIs.",
       "Implemented secure DRM playback with Shaka Player, building the player interface as our own event-driven components on top of its defaults rather than inheriting browser-native controls and caption rendering — which look and behave differently on every engine.",
       "Held playback and layout across a browser matrix spanning Chrome, Edge, Firefox and Safari on macOS, Windows, iOS, iPadOS and Android — including that every iOS browser is WebKit underneath, so a defect reported against iOS Chrome is a Safari defect.",
       "Designed i18n in from the start for multi-language experiences across regions.",
@@ -193,11 +198,15 @@ const EXPERIENCE: Role[] = [
     company: "Kodez",
     location: "Colombo, Sri Lanka (HQ Melbourne, Australia)",
     descriptor: "Enterprise CMS for service management and logistics",
-    title: "Senior Frontend Engineer",
+    title: "Senior Full-Stack Engineer",
     period: "Mar 2021 — Feb 2024",
     stack: [
       "React",
       "TypeScript",
+      "Node.js / Express",
+      "MySQL",
+      "Sequelize",
+      "PHP / Laravel",
       "Storybook",
       "Cypress",
       "Redux",
@@ -205,37 +214,35 @@ const EXPERIENCE: Role[] = [
       "TanStack Query",
       "React Hook Form",
       "MUI X Data Grid",
-      "Node.js / Express",
-      "Sequelize",
-      "MySQL",
+      "jQuery",
       "Atomic Design",
       "AWS",
     ],
     points: [
-      `Architected and delivered a React CMS from 0→1 to MVP as domain modules with SOLID boundaries — each feature owning its components, state and API access, depending only on the shared UI layer beneath it — then led ${MEASUREMENTS.releases.value} production releases on it.`,
+      `Architected and delivered an enterprise CMS from 0→1 to MVP across the stack — a React frontend built as domain modules with SOLID boundaries, each feature owning its components, state and API access, over a Node.js and Express API on MySQL — then led ${MEASUREMENTS.releases.value} production releases on it.`,
       // Second, not fifth. This is the hardest thing on the role and the closest
       // match to what most senior React openings actually are — an inherited
       // codebase, not an empty one. Below the page-load bullet it was read after
       // a skimmer had already filed the role as "greenfield CMS".
-      "Migrated a legacy Laravel, jQuery and Bootstrap application to React and ExpressJS incrementally without freezing client delivery — I had worked in that codebase before replacing it, which is why the seams were obvious — and built Node.js BFF layers with the backend team to reduce API latency.",
+      "Migrated a legacy PHP/Laravel, jQuery and Bootstrap application to React and Express incrementally without freezing client delivery — I had worked in that codebase, backend and front, before replacing it, which is why the seams were obvious — and built Node.js BFF layers with the backend team to reduce API latency.",
       `Introduced test-driven development with Jest and Cypress end-to-end gates, driving overall automated coverage to ${MEASUREMENTS.coverage.value} with every critical path behind the merge gate in CI/CD — which is what let releases stay frequent without a regression freeze.`,
       `Built a Storybook-based reusable component library that cut frontend development time ${MEASUREMENTS["dev-time"].value.replace("−","~")} across projects.`,
       `Reduced page load time ${MEASUREMENTS["load-kodez"].value.replace("−","~")} through code-splitting, lazy loading, and asset optimization, with assets served from AWS S3.`,
-      `Built REST integrations against the client's enterprise vendor stack — Amtek (Australia), running on Fiserv, Toshiba, NTT DATA, Park Assist and City systems — across a ${MEASUREMENTS.tables.value} table schema.`,
-      "Translated Figma designs into responsive interfaces; set frontend standards and ran code reviews as the company scaled from 10 to 60+ people.",
+      `Built the REST integrations against the client's enterprise vendor stack — Amtek (Australia), running on Fiserv, Toshiba, NTT DATA, Park Assist and City systems — across a ${MEASUREMENTS.tables.value} table schema, with Sequelize models over MySQL.`,
+      "Translated Figma designs into responsive interfaces; set engineering standards and ran code reviews as the company scaled from 10 to 60+ people.",
     ],
   },
   {
     company: "RaSoft",
     location: "Colombo, Sri Lanka",
     descriptor: "Seed-stage startup — internal systems and web products",
-    title: "Frontend Engineer",
+    title: "Full-Stack Engineer",
     period: "Dec 2018 — Feb 2021",
-    stack: ["React.js", "JavaScript", "SCSS", "Agile / Scrum"],
+    stack: ["React.js", "JavaScript", "Node.js", "PHP / Laravel", "jQuery", "SCSS", "Agile / Scrum"],
     points: [
-      "Joined as a Frontend Engineer Intern in December 2018 and moved into the full role in June 2019 — first end-to-end UI ownership at a seed-stage startup.",
-      "Delivered an Employment Management System from concept to production as the end-to-end UI owner, in React.js, JavaScript, HTML, and SCSS.",
-      `Rebuilt the company website around responsive layout and accessibility, lifting UX and conversion ${MEASUREMENTS.conversion.value.replace("+","~")}.`,
+      "Joined as an intern in December 2018 and moved into the full-stack role in June 2019 — end-to-end ownership at a seed-stage startup.",
+      "Delivered an Employment Management System from concept to production across the stack — a React.js frontend over a Node.js backend.",
+      `Rebuilt the company website on PHP/Laravel and jQuery around responsive layout and accessibility, lifting UX and conversion ${MEASUREMENTS.conversion.value.replace("+","~")}.`,
       "Improved application performance through refactoring and component-level optimization, and ran code reviews and pair-programming sessions to keep the codebase maintainable as it grew.",
     ],
   },
@@ -336,8 +343,12 @@ const STACK: StackGroup[] = [
     items: [
       "Node.js",
       "ExpressJS (BFF)",
+      ".NET (C#)",
+      "SignalR",
       "PHP / Laravel",
+      "Handlebars",
       "MySQL",
+      "PostgreSQL",
       "Sequelize",
       "MongoDB",
       "AWS S3",
@@ -393,7 +404,7 @@ const EDUCATION: { degree: string; school: string; note?: string }[] = [
 export type ResumeVariant = "frontend" | "web-platform";
 
 const WEB_POSITIONING = () =>
-  `Senior engineer with ${yearsPhrase()} on the web, currently the sole developer for the DAS Holding group — ${MEASUREMENTS["das-companies"].value} companies' websites on WordPress, Laravel, PHP and Shopify, alongside new builds in React and TypeScript. Before that I led frontend teams on enterprise and media platforms, and I run a multi-brand estate the same way: every change proven on a copy first, every task on record, and security and upgrades planned rather than patched.`;
+  `Senior engineer with ${yearsPhrase()} on the web, currently the sole developer for the DAS Holding group — ${MEASUREMENTS["das-companies"].value} companies' websites on WordPress, Laravel, PHP and Shopify, alongside new builds in React and TypeScript. Before that came full-stack product work — React over Node.js, .NET and Laravel backends — and frontend team leadership on enterprise and media platforms. I run a multi-brand estate with the same discipline: every change proven on a copy first, every task on record, and security and upgrades planned rather than patched.`;
 
 const WEB_METRICS: { label: string; m: MeasurementId }[] = [
   { label: "group companies — the DAS Holding account", m: "das-companies" },
