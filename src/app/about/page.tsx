@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   // it described. A description promising a section the page no longer has is the
   // kind of drift that outlives every copy edit.
   description:
-    "Senior Frontend Engineer: the career path from intern to lead, the numbers behind it, and the education.",
+    "Senior Web & Frontend Engineer: the career path from intern to lead, the numbers behind it, and the education.",
 };
 
 export default function AboutPage() {

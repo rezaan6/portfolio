@@ -583,7 +583,7 @@ export function SiteFrame({ children }: { children: ReactNode }) {
               Mohammed Rezaan Riyaz
             </p>
             <p className="mt-1 font-[family-name:var(--font-display)] text-[10.5px] uppercase tracking-[0.14em] text-[var(--sr-faint)]">
-              Senior Frontend Engineer · Open to roles
+              Senior Web &amp; Frontend Engineer · Open to roles
             </p>
           </div>
 

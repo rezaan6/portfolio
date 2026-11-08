@@ -11,6 +11,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import "./globals.css";
 import { SiteFrame } from "./components/signal-room";
+import { MEASUREMENTS } from "./lib/measurement";
 
 const bodyFont = Inter({
   variable: "--font-body",
@@ -54,16 +55,16 @@ const numeralFont = Oswald({
 });
 
 const SITE_URL = "https://rezaanriyaz.com";
-const TITLE = "Mohammed Rezaan Riyaz | Senior Frontend Engineer";
+const TITLE = "Mohammed Rezaan Riyaz | Senior Web & Frontend Engineer";
 // Under 158 characters, deliberately: the previous version ran to 180 and Google
 // cuts a description at about that point, so its tail was silently dropped from
 // every search result — while still appearing in full in each LinkedIn, Slack
 // and WhatsApp unfurl, which is where a recruiter reads this first. No country
 // here: a place in a description is read as a filter and applied before anyone
 // reads a word of the site. One constant, three surfaces — description,
-// openGraph and twitter all take it, so it cannot drift between them.
-const DESCRIPTION =
-  "Senior Frontend Engineer — React, Next.js, TypeScript. Frontend architecture, performance, and design systems. Open to onsite, remote, or relocation.";
+// openGraph and twitter all take it, so it cannot drift between them. Both sides
+// of the work are in it because every page unfurls with it — /work/cr8v included.
+const DESCRIPTION = `Senior Web & Frontend Engineer — enterprise React apps, and a ${MEASUREMENTS["das-companies"].value}-company group's websites on WordPress and Laravel. Open to onsite, remote, or relocation.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -77,12 +78,16 @@ export const metadata: Metadata = {
   creator: "Mohammed Rezaan Riyaz",
   keywords: [
     "Senior Frontend Engineer",
+    "Senior Web Developer",
     "React Developer",
     "Next.js",
     "TypeScript",
     "Frontend Architecture",
     "Design Systems",
     "Web Performance",
+    "WordPress",
+    "Laravel",
+    "Shopify",
     "Mohammed Rezaan Riyaz",
     // No search engine has ranked on the keywords tag since 2009, so this earns
     // nothing from Google. It is here because some sourcing tools still scrape

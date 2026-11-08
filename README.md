@@ -1,6 +1,6 @@
-# Senior Frontend Engineer portfolio — Mohammed Rezaan Riyaz
+# Senior Web & Frontend Engineer portfolio — Mohammed Rezaan Riyaz
 
-React · Next.js · TypeScript. Open to onsite, remote, or relocation.
+React · Next.js · TypeScript · WordPress · Laravel · Shopify. Open to onsite, remote, or relocation.
 
 **Live:** https://rezaanriyaz.com
 

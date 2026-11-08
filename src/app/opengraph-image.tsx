@@ -1,7 +1,10 @@
 import { ImageResponse } from "next/og";
 
-// Generated social-share image for link previews.
-export const alt = "Mohammed Rezaan Riyaz — Senior Frontend Engineer";
+import { MEASUREMENTS } from "./lib/measurement";
+
+// Generated social-share image for link previews. Every page unfurls with it,
+// so it carries both sides of the work — the same two lines as the LinkedIn banner.
+export const alt = "Mohammed Rezaan Riyaz — Senior Web & Frontend Engineer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -22,7 +25,7 @@ export default function OpengraphImage() {
         }}
       >
         <div style={{ fontSize: 26, letterSpacing: 4, color: "#6fa8c4" }}>
-          SENIOR FRONTEND ENGINEER · REACT · NEXT.JS · TYPESCRIPT
+          SENIOR WEB &amp; FRONTEND ENGINEER
         </div>
         <div
           style={{
@@ -34,13 +37,15 @@ export default function OpengraphImage() {
         >
           Mohammed Rezaan Riyaz
         </div>
-        <div style={{ fontSize: 34, color: "#9aa0ad", marginTop: 28, maxWidth: 900 }}>
-          I architect and optimize web platforms that hold up at scale — from
-          the boundaries to the bundle.
+        <div style={{ fontSize: 40, color: "#d5d9e2", marginTop: 28, maxWidth: 980 }}>
+          {`Enterprise React apps. ${MEASUREMENTS["das-companies"].value} companies' websites.`}
+        </div>
+        <div style={{ fontSize: 26, color: "#9aa0ad", marginTop: 18 }}>
+          React · Next.js · TypeScript · WordPress · Laravel · Shopify
         </div>
         <div
           style={{
-            marginTop: 48,
+            marginTop: 44,
             display: "flex",
             gap: 16,
           }}
