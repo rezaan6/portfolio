@@ -914,7 +914,7 @@ No startViewTransition → CSS cross-fade. reduce-motion → neither.`,
       `I use Next.js when the rendering strategy is itself a product decision — which parts must be server-rendered for SEO and first paint, which are client-interactive, and where the hydration boundary sits. At Axinom that mattered for media applications where load time was a deliverable: route-level code-splitting and deferred client bundles were a large part of the ${MEASUREMENTS["load-axinom"].value.replace("−","~")} improvement. On the App Router I treat the boundary as something each file has to justify, and I'm precise about what it costs — a client component is still prerendered on the server, so "use client" spends bundle, not first paint. This site is the worked example: every route prerendered, the case-study route an async Server Component that awaits its params, and revalidate on the five pages quoting a figure derived from a date, so they can't go stale between deploys.`,
     sample: `Rendering is a per-route decision, then a per-file one
 /work/[slug]         server · await params · generateStaticParams → 5 pages
-/ /about /stack /resume /resume/web-platform   prerendered + revalidate = 3600
+/ /about /stack /resume /resume/frontend   prerendered + revalidate = 3600
 loading.tsx          9 of them — Next wraps the segment in Suspense
 "use client"         only where state, an event handler or a DOM API lives
 Guardrail: nothing on the path to first frame is lazy-loaded.`,

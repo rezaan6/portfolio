@@ -17,6 +17,10 @@ const nextConfig: NextConfig = {
       { source: "/web", destination: "/work/cr8v", permanent: true },
       { source: "/web/:slug", destination: "/work/cr8v", permanent: true },
       { source: "/clients", destination: "/work/cr8v", permanent: true },
+      // The web platform résumé became the default at /resume.
+      { source: "/resume/web-platform", destination: "/resume", permanent: true },
+      { source: "/resume-web-platform.pdf", destination: "/resume.pdf", permanent: true },
+      { source: "/resume-web-platform-a4.pdf", destination: "/resume-a4.pdf", permanent: true },
     ];
   },
   turbopack: {

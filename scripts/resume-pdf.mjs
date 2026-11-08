@@ -20,8 +20,8 @@
  *                          @media print reflow. This is the one to
  *                          upload to an ATS, and the one that prints.
  *
- *   public/resume-web-platform.pdf and -a4.pdf — the same pair, rendered
- *                          from /resume/web-platform.
+ *   public/resume-frontend.pdf and -a4.pdf — the same pair, rendered
+ *                          from /resume/frontend.
  *
  * Two files because a 232 × ~590mm page scaled onto A4 lands the body
  * type near 5pt. The tall page is for reading; A4 is for filing.
@@ -46,11 +46,11 @@ const ROOT = path.resolve(import.meta.dirname, "..");
 const OUT = path.join(ROOT, "public");
 
 /* Two résumés from one layout (see resume-client.tsx): the frontend one at
- * /resume and the web-platform one beside it. Each is photographed the same
+ * /resume (web platform, the default) and the frontend one beside it. Each is photographed the same
  * way, into its own pair of files, so neither can drift from its page. */
 const VARIANTS = [
   { route: "/resume", file: "resume" },
-  { route: "/resume/web-platform", file: "resume-web-platform" },
+  { route: "/resume/frontend", file: "resume-frontend" },
 ];
 const MM_PER_PX = 25.4 / 96;
 

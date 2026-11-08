@@ -2368,12 +2368,12 @@ export function WebResumeCta() {
           Hiring for a group&apos;s websites? The web platform résumé leads with this work.
         </p>
         <div className="flex flex-wrap items-center gap-3">
-          <Link href="/resume/web-platform" className="rounded-full sr-cta px-6 py-3 text-[14px] font-semibold">
+          <Link href="/resume" className="rounded-full sr-cta px-6 py-3 text-[14px] font-semibold">
             Web platform résumé
           </Link>
           <a
-            href="/resume-web-platform.pdf"
-            download="Mohammed-Rezaan-Riyaz-Resume-Web-Platform.pdf"
+            href="/resume.pdf"
+            download="Mohammed-Rezaan-Riyaz-Resume.pdf"
             className="rounded-full border border-[var(--sr-hairline)] px-6 py-3 text-[14px] font-semibold text-[var(--sr-text)] transition hover:border-[var(--sr-accent)] hover:text-[var(--sr-accent)]"
           >
             Download PDF

@@ -381,10 +381,10 @@ const EDUCATION: { degree: string; school: string; note?: string }[] = [
 /* ------------------------------------------------------------------ *
  * Two résumés, one layout.
  *
- * The frontend résumé above is the default, for product teams. The web
- * platform version is for groups that run many brand sites: it leads with
- * the cr8v estate and puts the CMS and tracking stack first, and reuses
- * everything else as it stands. Each renderer below reads its variant's
+ * The web platform version is the default at /resume, for groups that run
+ * many brand sites: it leads with the cr8v estate and puts the CMS and
+ * tracking stack first. The frontend résumé above sits at /resume/frontend
+ * for product teams. Both reuse everything else as it stands. Each renderer below reads its variant's
  * data under the names the frontend résumé always used, so the sheet, the
  * phone reflow and the plain-text export stay one code path and the two
  * versions cannot drift apart in layout — only in what they lead with.
@@ -447,8 +447,8 @@ const RESUMES = {
     endnotes: ENDNOTES,
     experience: EXPERIENCE,
     stack: STACK,
-    pdf: "/resume.pdf",
-    download: "Mohammed-Rezaan-Riyaz-Resume.pdf",
+    pdf: "/resume-frontend.pdf",
+    download: "Mohammed-Rezaan-Riyaz-Resume-Frontend.pdf",
   },
   "web-platform": {
     headline: "Senior Web Developer",
@@ -458,14 +458,16 @@ const RESUMES = {
     endnotes: WEB_METRICS.map((x) => ({ id: x.m, label: x.label, ...MEASUREMENTS[x.m] })),
     experience: [CR8V_WEB, ...EXPERIENCE.filter((r) => r !== CR8V)],
     stack: WEB_STACK,
-    pdf: "/resume-web-platform.pdf",
-    download: "Mohammed-Rezaan-Riyaz-Resume-Web-Platform.pdf",
+    pdf: "/resume.pdf",
+    download: "Mohammed-Rezaan-Riyaz-Resume.pdf",
   },
 } satisfies Record<ResumeVariant, unknown>;
 
+// The web platform résumé is the default: it is the one the current search is
+// for. The frontend version sits one click away for product-company roles.
 const VERSIONS: { variant: ResumeVariant; href: string; label: string }[] = [
-  { variant: "frontend", href: "/resume", label: "Frontend" },
-  { variant: "web-platform", href: "/resume/web-platform", label: "Web platform" },
+  { variant: "web-platform", href: "/resume", label: "Web platform" },
+  { variant: "frontend", href: "/resume/frontend", label: "Frontend" },
 ];
 
 const buildResumeText = (variant: ResumeVariant) => {
@@ -690,7 +692,7 @@ function MobileResume({ variant }: { variant: ResumeVariant }) {
   );
 }
 
-export default function ResumePage({ variant = "frontend" }: { variant?: ResumeVariant }) {
+export default function ResumePage({ variant = "web-platform" }: { variant?: ResumeVariant }) {
   const {
     headline,
     tagline,

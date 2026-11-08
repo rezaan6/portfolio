@@ -119,7 +119,7 @@ npm run dev      # http://localhost:3000
 | `npm run dev` | Dev server (Turbopack) |
 | `npm run build` | Renders both résumés to PDF, then builds. Ordering matters — see below |
 | `npm run build:fast` | Build without regenerating the PDFs |
-| `npm run resume:pdf` | Render `/resume` and `/resume/web-platform` to `public/resume{,-web-platform}.pdf`, each with an `-a4` twin |
+| `npm run resume:pdf` | Render `/resume` and `/resume/frontend` to `public/resume{,-frontend}.pdf`, each with an `-a4` twin |
 | `npm run clients:shots` | Retake the client-site screenshots from the live sites (`-- <slug>` for one) |
 | `npm start` | Serve the production build |
 | `npm run lint` | ESLint |
@@ -140,8 +140,8 @@ npm run dev      # http://localhost:3000
 | `/method` | The Architect → Build → Harden → Measure loop |
 | `/artifacts` | Nine engineering documents — ADR, component spec, state model, incident review, perf, test strategy, accessibility baseline, API contract, migration plan |
 | `/about` | Career path, principles, education, contact |
-| `/resume` | Digital-first résumé — prints to A4, or copies as plain text |
-| `/resume/web-platform` | The same résumé led by the multi-brand web work, for groups that run many sites |
+| `/resume` | Digital-first résumé, web platform version by default — prints to A4, or copies as plain text |
+| `/resume/frontend` | The same résumé led by the frontend engineering work, for product companies (the web platform version is the default at `/resume`) |
 
 ## Where the content lives
 
