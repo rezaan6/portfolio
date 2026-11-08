@@ -95,14 +95,14 @@ const METRICS: { label: string; m: MeasurementId }[] = [
 // like the ordinal marker this replaced.
 const ENDNOTES = METRICS.map((x) => ({ id: x.m, label: x.label, ...MEASUREMENTS[x.m] }));
 
-// Two current roles, newest first: cr8v's client work from June, Hobber's
-// vendor platform from January.
+// Two current roles, both from January 2026: cr8v's client work first, then
+// Hobber's vendor platform.
 const CR8V: Role = {
   company: "cr8v",
   location: "Abu Dhabi, UAE",
   descriptor: "Digital agency · sole developer on the DAS Holding account, and other clients",
   title: "Senior Web Developer (Lead)",
-  period: "Jun 2026 to Present",
+  period: "Jan 2026 to Present",
   stack: [
     "WordPress",
     "Laravel",

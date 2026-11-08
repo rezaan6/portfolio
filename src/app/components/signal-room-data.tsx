@@ -97,7 +97,7 @@ export const caseStudies: CaseStudy[] = [
     tag: "MULTI-BRAND WEB PLATFORMS · GROUP WEB LEAD",
     domain:
       "Digital agency · sole developer on the DAS Holding account, a holding group's websites across real estate, healthcare, retail, investment and e-commerce · UAE",
-    period: "Jun 2026 to Present",
+    period: "Jan 2026 to Present",
     // cr8v's own purple, from the gradient on cr8v.com.
     color: "#9820fe",
     brand: "#9820fe",

@@ -149,7 +149,7 @@ export const MEASUREMENTS = {
     value: "320+",
     kind: "count",
     basis:
-      "Entries in my work log since 30 June 2026, one per task, from a content change to a security fix or a new feature.",
+      "Entries in my work log, one per task, from a content change to a security fix or a new feature.",
     limit: "A count of tasks, not of hours: they range from minutes to days.",
   },
   "upgrade-plan": {
