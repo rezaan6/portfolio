@@ -163,7 +163,7 @@ const EXPERIENCE: Role[] = [
     company: "Axinom",
     location: "Colombo, Sri Lanka (HQ Fürth, Germany)",
     descriptor: "Enterprise media technology delivered on the Mosaic platform",
-    title: "Senior Frontend Engineer — Lead",
+    title: "Senior Full-Stack Engineer — Lead",
     period: "Mar 2024 — Nov 2025",
     stack: [
       "React",
@@ -182,7 +182,7 @@ const EXPERIENCE: Role[] = [
       "Azure DevOps",
     ],
     points: [
-      "Led the frontend team building high-performance web applications for clients including the Goethe-Institut and the Lindau Nobel Laureate Meetings, delivering two client products 0→1 — the Goethe-Institut and Lindau builds — through full development, testing and production release cycles.",
+      "Led the frontend team and worked on the Node.js backend, building high-performance web applications for clients including the Goethe-Institut and the Lindau Nobel Laureate Meetings, delivering two client products 0→1 — the Goethe-Institut and Lindau builds — through full development, testing and production release cycles.",
       `Reduced page load time ${MEASUREMENTS["load-axinom"].value.replace("−","~")} through bundle optimization, lazy loading, and caching improvements.`,
       "Built on Axinom's Mosaic micro-frontends (Media, Catalogue, Entitlement, DRM) and its APIs for content synchronization and metadata management, rather than hand-rolling media delivery.",
       "Worked on the Node.js backend as well as the frontend — services and Handlebars-rendered templates for the client builds, alongside the Mosaic platform APIs.",

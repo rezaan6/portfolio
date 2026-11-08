@@ -831,10 +831,10 @@ export const timeline: {
   {
     year: "2024",
     company: "Axinom",
-    role: "Senior Frontend Engineer — Lead",
+    role: "Senior Full-Stack Engineer — Lead",
     place: "Colombo, Sri Lanka (HQ Fürth, Germany)",
     scope:
-      `Led the frontend team on an enterprise media platform — Mosaic micro-frontends, Shaka Player DRM, i18n, and ${MEASUREMENTS["load-axinom"].value.replace("−","~")} faster page loads.`,
+      `Led the frontend team on an enterprise media platform and worked on its Node.js backend — Mosaic micro-frontends, Shaka Player DRM, i18n, and ${MEASUREMENTS["load-axinom"].value.replace("−","~")} faster page loads.`,
   },
   {
     year: "2021",
