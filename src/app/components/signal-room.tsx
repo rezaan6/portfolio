@@ -1619,15 +1619,15 @@ export function PathSection() {
           />
           <ol>
 
-          {timeline.map((item, i) => {
+          {timeline.map((item) => {
             const cs = caseStudies.find((c) => c.company === item.company);
-            const brand = cs?.brand ?? "var(--sr-accent-solid)";
+            const brand = item.brand ?? cs?.brand ?? "var(--sr-accent-solid)";
             return (
               <li key={item.company} className="relative flex gap-6 pb-14 last:pb-0 sm:gap-7">
                   <span
                     aria-hidden="true"
                     className="relative z-10 mt-[7px] h-[11px] w-[11px] shrink-0 rounded-[3px] ring-4 ring-[var(--sr-bg)]"
-                    style={{ background: i === 0 ? brand : "var(--sr-hairline)" }}
+                    style={{ background: item.current ? brand : "var(--sr-hairline)" }}
                   />
 
                   <div className="min-w-0 flex-1">

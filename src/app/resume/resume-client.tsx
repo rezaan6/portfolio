@@ -95,14 +95,14 @@ const METRICS: { label: string; m: MeasurementId }[] = [
 // like the ordinal marker this replaced.
 const ENDNOTES = METRICS.map((x) => ({ id: x.m, label: x.label, ...MEASUREMENTS[x.m] }));
 
-// Hobber and cr8v run under the same CEO, so the two roles overlap: the vendor
-// platform from January, the agency's client work from June. The title is the
-// plain one — this is web platform work, and the résumé says so.
+// Two current roles side by side: cr8v's client work from June, Hobber's vendor
+// platform from January. Hobber stays first on this résumé because it is the
+// frontend role; the web-platform version below leads with cr8v.
 const CR8V: Role = {
   company: "cr8v",
   location: "Abu Dhabi, UAE",
-  descriptor: "Digital agency under Hobber's CEO — the DAS Holding group and other clients",
-  title: "Full-Stack Web Developer",
+  descriptor: "Digital agency — sole developer on the DAS Holding account, and other clients",
+  title: "Senior Web Developer — Lead",
   period: "Jun 2026 — Present",
   stack: [
     "WordPress",

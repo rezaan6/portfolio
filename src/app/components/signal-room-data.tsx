@@ -717,25 +717,38 @@ export const artifacts: Artifact[] = [  {
   },
 ];
 
-export const timeline = [
+// Newest first, by when each role started. Two roles are current, so both get
+// their brand colour on the rail rather than only the first row; a role with no
+// case study to take a colour from (cr8v) carries its own.
+export const timeline: {
+  year: string;
+  company: string;
+  role: string;
+  place: string;
+  scope: string;
+  current?: boolean;
+  brand?: string;
+}[] = [
+  {
+    year: "2026",
+    company: "cr8v",
+    role: "Senior Web Developer — Lead",
+    place: "Abu Dhabi, UAE",
+    current: true,
+    // cr8v's own purple, from the gradient on cr8v.com.
+    brand: "#9820fe",
+    scope:
+      `Sole developer for the DAS Holding group — ${MEASUREMENTS["das-companies"].value} companies' sites on WordPress, Laravel and Shopify — and a restaurant site built from an empty repository.`,
+  },
   {
     year: "2026",
     company: "Hobber",
     role: "Senior Frontend Engineer — Lead",
     place: "Abu Dhabi, UAE",
+    current: true,
     // One line. The title carries the seniority; this carries the substance.
     scope:
       "Architected a vendor marketplace platform 0→1 — seven feature-sliced modules on one shared React + TypeScript component layer.",
-  },
-  {
-    // Same CEO as Hobber, and the roles overlap: the vendor platform from
-    // January, the agency's client work from June.
-    year: "2026",
-    company: "cr8v",
-    role: "Full-Stack Web Developer",
-    place: "Abu Dhabi, UAE",
-    scope:
-      `Sole developer for the DAS Holding group — ${MEASUREMENTS["das-companies"].value} companies' sites on WordPress, Laravel and Shopify — and a restaurant site built from an empty repository.`,
   },
   {
     year: "2024",
