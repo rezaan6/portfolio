@@ -14,8 +14,8 @@ import { MEASUREMENTS, type MeasurementId } from "../lib/measurement";
 
 export const contact = {
   email: "rezaan6@gmail.com",
-  phone: "+971-56-618-4561",
-  phoneHref: "tel:+971566184561",
+  phone: "+971-54-488-5839",
+  phoneHref: "tel:+971544885839",
   linkedin: "https://linkedin.com/in/rezaan6",
   github: "https://github.com/rezaan6",
   resume: "/resume",

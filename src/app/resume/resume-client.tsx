@@ -35,7 +35,7 @@ type StackGroup = { label: string; items: string[] };
 
 const CONTACT = [
   "UAE — open to relocation, onsite & remote",
-  "+971-56-618-4561",
+  "+971-54-488-5839",
   "rezaan6@gmail.com",
   "linkedin.com/in/rezaan6",
   "github.com/rezaan6",
@@ -45,7 +45,7 @@ const CONTACT = [
 // Keyed off the visible string so the list above stays the single source of the
 // text, and so a copy/paste export never picks up markup it can't represent.
 const CONTACT_HREF: Record<string, string> = {
-  "+971-56-618-4561": "tel:+971566184561",
+  "+971-54-488-5839": "tel:+971544885839",
   "rezaan6@gmail.com": "mailto:rezaan6@gmail.com",
   "linkedin.com/in/rezaan6": "https://linkedin.com/in/rezaan6",
   "github.com/rezaan6": "https://github.com/rezaan6",
@@ -58,7 +58,7 @@ const CONTACT_HREF: Record<string, string> = {
 // system font that the build container does not have. Words also parse: an ATS
 // reading "Tel +971…" gets a label, where "☏ +971…" gets a character it will drop.
 const CONTACT_GLYPH: Record<string, string> = {
-  "+971-56-618-4561": "Tel",
+  "+971-54-488-5839": "Tel",
   "rezaan6@gmail.com": "Email",
   "linkedin.com/in/rezaan6": "in",
   "github.com/rezaan6": "GitHub",
