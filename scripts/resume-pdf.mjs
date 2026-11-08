@@ -20,8 +20,8 @@
  *                          @media print reflow. This is the one to
  *                          upload to an ATS, and the one that prints.
  *
- *   public/resume-frontend.pdf and -a4.pdf — the same pair, rendered
- *                          from /resume/frontend.
+ *   public/resume-full-stack.pdf and -a4.pdf: the same pair, rendered
+ *                          from /resume/full-stack.
  *
  * Two files because a 232 × ~590mm page scaled onto A4 lands the body
  * type near 5pt. The tall page is for reading; A4 is for filing.
@@ -45,12 +45,12 @@ import { resumeSourceHash } from "./resume-sources.mjs";
 const ROOT = path.resolve(import.meta.dirname, "..");
 const OUT = path.join(ROOT, "public");
 
-/* Two résumés from one layout (see resume-client.tsx): the frontend one at
- * /resume (web platform, the default) and the frontend one beside it. Each is photographed the same
+/* Two résumés from one layout (see resume-client.tsx): the web platform one at
+ * /resume (the default) and the full-stack one beside it. Each is photographed the same
  * way, into its own pair of files, so neither can drift from its page. */
 const VARIANTS = [
   { route: "/resume", file: "resume" },
-  { route: "/resume/frontend", file: "resume-frontend" },
+  { route: "/resume/full-stack", file: "resume-full-stack" },
 ];
 const MM_PER_PX = 25.4 / 96;
 

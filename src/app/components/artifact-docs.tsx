@@ -8,14 +8,14 @@ import type { ArtDoc } from "./artifact-doc";
 export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
   ADR: {
     summary:
-      "The architecture decision record behind the Hobber vendor platform — why seven domains got their own feature slices instead of one dashboard surface, what the boundary rules are, and what the decision costs.",
+      "The architecture decision record behind the Hobber vendor platform: why seven domains got their own feature slices instead of one dashboard surface, what the boundary rules are, and what the decision costs.",
     blocks: [
       {
         type: "fields",
         fields: [
-          { label: "Record", value: "ADR-001 — Feature-sliced architecture" },
+          { label: "Record", value: "ADR-001: Feature-sliced architecture" },
           { label: "Deciders", value: "Me, with the backend lead. One dissent: start single-surface, split later." },
-          { label: "Scope", value: "Sole frontend engineer — the frontend is mine end to end, so this record is the boundary I hold myself to rather than one I enforce on others." },
+          { label: "Scope", value: "Sole frontend engineer. The frontend is mine end to end, so this record is the boundary I hold myself to rather than one I enforce on others." },
           { label: "Status", value: "Accepted · amended after the first release" },
           { label: "Context", value: "Hobber vendor platform · greenfield · UAE" },
           { label: "Stack", value: "React · TypeScript" },
@@ -25,7 +25,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "section",
         n: "01",
         title: "Context",
-        text: "The vendor platform needs authentication, vendor accounts, dashboards, scheduling, payouts, integrations, and team access management — seven domains, each with its own state, permissions, and backend surface. Vendor workflows sit on top: activity management, booking, stock scheduling, discount logic, and content management. Built as one dashboard surface, cross-domain coupling arrives before the first release.",
+        text: "The vendor platform needs authentication, vendor accounts, dashboards, scheduling, payouts, integrations, and team access management. That is seven domains, each with its own state, permissions, and backend surface. Vendor workflows sit on top: activity management, booking, stock scheduling, discount logic, and content management. Built as one dashboard surface, cross-domain coupling arrives before the first release.",
       },
       {
         type: "section",
@@ -44,7 +44,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         // in the repo; the document just didn't admit the layer they live in.
         // Naming two shared layers is the honest version, and it is where
         // feature-sliced architectures actually fail.
-        text: "Organize the frontend by feature slice, not by technical layer. Each domain owns its routes, components, state, and API access together, and slices never import from each other. Two shared layers sit underneath, not one: generic UI primitives that know no domain, and a domain layer for the things every slice needs but no slice owns — the HTTP client, auth and token refresh, permission checks, error normalisation, shared types. Slices may import both; neither may import a slice; and shared UI may not import the domain layer. The import direction is lint-checked rather than convention-checked, and TypeScript checks the contracts where slices compose.",
+        text: "Organize the frontend by feature slice, not by technical layer. Each domain owns its routes, components, state, and API access together, and slices never import from each other. Two shared layers sit underneath, not one: generic UI primitives that know no domain, and a domain layer for the things every slice needs but no slice owns (the HTTP client, auth and token refresh, permission checks, error normalisation, shared types). Slices may import both; neither may import a slice; and shared UI may not import the domain layer. The import direction is lint-checked rather than convention-checked, and TypeScript checks the contracts where slices compose.",
       },
       { type: "heading", title: "Boundary rules" },
       {
@@ -52,7 +52,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         checks: [
           { text: "A slice may import from the shared UI layer, and from the shared domain layer." },
           {
-            text: "A slice may not import from another slice — cross-domain flows compose at the route level.",
+            text: "A slice may not import from another slice; cross-domain flows compose at the route level.",
           },
           {
             text: "Shared UI stays domain-agnostic. If it needs to know about payouts, it isn't shared.",
@@ -60,13 +60,13 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
           {
             text: "Shared UI may not import the domain layer. That direction is what stops the primitives becoming a second place domain logic hides.",
           },
-          { text: "A pattern is copied twice before it is promoted. — Added by amendment; see below." },
+          { text: "A pattern is copied twice before it is promoted. (Added by amendment; see below.)" },
           {
-            text: "The lint rule only enforces the slice-to-slice direction. Domain logic put into shared UI is caught by review, which holds as long as the reviewer remembers — the next rule I'd add, not one I have.",
+            text: "The lint rule only enforces the slice-to-slice direction. Domain logic put into shared UI is caught by review, which holds as long as the reviewer remembers. A rule that catches it is the next one I'd add, not one I have.",
             good: false,
           },
           {
-            text: "Premature generalization — a shared component built for a use case that hasn't arrived.",
+            text: "Premature generalization: a shared component built for a use case that hasn't arrived.",
             good: false,
           },
         ],
@@ -87,7 +87,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "callout",
         tone: "note",
         title: "Trade-off on record",
-        text: "Upfront architecture vs. time to first screen. Uncomfortable at a startup, and taken knowingly — the alternative is paying it back with interest during the first big feature.",
+        text: "Upfront architecture vs. time to first screen. Uncomfortable at a startup, and taken knowingly. The alternative is paying it back with interest during the first big feature.",
       },
       {
         type: "callout",
@@ -99,7 +99,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "callout",
         tone: "win",
         title: "Consequence",
-        text: "A new domain is a new folder, not a refactor. A boundary violation is refused by lint on the import direction, and a contract that has drifted fails to typecheck where the slices compose — rather than either surfacing in review, or in production.",
+        text: "A new domain is a new folder, not a refactor. A boundary violation is refused by lint on the import direction, and a contract that has drifted fails to typecheck where the slices compose, rather than either surfacing in review, or in production.",
       },
     ],
   },
@@ -111,10 +111,10 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
       {
         type: "fields",
         fields: [
-          { label: "Doc", value: "Reusable component library — API contract" },
+          { label: "Doc", value: "Reusable component library: API contract" },
           { label: "Context", value: "Kodez enterprise CMS · company scaled 10 → 60+" },
           { label: "Stack", value: "React · TypeScript · SCSS · Material UI · Storybook" },
-          { label: "Result", value: `Frontend delivery time down by roughly a third (${MEASUREMENTS["dev-time"].value.replace("−","~")}) — my judgement, not an instrumented figure` },
+          { label: "Result", value: `Frontend delivery time down by roughly a third (${MEASUREMENTS["dev-time"].value.replace("−","~")}); my judgement, not an instrumented figure` },
         ],
       },
       {
@@ -124,7 +124,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
       },
       {
         type: "steps",
-        title: "Promotion rule — when a component becomes shared",
+        title: "Promotion rule: when a component becomes shared",
         ordered: true,
         items: [
           "The pattern has appeared at least twice, in two different domains.",
@@ -138,7 +138,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         checks: [
           { text: "Typed and required by default; every optional prop has a documented default." },
           { text: "Controlled by default. Uncontrolled only where the DOM already owns the state." },
-          { text: "Styling by variant token — never raw class names passed through." },
+          { text: "Styling by variant token, never raw class names passed through." },
           {
             text: 'Feature-specific props. A prop named "isPayoutRow" disqualifies the component.',
             good: false,
@@ -150,20 +150,20 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         title: "Changing one, once it is shared",
         ordered: true,
         items: [
-          "Additive by default — a new optional prop with a default that preserves current behaviour.",
+          "Additive by default: a new optional prop with a default that preserves current behaviour.",
           "A breaking change updates every call site in the same pull request. If that is too large to review, it is too large to make in one go.",
           "Never change a prop's meaning while keeping its name. Add the new one, deprecate the old one in the story, remove it once the call sites are gone.",
         ],
       },
       {
         type: "checklist",
-        title: "Accessibility floor — non-negotiable",
+        title: "Accessibility floor (non-negotiable)",
         checks: [
           { text: "Reachable and operable by keyboard, with a visible focus ring." },
           { text: "Correct role and accessible name; state exposed via ARIA, not colour alone." },
           { text: "Contrast meets WCAG AA in both the light and dark themes." },
           {
-            text: "Enforced in review against this list, not by an automated check — see below.",
+            text: "Enforced in review against this list, not by an automated check (see below).",
             good: false,
           },
         ],
@@ -178,21 +178,21 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "callout",
         tone: "insight",
         title: "What I'd do differently",
-        text: "Two things. I sold the library on consistency when I should have sold it on speed — engineers adopt a design system when it visibly saves them an afternoon, so publish the before/after build time for a real screen in week one and let the number argue. And I called the accessibility floor non-negotiable while enforcing it by review, which means it held exactly as long as the reviewer remembered. A rule with no check is a preference; it belongs in the pipeline next to the tests.",
+        text: "Two things. I sold the library on consistency when I should have sold it on speed. Engineers adopt a design system when it visibly saves them an afternoon, so publish the before/after build time for a real screen in week one and let the number argue. And I called the accessibility floor non-negotiable while enforcing it by review, which means it held exactly as long as the reviewer remembered. A rule with no check is a preference; it belongs in the pipeline next to the tests.",
       },
     ],
   },
 
   "STATE MODEL": {
     summary:
-      "The rule that keeps data-fetching bugs from becoming rendering bugs in the Hobber vendor dashboard — what belongs in the cache, what belongs in the component, and why the two are never the same store.",
+      "The rule that keeps data-fetching bugs from becoming rendering bugs in the Hobber vendor dashboard: what belongs in the cache, what belongs in the component, and why the two are never the same store.",
     blocks: [
       {
         type: "fields",
         fields: [
           { label: "Doc", value: "Server state vs. client state" },
           { label: "Context", value: "Hobber vendor dashboard · feature-sliced" },
-          { label: "Rule", value: "Different problems — they do not share a store" },
+          { label: "Rule", value: "Different problems, so they do not share a store" },
           { label: "Stack", value: "React · TypeScript · query layer" },
         ],
       },
@@ -244,7 +244,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         ordered: true,
         items: [
           "Mutate.",
-          "Invalidate the affected cache keys — precisely, not page-wide.",
+          "Invalidate the affected cache keys precisely, not page-wide.",
           "Let the query layer refetch, so the screen reflects what the server accepted rather than what the client hoped.",
         ],
       },
@@ -253,7 +253,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         title: "What breaks the rule",
         checks: [
           {
-            text: "Copying a query result into useState so it can be edited. Now there are two answers and no way to tell which is current — hold the draft separately and keep the cache as the read.",
+            text: "Copying a query result into useState so it can be edited. Now there are two answers and no way to tell which is current. Hold the draft separately and keep the cache as the read.",
             good: false,
           },
           {
@@ -269,7 +269,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
             good: false,
           },
           {
-            text: "A real-time event written straight into component state. An event may invalidate a cache key; it must never be the only way a piece of state arrives — a socket that reconnects replays nothing, so the screen is then confidently wrong with no read that can correct it.",
+            text: "A real-time event written straight into component state. An event may invalidate a cache key; it must never be the only way a piece of state arrives. A socket that reconnects replays nothing, so the screen is then confidently wrong with no read that can correct it.",
             good: false,
           },
         ],
@@ -278,7 +278,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "callout",
         tone: "note",
         title: "Why it matters here",
-        text: "Scheduling, payouts, and discount logic are financially consequential. A stale read on a payout screen isn't a cosmetic bug — so when server and client disagree, the server wins and the UI says so.",
+        text: "Scheduling, payouts, and discount logic are financially consequential. A stale read on a payout screen isn't a cosmetic bug, so when server and client disagree, the server wins and the UI says so.",
       },
     ],
   },
@@ -290,12 +290,12 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
       {
         type: "fields",
         fields: [
-          { label: "Doc", value: "Page-load performance one-pager — media web applications" },
+          { label: "Doc", value: "Page-load performance one-pager: media web applications" },
           { label: "Context", value: "Axinom · Mosaic platform · global media clients" },
           { label: "Result", value: `${MEASUREMENTS["load-axinom"].value.replace("−","~")} reduction in page load time` },
           {
             label: "Read as",
-            value: "Before/after vs. a defined baseline — not a controlled experiment",
+            value: "Before/after vs. a defined baseline, not a controlled experiment",
           },
         ],
       },
@@ -309,9 +309,9 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         title: "The three levers, in order of application",
         ordered: true,
         items: [
-          "Bundle optimization — analyse first, cut second. Remove what ships but is unused; split what is needed but not immediately.",
-          "Lazy loading — defer everything below the fold and every route the user hasn't asked for. Playback surfaces load first; catalogue browsing can wait, the playback path cannot.",
-          "Caching — cache what doesn't change per request. Metadata from the Mosaic APIs qualifies; entitlement decisions do not.",
+          "Bundle optimization: analyse first, cut second. Remove what ships but is unused; split what is needed but not immediately.",
+          "Lazy loading: defer everything below the fold and every route the user hasn't asked for. Playback surfaces load first; catalogue browsing can wait, the playback path cannot.",
+          "Caching: cache what doesn't change per request. Metadata from the Mosaic APIs qualifies; entitlement decisions do not.",
         ],
       },
       {
@@ -334,7 +334,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
           },
           { text: "Lazy-loading anything on the critical path to first frame.", good: false },
           {
-            text: "Reading the average alone — it hides the regions and devices having the worst time. Added after the fact: the original pass had no segmentation guardrail, which is the mistake recorded below.",
+            text: "Reading the average alone, which hides the regions and devices having the worst time. Added after the fact: the original pass had no segmentation guardrail, which is the mistake recorded below.",
             good: false,
           },
         ],
@@ -343,13 +343,13 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "callout",
         tone: "insight",
         title: "Where this stops being a budget",
-        text: "A budget is a number you are not allowed to exceed. This was a measurement pass with a target — real thresholds, in CI, failing the build on a regression, would have made the gain durable instead of a snapshot. It held because the same few people were watching it, which is not a mechanism.",
+        text: "A budget is a number you are not allowed to exceed. This was a measurement pass with a target; real thresholds, in CI, failing the build on a regression, would have made the gain durable instead of a snapshot. It held because the same few people were watching it, which is not a mechanism.",
       },
       {
         type: "callout",
         tone: "insight",
         title: "What I'd add next",
-        text: "Segment the measurement by region and device from the first read, not the third. On an international product with global clients, the aggregate is the least informative number available — a good median hides the region having the worst time.",
+        text: "Segment the measurement by region and device from the first read, not the third. On an international product with global clients, the aggregate is the least informative number available: a good median hides the region having the worst time.",
       },
     ],
   },
@@ -361,8 +361,8 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
       {
         type: "fields",
         fields: [
-          { label: "Doc", value: "Test strategy — Kodez CMS" },
-          { label: "Coverage", value: `${MEASUREMENTS.coverage.value} overall — Jest + Cypress merged; every critical path gated` },
+          { label: "Doc", value: "Test strategy: Kodez CMS" },
+          { label: "Coverage", value: `${MEASUREMENTS.coverage.value} overall (Jest + Cypress merged); every critical path gated` },
           { label: "Releases", value: `${MEASUREMENTS.releases.value} production releases` },
           { label: "Tooling", value: "Jest · Cypress · CI/CD · BrowserStack" },
         ],
@@ -371,15 +371,15 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "callout",
         tone: "insight",
         title: "The premise",
-        text: `Release throughput is not a function of moving fast. It's a function of how cheaply you can prove you didn't break anything. TDD and CI gates weren't overhead on the ${MEASUREMENTS.releases.value} releases — they're what made shipping on that cadence safe.`,
+        text: `Release throughput is not a function of moving fast. It's a function of how cheaply you can prove you didn't break anything. TDD and CI gates weren't overhead on the ${MEASUREMENTS.releases.value} releases; they're what made shipping on that cadence safe.`,
       },
       {
         type: "table",
         cols: ["Layer", "Volume", "Speed"],
         rows: [
-          { cells: ["Unit (Jest) — logic, reducers, transforms", "Many", "Fast"] },
-          { cells: ["Component — rendering against the library", "Some", "Medium"] },
-          { cells: ["E2E (Cypress) — flows a client would notice", "Fewest", "Slow"], tag: "Now" },
+          { cells: ["Unit (Jest): logic, reducers, transforms", "Many", "Fast"] },
+          { cells: ["Component: rendering against the library", "Some", "Medium"] },
+          { cells: ["E2E (Cypress): flows a client would notice", "Fewest", "Slow"], tag: "Now" },
         ],
       },
       {
@@ -388,10 +388,10 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         checks: [
           { text: "Authentication and permissions." },
           {
-            text: `Write paths into the core schema where a bad write isn't recoverable by a retry — not all ${MEASUREMENTS.tables.value} tables, the consequential ones.`,
+            text: `Write paths into the core schema where a bad write isn't recoverable by a retry (not all ${MEASUREMENTS.tables.value} tables, the consequential ones).`,
           },
           {
-            text: "Every integration surface in the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City) — against a recorded contract, not the vendor's live endpoint.",
+            text: "Every integration surface in the client's vendor stack (Fiserv, Toshiba, NTT DATA, Park Assist, City), tested against a recorded contract, not the vendor's live endpoint.",
           },
           { text: "Any path a defect has been filed against. A bug gets a test before it gets a fix." },
         ],
@@ -399,7 +399,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
       {
         type: "section",
         title: "The third-party boundary",
-        text: "Five vendor integrations cannot be in the merge path. A suite that calls a payment or POS provider on every pull request is slow, needs credentials in CI, and goes red for reasons that have nothing to do with the diff — so the team stops trusting it, which is worse than not having it. The rule: our side of each contract is stubbed at the network boundary and the stub is the recorded shape of the real response. Contract drift is caught by exercising the live integration on a schedule against staging, where a failure is a conversation with the vendor rather than a blocked release.",
+        text: "Five vendor integrations cannot be in the merge path. A suite that calls a payment or POS provider on every pull request is slow, needs credentials in CI, and goes red for reasons that have nothing to do with the diff, so the team stops trusting it, which is worse than not having it. The rule: our side of each contract is stubbed at the network boundary and the stub is the recorded shape of the real response. Contract drift is caught by exercising the live integration on a schedule against staging, where a failure is a conversation with the vendor rather than a blocked release.",
       },
       {
         type: "checklist",
@@ -432,12 +432,12 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
 
   "INCIDENT REVIEW": {
     summary:
-      "Protected playback stopped part-way through long assets on the Axinom media build. The licence was acquired once, at play time, and outlived by the content — a failure that could not appear on any asset short enough for someone to sit through during development.",
+      "Protected playback stopped part-way through long assets on the Axinom media build. The licence was acquired once, at play time, and outlived by the content. That failure could not appear on any asset short enough for someone to sit through during development.",
     blocks: [
       {
         type: "fields",
         fields: [
-          { label: "Doc", value: "Incident review — licence expiry mid-playback" },
+          { label: "Doc", value: "Incident review: licence expiry mid-playback" },
           { label: "Context", value: "Axinom · DRM-protected long-form content · global media clients" },
           { label: "Detected by", value: "A viewer, via the client's support team. There was no client-side error reporting to detect it for us." },
           { label: "Status", value: "Closed · one gap deliberately left open, stated below" },
@@ -454,7 +454,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "section",
         n: "02",
         title: "Why it took a viewer to find it",
-        text: "Two things, and only one of them is about tooling. There was no client-side error reporting on this product, so nobody was watching for a failure — a viewer was the detector, and they told the client before the client told us. But the player did report it: Shaka raises an expiry error, and it fired. The gap was that the error had nowhere to go. It went to a browser console no operator was reading, and the ticket that reached me said the video stopped working. A signal nobody routes anywhere is not a signal.",
+        text: "Two things, and only one of them is about tooling. There was no client-side error reporting on this product, so nobody was watching for a failure; a viewer was the detector, and they told the client before the client told us. But the player did report it: Shaka raises an expiry error, and it fired. The gap was that the error had nowhere to go. It went to a browser console no operator was reading, and the ticket that reached me said the video stopped working. A signal nobody routes anywhere is not a signal.",
       },
       {
         type: "steps",
@@ -462,7 +462,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         ordered: true,
         items: [
           "The licence validity for the affected titles was raised on the licence side, so live viewers stopped losing sessions mid-recording. This moved the boundary further out; it did not remove it.",
-          "Support was given something accurate to say — long content only, the recording is fine, reload and resume — instead of \"the video is broken\".",
+          "Support was given something accurate to say (long content only, the recording is fine, reload and resume) instead of \"the video is broken\".",
           "I pinned a deliberately short-lived licence in a non-production environment, so the boundary could be crossed in a browser on demand rather than by watching a full lecture. That is what made the real fix testable.",
         ],
       },
@@ -477,9 +477,9 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         ordered: true,
         items: [
           "Expiry became state the player owns rather than an event it reacts to. The DRM module reads the expiration it is handed by the key session and acts before the keys die, not after playback has already stopped.",
-          "Renewal is a reload at the current position with a freshly minted entitlement token, not an in-place licence swap. In-place renewal does exist — a CDM that is issued a renewable licence emits a license-renewal message, and the response goes back through MediaKeySession.update() without interrupting playback — but the licences we were issued carried no renewal policy, so no renewal message was ever emitted and there was nothing to pass to update(). Changing that is a licence-service decision, not a client one. Reload at position was the mechanism available to me, and it costs the viewer a brief visible stall. A stall you can explain beats a stop you cannot.",
+          "Renewal is a reload at the current position with a freshly minted entitlement token, not an in-place licence swap. In-place renewal does exist: a CDM that is issued a renewable licence emits a license-renewal message, and the response goes back through MediaKeySession.update() without interrupting playback. But the licences we were issued carried no renewal policy, so no renewal message was ever emitted and there was nothing to pass to update(). Changing that is a licence-service decision, not a client one. Reload at position was the mechanism available to me, and it costs the viewer a brief visible stall. A stall you can explain beats a stop you cannot.",
           "The short-lived licence became a standing check, so the renewal path is crossed every time it runs and a broken renewal fails in a check rather than in somebody's lecture.",
-          "The expiry error was mapped to a distinct state — access expired, as against cannot play on this device, as against network — so the next ticket arrives carrying something to act on.",
+          "The expiry error was mapped to a distinct state (access expired, as against cannot play on this device, as against network), so the next ticket arrives carrying something to act on.",
         ],
       },
       {
@@ -491,7 +491,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
             good: false,
           },
           {
-            text: "Test a duration-dependent failure by making the test longer. Shrink the window instead — the licence, not the lecture.",
+            text: "Test a duration-dependent failure by making the test longer. Shrink the window instead: the licence, not the lecture.",
             good: false,
           },
           {
@@ -504,19 +504,19 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "callout",
         tone: "insight",
         title: "The gap I left open",
-        text: "The check runs on real browsers as a release step, not as a merge gate, because a real content decryption module does not exist in headless CI — and by my own standard a rule with no gate is a preference. I also did not rule out every adjacent cause before shipping the fix; I could reproduce expiry and I fixed expiry. And the detector is still a person. That one is mine: I chose not to build client-side failure reporting on a product where a playback failure is the most expensive thing there is to reproduce. This is the incident that makes the argument for it.",
+        text: "The check runs on real browsers as a release step, not as a merge gate, because a real content decryption module does not exist in headless CI, and by my own standard a rule with no gate is a preference. I also did not rule out every adjacent cause before shipping the fix; I could reproduce expiry and I fixed expiry. And the detector is still a person. That one is mine: I chose not to build client-side failure reporting on a product where a playback failure is the most expensive thing there is to reproduce. This is the incident that makes the argument for it.",
       },
     ],
   },
 
   "ACCESSIBILITY BASELINE": {
     summary:
-      "The floor the RaSoft company-site rebuild had to clear before it could ship — what had to be true of every screen, why keyboard order came before colour, and the thing I had backwards at the start.",
+      "The floor the RaSoft company-site rebuild had to clear before it could ship: what had to be true of every screen, why keyboard order came before colour, and the thing I had backwards at the start.",
     blocks: [
       {
         type: "fields",
         fields: [
-          { label: "Doc", value: "Accessibility & responsive baseline — company site rebuild" },
+          { label: "Doc", value: "Accessibility & responsive baseline: company site rebuild" },
           { label: "Context", value: "RaSoft · seed-stage startup · first end-to-end UI ownership" },
           { label: "Stack", value: "React · JavaScript · SCSS" },
           { label: "Status", value: "Applied to the rebuild; written up here from what the work required" },
@@ -532,11 +532,11 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         title: "True of every screen before it ships",
         checks: [
           { text: "Reachable and operable by keyboard, in an order that matches the visual one." },
-          { text: "One h1, and headings that descend without skipping a level — the document outline is the mental model a screen reader user gets." },
+          { text: "One h1, and headings that descend without skipping a level. The document outline is the mental model a screen reader user gets." },
           { text: "Every control has an accessible name. An icon-only button without one is unusable and reads as \"button\"." },
           { text: "Text meets WCAG AA against its actual background, not against white." },
           { text: "Layout holds from 320px up, and text reflows rather than being scaled down to fit." },
-          { text: "Colour as the only signal — a red border with no text is invisible to the people most likely to need it.", good: false },
+          { text: "Colour as the only signal. A red border with no text is invisible to the people most likely to need it.", good: false },
           { text: "A div with a click handler standing in for a button. It is not focusable and does not fire on Enter.", good: false },
         ],
       },
@@ -544,20 +544,20 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "callout",
         tone: "insight",
         title: "What I had backwards",
-        text: "I started with contrast, because it is the part you can see and check quickly. It was the wrong order. Contrast is a property of a finished style; keyboard order and semantics are properties of the structure, and by the time a screen looks right the structure is expensive to change. Semantics first, then focus order, then colour — that sequence costs the least and I only learned it by paying the other one.",
+        text: "I started with contrast, because it is the part you can see and check quickly. It was the wrong order. Contrast is a property of a finished style; keyboard order and semantics are properties of the structure, and by the time a screen looks right the structure is expensive to change. Semantics first, then focus order, then colour. That sequence costs the least and I only learned it by paying the other one.",
       },
       {
         type: "callout",
         tone: "note",
         title: "Where this stops",
-        text: "This was manual: keyboard passes, a contrast checker and reading the markup. No automated audit ran in CI, and I did not test with a real screen-reader user — the closest I got was navigating with one myself, which tells you a page is operable and not whether it is comprehensible. A floor enforced by attention is a floor that holds while someone is paying attention.",
+        text: "This was manual: keyboard passes, a contrast checker and reading the markup. No automated audit ran in CI, and I did not test with a real screen-reader user; the closest I got was navigating with one myself, which tells you a page is operable and not whether it is comprehensible. A floor enforced by attention is a floor that holds while someone is paying attention.",
       },
     ],
   },
 
   "API CONTRACT": {
     summary:
-      "How the frontend and the .NET backend at Hobber agree on a shape before either side builds it — pinned in Swagger, typed on our side, and changed by conversation rather than discovered in production.",
+      "How the frontend and the .NET backend at Hobber agree on a shape before either side builds it: pinned in Swagger, typed on our side, and changed by conversation rather than discovered in production.",
     blocks: [
       {
         type: "fields",
@@ -571,14 +571,14 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
       {
         type: "section",
         title: "Why this exists",
-        text: "Two people building both halves of an integration from a conversation produces two different guesses, and the difference surfaces at the worst moment — usually in a browser, usually the day it is demoed. Pinning the shape first turns an integration bug into a five-minute disagreement held before either side has written anything worth defending.",
+        text: "Two people building both halves of an integration from a conversation produces two different guesses, and the difference surfaces at the worst moment, usually in a browser, usually the day it is demoed. Pinning the shape first turns an integration bug into a five-minute disagreement held before either side has written anything worth defending.",
       },
       {
         type: "steps",
         title: "The order",
         ordered: true,
         items: [
-          "The shape is agreed and pinned in Swagger before either side builds — request, response, and what an error looks like.",
+          "The shape (request, response, and what an error looks like) is agreed and pinned in Swagger before either side builds.",
           "It is typed on our side, so a response that stops matching is a compile error rather than an undefined halfway down a render.",
           "The client is written against the pinned shape. Where the backend is not ready, the shape is enough to build and test against.",
           "A change to the contract is a change to the document first. Discovering it from a failing screen means the document was not the contract.",
@@ -589,7 +589,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         title: "What the shape has to say",
         checks: [
           { text: "What is optional and what is guaranteed. \"Usually present\" is not a contract." },
-          { text: "What an error looks like, with the same shape every time — a client cannot branch on prose." },
+          { text: "What an error looks like, with the same shape every time. A client cannot branch on prose." },
           { text: "What an empty result is: an empty array and a null are different states and read differently on screen." },
           { text: "Which fields are money or dates, and in what units and timezone." },
           { text: "A field whose meaning depends on another field's value, with nothing saying so.", good: false },
@@ -599,28 +599,28 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "callout",
         tone: "note",
         title: "The real-time half",
-        text: "SignalR does not remove the need for this, it adds one. A socket event carries a payload with a shape, and the same rules apply — but an event is also not a source of truth on its own, because a hub restores a connection and replays nothing sent during the gap. The event invalidates a cache key; the read is still the REST contract. That rule is in the state model.",
+        text: "SignalR does not remove the need for this, it adds one. A socket event carries a payload with a shape, and the same rules apply. But an event is also not a source of truth on its own, because a hub restores a connection and replays nothing sent during the gap. The event invalidates a cache key; the read is still the REST contract. That rule is in the state model.",
       },
       {
         type: "callout",
         tone: "insight",
         title: "What this does not solve",
-        text: "A pinned document is a shared intention, not a guarantee — nothing here fails a build if the deployed API drifts from what Swagger says. Generating the client types from the spec, and checking the running API against it on a schedule, is what would turn agreement into enforcement. By my own standard that makes this a preference with a good habit around it.",
+        text: "A pinned document is a shared intention, not a guarantee: nothing here fails a build if the deployed API drifts from what Swagger says. Generating the client types from the spec, and checking the running API against it on a schedule, is what would turn agreement into enforcement. By my own standard that makes this a preference with a good habit around it.",
       },
     ],
   },
 
   "MIGRATION PLAN": {
     summary:
-      "How a legacy Laravel and jQuery application moved to React and ExpressJS incrementally at Kodez — the strangler approach, the ordering, and the one rule that kept two coexisting stacks from doubling the work. The legacy surface was retired down to a low-traffic remainder, without a delivery freeze.",
+      "How a legacy Laravel and jQuery application moved to React and ExpressJS incrementally at Kodez: the strangler approach, the ordering, and the one rule that kept two coexisting stacks from doubling the work. The legacy surface was retired down to a low-traffic remainder, without a delivery freeze.",
     blocks: [
       {
         type: "fields",
         fields: [
           { label: "Doc", value: "Legacy Laravel + jQuery → React + ExpressJS" },
-          { label: "Constraint", value: "Live users and client commitments — no freeze available" },
+          { label: "Constraint", value: "Live users and client commitments · no freeze available" },
           { label: "Result", value: "Legacy surface retired down to a low-traffic remainder · zero delivery freeze" },
-          { label: "Approach", value: "Strangler — migrate alongside funded work" },
+          { label: "Approach", value: "Strangler: migrate alongside funded work" },
         ],
       },
       {
@@ -669,7 +669,7 @@ export const ARTIFACT_DOCS: Record<string, ArtDoc> = {
         type: "callout",
         tone: "note",
         title: "Trade-off on record",
-        text: "A period of two coexisting stacks — more surface area, more context-switching — in exchange for never stopping client delivery. Taken deliberately.",
+        text: "A period of two coexisting stacks (more surface area, more context-switching) in exchange for never stopping client delivery. Taken deliberately.",
       },
     ],
   },

@@ -71,7 +71,7 @@ export const PROTOTYPES: Record<string, Proto> = {
       {
         "label": "Availability",
         "title": "Weekly availability",
-        "sub": "Set when Al Noor Services can take bookings — the last readiness gate before going live.",
+        "sub": "Set when Al Noor Services can take bookings. This is the last readiness gate before going live.",
         "activeNav": 2,
         "blocks": [
           {
@@ -95,7 +95,7 @@ export const PROTOTYPES: Record<string, Proto> = {
           {
             "type": "cta",
             "title": "Schedule readiness complete",
-            "sub": "All four activation gates met — onboarding, services, pricing, and schedule. Al Noor Services is ready for demand.",
+            "sub": "All four activation gates met: onboarding, services, pricing, and schedule. Al Noor Services is ready for demand.",
             "cta": "Go live"
           }
         ]
@@ -103,7 +103,7 @@ export const PROTOTYPES: Record<string, Proto> = {
       {
         "label": "Go-live",
         "title": "You are live on Hobber",
-        "sub": "Al Noor Services is live — visible to customers across the marketplace.",
+        "sub": "Al Noor Services is live and visible to customers across the marketplace.",
         "activeNav": 2,
         "blocks": [
           {
@@ -220,7 +220,7 @@ export const PROTOTYPES: Record<string, Proto> = {
     tablet: [
       {
         label: "Overview",
-        title: "Al Noor Services — Dashboard",
+        title: "Al Noor Services · Dashboard",
         sub: "Tuesday 1 July · Dubai",
         activeNav: 0,
         blocks: [
@@ -238,7 +238,7 @@ export const PROTOTYPES: Record<string, Proto> = {
             title: "Bookings this week",
             bars: [30, 45, 60, 52, 78, 90, 40],
             statValue: "22",
-            statLabel: "Mon–Sun bookings",
+            statLabel: "Mon to Sun bookings",
           },
           {
             type: "list",
@@ -1179,11 +1179,11 @@ export const PROTOTYPES: Record<string, Proto> = {
               },
               {
                 "label": "Type",
-                "value": "On-site repair — HVAC"
+                "value": "On-site repair · HVAC"
               },
               {
                 "label": "Priority",
-                "value": "P2 — High (8h SLA)"
+                "value": "P2 · High (8h SLA)"
               },
               {
                 "label": "Assignee",
@@ -1306,7 +1306,7 @@ export const PROTOTYPES: Record<string, Proto> = {
                 "cells": [
                   "shp_••••9f7",
                   "AUH-02 → Client site",
-                  "—"
+                  "n/a"
                 ],
                 "status": "OK"
               },
@@ -1330,7 +1330,7 @@ export const PROTOTYPES: Record<string, Proto> = {
                 "cells": [
                   "shp_••••8b0",
                   "SHJ-03 → Zone East",
-                  "—"
+                  "n/a"
                 ],
                 "status": "OK"
               }
@@ -1679,9 +1679,9 @@ export const PROTOTYPES: Record<string, Proto> = {
             type: "list",
             title: "Needs your action",
             items: [
-              { label: "Annual leave · Dilani P.", meta: "5 days · 14–18 Jul · Engineering", status: "Pending" },
+              { label: "Annual leave · Dilani P.", meta: "5 days · 14 to 18 Jul · Engineering", status: "Pending" },
               { label: "Sick leave · Ruwan J.", meta: "1 day · today · Finance", status: "Pending" },
-              { label: "WFH request · Nadeesha K.", meta: "2 days · 3–4 Jul · Support", status: "Pending" },
+              { label: "WFH request · Nadeesha K.", meta: "2 days · 3 to 4 Jul · Support", status: "Pending" },
               { label: "Attendance correction · Kasun M.", meta: "Missed clock-out · Mon 30 Jun", status: "Review" },
             ],
           },
@@ -1697,7 +1697,7 @@ export const PROTOTYPES: Record<string, Proto> = {
       {
         label: "Approvals",
         title: "Leave & approval queue",
-        sub: "Every request routes here — no more chasing sign-off across desks and inboxes.",
+        sub: "Every request routes here. No more chasing sign-off across desks and inboxes.",
         activeNav: 1,
         crumbs: ["Approvals", "Pending"],
         blocks: [
@@ -1706,10 +1706,10 @@ export const PROTOTYPES: Record<string, Proto> = {
             title: "Awaiting decision",
             cols: ["Request", "Employee", "Dates", "State"],
             rows: [
-              { cells: ["Annual leave", "Dilani P.", "14–18 Jul"], status: "Pending" },
+              { cells: ["Annual leave", "Dilani P.", "14 to 18 Jul"], status: "Pending" },
               { cells: ["Sick leave", "Ruwan J.", "Today"], status: "Pending" },
-              { cells: ["WFH", "Nadeesha K.", "3–4 Jul"], status: "Pending" },
-              { cells: ["Annual leave", "Sahan D.", "21–25 Jul"], status: "Approved" },
+              { cells: ["WFH", "Nadeesha K.", "3 to 4 Jul"], status: "Pending" },
+              { cells: ["Annual leave", "Sahan D.", "21 to 25 Jul"], status: "Approved" },
               { cells: ["Casual leave", "Ishara W.", "8 Jul"], status: "Approved" },
             ],
           },
@@ -1726,7 +1726,7 @@ export const PROTOTYPES: Record<string, Proto> = {
       {
         label: "Request",
         title: "Annual leave · Dilani P.",
-        sub: "One record, one approval trail — replacing three spreadsheets that never agreed.",
+        sub: "One record, one approval trail, replacing three spreadsheets that never agreed.",
         activeNav: 1,
         crumbs: ["Approvals", "Dilani P.", "LR-2048"],
         split: true,
@@ -1736,7 +1736,7 @@ export const PROTOTYPES: Record<string, Proto> = {
             title: "Request LR-2048",
             items: [
               { label: "Type", value: "Annual leave" },
-              { label: "Dates", value: "14–18 Jul (5 days)" },
+              { label: "Dates", value: "14 to 18 Jul (5 days)" },
               { label: "Balance after", value: "9 of 21 days" },
               { label: "Cover", value: "Sahan D." },
             ],
@@ -1745,10 +1745,10 @@ export const PROTOTYPES: Record<string, Proto> = {
             type: "progress",
             title: "Approval trail",
             pct: 66,
-            sub: "Auto-routed to reporting manager, then HR — no manual chasing",
+            sub: "Auto-routed to reporting manager, then HR, with no manual chasing",
             steps: [
               { label: "Submitted by Dilani P.", done: true },
-              { label: "Manager review — approved", done: true },
+              { label: "Manager review: approved", done: true },
               { label: "HR confirmation", done: false },
               { label: "Calendar & payroll synced", done: false },
             ],
@@ -1778,7 +1778,7 @@ export const PROTOTYPES: Record<string, Proto> = {
             cols: ["Employee", "Dept", "In", "State"],
             rows: [
               { cells: ["Dilani P.", "Engineering", "08:52"], status: "Present" },
-              { cells: ["Ruwan J.", "Finance", "—"], status: "On leave" },
+              { cells: ["Ruwan J.", "Finance", "n/a"], status: "On leave" },
               { cells: ["Nadeesha K.", "Support", "09:04"], status: "Present" },
               { cells: ["Kasun M.", "Engineering", "09:41"], status: "Late" },
               { cells: ["Ishara W.", "People", "08:47"], status: "Present" },
@@ -1797,7 +1797,7 @@ export const PROTOTYPES: Record<string, Proto> = {
       },
       {
         label: "Onboarding",
-        title: "New joiner — Amaya S.",
+        title: "New joiner · Amaya S.",
         sub: "Software Engineer · starts Mon 7 Jul · paper forms retired",
         activeNav: 4,
         crumbs: ["Onboarding", "Amaya S."],
@@ -1837,19 +1837,19 @@ export const PROTOTYPES: Record<string, Proto> = {
                 name: "Submitted",
                 cards: [
                   { title: "Sick leave · Ruwan J.", meta: "1 day · today", done: false },
-                  { title: "WFH · Nadeesha K.", meta: "2 days · 3–4 Jul", done: false },
+                  { title: "WFH · Nadeesha K.", meta: "2 days · 3 to 4 Jul", done: false },
                 ],
               },
               {
                 name: "Manager review",
                 cards: [
-                  { title: "Annual leave · Dilani P.", meta: "5 days · 14–18 Jul", done: false },
+                  { title: "Annual leave · Dilani P.", meta: "5 days · 14 to 18 Jul", done: false },
                 ],
               },
               {
                 name: "Approved",
                 cards: [
-                  { title: "Annual · Sahan D.", meta: "21–25 Jul · synced", done: true },
+                  { title: "Annual · Sahan D.", meta: "21 to 25 Jul · synced", done: true },
                   { title: "Casual · Ishara W.", meta: "8 Jul · synced", done: true },
                 ],
               },
@@ -1917,7 +1917,7 @@ export const PROTOTYPES: Record<string, Proto> = {
             type: "list",
             title: "My requests",
             items: [
-              { label: "Annual leave · 14–18 Jul", meta: "LR-2048 · with HR", status: "Pending" },
+              { label: "Annual leave · 14 to 18 Jul", meta: "LR-2048 · with HR", status: "Pending" },
               { label: "WFH · 20 Jun", meta: "LR-1994", status: "Approved" },
             ],
           },
@@ -1935,19 +1935,19 @@ export const PROTOTYPES: Record<string, Proto> = {
             title: "New leave request",
             items: [
               { label: "Type", value: "Annual leave" },
-              { label: "Dates", value: "14–18 Jul" },
+              { label: "Dates", value: "14 to 18 Jul" },
               { label: "Days", value: "5" },
               { label: "Cover", value: "Sahan D." },
             ],
             cta: "Submit for approval",
           },
-          { type: "note", text: "Routes straight to your manager, then HR. You'll see each step update here — no paper, no chasing." },
+          { type: "note", text: "Routes straight to your manager, then HR. You'll see each step update here. No paper, no chasing." },
         ],
       },
       {
         label: "Status",
         title: "Request LR-2048",
-        sub: "Annual leave · 14–18 Jul",
+        sub: "Annual leave · 14 to 18 Jul",
         activeNav: 1,
         blocks: [
           {

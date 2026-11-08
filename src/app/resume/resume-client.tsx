@@ -34,7 +34,7 @@ type Role = {
 type StackGroup = { label: string; items: string[] };
 
 const CONTACT = [
-  "UAE — open to relocation, onsite & remote",
+  "UAE · open to relocation, onsite & remote",
   "+971-54-488-5839",
   "rezaan6@gmail.com",
   "linkedin.com/in/rezaan6",
@@ -72,7 +72,7 @@ const CONTACT_GLYPH: Record<string, string> = {
 // hands-on clause comes first for that reason, and it is not a new claim: the
 // Hobber bullet below already says the frontend is his end to end.
 const POSITIONING = () =>
-  `Senior Frontend Engineer with ${yearsPhrase()} owning large React codebases from architecture through production — hands-on as the primary engineer, and leading frontend teams — and working in the Node.js, .NET and Laravel backends behind them. I work cross-functionally with design, backend and DevOps, and I'm the one who flags where a design will fight the design system. I make the structural decisions a codebase has to live with, and take responsibility for how it performs and how safely it ships. Today I'm also the sole developer for a ${MEASUREMENTS["das-companies"].value}-company holding group's websites, on WordPress, Laravel and Shopify.`;
+  `Senior Full-Stack Engineer with ${yearsPhrase()} owning large React codebases from architecture through production, and the Node.js, .NET and Laravel backends behind them. Hands-on as the primary engineer and leading teams, I work cross-functionally with design, backend and DevOps, and I'm the one who flags where a design will fight the design system. I make the structural decisions a codebase has to live with, and take responsibility for how it performs and how safely it ships. Today I'm also the sole developer for a ${MEASUREMENTS["das-companies"].value}-company holding group's websites, on WordPress, Laravel and Shopify.`;
 
 // The five-second scan payload. Every figure is a before/after read against
 // a defined baseline — never a causal claim.
@@ -80,7 +80,7 @@ const POSITIONING = () =>
 // so changing −40% there changes it on the résumé, in the case tables and in
 // the endnotes at once — they used to be three separate copies.
 const METRICS: { label: string; m: MeasurementId }[] = [
-  { label: "platforms architected 0→1 — Hobber, Kodez", m: "platforms" },
+  { label: "platforms architected 0→1 (Hobber, Kodez)", m: "platforms" },
   { label: "page load time, Kodez CMS", m: "load-kodez" },
   { label: "test coverage, Jest + Cypress", m: "coverage" },
   { label: "production releases shipped", m: "releases" },
@@ -100,9 +100,9 @@ const ENDNOTES = METRICS.map((x) => ({ id: x.m, label: x.label, ...MEASUREMENTS[
 const CR8V: Role = {
   company: "cr8v",
   location: "Abu Dhabi, UAE",
-  descriptor: "Digital agency — sole developer on the DAS Holding account, and other clients",
-  title: "Senior Web Developer — Lead",
-  period: "Jun 2026 — Present",
+  descriptor: "Digital agency · sole developer on the DAS Holding account, and other clients",
+  title: "Senior Web Developer (Lead)",
+  period: "Jun 2026 to Present",
   stack: [
     "WordPress",
     "Laravel",
@@ -115,10 +115,10 @@ const CR8V: Role = {
     "Looker Studio",
   ],
   points: [
-    `Sole developer on the DAS Holding account — the websites of ${MEASUREMENTS["das-companies"].value} group companies across real estate, healthcare, retail, investment and e-commerce, scoped, built, tested and deployed end to end. Every site is live at rezaanriyaz.com/web.`,
+    `Sole developer on the DAS Holding account: the websites of ${MEASUREMENTS["das-companies"].value} group companies across real estate, healthcare, retail, investment and e-commerce, scoped, built, tested and deployed end to end. Every site is live at rezaanriyaz.com/web.`,
     `Ran the security and upgrade work across the group's ${MEASUREMENTS["das-sites"].value} production sites: worked through the penetration-test findings and planned a ${MEASUREMENTS["upgrade-plan"].value}-day, site-by-site upgrade programme the client approved.`,
-    "Built 54dining.com from an empty repository for a separate client — React and TypeScript, now on Cloudflare with an admin panel I also built: real-time publishing, photo cropping, English and Arabic content, a staging site and nightly backups.",
-    `Rolled out lead tracking on ${MEASUREMENTS.tracking.value} sites and built Looker Studio sales dashboards on GA4 and Meta Ads data — ${MEASUREMENTS.tasks.value} tasks delivered.`,
+    "Built 54dining.com for a separate client, from an empty repository in React and TypeScript. It now runs on Cloudflare, with an admin panel I also built: real-time publishing, photo cropping, English and Arabic content, a staging site and nightly backups.",
+    `Rolled out lead tracking on ${MEASUREMENTS.tracking.value} sites and built Looker Studio sales dashboards on GA4 and Meta Ads data. ${MEASUREMENTS.tasks.value} tasks delivered.`,
   ],
 };
 
@@ -129,8 +129,8 @@ const EXPERIENCE: Role[] = [
     location: "Abu Dhabi, UAE",
     descriptor:
       "Marketplace platform for entertainment, recreation, dining & tourism vendors",
-    title: "Senior Full-Stack Engineer — Lead",
-    period: "Jan 2026 — Present",
+    title: "Senior Full-Stack Engineer (Lead)",
+    period: "Jan 2026 to Present",
     stack: [
       "React",
       "TypeScript",
@@ -144,8 +144,8 @@ const EXPERIENCE: Role[] = [
       "Google Maps API",
     ],
     points: [
-      "Full-stack engineer on the Hobber vendor platform — the frontend is mine end to end, architected from an empty repository in React and TypeScript on a modular, feature-sliced structure, and I work in the .NET backend behind it.",
-      "Shipped seven core platform modules — authentication, vendor accounts, dashboards, scheduling, payouts, integrations, and team access — as independent slices over one shared component layer built on shadcn/ui and Radix primitives.",
+      "Full-stack engineer on the Hobber vendor platform. The frontend is mine end to end, architected from an empty repository in React and TypeScript on a modular, feature-sliced structure, and I work in the .NET backend behind it.",
+      "Shipped seven core platform modules (authentication, vendor accounts, dashboards, scheduling, payouts, integrations, and team access) as independent slices over one shared component layer built on shadcn/ui and Radix primitives.",
       "Built the vendor workflows on top: activity management, booking flows, stock scheduling, discount logic, and content management.",
       // Was "cross-slice contracts enforced by TypeScript at build time". That is
       // not what enforces it: TypeScript compiles a cross-slice import perfectly
@@ -153,18 +153,18 @@ const EXPERIENCE: Role[] = [
       // direction; TypeScript checks the contract where slices actually compose,
       // at the route. Conflating a lint rule with a compiler guarantee is the
       // fastest way to lose a senior interviewer on this exact topic.
-      "Set the architectural boundaries the codebase is held to, so a new domain is a new folder rather than a refactor — cross-slice imports blocked by a lint rule rather than a convention, and the contracts type-checked where slices compose.",
-      "Set up the testing layer from scratch — Vitest for unit and integration, Playwright for end-to-end across the vendor workflows.",
-      "Built real-time vendor messaging on SignalR end to end — the .NET hub and the React client — and the location and routing surfaces on the Google Maps API.",
-      "Work in the .NET (C#) backend on the APIs the vendor workflows run on — endpoints, authentication and platform features over PostgreSQL — with every contract pinned in Swagger before either side is built, alongside the backend and DevOps engineers.",
+      "Set the architectural boundaries the codebase is held to, so a new domain is a new folder rather than a refactor. Cross-slice imports are blocked by a lint rule rather than a convention, and the contracts are type-checked where slices compose.",
+      "Set up the testing layer from scratch: Vitest for unit and integration, Playwright for end-to-end across the vendor workflows.",
+      "Built real-time vendor messaging on SignalR end to end, from the .NET hub to the React client, plus the location and routing surfaces on the Google Maps API.",
+      "Work in the .NET (C#) backend on the APIs the vendor workflows run on: endpoints, authentication and platform features over PostgreSQL. Every contract is pinned in Swagger before either side is built, working alongside the backend and DevOps engineers.",
     ],
   },
   {
     company: "Axinom",
     location: "Colombo, Sri Lanka (HQ Fürth, Germany)",
     descriptor: "Enterprise media technology delivered on the Mosaic platform",
-    title: "Senior Full-Stack Engineer — Lead",
-    period: "Mar 2024 — Nov 2025",
+    title: "Senior Full-Stack Engineer (Lead)",
+    period: "Mar 2024 to Nov 2025",
     stack: [
       "React",
       "Next.js",
@@ -182,16 +182,16 @@ const EXPERIENCE: Role[] = [
       "Azure DevOps",
     ],
     points: [
-      "Led the frontend team and worked on the Node.js backend, building high-performance web applications for clients including the Goethe-Institut and the Lindau Nobel Laureate Meetings, delivering two client products 0→1 — the Goethe-Institut and Lindau builds — through full development, testing and production release cycles.",
+      "Led the frontend team and worked on the Node.js backend, building high-performance web applications for clients including the Goethe-Institut and the Lindau Nobel Laureate Meetings, delivering two client products 0→1 (the Goethe-Institut and Lindau builds) through full development, testing and production release cycles.",
       `Reduced page load time ${MEASUREMENTS["load-axinom"].value.replace("−","~")} through bundle optimization, lazy loading, and caching improvements.`,
       "Built on Axinom's Mosaic micro-frontends (Media, Catalogue, Entitlement, DRM) and its APIs for content synchronization and metadata management, rather than hand-rolling media delivery.",
-      "Worked on the Node.js backend as well as the frontend — services and Handlebars-rendered templates for the client builds, alongside the Mosaic platform APIs.",
-      "Implemented secure DRM playback with Shaka Player, building the player interface as our own event-driven components on top of its defaults rather than inheriting browser-native controls and caption rendering — which look and behave differently on every engine.",
-      "Held playback and layout across a browser matrix spanning Chrome, Edge, Firefox and Safari on macOS, Windows, iOS, iPadOS and Android — including that every iOS browser is WebKit underneath, so a defect reported against iOS Chrome is a Safari defect.",
+      "Worked on the Node.js backend as well as the frontend: services and Handlebars-rendered templates for the client builds, alongside the Mosaic platform APIs.",
+      "Implemented secure DRM playback with Shaka Player, building the player interface as our own event-driven components on top of its defaults rather than inheriting browser-native controls and caption rendering, which look and behave differently on every engine.",
+      "Held playback and layout across a browser matrix spanning Chrome, Edge, Firefox and Safari on macOS, Windows, iOS, iPadOS and Android, including the fact that every iOS browser is WebKit underneath, so a defect reported against iOS Chrome is a Safari defect.",
       "Designed i18n in from the start for multi-language experiences across regions.",
-      "Delivered large media assets out of Azure Blob Storage through the Azure SDK for the Goethe-Institut build — files big enough that the browser could not simply hold one, so the transfer had to be handled rather than requested.",
+      "Delivered large media assets out of Azure Blob Storage through the Azure SDK for the Goethe-Institut build. The files were big enough that the browser could not simply hold one, so the transfer had to be handled rather than requested.",
       "Worked directly with designers to translate Figma into pixel-perfect, responsive interfaces, holding SEO and WCAG-aligned accessibility across every customer-facing surface.",
-      "Owned client-facing technical communication — requirements, feasibility, UX trade-offs, and scope — mentored junior engineers, enforced coding standards, and kept CI/CD stable with DevOps across environments.",
+      "Owned client-facing technical communication (requirements, feasibility, UX trade-offs, and scope), mentored junior engineers, enforced coding standards, and kept CI/CD stable with DevOps across environments.",
     ],
   },
   {
@@ -199,7 +199,7 @@ const EXPERIENCE: Role[] = [
     location: "Colombo, Sri Lanka (HQ Melbourne, Australia)",
     descriptor: "Enterprise CMS for service management and logistics",
     title: "Senior Full-Stack Engineer",
-    period: "Mar 2021 — Feb 2024",
+    period: "Mar 2021 to Feb 2024",
     stack: [
       "React",
       "TypeScript",
@@ -219,29 +219,29 @@ const EXPERIENCE: Role[] = [
       "AWS",
     ],
     points: [
-      `Architected and delivered an enterprise CMS from 0→1 to MVP across the stack — a React frontend built as domain modules with SOLID boundaries, each feature owning its components, state and API access, over a Node.js and Express API on MySQL — then led ${MEASUREMENTS.releases.value} production releases on it.`,
+      `Architected and delivered an enterprise CMS from 0→1 to MVP across the stack: a React frontend built as domain modules with SOLID boundaries, each feature owning its components, state and API access, over a Node.js and Express API on MySQL. I then led ${MEASUREMENTS.releases.value} production releases on it.`,
       // Second, not fifth. This is the hardest thing on the role and the closest
       // match to what most senior React openings actually are — an inherited
       // codebase, not an empty one. Below the page-load bullet it was read after
       // a skimmer had already filed the role as "greenfield CMS".
-      "Migrated a legacy PHP/Laravel, jQuery and Bootstrap application to React and Express incrementally without freezing client delivery — I had worked in that codebase, backend and front, before replacing it, which is why the seams were obvious — and built Node.js BFF layers with the backend team to reduce API latency.",
-      `Introduced test-driven development with Jest and Cypress end-to-end gates, driving overall automated coverage to ${MEASUREMENTS.coverage.value} with every critical path behind the merge gate in CI/CD — which is what let releases stay frequent without a regression freeze.`,
+      "Migrated a legacy PHP/Laravel, jQuery and Bootstrap application to React and Express incrementally, without freezing client delivery. I had worked in that codebase, backend and front, before replacing it, which is why the seams were obvious. I also built Node.js BFF layers with the backend team to reduce API latency.",
+      `Introduced test-driven development with Jest and Cypress end-to-end gates, driving overall automated coverage to ${MEASUREMENTS.coverage.value} with every critical path behind the merge gate in CI/CD. That is what let releases stay frequent without a regression freeze.`,
       `Built a Storybook-based reusable component library that cut frontend development time ${MEASUREMENTS["dev-time"].value.replace("−","~")} across projects.`,
       `Reduced page load time ${MEASUREMENTS["load-kodez"].value.replace("−","~")} through code-splitting, lazy loading, and asset optimization, with assets served from AWS S3.`,
-      `Built the REST integrations against the client's enterprise vendor stack — Amtek (Australia), running on Fiserv, Toshiba, NTT DATA, Park Assist and City systems — across a ${MEASUREMENTS.tables.value} table schema, with Sequelize models over MySQL.`,
+      `Built the REST integrations against the client's enterprise vendor stack: Amtek (Australia), running on Fiserv, Toshiba, NTT DATA, Park Assist and City systems. The schema ran to ${MEASUREMENTS.tables.value} tables, with Sequelize models over MySQL.`,
       "Translated Figma designs into responsive interfaces; set engineering standards and ran code reviews as the company scaled from 10 to 60+ people.",
     ],
   },
   {
     company: "RaSoft",
     location: "Colombo, Sri Lanka",
-    descriptor: "Seed-stage startup — internal systems and web products",
+    descriptor: "Seed-stage startup · internal systems and web products",
     title: "Full-Stack Engineer",
-    period: "Dec 2018 — Feb 2021",
+    period: "Dec 2018 to Feb 2021",
     stack: ["React.js", "JavaScript", "Node.js", "PHP / Laravel", "jQuery", "SCSS", "Agile / Scrum"],
     points: [
-      "Joined as an intern in December 2018 and moved into the full-stack role in June 2019 — end-to-end ownership at a seed-stage startup.",
-      "Delivered an Employment Management System from concept to production across the stack — a React.js frontend over a Node.js backend.",
+      "Joined as an intern in December 2018 and moved into the full-stack role in June 2019. It was end-to-end ownership at a seed-stage startup.",
+      "Delivered an Employment Management System from concept to production across the stack, with a React.js frontend over a Node.js backend.",
       `Rebuilt the company website on PHP/Laravel and jQuery around responsive layout and accessibility, lifting UX and conversion ${MEASUREMENTS.conversion.value.replace("+","~")}.`,
       "Improved application performance through refactoring and component-level optimization, and ran code reviews and pair-programming sessions to keep the codebase maintainable as it grew.",
     ],
@@ -262,6 +262,28 @@ const STACK: StackGroup[] = [
       "Suspense",
       "Error boundaries",
       "Memoization & render isolation",
+    ],
+  },
+  {
+    label: "Backend & delivery",
+    items: [
+      "Node.js",
+      "ExpressJS (BFF)",
+      ".NET (C#)",
+      "SignalR",
+      "PHP / Laravel",
+      "Handlebars",
+      "MySQL",
+      "PostgreSQL",
+      "Sequelize",
+      "MongoDB",
+      "AWS S3",
+      "Docker",
+      "GitHub Actions",
+      "Vercel",
+      "Azure Blob Storage",
+      "Jira",
+      "Azure DevOps",
     ],
   },
   {
@@ -339,28 +361,6 @@ const STACK: StackGroup[] = [
     ],
   },
   {
-    label: "Backend & delivery",
-    items: [
-      "Node.js",
-      "ExpressJS (BFF)",
-      ".NET (C#)",
-      "SignalR",
-      "PHP / Laravel",
-      "Handlebars",
-      "MySQL",
-      "PostgreSQL",
-      "Sequelize",
-      "MongoDB",
-      "AWS S3",
-      "Docker",
-      "GitHub Actions",
-      "Vercel",
-      "Azure Blob Storage",
-      "Jira",
-      "Azure DevOps",
-    ],
-  },
-  {
     label: "AI-assisted delivery",
     items: [
       "Agent orchestration",
@@ -373,18 +373,18 @@ const STACK: StackGroup[] = [
 
 const EDUCATION: { degree: string; school: string; note?: string }[] = [
   {
-    degree: "BSc (Hons) Computer Science & Software Engineering — First Class",
+    degree: "BSc (Hons) Computer Science & Software Engineering, First Class",
     school: "University of Bedfordshire · 2022",
     // Kept here rather than in the skills chips: it dates the work to 2022 and
     // frames it as academic, which is what it was.
-    note: "Dissertation: BlockVote — blockchain-based e-voting on Ethereum (Solidity, Truffle, React, MetaMask)",
+    note: "Dissertation: BlockVote, blockchain-based e-voting on Ethereum (Solidity, Truffle, React, MetaMask)",
   },
   {
-    degree: "Higher National Diploma — Computing (Software Engineering)",
+    degree: "Higher National Diploma in Computing (Software Engineering)",
     school: "Pearson · 2020",
   },
   {
-    degree: "Higher National Diploma — Mechatronics Engineering",
+    degree: "Higher National Diploma in Mechatronics Engineering",
     school: "Cardiff Metropolitan University · 2019",
   },
 ];
@@ -394,23 +394,23 @@ const EDUCATION: { degree: string; school: string; note?: string }[] = [
  *
  * The web platform version is the default at /resume, for groups that run
  * many brand sites: it leads with the cr8v estate and puts the CMS and
- * tracking stack first. The frontend résumé above sits at /resume/frontend
+ * tracking stack first. The full-stack résumé above sits at /resume/full-stack
  * for product teams. Both reuse everything else as it stands. Each renderer below reads its variant's
  * data under the names the frontend résumé always used, so the sheet, the
  * phone reflow and the plain-text export stay one code path and the two
  * versions cannot drift apart in layout — only in what they lead with.
  * ------------------------------------------------------------------ */
 
-export type ResumeVariant = "frontend" | "web-platform";
+export type ResumeVariant = "full-stack" | "web-platform";
 
 const WEB_POSITIONING = () =>
-  `Senior engineer with ${yearsPhrase()} on the web, currently the sole developer for the DAS Holding group — ${MEASUREMENTS["das-companies"].value} companies' websites on WordPress, Laravel, PHP and Shopify, alongside new builds in React and TypeScript. Before that came full-stack product work — React over Node.js, .NET and Laravel backends — and frontend team leadership on enterprise and media platforms. I run a multi-brand estate with the same discipline: every change proven on a copy first, every task on record, and security and upgrades planned rather than patched.`;
+  `Senior engineer with ${yearsPhrase()} on the web, currently the sole developer for the DAS Holding group, covering ${MEASUREMENTS["das-companies"].value} companies' websites on WordPress, Laravel, PHP and Shopify, alongside new builds in React and TypeScript. Before that came full-stack product work (React over Node.js, .NET and Laravel backends) and frontend team leadership on enterprise and media platforms. I run a multi-brand estate with the same discipline: every change proven on a copy first, every task on record, and security and upgrades planned rather than patched.`;
 
 const WEB_METRICS: { label: string; m: MeasurementId }[] = [
-  { label: "group companies — the DAS Holding account", m: "das-companies" },
+  { label: "group companies under the DAS Holding account", m: "das-companies" },
   { label: "production sites on one shared server", m: "das-sites" },
   { label: "tasks delivered on the account", m: "tasks" },
-  { label: "platforms architected 0→1 — Hobber, Kodez", m: "platforms" },
+  { label: "platforms architected 0→1 (Hobber, Kodez)", m: "platforms" },
 ];
 
 // The cr8v role at full length, because here it is the lead role rather than
@@ -419,7 +419,7 @@ const CR8V_WEB: Role = {
   ...CR8V,
   points: [
     CR8V.points[0],
-    "Every change is proven on a copy of the site and goes live only after client sign-off, and every task is logged — so the history of any site, and the reason behind a change, is on record.",
+    "Every change is proven on a copy of the site and goes live only after client sign-off, and every task is logged, so the history of any site, and the reason behind a change, is on record.",
     CR8V.points[1],
     "Work across WordPress (Elementor, WPML, WooCommerce, ACF), Laravel, custom PHP and Shopify Liquid, including an investor-relations portal in English and Arabic.",
     ...CR8V.points.slice(2),
@@ -450,16 +450,16 @@ const WEB_STACK: StackGroup[] = [
 ];
 
 const RESUMES = {
-  frontend: {
-    headline: "Senior Frontend Engineer",
-    tagline: "React · Next.js · TypeScript",
+  "full-stack": {
+    headline: "Senior Full-Stack Engineer",
+    tagline: "React · Next.js · TypeScript · Node.js · .NET",
     positioning: POSITIONING,
     metrics: METRICS,
     endnotes: ENDNOTES,
     experience: EXPERIENCE,
     stack: STACK,
-    pdf: "/resume-frontend.pdf",
-    download: "Mohammed-Rezaan-Riyaz-Resume-Frontend.pdf",
+    pdf: "/resume-full-stack.pdf",
+    download: "Mohammed-Rezaan-Riyaz-Resume-Full-Stack.pdf",
   },
   "web-platform": {
     headline: "Senior Web Developer",
@@ -478,7 +478,7 @@ const RESUMES = {
 // for. The frontend version sits one click away for product-company roles.
 const VERSIONS: { variant: ResumeVariant; href: string; label: string }[] = [
   { variant: "web-platform", href: "/resume", label: "Web platform" },
-  { variant: "frontend", href: "/resume/frontend", label: "Frontend" },
+  { variant: "full-stack", href: "/resume/full-stack", label: "Full-stack" },
 ];
 
 const buildResumeText = (variant: ResumeVariant) => {
@@ -493,7 +493,7 @@ const buildResumeText = (variant: ResumeVariant) => {
   } = RESUMES[variant];
   return [
     "MOHAMMED REZAAN RIYAZ",
-    `${headline} — ${tagline} · ${yearsOfExperience()}+ Years`,
+    `${headline} · ${tagline} · ${yearsOfExperience()}+ Years`,
     "",
     CONTACT.join("\n"),
     "",
@@ -505,7 +505,7 @@ const buildResumeText = (variant: ResumeVariant) => {
     "",
     "EXPERIENCE",
     EXPERIENCE.map(
-      (r) => `${r.company}, ${r.location} — ${r.title}
+      (r) => `${r.company}, ${r.location} · ${r.title}
 ${r.period}
 ${r.descriptor}
 Stack: ${r.stack.join(", ")}
@@ -518,11 +518,11 @@ ${r.points.map((pt) => `- ${pt}`).join("\n")}`,
     "MEASUREMENT NOTES",
     ENDNOTES.map((e) => {
       const lim = "limit" in e && e.limit ? " " + e.limit : "";
-      return `${e.value} ${e.label} — ${KIND_LABEL[e.kind]}. ${e.basis}${lim}`;
+      return `${e.value} ${e.label} · ${KIND_LABEL[e.kind]}. ${e.basis}${lim}`;
     }).join("\n"),
     "",
     "EDUCATION",
-    EDUCATION.map((e) => `${e.degree} — ${e.school}${e.note ? "\n  " + e.note : ""}`).join("\n"),
+    EDUCATION.map((e) => `${e.degree} · ${e.school}${e.note ? "\n  " + e.note : ""}`).join("\n"),
   ].join("\n");
 };
 
@@ -683,7 +683,7 @@ function MobileResume({ variant }: { variant: ResumeVariant }) {
         Measurement notes
       </h2>
       <p className="mt-3 text-[12.5px] leading-[1.6] text-neutral-500">
-        What each figure is, and where it stops — a count, a reading and a judgement are
+        What each figure is, and where it stops. A count, a reading and a judgement are
         not the same kind of claim.
       </p>
       <dl className="mt-3 space-y-3">
@@ -1070,7 +1070,7 @@ export default function ResumePage({ variant = "web-platform" }: { variant?: Res
                 <section className="break-inside-avoid border-t border-neutral-200 px-11 pb-9 pt-7">
                   <SectionHeading>Measurement Notes</SectionHeading>
                   <p className="mb-3 text-[9.6px] leading-[1.5] text-neutral-500">
-                    What each figure is, and where it stops — a count, a reading
+                    What each figure is, and where it stops. A count, a reading
                     and a judgement are not the same kind of claim.
                   </p>
                   <div className="grid grid-cols-2 gap-x-8 gap-y-3">

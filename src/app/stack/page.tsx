@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import { PageIntro, ToolsSection } from "../components/signal-room";
 
 export const metadata: Metadata = {
-  title: "Stack — Mohammed Rezaan Riyaz",
+  title: "Stack | Mohammed Rezaan Riyaz",
   description:
-    "The toolkit: React, Next.js, TypeScript, Storybook, TanStack Query, Cypress, AWS and the rest — grouped by what each part is for, with how I actually use it.",
+    "The toolkit: React, Next.js, TypeScript, Storybook, TanStack Query, Cypress, AWS and the rest, grouped by what each part is for, with how I actually use it.",
 };
 
 // The React entry quotes a length of career, derived from a date rather than
@@ -24,7 +24,7 @@ export default function StackPage() {
         num="04"
         label="Stack"
         title="What I build with, and how I actually use it."
-        subtitle="Grouped by what each part is for rather than listed alphabetically. Open any one to see how it shows up in real work — the craft below is what moves it."
+        subtitle="Grouped by what each part is for rather than listed alphabetically. Open any one to see how it shows up in real work; the craft below is what moves it."
       />
       <ToolsSection />
     </>

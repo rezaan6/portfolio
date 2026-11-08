@@ -55,7 +55,7 @@ const numeralFont = Oswald({
 });
 
 const SITE_URL = "https://rezaanriyaz.com";
-const TITLE = "Mohammed Rezaan Riyaz | Senior Web & Frontend Engineer";
+const TITLE = "Mohammed Rezaan Riyaz | Senior Full-Stack Engineer";
 // Under 158 characters, deliberately: the previous version ran to 180 and Google
 // cuts a description at about that point, so its tail was silently dropped from
 // every search result — while still appearing in full in each LinkedIn, Slack
@@ -64,7 +64,7 @@ const TITLE = "Mohammed Rezaan Riyaz | Senior Web & Frontend Engineer";
 // reads a word of the site. One constant, three surfaces — description,
 // openGraph and twitter all take it, so it cannot drift between them. Both sides
 // of the work are in it because every page unfurls with it — /work/cr8v included.
-const DESCRIPTION = `Senior Web & Frontend Engineer — enterprise React apps, and a ${MEASUREMENTS["das-companies"].value}-company group's websites on WordPress and Laravel. Open to onsite, remote, or relocation.`;
+const DESCRIPTION = `Senior Full-Stack Engineer: enterprise React and .NET apps, and a ${MEASUREMENTS["das-companies"].value}-company group's websites on WordPress and Laravel. Open to onsite, remote or relocation.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -77,11 +77,15 @@ export const metadata: Metadata = {
   authors: [{ name: "Mohammed Rezaan Riyaz", url: SITE_URL }],
   creator: "Mohammed Rezaan Riyaz",
   keywords: [
+    "Senior Full-Stack Engineer",
+    "Full-Stack Developer",
     "Senior Frontend Engineer",
     "Senior Web Developer",
     "React Developer",
     "Next.js",
     "TypeScript",
+    "Node.js",
+    ".NET",
     "Frontend Architecture",
     "Design Systems",
     "Web Performance",

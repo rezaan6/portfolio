@@ -15,9 +15,9 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
   const cs = caseStudies.find((c) => c.slug === slug);
-  if (!cs) return { title: "Case study — Mohammed Rezaan Riyaz" };
+  if (!cs) return { title: "Case study | Mohammed Rezaan Riyaz" };
   return {
-    title: `${cs.company} — Mohammed Rezaan Riyaz`,
+    title: `${cs.company} | Mohammed Rezaan Riyaz`,
     description: cs.headline,
   };
 }

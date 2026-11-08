@@ -69,30 +69,30 @@ export const MEASUREMENTS = {
     value: "~90%",
     kind: "report",
     basis:
-      "The overall number on the merged Kodez coverage report. The suite ran as a merge gate in CI — every critical path had to pass before a merge.",
+      "The overall number on the merged Kodez coverage report. The suite ran as a merge gate in CI: every critical path had to pass before a merge.",
     limit:
-      "Not one column — branch sits lower. And the suite was gated, the number was not: a change that kept every test green while dropping the percentage would not have been stopped by CI.",
+      "Not one column; branch sits lower. And the suite was gated, the number was not: a change that kept every test green while dropping the percentage would not have been stopped by CI.",
   },
   releases: {
     value: "40+",
     kind: "count",
     basis:
-      "Production releases shipped on the Kodez CMS across three years — features, defect fixes and database work.",
+      "Production releases shipped on the Kodez CMS across three years, covering features, defect fixes and database work.",
   },
   "dev-time": {
     value: "−30%",
     kind: "estimate",
     basis:
-      "My comparison of elapsed delivery on comparable screens before and after the library became the default way to build — at sprint granularity, in a team that was also growing.",
+      "My comparison of elapsed delivery on comparable screens before and after the library became the default way to build (at sprint granularity, in a team that was also growing).",
     limit:
-      "Not an instrumented measurement, and I never published a before/after build time for a real screen — which is exactly the mistake the component spec records. Treat it as a judgement of roughly a third, not a figure.",
+      "Not an instrumented measurement, and I never published a before/after build time for a real screen, which is exactly the mistake the component spec records. Treat it as a judgement of roughly a third, not a figure.",
   },
   tables: {
     value: "250+",
     kind: "count",
     basis:
       "The size of the schema the Kodez CMS was built against, across its enterprise integration surfaces.",
-    limit: "The scale I worked against — I did not own the data model.",
+    limit: "The scale I worked against, though I did not own the data model.",
   },
   conversion: {
     value: "+15%",
@@ -100,7 +100,7 @@ export const MEASUREMENTS = {
     basis:
       "Reported internally at RaSoft over the months after the responsive and accessibility rebuild of the company site.",
     limit:
-      "A business figure I was told rather than one I instrumented, and several things changed at once — a contribution, not an isolated cause.",
+      "A business figure I was told rather than one I instrumented, and several things changed at once. A contribution, not an isolated cause.",
   },
   platforms: {
     value: "2",
@@ -114,7 +114,7 @@ export const MEASUREMENTS = {
     value: "7",
     kind: "count",
     basis:
-      "Authentication, vendor accounts, dashboards, scheduling, payouts, integrations and team access — shipped as independent feature slices over one shared component layer.",
+      "Authentication, vendor accounts, dashboards, scheduling, payouts, integrations and team access, all shipped as independent feature slices over one shared component layer.",
   },
   team: {
     value: "10 → 60+",
@@ -127,7 +127,7 @@ export const MEASUREMENTS = {
     value: "7+",
     kind: "count",
     basis:
-      "Derived from a single start date — my first professional role in December 2018 — rather than written down, and floored so it can never overstate.",
+      "Derived from a single start date (my first professional role in December 2018) rather than written down, and floored so it can never overstate.",
   },
   // The cr8v figures. Each one is checkable against /web, where every site
   // they count is listed and live.
@@ -135,7 +135,7 @@ export const MEASUREMENTS = {
     value: "20",
     kind: "count",
     basis:
-      "Companies under the DAS Holding account whose websites, stores or reporting I work on — one file each in my work log.",
+      "Companies under the DAS Holding account whose websites, stores or reporting I work on, each with one file in my work log.",
     limit:
       "Twenty companies, not twenty builds: most are existing sites I run and extend, and for two of them the work is reporting or an assessment rather than the site itself.",
   },
@@ -143,20 +143,20 @@ export const MEASUREMENTS = {
     value: "16",
     kind: "count",
     basis:
-      "Production websites on the group's shared server — the set the security assessment and the upgrade plan cover.",
+      "Production websites on the group's shared server: the set the security assessment and the upgrade plan cover.",
   },
   tasks: {
     value: "320+",
     kind: "count",
     basis:
-      "Entries in my work log since 30 June 2026 — one per task, from a content change to a security fix or a new feature.",
+      "Entries in my work log since 30 June 2026, one per task, from a content change to a security fix or a new feature.",
     limit: "A count of tasks, not of hours: they range from minutes to days.",
   },
   "upgrade-plan": {
     value: "54",
     kind: "estimate",
     basis:
-      "Working days in the site-by-site upgrade plan the client approved — every site grouped by risk, with an effort estimate for each.",
+      "Working days in the site-by-site upgrade plan the client approved. Every site is grouped by risk, with an effort estimate for each.",
     limit: "Planned effort, not elapsed time, and a plan still being delivered.",
   },
   tracking: {

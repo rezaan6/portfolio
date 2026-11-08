@@ -1,6 +1,6 @@
-# Senior Web & Frontend Engineer portfolio — Mohammed Rezaan Riyaz
+# Senior Full-Stack Engineer portfolio: Mohammed Rezaan Riyaz
 
-React · Next.js · TypeScript · WordPress · Laravel · Shopify. Open to onsite, remote, or relocation.
+React · Next.js · TypeScript · Node.js · .NET · WordPress · Laravel · Shopify. Open to onsite, remote, or relocation.
 
 **Live:** https://rezaanriyaz.com
 
@@ -119,7 +119,7 @@ npm run dev      # http://localhost:3000
 | `npm run dev` | Dev server (Turbopack) |
 | `npm run build` | Renders both résumés to PDF, then builds. Ordering matters — see below |
 | `npm run build:fast` | Build without regenerating the PDFs |
-| `npm run resume:pdf` | Render `/resume` and `/resume/frontend` to `public/resume{,-frontend}.pdf`, each with an `-a4` twin |
+| `npm run resume:pdf` | Render `/resume` and `/resume/full-stack` to `public/resume{,-full-stack}.pdf`, each with an `-a4` twin |
 | `npm run clients:shots` | Retake the client-site screenshots from the live sites (`-- <slug>` for one) |
 | `npm start` | Serve the production build |
 | `npm run lint` | ESLint |
@@ -141,7 +141,7 @@ npm run dev      # http://localhost:3000
 | `/artifacts` | Nine engineering documents — ADR, component spec, state model, incident review, perf, test strategy, accessibility baseline, API contract, migration plan |
 | `/about` | Career path, principles, education, contact |
 | `/resume` | Digital-first résumé, web platform version by default — prints to A4, or copies as plain text |
-| `/resume/frontend` | The same résumé led by the frontend engineering work, for product companies (the web platform version is the default at `/resume`) |
+| `/resume/full-stack` | The same résumé led by the full-stack engineering work, for product companies (the web platform version is the default at `/resume`) |
 
 ## Where the content lives
 

@@ -8,9 +8,9 @@ import ResumePage from "./resume-client";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Resume — Mohammed Rezaan Riyaz",
+  title: "Resume | Mohammed Rezaan Riyaz",
   description:
-    "Senior Web Developer resume — sole developer for a twenty-company holding group's websites on WordPress, Laravel and Shopify, backed by full-stack work in React, Node.js and .NET.",
+    "Senior Web Developer resume: sole developer for a twenty-company holding group's websites on WordPress, Laravel and Shopify, backed by full-stack work in React, Node.js and .NET.",
 };
 
 export default function Page() {

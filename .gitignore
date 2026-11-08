@@ -51,9 +51,9 @@ next-env.d.ts
 /public/resume.pdf
 /public/resume-a4.pdf
 /public/resume.meta.json
-/public/resume-frontend.pdf
-/public/resume-frontend-a4.pdf
-/public/resume-frontend.meta.json
+/public/resume-full-stack.pdf
+/public/resume-full-stack-a4.pdf
+/public/resume-full-stack.meta.json
 
 # agent instruction files — local only
 # This repo is linked from /projects as a public work sample, so the tooling that

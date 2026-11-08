@@ -583,7 +583,7 @@ export function SiteFrame({ children }: { children: ReactNode }) {
               Mohammed Rezaan Riyaz
             </p>
             <p className="mt-1 font-[family-name:var(--font-display)] text-[10.5px] uppercase tracking-[0.14em] text-[var(--sr-faint)]">
-              Senior Web &amp; Frontend Engineer · Open to roles
+              Senior Full-Stack Engineer · Open to roles
             </p>
           </div>
 
@@ -679,10 +679,10 @@ export function Reveal({
 
 function SectionLabel({ title }: { title: string }) {
   return (
-    <div className="flex items-baseline gap-3">
-      <span className="font-[family-name:var(--font-display)] text-[12px] font-medium tracking-[0.2em] text-[var(--sr-faint)]">
-        —
-      </span>
+    // The mark was a long dash, which he asked to keep out of everything he
+    // publishes. The accent dot is the one the hero card already uses.
+    <div className="flex items-center gap-3">
+      <span aria-hidden="true" className="h-2 w-2 rounded-full" style={{ background: "var(--sr-accent)" }} />
       <span className="font-[family-name:var(--font-display)] text-[11px] font-medium uppercase tracking-[0.3em] text-[var(--sr-muted)]">
         {title}
       </span>
@@ -803,15 +803,15 @@ export function Magnetic({
 // percentages read as measured (or as a delivery count), never as invented.
 const caseBarSource: Record<string, string> = {
   cr8v:
-    "Counts from my work log and the group's security review — most of this work is running and extending sites that already existed, so the honest figures are counts, not before/after reads.",
+    "Counts from my work log and the group's security review. Most of this work is running and extending sites that already existed, so the honest figures are counts, not before/after reads.",
   hobber:
-    "Composition and boundary reads across the codebase I architected — a structural measure, not a performance one. The platform is still in its first year, so there is no before/after perf number to report yet.",
+    "Composition and boundary reads across the codebase I architected: a structural measure, not a performance one. The platform is still in its first year, so there is no before/after perf number to report yet.",
   axinom:
     "Load-time measured before/after the bundle, lazy-load, and caching work, plus the Mosaic micro-frontends integrated for client delivery.",
   kodez:
     `CI coverage reports and before/after load-time reads across ${MEASUREMENTS.releases.value} production releases.`,
   rasoft:
-    "Reported internally at a seed-stage startup — an early-career read, not instrumented analytics.",
+    "Reported internally at a seed-stage startup (an early-career read, not instrumented analytics).",
 };
 
 /* ------------------------ data-viz primitives ---------------------- */
@@ -1090,7 +1090,7 @@ export function MethodSection() {
           </h2>
           <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
             Every case study runs through the same four stages, and each hands
-            the next a concrete output — so the process is repeatable, not
+            the next a concrete output, so the process is repeatable, not
             improvised.
           </p>
         </Reveal>
@@ -1230,7 +1230,7 @@ export function MethodSection() {
                     {s.body}
                   </p>
                   <p className="mt-3 border-t border-[var(--sr-hairline)] pt-2.5 font-[family-name:var(--font-display)] text-[10px] uppercase tracking-[0.12em] text-[var(--sr-faint)]">
-                    Output — <span className="text-[var(--sr-accent)]">{s.artifact}</span>
+                    Output: <span className="text-[var(--sr-accent)]">{s.artifact}</span>
                   </p>
                 </motion.article>
               </Reveal>
@@ -1363,7 +1363,7 @@ export function ArtifactsSection() {
             onClick={() => close()}
             role="dialog"
             aria-modal="true"
-            aria-label={`${open.title} — sample`}
+            aria-label={`${open.title}: sample`}
           >
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 24, scale: 0.97 }}
@@ -1474,7 +1474,7 @@ export function AboutHero() {
                 I architect the system, not just the screen.
               </h1>
               <p className="mt-6 max-w-xl text-[16px] leading-8 text-[var(--sr-muted)]">
-                {yearsPhrase()} building accessible, high-performance web products —
+                {yearsPhrase()} building accessible, high-performance web products:
                 marketplace platforms, enterprise media, CMS at scale, and today
                 the websites of a {MEASUREMENTS["das-companies"].value}-company
                 holding group. I draw the boundaries first, prove the work with
@@ -1519,7 +1519,7 @@ export function AboutHero() {
                   Mohammed Rezaan Riyaz
                 </p>
                 <p className="mt-0.5 text-[13px] text-[var(--sr-muted)]">
-                  Senior Web &amp; Frontend Engineer
+                  Senior Full-Stack Engineer
                 </p>
                 <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-[var(--sr-accent-soft)] px-3 py-1.5">
                   <span className="relative flex h-2 w-2">
@@ -1674,19 +1674,19 @@ export function EducationSection() {
       award: "First Class",
       school: "University of Bedfordshire",
       year: "2022",
-      note: "Dissertation: BlockVote — a blockchain-based e-voting system on Ethereum, built and defended in 2022. Solidity contracts, Truffle, a React client and MetaMask.",
+      note: "Dissertation: BlockVote, a blockchain-based e-voting system on Ethereum, built and defended in 2022. Solidity contracts, Truffle, a React client and MetaMask.",
     },
     {
-      degree: "Higher National Diploma — Computing (Software Engineering)",
+      degree: "Higher National Diploma in Computing (Software Engineering)",
       school: "Pearson",
       year: "2020",
       note: "Data structures, databases, and the first systems I built end to end, alongside the early RaSoft work.",
     },
     {
-      degree: "Higher National Diploma — Mechatronics Engineering",
+      degree: "Higher National Diploma in Mechatronics Engineering",
       school: "Cardiff Metropolitan University",
       year: "2019",
-      note: "The starting point, and not a straight line: I came in for hardware and left through a C++ class that pulled me toward the web — which is also why I still reach for a measurement before an opinion.",
+      note: "The starting point, and not a straight line: I came in for hardware and left through a C++ class that pulled me toward the web, which is also why I still reach for a measurement before an opinion.",
     },
   ];
 
@@ -1747,7 +1747,7 @@ export function PrinciplesSection() {
             The rules I don&apos;t trade away.
           </h2>
           <p className="mt-4 max-w-xl text-[15px] leading-7 text-[var(--sr-muted)]">
-            Four calls I make the same way on every codebase — the reason the numbers below them hold up.
+            Four calls I make the same way on every codebase. They&apos;re the reason the numbers below them hold up.
           </p>
         </Reveal>
         <div className="mt-12 grid gap-4 md:grid-cols-2">
@@ -1788,7 +1788,7 @@ export function ContactSection() {
         <Reveal>
           <SectionLabel title="Contact" />
           <h2 className="mt-4 max-w-4xl font-[family-name:var(--font-display)] text-[clamp(1.7rem,3.2vw,2.55rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-            Open to senior web and frontend roles — onsite, remote, or
+            Open to senior full-stack and web roles: onsite, remote, or
             relocation.
           </h2>
           {/* This was a three-part conditional: "If you're hiring an engineer
@@ -1808,7 +1808,7 @@ export function ContactSection() {
         <Reveal delay={0.1}>
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
-              href={`mailto:${contact.email}?subject=Engineering%20role%20%E2%80%94%20let%27s%20talk`}
+              href={`mailto:${contact.email}?subject=Engineering%20role%3A%20let%27s%20talk`}
               className="rounded-full sr-cta px-5 py-3 text-[14px] font-semibold"
             >
               Email me
@@ -1895,7 +1895,7 @@ export function ToolsSection() {
             Grouped by what each part is for.
           </h2>
           <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
-            The toolkit, grouped by what each part is for — architecture through
+            The toolkit, grouped by what each part is for, from architecture through
             delivery. Open any one to see how I actually use it. The craft below
             is what moves the work.
           </p>
@@ -1999,7 +1999,7 @@ export function ToolsSection() {
             onClick={() => close()}
             role="dialog"
             aria-modal="true"
-            aria-label={`${openTool.name} — how I use it`}
+            aria-label={`${openTool.name}: how I use it`}
           >
             <motion.div
               onClick={(e) => e.stopPropagation()}
@@ -2053,7 +2053,7 @@ export function ToolsSection() {
                 ) : null}
                 <p className="mt-4 text-[12px] leading-6 text-[var(--sr-faint)]">
                   How I actually work with {openTool.name}. The sample is
-                  illustrative — client code and data are kept out.
+                  illustrative; client code and data are kept out.
                 </p>
               </div>
             </motion.div>
@@ -2163,7 +2163,7 @@ export function ProjectsSection() {
               This site, then questions I hadn’t hit at work.
             </h2>
             <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
-              Personal projects, not production work — my production code is
+              Personal projects, not production work. My production code is
               under NDA. I&apos;m listing what each one was actually for rather
               than pitching them as portfolio pieces. Every repo has
               screenshots and a full write-up in its README.
@@ -2216,7 +2216,7 @@ export function ProjectsSection() {
               Smaller API-integration builds.
             </h2>
             <p className="mt-3 max-w-2xl text-[15px] leading-7 text-[var(--sr-muted)]">
-              Each one wraps a third-party API in a UI — the interesting part was
+              Each one wraps a third-party API in a UI; the interesting part was
               always the state around the request, not the request.
             </p>
           </Reveal>
@@ -2391,7 +2391,7 @@ export function WebCapabilitiesSection() {
         <Reveal>
           <SectionLabel title="What a group gets" />
           <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-            One developer for every brand&apos;s website — and the work around it.
+            One developer for every brand&apos;s website, and the work around it.
           </h2>
           <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
             Each of these is work I do across the DAS Holding group now, and
@@ -2542,11 +2542,11 @@ export function WebSitesSection() {
         <Reveal>
           <SectionLabel title="The sites" />
           <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-            {wall.length} live sites — open any of them.
+            {wall.length} live sites. Open any of them.
           </h2>
           <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
             The DAS Holding group&apos;s sites I run and extend, across every
-            sector the group is in — and a restaurant site I built from
+            sector the group is in, plus a restaurant site I built from
             scratch for a separate client.
           </p>
         </Reveal>
@@ -2654,7 +2654,7 @@ function V8HeroCard() {
         ))}
       </div>
       <p className="mt-5 border-t border-[var(--sr-hairline)] pt-3 text-[10.5px] leading-4 text-[var(--sr-faint)]">
-        Measured before/after against a defined baseline — not claimed causal.
+        Measured before/after against a defined baseline, not claimed causal.
       </p>
     </div>
   );
@@ -2675,7 +2675,7 @@ function V8Hero() {
           <div>
             <Reveal immediate>
               <p className="font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.3em] text-[var(--sr-accent)]">
-                Senior Web & Frontend Engineer · React · WordPress · Laravel
+                Senior Full-Stack Engineer · React · .NET · WordPress
               </p>
             </Reveal>
             <Reveal immediate>
@@ -2689,7 +2689,7 @@ function V8Hero() {
             </Reveal>
             <Reveal immediate>
               <p className="mt-7 max-w-lg text-[16px] leading-7 text-[var(--sr-muted)]">
-                {yearsPhrase()} across marketplace, media, and enterprise products —
+                {yearsPhrase()} across marketplace, media, and enterprise products,
                 and today the sole developer for a{" "}
                 {MEASUREMENTS["das-companies"].value}-company holding group&apos;s
                 websites. I draw the boundaries first, prove the work with tests,
@@ -2746,7 +2746,7 @@ function V8Impact() {
     {
       value: "0→1",
       label:
-        "Vendor platform architected from an empty repo — 7 feature-sliced modules · Hobber",
+        "Vendor platform architected from an empty repo, with 7 feature-sliced modules · Hobber",
       m: "modules",
     },
     {
@@ -2756,7 +2756,7 @@ function V8Impact() {
     },
     {
       value: MEASUREMENTS.coverage.value,
-      label: "Automated test coverage — Jest + Cypress, suite gated in CI · Kodez",
+      label: "Automated test coverage: Jest + Cypress, suite gated in CI · Kodez",
       m: "coverage",
     },
     {
@@ -3062,7 +3062,7 @@ function V8Focus() {
       // Full-stack card folds in here — its Node BFF, schema and migration work
       // is the same "whole platform" range, so six cards stay six.
       t: "Web platforms & full-stack",
-      d: "WordPress, Laravel and Shopify estates run as one — bilingual sites, forms that deliver, tracking marketing can trust — plus .NET and Node.js backends, relational schema work, and legacy stacks migrated without freezing delivery.",
+      d: "WordPress, Laravel and Shopify estates run as one (bilingual sites, forms that deliver, tracking marketing can trust), plus .NET and Node.js backends, relational schema work, and legacy stacks migrated without freezing delivery.",
       companies: ["cr8v", "Hobber", "Kodez", "RaSoft"],
       outcome: `${MEASUREMENTS["das-companies"].value} companies' sites · legacy stack retired incrementally`,
     },
@@ -3082,7 +3082,7 @@ function V8Focus() {
     },
     {
       t: "Performance engineering",
-      d: "Bundle analysis, code-splitting, lazy loading, and caching — always starting from a measurement rather than an instinct, and never reading the average alone.",
+      d: "Bundle analysis, code-splitting, lazy loading, and caching, always starting from a measurement rather than an instinct, and never reading the average alone.",
       companies: ["Kodez", "Axinom"],
       outcome: `${MEASUREMENTS["load-kodez"].value} and ${MEASUREMENTS["load-axinom"].value} page load`,
     },
@@ -3094,7 +3094,7 @@ function V8Focus() {
     },
     {
       t: "Testing & release safety",
-      d: "Test-first with Jest, Cypress at the gate in CI, plus cross-browser validation — the reason releases stayed frequent and safe rather than merely fast.",
+      d: "Test-first with Jest, Cypress at the gate in CI, plus cross-browser validation, which is why releases stayed frequent and safe rather than merely fast.",
       companies: ["Kodez"],
       outcome: `${MEASUREMENTS.coverage.value} coverage · ${MEASUREMENTS.releases.value} releases`,
     },
@@ -3111,7 +3111,7 @@ function V8Focus() {
         <Reveal>
           <SectionLabel title="Where I fit" />
           <h2 className="mt-4 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(1.55rem,2.9vw,2.35rem)] font-medium leading-[1.08] text-[var(--sr-text)]">
-            Web platforms and frontend architecture — and where they extend.
+            Web platforms and frontend architecture, and where they extend.
           </h2>
           <p className="mt-4 max-w-2xl text-[16px] leading-7 text-[var(--sr-muted)]">
             {/* Four, matching the grid below, which badges the first four cards
@@ -3119,7 +3119,7 @@ function V8Focus() {
                 section's own UI promotes, inside one viewport. */}
             Web platforms, architecture, performance, and design systems are
             the core I&apos;ve shipped against. Testing discipline and AI-native
-            workflows are where that same instinct extends — each backed by a
+            workflows are where that same instinct extends. Each is backed by a
             number, not just a title.
           </p>
         </Reveal>

@@ -139,7 +139,7 @@ export function CaseDetail({
           <div className="mx-auto max-w-6xl px-5 py-16 lg:px-8 lg:py-20">
             <p className="font-[family-name:var(--font-display)] text-[11px] uppercase tracking-[0.2em]" style={{ color: ink }}>UI · reference build</p>
             <h2 className="mt-3 max-w-2xl font-[family-name:var(--font-display)] text-[clamp(1.3rem,2.6vw,1.85rem)] font-medium leading-snug tracking-[-0.01em] text-[var(--sr-text)]">
-              One responsive interface — switch between laptop, tablet, and mobile.
+              One responsive interface. Switch between laptop, tablet, and mobile.
             </h2>
             {/* One stage; pick a device and the frame morphs between them. */}
             <div className="mt-10">
@@ -177,7 +177,7 @@ export function CaseDetail({
               dangerouslySetInnerHTML={{ __html: codeHtml }}
             />
             <p className="mt-3 text-[12px] leading-6 text-[var(--sr-faint)]">
-              Illustrative — written to show the shape of the decision. Client
+              Illustrative, written to show the shape of the decision. Client
               code is under NDA and none of it appears here.
             </p>
           </div>
@@ -273,7 +273,7 @@ export function CaseDetail({
               ))}
             </div>
             <p className="mt-6 text-[12.5px] leading-6 text-[var(--sr-faint)]">
-              Each one maps to a specific decision above — the reasoning is on
+              Each one maps to a specific decision above; the reasoning is on
               record, not asserted as a trait.
             </p>
           </div>

@@ -4,7 +4,7 @@ import { MEASUREMENTS } from "./lib/measurement";
 
 // Generated social-share image for link previews. Every page unfurls with it,
 // so it carries both sides of the work — the same two lines as the LinkedIn banner.
-export const alt = "Mohammed Rezaan Riyaz — Senior Web & Frontend Engineer";
+export const alt = "Mohammed Rezaan Riyaz | Senior Full-Stack Engineer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -25,7 +25,7 @@ export default function OpengraphImage() {
         }}
       >
         <div style={{ fontSize: 26, letterSpacing: 4, color: "#6fa8c4" }}>
-          SENIOR WEB &amp; FRONTEND ENGINEER
+          SENIOR FULL-STACK ENGINEER
         </div>
         <div
           style={{
@@ -41,7 +41,7 @@ export default function OpengraphImage() {
           {`Enterprise React apps. ${MEASUREMENTS["das-companies"].value} companies' websites.`}
         </div>
         <div style={{ fontSize: 26, color: "#9aa0ad", marginTop: 18 }}>
-          React · Next.js · TypeScript · WordPress · Laravel · Shopify
+          React · Next.js · TypeScript · Node.js · .NET · WordPress · Laravel
         </div>
         <div
           style={{

@@ -14,12 +14,12 @@ import {
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "About — Mohammed Rezaan Riyaz",
+  title: "About | Mohammed Rezaan Riyaz",
   // "and what I'm looking for next" came out with the Beyond-the-resume section
   // it described. A description promising a section the page no longer has is the
   // kind of drift that outlives every copy edit.
   description:
-    "Senior Web & Frontend Engineer: the career path from intern to lead, the numbers behind it, and the education.",
+    "Senior Full-Stack Engineer: the career path from intern to lead, the numbers behind it, and the education.",
 };
 
 export default function AboutPage() {

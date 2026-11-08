@@ -21,6 +21,10 @@ const nextConfig: NextConfig = {
       { source: "/resume/web-platform", destination: "/resume", permanent: true },
       { source: "/resume-web-platform.pdf", destination: "/resume.pdf", permanent: true },
       { source: "/resume-web-platform-a4.pdf", destination: "/resume-a4.pdf", permanent: true },
+      // The second résumé was the frontend version until it became full-stack.
+      { source: "/resume/frontend", destination: "/resume/full-stack", permanent: true },
+      { source: "/resume-frontend.pdf", destination: "/resume-full-stack.pdf", permanent: true },
+      { source: "/resume-frontend-a4.pdf", destination: "/resume-full-stack-a4.pdf", permanent: true },
     ];
   },
   turbopack: {

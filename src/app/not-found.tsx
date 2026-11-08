@@ -10,7 +10,7 @@ export default function NotFound() {
         This page shipped elsewhere.
       </h1>
       <p className="mt-4 max-w-md text-[16px] leading-7 text-[var(--sr-muted)]">
-        The link you followed doesn&apos;t exist — but the work does.
+        The link you followed doesn&apos;t exist, but the work does.
       </p>
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
         <Link

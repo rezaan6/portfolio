@@ -27,7 +27,7 @@ export const webCapabilities: WebCapability[] = [
   },
   {
     title: "Arabic and English, properly",
-    body: "Bilingual pages that read right in both — right-to-left layouts, Arabic dates, translated pages kept in step with the English.",
+    body: "Bilingual pages that read right in both: right-to-left layouts, Arabic dates, translated pages kept in step with the English.",
     proof: [
       "Arabic versions rebuilt on WPML",
       "Right-to-left layouts with Arabic dates and numerals",
@@ -111,15 +111,15 @@ export const webCaseStudies: WebCaseStudy[] = [
     image: "das-holding",
     links: [],
     tags: ["WordPress", "Laravel", "Custom PHP", "cPanel"],
-    situation: `The group's ${MEASUREMENTS["das-sites"].value} production sites share one server and span WordPress, Laravel and custom PHP. Its security team needed to know where each one stood — and then to see it fixed.`,
+    situation: `The group's ${MEASUREMENTS["das-sites"].value} production sites share one server and span WordPress, Laravel and custom PHP. Its security team needed to know where each one stood, and then to see it fixed.`,
     did: [
       "Reviewed every site's platform and dependencies, and wrote a site-by-site status report for the group's management.",
       "Worked through the penetration test's findings across the estate, site by site.",
       "Applied the blocklists the group's security team sent to every site, each time a new one arrived.",
-      `Planned the upgrades site by site, grouped by risk with an effort estimate for each — ${MEASUREMENTS["upgrade-plan"].value} working days, approved — and started delivery with the group's own site.`,
+      `Planned the upgrades site by site, grouped by risk with an effort estimate for each (${MEASUREMENTS["upgrade-plan"].value} working days, approved), and started delivery with the group's own site.`,
     ],
     result:
-      "A written record of where every site stands, the test's findings worked through site by site, and an approved plan the group can hold to — instead of patching whichever site breaks next.",
+      "A written record of where every site stands, the test's findings worked through site by site, and an approved plan the group can hold to, instead of patching whichever site breaks next.",
   },
   {
     slug: "bilingual",
@@ -128,7 +128,7 @@ export const webCaseStudies: WebCaseStudy[] = [
     links: ["citiscape", "east-and-west", "ewp", "grove"],
     tags: ["WordPress", "WPML", "Laravel", "Right-to-left"],
     situation:
-      "The group's brands needed Arabic that works as Arabic — right-to-left layouts, Arabic dates and numerals, and translated pages that keep up with the English site.",
+      "The group's brands needed Arabic that works as Arabic, which means right-to-left layouts, Arabic dates and numerals, and translated pages that keep up with the English site.",
     did: [
       "Rebuilt Arabic versions on WPML from the current English sites, and tested both languages end to end.",
       "Added an Arabic language toggle where a brand had none, repairing English pages found broken along the way.",
@@ -145,7 +145,7 @@ export const webCaseStudies: WebCaseStudy[] = [
     links: ["esic"],
     tags: ["WordPress", "Custom PHP", "English & Arabic"],
     situation:
-      "Emirates Strategic Investment Company publishes results and credit ratings to investors through a locked portal, in English and Arabic — where a wrong figure is a disclosure problem, not a typo.",
+      "Emirates Strategic Investment Company publishes results and credit ratings to investors through a locked portal, in English and Arabic. A wrong figure there is a disclosure problem, not a typo.",
     did: [
       "Added the half-year results to the investor portal, built from the live files rather than a stale copy.",
       "Published rating actions and credit opinions across the investor pages.",
@@ -163,13 +163,13 @@ export const webCaseStudies: WebCaseStudy[] = [
     situation:
       "Two flower stores were spending on Meta and Google ads, but the numbers did not add up: purchases were counted several times over, and many arrived without an order value.",
     did: [
-      "Reviewed the stores' tracking end to end — Google tag, GA4 and the Meta pixel — and removed the duplicate setup.",
+      "Reviewed the stores' tracking end to end, across Google tag, GA4 and the Meta pixel, and removed the duplicate setup.",
       "Fixed the purchase events: no more duplicates, and an order value on every purchase.",
-      "Rebuilt both sales dashboards in Looker Studio — overview, campaigns, ads, placements and a store-versus-store comparison — with commentary that stays true for any date range.",
+      "Rebuilt both sales dashboards in Looker Studio (overview, campaigns, ads, placements and a store-versus-store comparison), with commentary that stays true for any date range.",
       "Storefront work alongside it: product carousels, bundles and add-ons, and checkout delivery changes.",
     ],
     result:
-      "Ad spend and sales now read from the same source, and the two stores can be compared side by side — the figures the agency's campaign reviews are built on.",
+      "Ad spend and sales now read from the same source, and the two stores can be compared side by side. These are the figures the agency's campaign reviews are built on.",
   },
   {
     slug: "fifty-four",
@@ -178,7 +178,7 @@ export const webCaseStudies: WebCaseStudy[] = [
     links: ["fifty-four"],
     tags: ["React", "TypeScript", "Cloudflare", "English & Arabic"],
     situation:
-      "A new restaurant needed a site to carry its menu, bookings and brand in English and Arabic — and one it could update itself, without a developer for every price change.",
+      "A new restaurant needed a site to carry its menu, bookings and brand in English and Arabic. It also needed one it could update itself, without a developer for every price change.",
     did: [
       "Built it from an empty repository in React and TypeScript, with the full menu rebuilt from the client's own spreadsheet.",
       "Gave the reservation and feedback forms a real backend, with email and WhatsApp alerts to the restaurant.",
@@ -197,7 +197,7 @@ export const webProcess: { label: string; body: string }[] = [
   },
   {
     label: "Scoped before it's built",
-    body: "What changes, on which site, and what else it touches — written down before the first edit.",
+    body: "What changes, on which site, and what else it touches, all written down before the first edit.",
   },
   {
     label: "Built on a copy",
@@ -205,7 +205,7 @@ export const webProcess: { label: string; body: string }[] = [
   },
   {
     label: "Shipped, then checked",
-    body: "Released by hand, then checked on the live site — the form submitted, the page read in both languages.",
+    body: "Released by hand, then checked on the live site: the form submitted, the page read in both languages.",
   },
   {
     label: "Reported in plain language",
